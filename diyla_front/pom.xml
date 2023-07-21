@@ -6,6 +6,7 @@
         <artifactId>diyla</artifactId>
         <version>1.0</version>
     </parent>
+
     <artifactId>diyla_front</artifactId>
     <packaging>war</packaging>
 
@@ -51,4 +52,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
