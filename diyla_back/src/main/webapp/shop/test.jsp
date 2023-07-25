@@ -12,6 +12,6 @@
     <title>Title</title>
 </head>
 <body>
-<H1>新增 ${categoryId} 類別</H1>
+<H1>新增成功</H1>
 </body>
 </html>

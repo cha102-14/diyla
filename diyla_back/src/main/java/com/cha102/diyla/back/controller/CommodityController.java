@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/shop/CommodityController")
 public class CommodityController extends HttpServlet {
@@ -29,7 +28,7 @@ public class CommodityController extends HttpServlet {
         if ("insert".equals(action)) {
             System.out.println(action);
             req.setAttribute("categoryId",categoryId);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/test.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/test.jsp"); // webapp/index.jsp or index.html
             requestDispatcher.forward(req,res);
         }
         CommodityVO commodityVO = new CommodityVO();
