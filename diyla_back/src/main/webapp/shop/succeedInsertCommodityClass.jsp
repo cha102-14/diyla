@@ -12,6 +12,6 @@
     <title>Title</title>
 </head>
 <body>
-<H1>新增成功</H1>
+<H1>新增商品類別${message}</H1>
 </body>
 </html>

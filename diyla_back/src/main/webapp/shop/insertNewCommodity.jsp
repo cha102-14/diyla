@@ -51,7 +51,6 @@
     });
 
     function getCategory() {
-        axios.get("http://localhost:8081/meal")
     }
 </script>
 </body>
