@@ -33,4 +33,92 @@ public class CommodityVO implements Serializable {
         this.ratingSum = ratingSum;
         this.updateTime = updateTime;
     }
+
+    public Integer getComNO() {
+        return comNO;
+    }
+
+    public void setComNO(Integer comNO) {
+        this.comNO = comNO;
+    }
+
+    public Integer getComClassNo() {
+        return comClassNo;
+    }
+
+    public void setComClassNo(Integer comClassNo) {
+        this.comClassNo = comClassNo;
+    }
+
+    public String getComNAME() {
+        return comNAME;
+    }
+
+    public void setComNAME(String comNAME) {
+        this.comNAME = comNAME;
+    }
+
+    public byte[] getComPic() {
+        return comPic;
+    }
+
+    public void setComPic(byte[] comPic) {
+        this.comPic = comPic;
+    }
+
+    public String getComDec() {
+        return comDec;
+    }
+
+    public void setComDec(String comDec) {
+        this.comDec = comDec;
+    }
+
+    public Double getComPri() {
+        return comPri;
+    }
+
+    public void setComPri(Double comPri) {
+        this.comPri = comPri;
+    }
+
+    public Integer getComQua() {
+        return comQua;
+    }
+
+    public void setComQua(Integer comQua) {
+        this.comQua = comQua;
+    }
+
+    public Integer getComState() {
+        return comState;
+    }
+
+    public void setComState(Integer comState) {
+        this.comState = comState;
+    }
+
+    public Integer getCommentTotal() {
+        return commentTotal;
+    }
+
+    public void setCommentTotal(Integer commentTotal) {
+        this.commentTotal = commentTotal;
+    }
+
+    public Integer getRatingSum() {
+        return ratingSum;
+    }
+
+    public void setRatingSum(Integer ratingSum) {
+        this.ratingSum = ratingSum;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
 }
