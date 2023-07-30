@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false" %>
 <%-- List<String> productCategories = (List<String>) request.getAttribute("productCategories"); --%>
 <!DOCTYPE html>
 <html>
@@ -22,37 +24,14 @@
         <% } --%>
     </div>
     <div class="input-container">
-
         <form action="CommodityClassController" method="post">
             <input type="text" name="action" value="insert" hidden="hidden">
             <input type="text" class="input-field" id="className" name="className" placeholder="新增新的類別">
+            <span style="display: block; color: red;">${errMsgs["className"]}</span>
             <input type="submit" id="submitButton" value="提交">
         </form>
     </div>
 </div>
 
-<script>
-
-//    document.addEventListener("DOMContentLoaded",()=>{
-//
-//
-//
-//        const submitButton = document.getElementById("submitButton");
-//        submitButton.addEventListener("click",(e)=>{
-//            const className = document.getElementById("className");
-//            if (className.value.trim === null || className.value.trim === "") {
-//                alert("請輸入值")
-//                e.preventDefault();
-//            }
-//
-//        })
-//
-//
-//
-//
-//
-//    })
-
-</script>
 </body>
 </html>

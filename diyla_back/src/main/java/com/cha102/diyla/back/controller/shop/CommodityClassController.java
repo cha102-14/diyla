@@ -10,9 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+
 @WebServlet("/shop/CommodityClassController")
 public class CommodityClassController extends HttpServlet {
     CommodityClassService service = new CommodityClassService();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
@@ -20,10 +28,19 @@ public class CommodityClassController extends HttpServlet {
 
 
         if ("insert".equals(action)) {
+            HashMap<String, String> errMsgs = new HashMap<>();
             String className = req.getParameter("className");
-
+            if (className == null || className.trim().length() == 0) {
+                errMsgs.put("className", "類別名稱不得空白");
+            }
+            if (!errMsgs.isEmpty()) {
+                req.setAttribute("errMsgs", errMsgs);
+                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/insertNewCommodityClass.jsp");
+                requestDispatcher.forward(req,res);
+                return;
+            }
             CommodityClassVO commodityClassVO = new CommodityClassVO();
-            commodityClassVO.setComClassName(className);
+            commodityClassVO.setComClassName(className.trim());
             int i = service.insert(commodityClassVO);
 
             if (i > 0) {

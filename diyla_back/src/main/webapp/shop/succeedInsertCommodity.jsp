@@ -5,6 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<H1>新增商品類別${message}</H1>
+<H1>新增商品</H1>
 </body>
 </html>

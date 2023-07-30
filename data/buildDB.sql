@@ -71,12 +71,12 @@ CREATE TABLE COMMODITY
     COM_CLASS_NO  INT                                 NOT NULL COMMENT '商品類別編號',
     COM_NAME      VARCHAR(50)                         NOT NULL COMMENT '商品名稱',
     COM_PIC       LONGBLOB COMMENT '商品圖片',
-    COM_DEC       VARCHAR(200)                        NULL COMMENT '商品描述',
+    COM_DES       VARCHAR(200)                        NULL COMMENT '商品描述',
     COM_PRI       INT                                 NOT NULL,
     COM_QUA       INT                                 NOT NULL COMMENT '數量',
     COM_STATE   TINYINT   DEFAULT 0                 NOT NULL COMMENT '商品狀態，(0:下架，1:上架中，2:完售)',
-    COMMENT_TOTAL INT                                 NOT NULL COMMENT '評論總人數',
-    RATING_SUM    INT                                 NOT NULL COMMENT '評論總分',
+    COMMENT_TOTAL INT     DEFAULT 0                            NOT NULL COMMENT '評論總人數',
+    RATING_SUM    INT     DEFAULT 0                            NOT NULL COMMENT '評論總分',
     UPDATE_TIME   TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
     CONSTRAINT COMMODITY_COMMODITY_CLASS_COM_CLASS_NO_FK
         FOREIGN KEY (COM_CLASS_NO) REFERENCES DIYLA.COMMODITY_CLASS (COM_CLASS_NO)
