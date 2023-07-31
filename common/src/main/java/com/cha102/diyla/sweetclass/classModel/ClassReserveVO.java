@@ -3,7 +3,6 @@ import java.sql.Timestamp;
 public class ClassReserveVO {
 
 
-
         private int reserveId;
         private int classId;
         private int memId;

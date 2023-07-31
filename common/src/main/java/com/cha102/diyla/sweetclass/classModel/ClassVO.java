@@ -1,6 +1,6 @@
 package com.cha102.diyla.sweetclass.classModel;
 import java.sql.Date;
-import java.sql.Time;
+
 public class ClassVO {
 
         private int classId;
