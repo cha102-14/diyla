@@ -62,9 +62,6 @@ body {
 .navbar{
   background-color:#FCE5CD;
 }
-.logo-image {
-  width: 70%;
-}
 
 .hero_area.sub_pages {
   height: auto;
@@ -110,6 +107,17 @@ body {
 
 #navbarSupportedContent .nav-item.active .nav-link {
   background-color: #ffffff;
+}
+
+#navbarSupportedContent .nav-item .nav-link:hover {
+  background-color: #FCE5CD; /* Set the background color when hovering */
+  color: #B26021; /* Set the text color when hovering */
+}
+
+/* Keep the selected item style unchanged when hovering */
+#navbarSupportedContent .nav-item.active .nav-link:hover {
+  background-color: #FCE5CD; /* Keep the background color when hovering the selected item */
+  color: #B26021; /* Keep the text color when hovering the selected item */
 }
 
 a,
@@ -230,17 +238,14 @@ a:focus {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 15px;
+   -ms-flex-align: center;
+      align-items: center;
+  margin-left: 25px;
 }
 
 .user_option a {
   margin-right: 25px;
-  color: #B26021;
+  color: #FCE5CD;
 }
 
 .user_option a span {
@@ -381,7 +386,6 @@ a:focus {
       -ms-flex-align: center;
           align-items: center;
   padding: 15px 30px;
-  height: 245px;
 }
 
 .shop_section .box .img-box img {
@@ -777,8 +781,13 @@ a:focus {
   background-color: #B26021;
   color: #ffffff;
 }
+.info_container .row {
+  display: flex; /* 使用Flexbox佈局 */
+  justify-content: center; /* 水平置中 */
+}
 
 .info_section .social_container {
+  display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -810,16 +819,6 @@ a:focus {
   padding: 7px 10px;
 }
 
-.info_section .info_form form button {
-  padding: 8px 35px;
-  outline: none;
-  border: none;
-  color: #ffffff;
-  background: #f89cab;
-  margin-top: 15px;
-  text-transform: uppercase;
-}
-
 .info_section .row > div {
   margin-top: 25px;
 }
@@ -836,7 +835,22 @@ a:focus {
 }
 
 .info_section p {
-  color: #cbc9c9;
+  color: #FCE5CD;
+}
+
+.info_link-box {
+  display: flex; /* 使用Flexbox佈局 */
+  flex-direction: column; /* 垂直方向排列內容 */
+}
+
+.info_link-box div {
+  display: flex; /* 使用Flexbox佈局 */
+  align-items: center; /* 水平對齊 */
+  margin: 5px 0; /* 調整各項目之間的間距 */
+}
+
+.info_link-box div i {
+  margin-right: 10px; /* 調整i元素與span元素之間的間距 */
 }
 
 .info_section .info_link-box a {
@@ -848,23 +862,12 @@ a:focus {
           align-items: center;
   margin: 15px 0;
 }
-
-.info_section .info_link-box a:hover {
-  color: #ffffff;
+#address{
+  width: 260px;
 }
 
-.info_section .info_link-box a i {
-  color: #ffffff;
-  margin-right: 5px;
-  font-size: 18px;
-}
-
-.info_section .info_link-box a span {
-  color: #cbc9c9;
-}
-
-.info_section .info_link-box a:hover span {
-  color: #ffffff;
+.info_link-box span{
+  color:#FCE5CD;
 }
 
 /* end info section */
@@ -878,12 +881,12 @@ a:focus {
   padding: 20px 0;
   margin: 0 auto;
   text-align: center;
-  border-top: 1.5px solid #eeeeee;
+  border-top: 1.5px solid #FCE5CD;
   width: 80%;
 }
 
 .footer_section a {
-  color: #cbc9c9;
+  color: #FCE5CD;
 }
 
 /* end footer section*/

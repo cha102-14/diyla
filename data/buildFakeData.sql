@@ -232,8 +232,8 @@ VALUES ('1', '1'),
        ('1', '14'),
        ('1', '15');
 
-insert into notice(mem_id, notice_title, notice_context, notice_time)
-values (1, '預約DIY甜點體驗成功！', '親愛的用戶，您已成功預約本店的DIY甜點體驗活動。請記得準時到店參加，我們期待您的到來！',
+INSERT INTO NOTICE(MEM_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_TIME)
+VALUES (1, '預約DIY甜點體驗成功！', '親愛的用戶，您已成功預約本店的DIY甜點體驗活動。請記得準時到店參加，我們期待您的到來！',
         '2021-4-2 22:59:30'),
        (2, '課程報名確認通知',
         '親愛的用戶，感謝您報名參加我們的甜點課程。您的報名已經確認，請準時前來參加課程，期待您的到來',
@@ -248,8 +248,8 @@ values (1, '預約DIY甜點體驗成功！', '親愛的用戶，您已成功預�
         '2023-7-7 07:07:07');
 
 
-insert into chatroom(mem_id, tea_id, chat_time, chat_context, chat_dir)
-values (1, 5, '2023-7-26 13:20:45',
+INSERT INTO CHATROOM(MEM_ID, TEA_ID, CHAT_TIME, CHAT_CONTEXT, CHAT_DIR)
+VALUES (1, 5, '2023-7-26 13:20:45',
         '您好！我特別喜歡法式甜點。看到老師也有開關於法式甜點的課程很感興趣，不知道如果想要請老師規劃客製化課程要提供什麼資訊',
         1),
        (2, 4, '2023-7-15 03:20:45',
