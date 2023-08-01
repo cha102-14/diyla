@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 
@@ -35,8 +36,8 @@
     <!-- header section strats -->
     <header class="header_section">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.jsp">
-                <img src="./images/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image">
+            <a class="navbar-brand" href="${ctxPath}/index.jsp">
+                <img src="${ctxPath}/images/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +63,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="shop/shop.html">
+                        <a class="nav-link" href="shop/shop.jsp">
                             商店
                         </a>
                     </li>

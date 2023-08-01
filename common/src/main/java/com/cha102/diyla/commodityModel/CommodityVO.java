@@ -8,22 +8,23 @@ public class CommodityVO implements Serializable {
     private Integer comClassNo;
     private String comNAME;
     private byte[] comPic;
+    private String showPic;
     private String comDes;
     private Integer comPri;
     private Integer comQua;
-
     private Integer comState;
     private Integer commentTotal;
     private Integer ratingSum;
-        private Timestamp updateTime;
+    private Timestamp updateTime;
 
     public CommodityVO(){}
 
-    public CommodityVO(Integer comNO, Integer comClassNo, String comNAME, byte[] comPic, String comDes, Integer comPri, Integer comQua, Integer comState, Integer commentTotal, Integer ratingSum, Timestamp updateTime) {
+    public CommodityVO(Integer comNO, Integer comClassNo, String comNAME, byte[] comPic, String showPic, String comDes, Integer comPri, Integer comQua, Integer comState, Integer commentTotal, Integer ratingSum, Timestamp updateTime) {
         this.comNO = comNO;
         this.comClassNo = comClassNo;
         this.comNAME = comNAME;
         this.comPic = comPic;
+        this.showPic = showPic;
         this.comDes = comDes;
         this.comPri = comPri;
         this.comQua = comQua;
@@ -63,6 +64,14 @@ public class CommodityVO implements Serializable {
 
     public void setComPic(byte[] comPic) {
         this.comPic = comPic;
+    }
+
+    public String getShowPic() {
+        return showPic;
+    }
+
+    public void setShowPic(String showPic) {
+        this.showPic = showPic;
     }
 
     public String getComDes() {
