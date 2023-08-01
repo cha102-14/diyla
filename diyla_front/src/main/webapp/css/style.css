@@ -251,72 +251,54 @@ a:focus {
 .user_option a span {
   margin-left: 5px;
 }
-
 /*end header section*/
+
+.slider_container{
+  height: 73vh;
+}
+
 .slider_section .carousel-item.active {
   position: relative;
 }
 
-.slider_section .img-box {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
+.slider_section .slider_container {
+  padding: 25px;
 }
 
-.slider_section .img-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.slider_section .slider_container {
-  color: #fefefe;
-  background-color: #000000;
-  background-color: #f89cab;
-  padding: 25px;
+.carousel-item.active {
+  background-size: 100% auto;
+  background-repeat: no-repeat;
 }
 
 .slider_section .row {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.slider_section .img-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 45px;
-}
-
-.slider_section .img-box img {
-  max-width: 100%;
-  height: auto;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .slider_section .detail-box {
   padding-left: 45px;
-  margin: 45px 0;
+  margin: 150px 0 0 0;
+  text-align:left;
 }
 
 .slider_section .detail-box h1 {
   font-weight: bold;
   font-size: 3.5rem;
+  color: #B26021;
   margin-bottom: 10px;
+}
+
+.slider_section .detail-box p {
+  color:black;
 }
 
 .slider_section .detail-box a {
   display: inline-block;
   padding: 10px 40px;
-  background-color: #db4566;
+  background-color: #B26021;
   color: #ffffff;
-  border: 1px solid #db4566;
+  border: 1px solid #B26021;
   border-radius: 5px;
   -webkit-transition: all .3s;
   transition: all .3s;
@@ -326,22 +308,20 @@ a:focus {
 
 .slider_section .detail-box a:hover {
   background-color: transparent;
-  color: #db4566;
+  color: #B26021;
 }
 
 .slider_section .carousel_btn-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  background-color: #ffffff;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between; /* 將內容左右置中 */
+  background-color: #FCE5CD;
+  align-items: center;
   position: absolute;
   bottom: -25px;
-  left: 5%;
+  left: 50%;
+  transform: translateX(-50%); /* 將元素向左平移自身寬度的一半，達到水平置中 */
   padding: 7px 10px;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px;
 }
 
 .slider_section .carousel_btn-box img {
@@ -356,9 +336,10 @@ a:focus {
   background-repeat: no-repeat;
   opacity: 1;
   background-position: center;
-  color: #000000;
+  color: #B26021;
   font-size: 14px;
 }
+
 
 .shop_section .heading_container {
   margin-bottom: 20px;
@@ -403,7 +384,7 @@ a:focus {
 }
 
 .shop_section .box .detail-box h6 span {
-  color: #db4f66;
+  color: #B26021;
 }
 
 .shop_section .box .new {
@@ -439,9 +420,9 @@ a:focus {
 .shop_section .btn-box a {
   display: inline-block;
   padding: 10px 40px;
-  background-color: #f16179;
+  background-color: #B26021;
   color: #ffffff;
-  border: 1px solid #f16179;
+  border: 1px solid #B26021;
   border-radius: 5px;
   -webkit-transition: all .3s;
   transition: all .3s;
@@ -449,7 +430,7 @@ a:focus {
 
 .shop_section .btn-box a:hover {
   background-color: transparent;
-  color: #f16179;
+  color: #B26021;
 }
 
 .saving_section {
@@ -615,21 +596,6 @@ a:focus {
   color: #ffffff;
 }
 
-.gift_section .detail-box .btn-box .btn2 {
-  display: inline-block;
-  padding: 10px 0;
-  background-color: #9242dd;
-  color: #ffffff;
-  border: 1px solid #9242dd;
-  border-radius: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-}
-
-.gift_section .detail-box .btn-box .btn2:hover {
-  background-color: transparent;
-  color: #9242dd;
-}
 
 .contact_section {
   position: relative;

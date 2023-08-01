@@ -50,12 +50,14 @@
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="diy.html">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="index.jsp">
                             DIY體驗
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="dessert_course.html">
+                    <li class="nav-item">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="index.jsp">
                             甜點課程
                         </a>
                     </li>
@@ -65,27 +67,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="community_sharing.html">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="index.jsp">
                             社群分享
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="problem.html">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="index.jsp">
                             常見問題
                         </a>
                     </li>
                 </ul>
                 <div class="user_option">
+                    <%--可自行更改href連結--%>
                     <a href="">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <span>登入</span>
                     </a>
-                    <a href="">
-                        <span>註冊</span>
-                    </a>
-
                     <form class="form-inline ">
-
                     </form>
                 </div>
             </div>
