@@ -1,4 +1,4 @@
-package com.cha102.diyla.sweetclass.classController;
+package com.cha102.diyla.front.desertcourse.classController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
