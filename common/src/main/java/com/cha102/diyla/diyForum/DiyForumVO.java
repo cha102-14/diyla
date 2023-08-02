@@ -1,7 +1,13 @@
 package com.cha102.diyla.diyForum;
 
-public class DiyForumVO {
-    private Integer artiNo;
+import java.io.Serializable;
+
+public class DiyForumVO implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer artiNo;
     private Integer memId;
     private Integer diyNo;
     private String artiCont;
@@ -24,7 +30,7 @@ public class DiyForumVO {
 				+ ", diyGrade=" + diyGrade + "]";
 	}
 
-    public Integer getArtiNo() {
+	public Integer getArtiNo() {
         return artiNo;
     }
 
@@ -63,4 +69,5 @@ public class DiyForumVO {
     public void setDiyGrade(Integer diyGrade) {
         this.diyGrade = diyGrade;
     }
+    
 }
