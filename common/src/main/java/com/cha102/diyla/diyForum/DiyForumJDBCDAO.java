@@ -5,10 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
-public class DiyForumDAO implements DiyForumDAO_Interface {
+public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
+
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei";
 	String userid = "root";
@@ -275,6 +276,65 @@ public class DiyForumDAO implements DiyForumDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	public static void main(String[] args) {
+
+		DiyForumJDBCDAO dao = new DiyForumJDBCDAO();
+
+		DiyForumVO DFVO = new DiyForumVO();
+
+// 新增		
+//		DFVO.setMemId(2);
+//		DFVO.setDiyNo(2);
+//		DFVO.setArtiCont("測試測試測試測試測試測試測試測試測試測試測試測試");
+//		DFVO.setDiyGrade(3);
+//		
+//		dao.insert(DFVO);
+//		
+//		System.out.println("新增成功");
+
+		/* ========================================================================== */
+
+// 刪除
+//		dao.delete(6);
+//		System.out.println("刪除成功");
+
+		/* ========================================================================== */
+
+// 修改
+//		diy_forum set MEM_ID = ?,DIY_NO =?,ARTI_CONT =?,DIY_GRA =? where ARTI_NO = ?
+//		DFVO.setMemId(3);
+//		DFVO.setDiyNo(1);
+//		DFVO.setArtiCont("歐齁歐齁歐齁歐齁");
+//		DFVO.setDiyGrade(5);
+//		DFVO.setArtiNo(7);
+//		
+//		dao.update(DFVO);
+//		System.out.println("修改成功");
+
+		/* ========================================================================== */
+
+// 查詢一筆		
+//		ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum where ARTI_NO = 
+
+//		DiyForumVO DFVO1 = dao.findByPrimaryKey(7);
+//		System.out.println(DFVO1.getArtiNo()+"|"+DFVO1.getMemId()
+//				+"|"+DFVO1.getDiyNo()+"|"+DFVO1.getArtiCont()
+//				+"|"+DFVO1.getDiyGrade());
+//		System.out.println("查詢成功");
+
+		/* ========================================================================== */
+
+// 查詢多筆	
+		List<DiyForumVO> list = dao.getAll();
+		for (DiyForumVO a : list) {
+			System.out.println(a.getArtiNo() + "|" + a.getMemId() + "|" + a.getDiyNo() + "|" + a.getArtiCont() + "|"
+					+ a.getDiyGrade());
+
+		}
+		;
+
 	}
 
 }
