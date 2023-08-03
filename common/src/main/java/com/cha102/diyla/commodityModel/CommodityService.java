@@ -13,8 +13,18 @@ public class CommodityService {
     public List<CommodityVO> getAll() {
         List<CommodityVO> commodityVOS = dao.getAll();
         for (CommodityVO commodityVO : commodityVOS) {
-            commodityVO.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(commodityVO.getComPic()));
+            setShowPic(commodityVO);
         }
         return commodityVOS;
+    }
+
+    public CommodityVO findByID(Integer comNO) {
+        CommodityVO commodityVO = dao.findByID(comNO);
+        setShowPic(commodityVO);
+        return commodityVO;
+    }
+
+    private static void setShowPic(CommodityVO commodityVO) {
+        commodityVO.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(commodityVO.getComPic()));
     }
 }

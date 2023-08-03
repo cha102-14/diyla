@@ -1,0 +1,79 @@
+/* 主色調設置為 #B26021 */
+:root {
+    --primary-color: #B26021;
+}
+
+/* 頁面背景色 */
+body {
+    background-color: #f0f0f0;
+}
+
+/* 主標題樣式 */
+h1 {
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* 內容容器 */
+#CONTENT {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 商品容器 */
+.prod {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 商品圖片容器 */
+.img {
+    margin-right: 50px;
+    width: 45%;
+}
+
+/* 商品圖片 */
+.commodityPhoto {
+    width: 300px;
+    border-radius: 5px;
+}
+
+/* 商品詳細資訊容器 */
+.commodityPage {
+    text-align: left;
+    line-height: 35px;
+    width: 45%;
+}
+
+/* 商品名稱樣式 */
+.commodityDescription label {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* 商品價格樣式 */
+#price {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* 修改資料按鈕樣式 */
+.button {
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #934e1a;
+}
