@@ -18,7 +18,7 @@
     TeacherService teacherService = new TeacherService();
     List<TeacherVO> teacherList = teacherService.getAllTeacher();
 
-    // Loop through the teacherList and display information
+
     for (TeacherVO teacher : teacherList) {
     byte[] imgBytes = teacher.getTeaPic();
     String base64Img = Base64.getEncoder().encodeToString(imgBytes);

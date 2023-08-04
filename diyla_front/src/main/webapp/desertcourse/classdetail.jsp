@@ -31,8 +31,11 @@
     <p><strong>Teacher ID:</strong> <%= course.getTeaId() %></p>
     <p><strong>Course Date:</strong> <%= course.getClassDate() %></p>
     <p><strong>Course Sequence:</strong> <%= course.getClassSeq() %></p>
-    <button type="button" id="registerButton">報名課程</button>
     <!-- Add more fields as needed -->
+    <form action="/reserve" value="Send Request" method="post">
+
+    <button type="submit" id="registerButton">報名課程</button>
+    </form>
 
     <a href="findclass.jsp">Back to Course List</a>
 </body>
