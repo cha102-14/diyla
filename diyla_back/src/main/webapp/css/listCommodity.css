@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F5F5F5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    background-color: #B26021;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+.add-button {
+    background-color: #B26021;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    margin: 15px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar {
+    padding: 10px;
+    border: 1px solid #B26021;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #B26021;
+}
+
+.delete-button {
+    background-color: #B26021;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #872C09;
+}
+
+.footer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.checkbox-label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #B26021;
+    border-radius: 3px;
+}
+
+.checkbox-input:checked ~ .checkmark:after {
+    content: "\2713"; /* Unicode character for a checkmark */
+    position: absolute;
+    display: block;
+    color: #FFF;
+    top: -3px;
+    left: 3px;
+}
+
+
+.checkbox-label:hover .checkmark {
+    background-color: #872C09;
+}

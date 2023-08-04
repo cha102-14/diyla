@@ -385,28 +385,28 @@ CREATE TABLE DIY_ING
     FOREIGN KEY (ING_ID) REFERENCES ING_STORAGE (ING_ID)
 ) COMMENT 'DIY使用食材明細';
 
-create table notice
+CREATE TABLE NOTICE
 (
-    notice_no      int primary key auto_increment,
-    mem_id         int           not null,
-    notice_title   varchar(50)   not null,
-    notice_context varchar(1000) not null,
-    notice_time    timestamp     not null default (current_timestamp),
-    notice_status  tinyint       not null default '0' comment '未讀取0,讀取1',
-    constraint fk_member_memid
-        foreign key (mem_id) references member (mem_id)
+    NOTICE_NO      INT PRIMARY KEY AUTO_INCREMENT,
+    MEM_ID         INT           NOT NULL,
+    NOTICE_TITLE   VARCHAR(50)   NOT NULL,
+    NOTICE_CONTEXT VARCHAR(1000) NOT NULL,
+    NOTICE_TIME    TIMESTAMP     NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    NOTICE_STATUS  TINYINT       NOT NULL DEFAULT '0' COMMENT '未讀取0,讀取1',
+    CONSTRAINT FK_MEMBER_MEMID
+        FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID)
 );
 
-create table chatroom
+CREATE TABLE CHATROOM
 (
-    chat_no      int primary key auto_increment,
-    mem_id       int           not null,
-    tea_id       int           not null,
-    chat_time    timestamp     not null default (current_timestamp),
-    chat_context varchar(1000) not null,
-    chat_dir     tinyint       not null comment '師傅對會員0,會員對師傅1',
-    constraint fk_memchat_memid
-        foreign key (mem_id) references member (mem_id)
+    CHAT_NO      INT PRIMARY KEY AUTO_INCREMENT,
+    MEM_ID       INT           NOT NULL,
+    TEA_ID       INT           NOT NULL,
+    CHAT_TIME    TIMESTAMP     NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+    CHAT_CONTEXT VARCHAR(1000) NOT NULL,
+    CHAT_DIR     TINYINT       NOT NULL COMMENT '師傅對會員0,會員對師傅1',
+    CONSTRAINT FK_MEMCHAT_MEMID
+        FOREIGN KEY (MEM_ID) REFERENCES MEMBER (MEM_ID)
 );
 
 

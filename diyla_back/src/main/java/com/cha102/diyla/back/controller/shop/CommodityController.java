@@ -31,6 +31,20 @@ public class CommodityController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/insertNewCommodity.jsp"); // 設定下個頁面路徑
             requestDispatcher.forward(req, resp); // 轉導到下個頁面，並把請求跟回應一併交給
         }
+
+        if ("listAll".equals(action)) {
+            List<CommodityVO> commodityVOS = service.getAll();
+            List<CommodityClassVO> commodityClasses = classService.getAll();
+            HashMap<Integer, String> classNameMap = new HashMap<>();
+            for (CommodityClassVO commodityClassVO : commodityClasses) {
+                //將類別編號當key，類別名稱當Value放進HashMap中
+                classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
+            }
+            req.setAttribute("classNameMap",classNameMap);
+            req.setAttribute("commodityList",commodityVOS);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
+            requestDispatcher.forward(req, resp);
+        }
     }
 
     @Override
@@ -54,7 +68,7 @@ public class CommodityController extends HttpServlet {
             }
 
             String commodityName = req.getParameter("commodityName");
-            if (commodityName == null || commodityName.trim().length() == 0) {
+            if (commodityName == null || commodityName.trim().isEmpty()) {
                 errMsg.put("commodityName", "名稱不得空白");
             }
             byte[] commodityPic = IOUtils.toByteArray(req.getPart("commodityPic").getInputStream());
