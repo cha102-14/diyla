@@ -11,7 +11,21 @@
     <packaging>war</packaging>
     <name>diyla_back Maven Webapp</name>
 
+
+
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>${spring.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.cha102.diyla</groupId>
             <artifactId>common</artifactId>
@@ -41,7 +55,6 @@
             <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>commons-io</groupId>

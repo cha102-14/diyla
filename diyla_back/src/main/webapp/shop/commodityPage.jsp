@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>商品詳情</title>
-    <link rel="stylesheet" type="text/css" href="../css/alterCommodity.css">
+    <link rel="stylesheet" type="text/css" href="../css/commodityPage.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 </head>
 
@@ -14,27 +14,28 @@
     <!--商品欄開始-->
     <div class="prod">
         <div class="img">
-            <img src="1.jpg" class="commodityPhoto" style="width: 100%">
+            <img src="${commodity.showPic}" class="commodityPhoto" style="width: 100%">
         </div>
+
         <div class="commodityPage">
 				<span class="commodityDescription">
 					<label>商品名稱：</label>
 					<span>${commodity.comName}</span>
 					<br>
 					<label>商品類別：</label>
-					<span>${commodity.comClass}</span>
+					<span>${classNameMap[commodity.comClassNo]}</span>
 					<br>
 					<label>商品描述：</label>
-					<span>${commodity.comContent}</span> <br>
+					<span>${commodity.comDes}</span> <br>
 					<br>
 					<label>價格：</label><span id="price">${commodity.comPri}</span>
 					<br>
-					<label>商品狀態：</label><span>${commodity.launch==1?"上架中" : "未上架"}</span>
+					<label>商品狀態：</label><span>${commodityState[commodity.comState]}</span>
 					<br>
 					<label>更新時間：</label>
 				<fmt:formatDate value="${commodity.updateTime}"
                                 pattern="yyyy-MM-dd HH:mm:ss"/> <br>
-					<button type="submit" form="form1" class="button">修改資料</button>
+					<button type="submit"  class="button">修改資料</button>
         </div>
     </div>
 </div>
