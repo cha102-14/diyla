@@ -59,7 +59,7 @@ h1 {
 
 /* 商品價格樣式 */
 #price {
-    color: var(--primary-color);
+    color: black;
     font-weight: bold;
 }
 

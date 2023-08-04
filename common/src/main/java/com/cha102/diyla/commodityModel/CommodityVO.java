@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class CommodityVO implements Serializable {
+
     private Integer comNO;
     private Integer comClassNo;
-    private String comNAME;
+    private String comName;
     private byte[] comPic;
     private String showPic;
     private String comDes;
@@ -19,10 +20,10 @@ public class CommodityVO implements Serializable {
 
     public CommodityVO(){}
 
-    public CommodityVO(Integer comNO, Integer comClassNo, String comNAME, byte[] comPic, String showPic, String comDes, Integer comPri, Integer comQua, Integer comState, Integer commentTotal, Integer ratingSum, Timestamp updateTime) {
+    public CommodityVO(Integer comNO, Integer comClassNo, String comName, byte[] comPic, String showPic, String comDes, Integer comPri, Integer comQua, Integer comState, Integer commentTotal, Integer ratingSum, Timestamp updateTime) {
         this.comNO = comNO;
         this.comClassNo = comClassNo;
-        this.comNAME = comNAME;
+        this.comName = comName;
         this.comPic = comPic;
         this.showPic = showPic;
         this.comDes = comDes;
@@ -50,12 +51,12 @@ public class CommodityVO implements Serializable {
         this.comClassNo = comClassNo;
     }
 
-    public String getComNAME() {
-        return comNAME;
+    public String getComName() {
+        return comName;
     }
 
-    public void setComNAME(String comNAME) {
-        this.comNAME = comNAME;
+    public void setComName(String comName) {
+        this.comName = comName;
     }
 
     public byte[] getComPic() {

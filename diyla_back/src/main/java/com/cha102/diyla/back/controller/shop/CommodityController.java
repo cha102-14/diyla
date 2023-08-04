@@ -45,6 +45,14 @@ public class CommodityController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
             requestDispatcher.forward(req, resp);
         }
+
+        if ("findByID".equals(action)) {
+            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
+            CommodityVO commodityVO = service.findByID(comNO);
+            req.setAttribute("commodity",commodityVO);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
+            requestDispatcher.forward(req,resp);
+        }
     }
 
     @Override
@@ -109,7 +117,7 @@ public class CommodityController extends HttpServlet {
 
             CommodityVO commodityVO = new CommodityVO();
             commodityVO.setComClassNo(comClassNo);
-            commodityVO.setComNAME(commodityName);
+            commodityVO.setComName(commodityName);
             commodityVO.setComPic(commodityPic);
             commodityVO.setComDes(commodityDes);
             commodityVO.setComPri(commodityPri);
