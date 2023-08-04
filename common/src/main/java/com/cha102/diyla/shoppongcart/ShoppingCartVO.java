@@ -6,20 +6,20 @@ import java.util.List;
 import com.cha102.diyla.commodityModel.CommodityVO;
 
 public class ShoppingCartVO implements Serializable {
-	private Integer memNo;
-	private Integer comNO;
+	private Integer memId;
+	private Integer comNo;
 	private Integer comAmount;
-	public Integer getMemNo() {
-		return memNo;
+	public Integer getMemId() {
+		return memId;
 	}
-	public void setMemNo(Integer memNo) {
-		this.memNo = memNo;
+	public void setMemId(Integer memId) {
+		this.memId = memId;
 	}
-	public Integer getComNO() {
-		return comNO;
+	public Integer getComNo() {
+		return comNo;
 	}
-	public void setComNO(Integer comNO) {
-		this.comNO = comNO;
+	public void setComNo(Integer comNo) {
+		this.comNo = comNo;
 	}
 	public Integer getComAmount() {
 		return comAmount;
@@ -27,10 +27,10 @@ public class ShoppingCartVO implements Serializable {
 	public void setComAmount(Integer comAmount) {
 		this.comAmount = comAmount;
 	}
-	public ShoppingCartVO(Integer memNo, Integer comNO, Integer comAmount) {
+	public ShoppingCartVO(Integer memId, Integer comNo, Integer comAmount) {
 		super();
-		this.memNo = memNo;
-		this.comNO = comNO;
+		this.memId = memId;
+		this.comNo = comNo;
 		this.comAmount = comAmount;
 	}
 	public ShoppingCartVO() {

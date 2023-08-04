@@ -8,5 +8,7 @@ public interface CommodityDao {
 
     List<CommodityVO> getAll();
 
+    CommodityVO findByID(Integer comNO);
+
 
 }

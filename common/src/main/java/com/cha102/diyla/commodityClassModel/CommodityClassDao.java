@@ -6,4 +6,6 @@ public interface CommodityClassDao {
     int insert(CommodityClassVO commodityClass);
 
     List<CommodityClassVO> getAll();
+
+    CommodityClassVO findByID(Integer comClassNo);
 }

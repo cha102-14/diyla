@@ -24,6 +24,9 @@ public class CommodityClassDaoImpl implements CommodityClassDao {
 
     public final String GET_ALL = "SELECT * FROM COMMODITY_CLASS ;";
 
+    public static final String FIND_BY_ID = "SELECT * FROM commodity_class where COM_CLASS_NO=?";
+
+
     @Override
     public int insert(CommodityClassVO commodityClass) {
         try (Connection conn = ds.getConnection();
@@ -51,8 +54,7 @@ public class CommodityClassDaoImpl implements CommodityClassDao {
             List<CommodityClassVO> commodityClasses = new ArrayList<>();
             while (resultSet.next()) {
                 CommodityClassVO commodityClass = new CommodityClassVO();
-                commodityClass.setComClassNo(resultSet.getInt(1));
-                commodityClass.setComClassName(resultSet.getString(2));
+                buildCommodityClass(commodityClass, resultSet);
                 commodityClasses.add(commodityClass);
             }
             return commodityClasses;
@@ -63,4 +65,26 @@ public class CommodityClassDaoImpl implements CommodityClassDao {
         return null;
     }
 
+    @Override
+    public CommodityClassVO findByID(Integer comClassNo) {
+        try (Connection conn = ds.getConnection();
+        PreparedStatement pstt = conn.prepareStatement(FIND_BY_ID)){
+            pstt.setInt(1,comClassNo);
+            ResultSet resultSet = pstt.executeQuery();
+            if (resultSet.next()) {
+                CommodityClassVO commodityClassVO = new CommodityClassVO();
+                buildCommodityClass(commodityClassVO,resultSet);
+                return commodityClassVO;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static void buildCommodityClass(CommodityClassVO commodityClass, ResultSet resultSet) throws SQLException {
+        commodityClass.setComClassNo(resultSet.getInt(1));
+        commodityClass.setComClassName(resultSet.getString(2));
+        commodityClass.setUpdateTime(resultSet.getTimestamp(3));
+    }
 }

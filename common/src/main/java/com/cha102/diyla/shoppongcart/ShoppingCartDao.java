@@ -5,13 +5,12 @@ import java.util.List;
 import com.cha102.diyla.commodityModel.CommodityVO;
 
 public interface ShoppingCartDao {
-	void insert(int memNO,CommodityVO comm,int amount);
+	void insert(Integer memId,Integer commNo,Integer amount);
 
-	void update(int mem_id, CommodityVO comm,int amount);
+	void update(Integer memId, Integer commNo,Integer amount);
 
-	void delete(int memID, CommodityVO comm);
+	void delete(Integer memId, Integer commNo);
 
-	CommodityVO getCommByComNO(Integer comNO);
 
-	List<CommodityVO> getAll();
+	List<ShoppingCartVO> getAll(Integer memId);
 }

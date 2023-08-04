@@ -25,6 +25,7 @@ public class CommodityDaoImpl implements CommodityDao {
 
     public static final String GET_ALL_SQL = "SELECT * FROM COMMODITY";
     public static final String INSERT_SQL = "INSERT INTO COMMODITY (COM_CLASS_NO,COM_NAME,COM_PIC,COM_DES,COM_PRI,COM_QUA,COM_STATE) VALUES (?,?,?,?,?,?,?);";
+    public static final String FIND_BY_ID = "SELECT * FROM commodity where COM_NO = ?";
 
     public int insert(CommodityVO commodity) {
         try (Connection conn = ds.getConnection();
@@ -57,21 +58,10 @@ public class CommodityDaoImpl implements CommodityDao {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CommodityVO commodity = new CommodityVO();
-                commodity.setComNO(rs.getInt(1));
-                commodity.setComClassNo(rs.getInt(2));
-                commodity.setComNAME(rs.getString(3));
-                commodity.setComPic(rs.getBytes(4));
-                commodity.setComDes(rs.getString(5));
-                commodity.setComPri(rs.getInt(6));
-                commodity.setComQua(rs.getInt(7));
-                commodity.setComState(rs.getInt(8));
-                commodity.setCommentTotal(rs.getInt(9));
-                commodity.setRatingSum(rs.getInt(10));
-                commodity.setUpdateTime(rs.getTimestamp(11));
-
+                buildCommodityVO(commodity, rs);
                 commodities.add(commodity);
             }
-
+            return commodities;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,4 +69,36 @@ public class CommodityDaoImpl implements CommodityDao {
     }
 
 
+    @Override
+    public CommodityVO findByID(Integer comNO) {
+
+        try (Connection connection = ds.getConnection();
+             PreparedStatement pstt = connection.prepareStatement(FIND_BY_ID)) {
+            pstt.setInt(1, comNO);
+            ResultSet rs = pstt.executeQuery();
+            if (rs.next()) {
+                CommodityVO commodity = new CommodityVO();
+                buildCommodityVO(commodity, rs);
+                return commodity;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static void buildCommodityVO(CommodityVO commodity, ResultSet rs) throws SQLException {
+        commodity.setComNO(rs.getInt(1));
+        commodity.setComClassNo(rs.getInt(2));
+        commodity.setComNAME(rs.getString(3));
+        commodity.setComPic(rs.getBytes(4));
+        commodity.setComDes(rs.getString(5));
+        commodity.setComPri(rs.getInt(6));
+        commodity.setComQua(rs.getInt(7));
+        commodity.setComState(rs.getInt(8));
+        commodity.setCommentTotal(rs.getInt(9));
+        commodity.setRatingSum(rs.getInt(10));
+        commodity.setUpdateTime(rs.getTimestamp(11));
+    }
 }

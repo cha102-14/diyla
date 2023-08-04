@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class DiyForumVO implements Serializable{
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private Integer artiNo;
-    private Integer memId;
-    private Integer diyNo;
-    private String artiCont;
-    private Integer diyGrade;
+     
+*/
+  private static final long serialVersionUID = 1L;
+  private Integer artiNo;
+  private Integer memId;
+  private Integer diyNo;
+  private String artiCont;
+  private Integer diyGrade; 
 
     public DiyForumVO() {
     }
@@ -25,12 +25,12 @@ public class DiyForumVO implements Serializable{
     }
 
     @Override
-	public String toString() {
-		return "DiyForumVO [artiNo=" + artiNo + ", memId=" + memId + ", diyNo=" + diyNo + ", artiCont=" + artiCont
-				+ ", diyGrade=" + diyGrade + "]";
-	}
+    public String toString() {
+        return "DiyForumVO [artiNo=" + artiNo + ", memId=" + memId + ", diyNo=" + diyNo + ", artiCont=" + artiCont
+                + ", diyGrade=" + diyGrade + "]";
+    }
 
-	public Integer getArtiNo() {
+    public Integer getArtiNo() {
         return artiNo;
     }
 
@@ -69,5 +69,5 @@ public class DiyForumVO implements Serializable{
     public void setDiyGrade(Integer diyGrade) {
         this.diyGrade = diyGrade;
     }
-    
+
 }
