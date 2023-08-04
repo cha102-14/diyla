@@ -10,7 +10,7 @@ public class ClassVO {
         private Date classDate;
         private int classSeq;
         private byte[] classPic;
-        private int limit;
+        private int classLimit;
         private int price;
         private String intro;
         private String className;
@@ -23,7 +23,7 @@ public class ClassVO {
 
         // Constructor with all fields
         public ClassVO(int classId, int category, int teaId, Date regEndTime, Date classDate, int classSeq,
-                       byte[] classPic, int limit, int price, String intro, String className, int headcount,
+                       byte[] classPic, int classLimit, int price, String intro, String className, int headcount,
                        int classStatus) {
             this.classId = classId;
             this.category = category;
@@ -32,7 +32,7 @@ public class ClassVO {
             this.classDate = classDate;
             this.classSeq = classSeq;
             this.classPic = classPic;
-            this.limit = limit;
+            this.classLimit = classLimit;
             this.price = price;
             this.intro = intro;
             this.className = className;
@@ -97,12 +97,12 @@ public class ClassVO {
             this.classPic = classPic;
         }
 
-        public int getLimit() {
-            return limit;
+        public int getClassLimit() {
+            return classLimit;
         }
 
-        public void setLimit(int limit) {
-            this.limit = limit;
+        public void setClassLimit(int classLimit) {
+            this.classLimit = classLimit;
         }
 
         public int getPrice() {

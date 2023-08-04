@@ -7,9 +7,13 @@ public class ClassService {
     private ClassDAO claDAO;
     private ClassReserveDAO resDAO;
     private ClassINGDAO ingDAO;
-
+    public  ClassService(){
+        claDAO = new ClassDAOImpl();
+        resDAO = new ClassReserveDAOImpl();
+        ingDAO = new ClassINGDAOImpl();
+    }
     public ClassVO addClass(Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
-                            byte[] classPic, Integer limit, Integer price, String intro, String className,
+                            byte[] classPic, Integer classLimit, Integer price, String intro, String className,
                             Integer headcount, Integer classStatus) {
         ClassVO classVO = new ClassVO();
         classVO.setCategory(category);
@@ -18,7 +22,7 @@ public class ClassService {
         classVO.setClassDate(classDate);
         classVO.setClassSeq(classSEQ);
         classVO.setClassPic(classPic);
-        classVO.setLimit(limit);
+        classVO.setClassLimit(classLimit);
         classVO.setPrice(price);
         classVO.setIntro(intro);
         classVO.setClassName(className);
@@ -29,7 +33,7 @@ public class ClassService {
         return classVO;
     }
     public ClassVO updateClass(Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
-                               byte[] classPic, Integer limit, Integer price, String intro, String className,
+                               byte[] classPic, Integer classLimit, Integer price, String intro, String className,
                                Integer headcount, Integer classStatus){
 
         ClassVO classVO = new ClassVO();
@@ -39,7 +43,7 @@ public class ClassService {
         classVO.setClassDate(classDate);
         classVO.setClassSeq(classSEQ);
         classVO.setClassPic(classPic);
-        classVO.setLimit(limit);
+        classVO.setClassLimit(classLimit);
         classVO.setPrice(price);
         classVO.setIntro(intro);
         classVO.setClassName(className);

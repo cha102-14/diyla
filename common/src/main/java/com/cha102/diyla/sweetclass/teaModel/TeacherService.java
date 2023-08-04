@@ -6,6 +6,12 @@ public class TeacherService {
     private TeaSpecialityDAO teaSpeDAO;
     private TeacherDAO teaDAO;
 
+    public TeacherService() {
+        teaDAO = new TeacherDAOImpl();
+        speDAO = new SpecialityDAOImpl();
+        teaSpeDAO = new TeaSpecialityDAOImpl();
+    }
+
     public TeacherVO addTeacher(Integer empID, String teaName, Integer teaGender, String teaPhone,
                                 String teaIntro, byte[] teaPic, String teaEmail, int teaStatus){
         TeacherVO teacherVO = new TeacherVO();
@@ -37,12 +43,15 @@ public class TeacherService {
         return teacherVO;
     }
     public void delTeacher(Integer teaID){
+
         teaDAO.delete(teaID);
     }
     public TeacherVO getOneTeacher(Integer teaID) {
+
         return teaDAO.findByPrimaryKey(teaID);
     }
     public List<TeacherVO> getAllTeacher(){
+
         return teaDAO.getAll();
     }
     public SpecialityVO addSpeciality(String speName){

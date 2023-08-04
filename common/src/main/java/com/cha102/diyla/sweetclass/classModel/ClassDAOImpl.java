@@ -18,17 +18,17 @@ public class ClassDAOImpl implements ClassDAO{
     }
 
     private static final String INSERT_STMT =
-            "INSERT INTO class (category,tea_id,reg_end_time,class_date,class_seq,class_pic,limit,price,intro,class_name,headcount,class_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "INSERT INTO class (category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_STMT =
-            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,limit,price,intro,class_name,headcount,class_status FROM class order by class_id";
+            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class order by class_id";
     private static final String GET_ONE_STMT =
-            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,limit,price,intro,class_name,headcount,class_status FROM class where class_id = ?";
+            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class where class_id = ?";
     private static final String DELETE =
             "DELETE FROM class where class_id = ?";
     private static final String UPDATE =
-            "UPDATE class_id set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
+            "UPDATE class_id set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,class_limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
     private static final String GET_DATE_STMT =
-            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,limit,price,intro,class_name,headcount,class_status FROM class where class_date = ?";
+            "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class where class_date = ?";
 
     @Override
     public void insert(ClassVO classVO) {
@@ -47,7 +47,7 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.setDate(4, classVO.getClassDate());
             pstmt.setInt(5, classVO.getClassSeq());
             pstmt.setBytes(6, classVO.getClassPic());
-            pstmt.setInt(7, classVO.getLimit());
+            pstmt.setInt(7, classVO.getClassLimit());
             pstmt.setInt(8, classVO.getPrice());
             pstmt.setString(9, classVO.getIntro());
             pstmt.setString(10, classVO.getClassName());
@@ -97,7 +97,7 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.setDate(4, classVO.getClassDate());
             pstmt.setInt(5, classVO.getClassSeq());
             pstmt.setBytes(6, classVO.getClassPic());
-            pstmt.setInt(7, classVO.getLimit());
+            pstmt.setInt(7, classVO.getClassLimit());
             pstmt.setInt(8, classVO.getPrice());
             pstmt.setString(9, classVO.getIntro());
             pstmt.setString(10, classVO.getClassName());
@@ -195,7 +195,7 @@ public class ClassDAOImpl implements ClassDAO{
                 classVO.setClassDate(rs.getDate("class_date"));
                 classVO.setClassSeq(rs.getInt("class_seq"));
                 classVO.setClassPic(rs.getBytes("class_pic"));
-                classVO.setLimit(rs.getInt("limit"));
+                classVO.setClassLimit(rs.getInt("class_limit"));
                 classVO.setPrice(rs.getInt("price"));
                 classVO.setIntro(rs.getString("intro"));
                 classVO.setClassName(rs.getString("class_name"));
@@ -260,7 +260,7 @@ public class ClassDAOImpl implements ClassDAO{
                 classVO.setClassDate(rs.getDate("class_date"));
                 classVO.setClassSeq(rs.getInt("class_seq"));
                 classVO.setClassPic(rs.getBytes("class_pic"));
-                classVO.setLimit(rs.getInt("limit"));
+                classVO.setClassLimit(rs.getInt("class_limit"));
                 classVO.setPrice(rs.getInt("price"));
                 classVO.setIntro(rs.getString("intro"));
                 classVO.setClassName(rs.getString("class_name"));
@@ -316,7 +316,7 @@ public class ClassDAOImpl implements ClassDAO{
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                // empVO 也稱為 Domain objects
+
                 classVO = new ClassVO();
                 classVO.setClassId(rs.getInt("class_id"));
                 classVO.setCategory(rs.getInt("category"));
@@ -325,7 +325,7 @@ public class ClassDAOImpl implements ClassDAO{
                 classVO.setClassDate(rs.getDate("class_date"));
                 classVO.setClassSeq(rs.getInt("class_seq"));
                 classVO.setClassPic(rs.getBytes("class_pic"));
-                classVO.setLimit(rs.getInt("limit"));
+                classVO.setClassLimit(rs.getInt("class_limit"));
                 classVO.setPrice(rs.getInt("price"));
                 classVO.setIntro(rs.getString("intro"));
                 classVO.setClassName(rs.getString("class_name"));

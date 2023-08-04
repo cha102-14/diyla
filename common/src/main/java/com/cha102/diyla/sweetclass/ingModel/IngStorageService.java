@@ -2,6 +2,9 @@ package com.cha102.diyla.sweetclass.ingModel;
 import java.util.*;
 public class IngStorageService {
     private IngStorageDAO ingStorageDAO;
+    public IngStorageService(){
+        ingStorageDAO = new IngStorageDAOImpl();
+    }
 
     public IngStorageVO addIngStorage (String brand, String ingName, Integer ingNums, Integer status, Integer servingSize) {
         IngStorageVO ingStorageVO = new IngStorageVO();
