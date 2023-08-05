@@ -41,46 +41,27 @@
         </h2>
       </div>
       <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="${ctxPath}/images/1.jpg" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $200
+        <c:forEach items="${commodityList}" var="commodity"  >
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="box">
+              <a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">
+                <div class="img-box">
+                  <img src="${commodity.showPic}" alt="">
+                </div>
+                <div class="detail-box">
+                  <h6>
+                    ${commodity.comName}
+                  </h6>
+                  <h6>
+                    <span>
+                        NT$${commodity.comPri}元
                   </span>
-                </h6>
-              </div>
-            </a>
+                  </h6>
+                </div>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="box">
-            <a href="">
-              <div class="img-box">
-                <img src="../images/2.jpg" alt="">
-              </div>
-              <div class="detail-box">
-                <h6>
-                  Ring
-                </h6>
-                <h6>
-                  Price
-                  <span>
-                    $200
-                  </span>
-                </h6>
-              </div>
-            </a>
-          </div>
-        </div>
+        </c:forEach>
       </div>
     </div>
   </section>

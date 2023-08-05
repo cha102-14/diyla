@@ -23,7 +23,7 @@
         <c:forEach items="${commodityList}" var="commodity"  >
             <tr>
                 <td>${classNameMap[commodity.comClassNo]}</td>
-                <td>${commodity.comNAME}</td>
+                <td><a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">${commodity.comName}</a></td>
                 <td>${commodity.comPri}</td>
                 <td>${commodity.comQua}</td>
                 <td>${commodityState[commodity.comState]}</td>

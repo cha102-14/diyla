@@ -353,7 +353,9 @@ a:focus {
 }
 
 .shop_section .box a {
-  color: #000000;
+  color: #B26021;
+  font-weight: bold;
+  font-family: "jf open 粉圓 1.1"
 }
 
 .shop_section .box .img-box {

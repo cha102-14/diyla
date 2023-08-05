@@ -61,6 +61,7 @@ public class CommodityDaoImpl implements CommodityDao {
                 buildCommodityVO(commodity, rs);
                 commodities.add(commodity);
             }
+            rs.close();
             return commodities;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,6 +80,7 @@ public class CommodityDaoImpl implements CommodityDao {
             if (rs.next()) {
                 CommodityVO commodity = new CommodityVO();
                 buildCommodityVO(commodity, rs);
+                rs.close();
                 return commodity;
             }
         } catch (SQLException e) {

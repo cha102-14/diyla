@@ -57,6 +57,7 @@ public class CommodityClassDaoImpl implements CommodityClassDao {
                 buildCommodityClass(commodityClass, resultSet);
                 commodityClasses.add(commodityClass);
             }
+            resultSet.close();
             return commodityClasses;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,6 +75,7 @@ public class CommodityClassDaoImpl implements CommodityClassDao {
             if (resultSet.next()) {
                 CommodityClassVO commodityClassVO = new CommodityClassVO();
                 buildCommodityClass(commodityClassVO,resultSet);
+                resultSet.close();
                 return commodityClassVO;
             }
         } catch (SQLException e) {

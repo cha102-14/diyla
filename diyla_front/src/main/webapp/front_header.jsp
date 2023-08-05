@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="shop/shop.jsp">
+                        <a class="nav-link" href="${ctxPath}/shop/CommodityController?action=listAll">
                             商店
                         </a>
                     </li>
