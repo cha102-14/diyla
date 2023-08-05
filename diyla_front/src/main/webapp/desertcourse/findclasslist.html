@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甜點課程</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+<h2>甜點課程</h2>
+<div id= "courseContainer">
+</div>
+
+</body>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getDesertCourse',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                var courseContainer = $('#courseContainer');
+                data.forEach(function(course) {
+                    var courseHtml = '<div>';
+                    courseHtml += '<img src="data:image/jpeg;base64,' + course.base64Img + '" alt="' + course.courseName + '">';
+                    courseHtml += '<h3>' + course.courseName + '</h3>';
+                    courseHtml += '<p>' + course.courseDate + '</p>';
+                    courseHtml += '<p>' + course.courseIntro + '</p>';
+                    // Add more course information as needed
+                    courseHtml += '</div>';
+                    courseContainer.append(courseHtml);
+                });
+            },
+            error: function() {
+                console.log('Error fetching course data');
+            }
+        });
+    });
+</script>
+
+</html>
