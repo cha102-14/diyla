@@ -1,5 +1,6 @@
 package com.cha102.diyla.commodityClassModel;
 
+
 import java.util.List;
 
 public class CommodityClassService {
@@ -12,4 +13,7 @@ public class CommodityClassService {
         return dao.getAll();
     }
 
+    public CommodityClassVO findById(Integer comClassNo) {
+        return dao.findByID(comClassNo);
+    }
 }

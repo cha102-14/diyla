@@ -24,6 +24,14 @@ public class CommodityService {
         return commodityVO;
     }
 
+    public List<CommodityVO> findByNameKeyword(String keyword) {
+        List<CommodityVO> commodityVOS = dao.findByNameKeyword(keyword);
+        for (CommodityVO commodityVO : commodityVOS) {
+            setShowPic(commodityVO);
+        }
+        return commodityVOS;
+    }
+
     private static void setShowPic(CommodityVO commodityVO) {
         commodityVO.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(commodityVO.getComPic()));
     }

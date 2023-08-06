@@ -10,5 +10,7 @@ public interface CommodityDao {
 
     CommodityVO findByID(Integer comNO);
 
+    List<CommodityVO> findByNameKeyword(String nameKeyword);
+
 
 }

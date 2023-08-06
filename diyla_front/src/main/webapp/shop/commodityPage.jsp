@@ -39,22 +39,27 @@
     </div>
 
     <div class="commodityPage">
-				<span class="commodityDescription">
-					<label>商品名稱：</label>
-					<span>${commodity.comName}</span>
-					<br>
-					<label>商品類別：</label>
-					<span>${classNameMap[commodity.comClassNo]}</span>
-					<br>
-					<label>商品描述：</label>
-					<span>${commodity.comDes}</span> <br>
-					<br>
-					<label>價格：</label><span id="price">${commodity.comPri}元</span>
-					<br>
+        <label>商品名稱：</label>
+        <span>${commodity.comName}</span>
+        <br>
+        <label>商品類別：</label>
+        <span>${comClassName.comClassName}</span>
+        <br>
+        <label>商品描述：</label>
+        <span>${commodity.comDes}</span> <br>
+        <br>
+        <label>價格：</label><span id="price">${commodity.comPri}元</span>
+        <br>
+        <form action="" method="post" enctype="application/x-www-form-urlencoded" id="addCart">
+            <input type="text" value="${commodity.comNO}" hidden="hidden">
+            <label style="font-size: 18px">請輸入購買數量：</label><span id="amount_value" style="font-size: 18px">1</span>
+            <input name="amount" type="range" min="1" max="99" value="1" id="amount">
+        </form>
 
-					<button type="submit" class="button">加入購物車</button>
-                    <button type="submit" class="button">加入追蹤</button>
-                </span>
+        <button type="submit" class="button" form="addCart">加入購物車</button>
+        <button type="submit" class="button">加入追蹤</button>
+
+
     </div>
 </div>
 
@@ -66,6 +71,15 @@
 <script src="../js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="../js/custom.js"></script>
-
+<script>
+    $(document).ready(function () {
+        $('#amount').mousemove(function () {
+            $('#amount_value').html($('#amount').val());
+        });
+        $('#amount').change(function () {
+            $('#amount_value').html($('#amount').val());
+        });
+    });
+</script>
 </body>
 </html>
