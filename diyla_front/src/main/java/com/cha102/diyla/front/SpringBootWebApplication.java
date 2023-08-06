@@ -1,4 +1,4 @@
-package com;
+package com.cha102.diyla.front;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
