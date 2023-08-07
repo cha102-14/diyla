@@ -27,6 +27,7 @@ public class CommodityDaoImpl implements CommodityDao {
     public static final String INSERT_SQL = "INSERT INTO COMMODITY (COM_CLASS_NO,COM_NAME,COM_PIC,COM_DES,COM_PRI,COM_QUA,COM_STATE) VALUES (?,?,?,?,?,?,?);";
     public static final String FIND_BY_ID = "SELECT * FROM COMMODITY where COM_NO = ?";
     public static final String FIND_BY_NAME_KEYWORD = "SELECT * FROM COMMODITY WHERE COM_NAME LIKE ? ";
+    public static final String FIND_BY_COM_CLASS_NO = "SELECT * FROM commodity WHERE COM_CLASS_NO = ?";
 
     public int insert(CommodityVO commodity) {
         try (Connection conn = ds.getConnection();
@@ -70,10 +71,8 @@ public class CommodityDaoImpl implements CommodityDao {
         return null;
     }
 
-
     @Override
     public CommodityVO findByID(Integer comNO) {
-
         try (Connection connection = ds.getConnection();
              PreparedStatement pstt = connection.prepareStatement(FIND_BY_ID)) {
             pstt.setInt(1, comNO);
@@ -89,20 +88,6 @@ public class CommodityDaoImpl implements CommodityDao {
         }
 
         return null;
-    }
-
-    private static void buildCommodityVO(CommodityVO commodity, ResultSet rs) throws SQLException {
-        commodity.setComNO(rs.getInt(1));
-        commodity.setComClassNo(rs.getInt(2));
-        commodity.setComName(rs.getString(3));
-        commodity.setComPic(rs.getBytes(4));
-        commodity.setComDes(rs.getString(5));
-        commodity.setComPri(rs.getInt(6));
-        commodity.setComQua(rs.getInt(7));
-        commodity.setComState(rs.getInt(8));
-        commodity.setCommentTotal(rs.getInt(9));
-        commodity.setRatingSum(rs.getInt(10));
-        commodity.setUpdateTime(rs.getTimestamp(11));
     }
 
     @Override
@@ -125,5 +110,40 @@ public class CommodityDaoImpl implements CommodityDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<CommodityVO> findByComClass(Integer comClassNO) {
+        try (Connection connection = ds.getConnection();
+             PreparedStatement pstt = connection.prepareStatement(FIND_BY_COM_CLASS_NO)) {
+            pstt.setInt(1, comClassNO);
+            ResultSet rs = pstt.executeQuery();
+            List<CommodityVO> commodityVOS = new ArrayList<>();
+            while (rs.next()) {
+                CommodityVO commodityVO = new CommodityVO();
+                buildCommodityVO(commodityVO,rs);
+                commodityVOS.add(commodityVO);
+            }
+            rs.close();
+            return commodityVOS;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static void buildCommodityVO(CommodityVO commodity, ResultSet rs) throws SQLException {
+        commodity.setComNO(rs.getInt(1));
+        commodity.setComClassNo(rs.getInt(2));
+        commodity.setComName(rs.getString(3));
+        commodity.setComPic(rs.getBytes(4));
+        commodity.setComDes(rs.getString(5));
+        commodity.setComPri(rs.getInt(6));
+        commodity.setComQua(rs.getInt(7));
+        commodity.setComState(rs.getInt(8));
+        commodity.setCommentTotal(rs.getInt(9));
+        commodity.setRatingSum(rs.getInt(10));
+        commodity.setUpdateTime(rs.getTimestamp(11));
     }
 }

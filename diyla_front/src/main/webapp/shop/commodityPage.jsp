@@ -43,7 +43,7 @@
         <span>${commodity.comName}</span>
         <br>
         <label>商品類別：</label>
-        <span>${comClassName.comClassName}</span>
+        <span>${classNameMap[commodity.comClassNo]}</span>
         <br>
         <label>商品描述：</label>
         <span>${commodity.comDes}</span> <br>

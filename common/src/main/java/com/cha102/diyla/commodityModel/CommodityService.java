@@ -32,6 +32,14 @@ public class CommodityService {
         return commodityVOS;
     }
 
+    public List<CommodityVO> findByComClass(Integer comClassNO) {
+        List<CommodityVO> commodityVOS = dao.findByComClass(comClassNO);
+        for (CommodityVO commodityVO : commodityVOS) {
+            setShowPic(commodityVO);
+        }
+        return commodityVOS;
+    }
+
     private static void setShowPic(CommodityVO commodityVO) {
         commodityVO.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(commodityVO.getComPic()));
     }

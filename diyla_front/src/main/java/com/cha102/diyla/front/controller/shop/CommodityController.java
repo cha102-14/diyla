@@ -1,7 +1,6 @@
 package com.cha102.diyla.front.controller.shop;
 
 import com.cha102.diyla.commodityClassModel.CommodityClassService;
-import com.cha102.diyla.commodityClassModel.CommodityClassVO;
 import com.cha102.diyla.commodityModel.CommodityService;
 import com.cha102.diyla.commodityModel.CommodityVO;
 
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 @WebServlet("/shop/CommodityController")
@@ -28,13 +26,6 @@ public class CommodityController extends HttpServlet {
 
         if ("listAll".equals(action)) {
             List<CommodityVO> commodityVOS = service.getAll();
-            List<CommodityClassVO> commodityClasses = classService.getAll();
-            HashMap<Integer, String> classNameMap = new HashMap<>();
-            for (CommodityClassVO commodityClassVO : commodityClasses) {
-                //將類別編號當key，類別名稱當Value放進HashMap中
-                classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
-            }
-            req.setAttribute("classNameMap", classNameMap);
             req.setAttribute("commodityList", commodityVOS);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
             requestDispatcher.forward(req, resp);
@@ -43,8 +34,6 @@ public class CommodityController extends HttpServlet {
         if ("findByID".equals(action)) {
             Integer comNO = Integer.valueOf(req.getParameter("comNO"));
             CommodityVO commodityVO = service.findByID(comNO);
-            CommodityClassVO commodityClassVO = classService.findById(commodityVO.getComClassNo());
-            req.setAttribute("comClassName",commodityClassVO);
             req.setAttribute("commodity", commodityVO);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
             requestDispatcher.forward(req, resp);
@@ -57,6 +46,16 @@ public class CommodityController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
             requestDispatcher.forward(req, resp);
         }
+
+        if ("findByClassNO".equals(action)) {
+            Integer comClassNO = Integer.valueOf(req.getParameter("comClassNo"));
+            List<CommodityVO> commodityVOS = service.findByComClass(comClassNO);
+            req.setAttribute("commodityList", commodityVOS);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+
     }
 }
 
