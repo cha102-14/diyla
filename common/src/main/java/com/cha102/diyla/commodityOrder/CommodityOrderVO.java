@@ -3,7 +3,7 @@ package com.cha102.diyla.commodityOrder;
 import java.sql.Timestamp;
 
 public class CommodityOrderVO {
-	private Integer opderNO;
+	private Integer orderNO;
 	private Integer memId;
 	private Timestamp orderTime;
 	private Integer orderStatus;
@@ -12,12 +12,12 @@ public class CommodityOrderVO {
 	private Integer actualPrice;
 	private Timestamp updateTime;
 
-	public Integer getOpderNO() {
-		return opderNO;
+	public Integer getOrderNO() {
+		return orderNO;
 	}
 
-	public void setOpderNO(Integer opderNO) {
-		this.opderNO = opderNO;
+	public void setOrderNO(Integer opderNO) {
+		this.orderNO = opderNO;
 	}
 
 	public Integer getMemId() {
@@ -79,7 +79,7 @@ public class CommodityOrderVO {
 	public CommodityOrderVO(Integer opderNO, Integer memId, Timestamp orderTime, Integer orderStatus,
 			Integer orderPrice, Integer discountPrice, Integer actualPrice, Timestamp updateTime) {
 		super();
-		this.opderNO = opderNO;
+		this.orderNO = opderNO;
 		this.memId = memId;
 		this.orderTime = orderTime;
 		this.orderStatus = orderStatus;
