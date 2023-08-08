@@ -1,6 +1,5 @@
 package com.cha102.diyla.front.controller.shop;
 
-import com.cha102.diyla.commodityClassModel.CommodityClassService;
 import com.cha102.diyla.commodityModel.CommodityService;
 import com.cha102.diyla.commodityModel.CommodityVO;
 
@@ -15,17 +14,16 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/shop/CommodityController")
-@MultipartConfig(fileSizeThreshold = 0, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class CommodityController extends HttpServlet {
     CommodityService service = new CommodityService();
-    CommodityClassService classService = new CommodityClassService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
 
         if ("listAll".equals(action)) {
-            List<CommodityVO> commodityVOS = service.getAll();
+            List<CommodityVO> commodityVOS = service.getAllState();
             req.setAttribute("commodityList", commodityVOS);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
             requestDispatcher.forward(req, resp);
@@ -34,9 +32,16 @@ public class CommodityController extends HttpServlet {
         if ("findByID".equals(action)) {
             Integer comNO = Integer.valueOf(req.getParameter("comNO"));
             CommodityVO commodityVO = service.findByID(comNO);
-            req.setAttribute("commodity", commodityVO);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
-            requestDispatcher.forward(req, resp);
+            RequestDispatcher requestDispatcher ;
+            if (commodityVO != null && !commodityVO.getComState().equals(0)) {
+                req.setAttribute("commodity", commodityVO);
+                requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
+                requestDispatcher.forward(req, resp);
+            } else {
+                requestDispatcher = req.getRequestDispatcher("/shop/commodityNotFound.jsp");
+                requestDispatcher.forward(req, resp);
+            }
+
         }
 
         if ("search".equals(action)) {

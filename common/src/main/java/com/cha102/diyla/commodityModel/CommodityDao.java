@@ -14,5 +14,7 @@ public interface CommodityDao {
 
     List<CommodityVO> findByComClass(Integer comClassNO);
 
+    List<CommodityVO> getAllState();
+
 
 }

@@ -50,8 +50,9 @@
         <br>
         <label>價格：</label><span id="price">${commodity.comPri}元</span>
         <br>
-        <form action="" method="post" enctype="application/x-www-form-urlencoded" id="addCart">
-            <input type="text" value="${commodity.comNO}" hidden="hidden">
+        <form action="ShoppingCartServlet" method="post" enctype="application/x-www-form-urlencoded" id="addCart">
+            <input type="hidden" name="action" value="addItem">
+            <input type="text" value="${commodity.comNO}" hidden="hidden" name ="comNo">
             <label style="font-size: 18px">請輸入購買數量：</label><span id="amount_value" style="font-size: 18px">1</span>
             <input name="amount" type="range" min="1" max="99" value="1" id="amount">
         </form>

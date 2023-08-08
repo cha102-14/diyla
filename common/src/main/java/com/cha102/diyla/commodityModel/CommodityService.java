@@ -18,6 +18,14 @@ public class CommodityService {
         return commodityVOS;
     }
 
+    public List<CommodityVO> getAllState() {
+        List<CommodityVO> commodityVOS = dao.getAllState();
+        for (CommodityVO commodityVO : commodityVOS) {
+            setShowPic(commodityVO);
+        }
+        return commodityVOS;
+    }
+
     public CommodityVO findByID(Integer comNO) {
         CommodityVO commodityVO = dao.findByID(comNO);
         setShowPic(commodityVO);

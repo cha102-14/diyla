@@ -27,7 +27,9 @@ public class CommodityDaoImpl implements CommodityDao {
     public static final String INSERT_SQL = "INSERT INTO COMMODITY (COM_CLASS_NO,COM_NAME,COM_PIC,COM_DES,COM_PRI,COM_QUA,COM_STATE) VALUES (?,?,?,?,?,?,?);";
     public static final String FIND_BY_ID = "SELECT * FROM COMMODITY where COM_NO = ?";
     public static final String FIND_BY_NAME_KEYWORD = "SELECT * FROM COMMODITY WHERE COM_NAME LIKE ? ";
-    public static final String FIND_BY_COM_CLASS_NO = "SELECT * FROM commodity WHERE COM_CLASS_NO = ?";
+    public static final String FIND_BY_COM_CLASS_NO = "SELECT * FROM COMMODITY WHERE COM_CLASS_NO = ? and COM_STATE != 0";
+    public static final String GET_ALL_STATE = "SELECT * FROM COMMODITY WHERE COM_STATE != 0";
+    public static final String GET_ONE_STATE = "SELECT * FROM COMMODITY where COM_NO = ? and COM_STATE != 0";
 
     public int insert(CommodityVO commodity) {
         try (Connection conn = ds.getConnection();
@@ -130,6 +132,25 @@ public class CommodityDaoImpl implements CommodityDao {
             e.printStackTrace();
         }
 
+        return null;
+    }
+
+    @Override
+    public List<CommodityVO> getAllState() {
+        List<CommodityVO> commodities = new ArrayList<>();
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(GET_ALL_STATE)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CommodityVO commodity = new CommodityVO();
+                buildCommodityVO(commodity, rs);
+                commodities.add(commodity);
+            }
+            rs.close();
+            return commodities;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
