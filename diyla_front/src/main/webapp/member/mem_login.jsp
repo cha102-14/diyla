@@ -149,30 +149,7 @@
 <body>
 
 	<jsp:include page="../front_header.jsp"/>
-<<<<<<< HEAD
-	<h4>會員登入</h4>
-	<div>
-    <c:if test="${not empty exMsgs}">
-        <div style="color:red">
-        <c:forEach var="message" items="${exMsgs}">
-        ${message}
-        </c:forEach>
-        </div>
-    </c:if>
-	<form method="post" action="login">
-		<label>請輸入帳號：</label>
-		<input type="email" name="user" placeholder="請輸入信箱"><br>
-		<label>請輸入密碼：</label>
-		<input type="password" name="password" placeholder="請輸入6-12字(含英數字)"><br>
-		<button type="submit" value="login">登入</button>
-		<button type="button">前往註冊</button><br>
-		<a href="">忘記密碼
 
-	</form>
-    </div>
-
-	<jsp:include page="../front_footer.jsp"/>
-=======
     <div class="title">
         <h4>會員登入</h4>
         <c:if test="${not empty exMsgs}">
@@ -206,6 +183,6 @@
 
 
 
->>>>>>> member
+
 </body>
 </html>
