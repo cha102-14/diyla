@@ -4,11 +4,13 @@ import java.util.List;
 
 public interface MemDAO_interface {
 	
-	public void insert(MemVo memVo);
+	public void insert(MemVO memVo);
 	public void delete(Integer mem_id);
-	public void update(MemVo memvo);
-	public MemVo findByPrimaryKey(Integer mem_id);
-	public List<MemVo> getAll();
+	public void update(MemVO memvo);
+	public MemVO findByPrimaryKey(Integer mem_id);
+	public List<MemVO> getAll();
+
+	public MemVO selectLogin(String memEmail,String memPassword);
 	
 	
 }

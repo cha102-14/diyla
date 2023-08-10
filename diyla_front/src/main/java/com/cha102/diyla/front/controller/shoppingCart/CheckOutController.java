@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.cha102.diyla.commodityModel.CommodityService;
-import com.cha102.diyla.member.MemVo;
+import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.shoppongcart.ShoppingCartService;
 import com.cha102.diyla.shoppongcart.ShoppingCartVO;
 
@@ -27,7 +27,7 @@ public class CheckOutController extends HttpServlet {
 		 HttpSession session = req.getSession();
 		 List<ShoppingCartVO> shoppingCartList = (ArrayList<ShoppingCartVO>) session.getAttribute("shoppingCartList");
 		 String action = req.getParameter("action");
-		 MemVo memVo=null;
+		 MemVO memVo=null;
 		 if("checkout".equals(action)) {
 			 
 		 }
