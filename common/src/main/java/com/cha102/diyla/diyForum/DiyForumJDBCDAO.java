@@ -1,5 +1,7 @@
 package com.cha102.diyla.diyForum;
 
+import com.cha102.diyla.util.PageBean;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,11 +19,13 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 
 	private static final String INSERT_STMT = "INSERT INTO diy_forum (MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA) VALUES ( ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum order by ARTI_NO";
+
+	private static final String GET_ALL_STMT_BY_DIY_NO = "SELECT ARTI_NO,df.MEM_ID as MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA,mem.MEM_NAME as MEM_NAME FROM diy_forum df left join member mem on df.MEM_ID = mem.MEM_ID where DIY_NO = ? order by ARTI_NO";
 	private static final String GET_ONE_STMT = "SELECT ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum where ARTI_NO = ?";
 	private static final String DELETE = "DELETE FROM diy_forum where ARTI_NO = ?";
 	private static final String UPDATE = "UPDATE diy_forum set MEM_ID = ?,DIY_NO =?,ARTI_CONT =?,DIY_GRA =? where ARTI_NO = ?";
 
-// 新增	
+// 新增
 	@Override
 	public void insert(DiyForumVO DiyForumVO) {
 		Connection con = null;
@@ -278,20 +282,26 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 		return list;
 	}
 
+	@Override
+	public PageBean getAll(Integer diyNo, String commentSort, String starSort, PageBean pageBean) {
+
+		return null;
+	}
+
 	public static void main(String[] args) {
 
 		DiyForumJDBCDAO dao = new DiyForumJDBCDAO();
 
 		DiyForumVO DFVO = new DiyForumVO();
 
-// 新增		
+// 新增
 //		DFVO.setMemId(2);
 //		DFVO.setDiyNo(2);
 //		DFVO.setArtiCont("測試測試測試測試測試測試測試測試測試測試測試測試");
 //		DFVO.setDiyGrade(3);
-//		
+//
 //		dao.insert(DFVO);
-//		
+//
 //		System.out.println("新增成功");
 
 		/* ========================================================================== */
@@ -309,14 +319,14 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 //		DFVO.setArtiCont("歐齁歐齁歐齁歐齁");
 //		DFVO.setDiyGrade(5);
 //		DFVO.setArtiNo(7);
-//		
+//
 //		dao.update(DFVO);
 //		System.out.println("修改成功");
 
 		/* ========================================================================== */
 
-// 查詢一筆		
-//		ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum where ARTI_NO = 
+// 查詢一筆
+//		ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum where ARTI_NO =
 //
 //		DiyForumVO DFVO1 = dao.findByPrimaryKey(5);
 //		System.out.println(DFVO1.getArtiNo()+"|"+DFVO1.getMemId()
@@ -326,7 +336,7 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 
 		/* ========================================================================== */
 
-// 查詢多筆	
+// 查詢多筆
 		List<DiyForumVO> list = dao.getAll();
 		for (DiyForumVO a : list) {
 			System.out.println(a.getArtiNo() + "|" + a.getMemId() + "|" + a.getDiyNo() + "|" + a.getArtiCont() + "|"
