@@ -14,7 +14,8 @@
 
 <body>
 <h2>甜點課程</h2>
-<div id = "courseCatContainer" class="scrollMenu"></div>
+<div id = "courseCatContainer" class="scrollMenu">
+    <span class="categorySpan" data-category="-1">全部</span></div>
 <div id= "courseContainer"></div>
 
 </body>
@@ -33,7 +34,7 @@
                 data.forEach(function(course) {
                     var courseHtml = '<div class=' + course.courseCat +'>';
                     courseHtml += '<img src="data:image/jpeg;base64,' + course.coursePic + '" alt="' + course.courseName + '">';
-                    courseHtml += '<h3>' + course.courseName + '</h3>';
+                    courseHtml += '<h3 class="courseName" data-courseId="' + String(course.courseId) + '">' + course.courseName + '</h3>';
                     courseHtml += '<p>' + course.courseDate + '</p>';
                     courseHtml += '<p>' + course.courseIntro + '</p>';
                     courseHtml += '</div>';
@@ -67,6 +68,10 @@
         var category = $(this).data('category');
         loadCourses(category);
     });
+    });
+        $('#courseContainer').on('click', '.courseName', function(){
+        var courseId = $(this).data('courseid');
+        window.location.href = 'classdetail.jsp?id=' + courseId;
     });
 </script>
 </html>

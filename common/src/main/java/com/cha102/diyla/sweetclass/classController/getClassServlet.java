@@ -32,6 +32,7 @@ public class getClassServlet extends HttpServlet {
             jsonCourse.put("courseName", courses.getClassName());
             jsonCourse.put("courseDate", courses.getClassDate().toString());
             jsonCourse.put("courseIntro", courses.getIntro());
+            jsonCourse.put("courseId", courses.getClassId());
             // Add more course information as needed
             jsonArray.put(jsonCourse);
             } else if (courses.getCategory() == categoryId) {
@@ -40,6 +41,7 @@ public class getClassServlet extends HttpServlet {
                 jsonCourse.put("courseName", courses.getClassName());
                 jsonCourse.put("courseDate", courses.getClassDate().toString());
                 jsonCourse.put("courseIntro", courses.getIntro());
+                jsonCourse.put("courseId", courses.getClassId());
                 // Add more course information as needed
                 jsonArray.put(jsonCourse);
             }

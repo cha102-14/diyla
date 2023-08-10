@@ -75,7 +75,7 @@ public class ClassService {
         resDAO.insert(classReserveVO);
         return classReserveVO;
     }
-    public ClassReserveVO updateReserve(Integer classID, Integer memID, Integer headcount, Integer status, Timestamp createTime, Integer totalPrice){
+    public ClassReserveVO updateReserve(Integer classID, Integer memID, Integer headcount, Integer status, Timestamp createTime, Integer totalPrice, Integer reserveID){
         ClassReserveVO classReserveVO = new ClassReserveVO();
         classReserveVO.setClassId(classID);
         classReserveVO.setMemId(memID);
@@ -83,11 +83,17 @@ public class ClassService {
         classReserveVO.setStatus(status);
         classReserveVO.setCreateTime(createTime);
         classReserveVO.setTotalPrice(totalPrice);
+        classReserveVO.setReserveId(reserveID);
         resDAO.update(classReserveVO);
         return classReserveVO;
     }
     public void delReserve(Integer resID){
         resDAO.delete(resID);
+    }
+    public void updateReserveStatus(Integer resID, Integer status) {
+        ClassReserveVO classReserveVO = resDAO.findByPrimaryKey(resID);
+        classReserveVO.setStatus(status);
+        resDAO.update(classReserveVO);
     }
     public ClassReserveVO getOneReserve(Integer resID) {
         return resDAO.findByPrimaryKey(resID);

@@ -1,11 +1,15 @@
 package com.cha102.diyla.sweetclass.classModel;
 
-import java.util.*;
-import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClassReserveDAOImpl implements ClassReserveDAO {
     private static DataSource ds = null;
@@ -26,7 +30,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
     private static final String DELETE =
             "DELETE FROM class_reserve where reserve_id = ?";
     private static final String UPDATE =
-            "UPDATE reserve_id set class_id=?,mem_id=?,headcount=?,status=?,create_time=?,total_price=? where reserve_id = ?";
+            "UPDATE class_reserve set class_id=?,mem_id=?,headcount=?,status=?,create_time=?,total_price=? where reserve_id = ?";
     @Override
     public void insert(ClassReserveVO classReserveVO) {
         Connection con = null;
@@ -43,6 +47,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             pstmt.setInt(4, classReserveVO.getStatus());
             pstmt.setTimestamp(5, classReserveVO.getCreateTime());
             pstmt.setInt(6, classReserveVO.getTotalPrice());
+            pstmt.setInt(7, classReserveVO.getReserveId());
 
             pstmt.executeUpdate();
 
@@ -85,6 +90,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             pstmt.setInt(4, classReserveVO.getStatus());
             pstmt.setTimestamp(5, classReserveVO.getCreateTime());
             pstmt.setInt(6, classReserveVO.getTotalPrice());
+            pstmt.setInt(7, classReserveVO.getReserveId());
 
             pstmt.executeUpdate();
 
