@@ -2,6 +2,7 @@ package com.cha102.diyla.diyOrder;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.sql.Date;
 
 public class DiyOrderVO implements Serializable {
 	
@@ -9,13 +10,13 @@ public class DiyOrderVO implements Serializable {
     private Integer memId;
     private Integer diyNo;
     private String contactPerson;
-    private String articleContent;
+    private String contactPhone;
     private Integer reservationNum;
     private Integer diyPeriod;
-    private java.sql.Date diyReserveDate;
+    private Date diyReserveDate;
     private Timestamp createTime;
-    private Byte reservationStatus;
-    private Byte paymentStatus;
+    private Integer reservationStatus;
+    private Integer paymentStatus;
     private Integer diyPrice;
     
     // 無參數
@@ -25,14 +26,14 @@ public class DiyOrderVO implements Serializable {
     
     // 帶參數的
     public DiyOrderVO(Integer diyOrderNo, Integer memId, Integer diyNo, String contactPerson,
-                      String articleContent, Integer reservationNum, Integer diyPeriod,
-                      java.sql.Date diyReserveDate, Timestamp createTime, Byte reservationStatus,
-                      Byte paymentStatus, Integer diyPrice) {
+                      String contactPhone, Integer reservationNum, Integer diyPeriod,
+                      Date diyReserveDate, Timestamp createTime, Integer reservationStatus,
+                      Integer paymentStatus, Integer diyPrice) {
         this.diyOrderNo = diyOrderNo;
         this.memId = memId;
         this.diyNo = diyNo;
         this.contactPerson = contactPerson;
-        this.articleContent = articleContent;
+        this.contactPhone = contactPhone;
         this.reservationNum = reservationNum;
         this.diyPeriod = diyPeriod;
         this.diyReserveDate = diyReserveDate;
@@ -67,11 +68,11 @@ public class DiyOrderVO implements Serializable {
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
     }
-    public String getArticleContent() {
-        return articleContent;
+    public String getContactPhone() {
+        return contactPhone;
     }
-    public void setArticleContent(String articleContent) {
-        this.articleContent = articleContent;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
     public Integer getReservationNum() {
         return reservationNum;
@@ -85,10 +86,10 @@ public class DiyOrderVO implements Serializable {
     public void setDiyPeriod(Integer diyPeriod) {
         this.diyPeriod = diyPeriod;
     }
-    public java.sql.Date getDiyReserveDate() {
+    public Date getDiyReserveDate() {
         return diyReserveDate;
     }
-    public void setDiyReserveDate(java.sql.Date diyReserveDate) {
+    public void setDiyReserveDate(Date diyReserveDate) {
         this.diyReserveDate = diyReserveDate;
     }
     public Timestamp getCreateTime() {
@@ -97,16 +98,16 @@ public class DiyOrderVO implements Serializable {
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
-    public Byte getReservationStatus() {
+    public Integer getReservationStatus() {
         return reservationStatus;
     }
-    public void setReservationStatus(Byte reservationStatus) {
+    public void setReservationStatus(Integer reservationStatus) {
         this.reservationStatus = reservationStatus;
     }
-    public Byte getPaymentStatus() {
+    public Integer getPaymentStatus() {
         return paymentStatus;
     }
-    public void setPaymentStatus(Byte paymentStatus) {
+    public void setPaymentStatus(Integer paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
     public Integer getDiyPrice() {
@@ -119,7 +120,7 @@ public class DiyOrderVO implements Serializable {
     @Override
     public String toString() {
         return "DiyOrderVO [diyOrderNo=" + diyOrderNo + ", memId=" + memId + ", diyNo=" + diyNo
-                + ", contactPerson=" + contactPerson + ", articleContent=" + articleContent
+                + ", contactPerson=" + contactPerson + ", contactPhone=" + contactPhone
                 + ", reservationNum=" + reservationNum + ", diyPeriod=" + diyPeriod
                 + ", diyReserveDate=" + diyReserveDate + ", createTime=" + createTime
                 + ", reservationStatus=" + reservationStatus + ", paymentStatus=" + paymentStatus

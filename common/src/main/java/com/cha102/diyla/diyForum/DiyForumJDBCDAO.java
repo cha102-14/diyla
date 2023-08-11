@@ -15,7 +15,7 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei";
 	String userid = "root";
-	String passwd = "Ee225025662";
+	String passwd = "12345678";
 
 	private static final String INSERT_STMT = "INSERT INTO diy_forum (MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA) VALUES ( ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT ARTI_NO,MEM_ID,DIY_NO,ARTI_CONT,DIY_GRA FROM diy_forum order by ARTI_NO";
@@ -294,7 +294,7 @@ public class DiyForumJDBCDAO implements DiyForumDAO_Interface {
 
 		DiyForumVO DFVO = new DiyForumVO();
 
-// 新增
+		// 新增
 //		DFVO.setMemId(2);
 //		DFVO.setDiyNo(2);
 //		DFVO.setArtiCont("測試測試測試測試測試測試測試測試測試測試測試測試");
