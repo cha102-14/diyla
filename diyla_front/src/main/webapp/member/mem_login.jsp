@@ -144,7 +144,7 @@
             color: #B26021;
         }
     </style>
->>>>>>> member
+
 </head>
 <body>
 
