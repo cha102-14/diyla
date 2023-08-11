@@ -1,17 +1,17 @@
 package com.cha102.diyla.diyOrder;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Timestamp;
+import java.util.Date;
 
-public class DiyOrderJDBCDAO implements DiyOrderDAO_interface {
-    private static final String driver = "com.mysql.cj.jdbc.Driver";
+public class DiyOrderDAO implements DiyOrderDAO_interface{
+	private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "12345678";
@@ -42,7 +42,7 @@ public class DiyOrderJDBCDAO implements DiyOrderDAO_interface {
             pstmt.setString(4, diyOrderVO.getContactPhone());
             pstmt.setInt(5, diyOrderVO.getReservationNum());
             pstmt.setInt(6, diyOrderVO.getDiyPeriod());
-            pstmt.setDate(7,  diyOrderVO.getDiyReserveDate());
+            pstmt.setDate(7, diyOrderVO.getDiyReserveDate());
 //            pstmt.setTimestamp(8, diyOrderVO.getCreateTime());
             pstmt.setInt(8, diyOrderVO.getReservationStatus());
             pstmt.setInt(9, diyOrderVO.getPaymentStatus());
@@ -305,61 +305,5 @@ public class DiyOrderJDBCDAO implements DiyOrderDAO_interface {
         }
 
         return list;
-    }
-
-    // 測試方法
-    public static void main(String[] args)throws Exception {
-        DiyOrderJDBCDAO dao = new DiyOrderJDBCDAO();
-
-        try {
-            // 新增
-//            DiyOrderVO diyOrderVO = new DiyOrderVO();
-//            diyOrderVO.setMemId(5);
-//            diyOrderVO.setDiyNo(2);
-//            diyOrderVO.setContactPerson("John Doe");
-//            diyOrderVO.setContactPhone("0978135768");
-//            diyOrderVO.setReservationNum(3);
-//            diyOrderVO.setDiyPeriod(2);
-//            diyOrderVO.setDiyReserveDate(Date.valueOf("2023-08-10"));
-//            diyOrderVO.setReservationStatus((byte) 1);
-//            diyOrderVO.setPaymentStatus((byte) 0);
-//            diyOrderVO.setDiyPrice(1500);
-//            dao.insert(diyOrderVO);
-//            System.out.println("新增成功");
-
-            // 修改
-//            DiyOrderVO diyOrderVO2 = new DiyOrderVO();
-//            diyOrderVO2.setDiyOrderNo(8);
-//            diyOrderVO2.setMemId(2);
-//            diyOrderVO2.setDiyNo(5);
-//            diyOrderVO2.setContactPerson("Jane Smith");
-//            diyOrderVO2.setContactPhone("0978666634");
-//            diyOrderVO2.setReservationNum(2);
-//            diyOrderVO2.setDiyPeriod(1);
-//            diyOrderVO2.setDiyReserveDate(Date.valueOf("2023-08-15"));
-//            diyOrderVO2.setCreateTime(new Timestamp(System.currentTimeMillis()));
-//            diyOrderVO2.setReservationStatus((byte) 2);
-//            diyOrderVO2.setPaymentStatus((byte) 1);
-//            diyOrderVO2.setDiyPrice(1800);
-//            dao.update(diyOrderVO2);
-//            System.out.println("修改成功");
-
-            // 刪除
-//            dao.delete(8);
-//            System.out.println("刪除成功");
-
-            // 查詢一筆
-//            DiyOrderVO diyOrderVO3 = dao.findByPrimaryKey(1);
-//            System.out.println(diyOrderVO3);
-//            System.out.println("---------------------");
-
-            // 查詢全部
-            List<DiyOrderVO> list = dao.getAll();
-            for (DiyOrderVO vo : list) {
-                System.out.println(vo);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
