@@ -33,6 +33,8 @@ public class LoginServlet extends HttpServlet {
         req.setAttribute("exMsgs",exMsgs);
         MemberService memVo = new MemberService();
         MemVO m = memVo.login(exMsgs,user,password);
+
+
         if (!exMsgs.isEmpty()){
             RequestDispatcher failure = req.getRequestDispatcher("/member/mem_login.jsp");
             failure.forward(req,res);
@@ -52,12 +54,5 @@ public class LoginServlet extends HttpServlet {
 
 //    登入後會有等待畫面或是登入成功畫面後再跳轉？
 //    忘記密碼
-//<<<<<<< HEAD
-//    驗證碼
 //    三次密碼錯誤要發驗證信
-//    記住我
-//=======
-////    三次密碼錯誤要發驗證信
-////    會員未驗證無法登入
-//>>>>>>> member
 }
