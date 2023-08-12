@@ -48,6 +48,10 @@ public class CommodityService {
         return commodityVOS;
     }
 
+    public void updateCommodity(CommodityVO commodity) {
+
+    }
+
     private static void setShowPic(CommodityVO commodityVO) {
         commodityVO.setShowPic("data:image/png;base64," + Base64.getEncoder().encodeToString(commodityVO.getComPic()));
     }

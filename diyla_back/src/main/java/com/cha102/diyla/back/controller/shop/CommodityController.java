@@ -22,14 +22,24 @@ import java.util.List;
 public class CommodityController extends HttpServlet {
     CommodityService service = new CommodityService();
     CommodityClassService classService = new CommodityClassService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        doPost(req, resp);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
+
         if ("insertPage".equals(action)) {
             List<CommodityClassVO> commodityClasses = classService.getAll(); // 取回所有商品類別
-            req.setAttribute("commodityClasses",commodityClasses); // 放到大中小的小
+            req.setAttribute("commodityClasses", commodityClasses); // 放到大中小的小
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/insertNewCommodity.jsp"); // 設定下個頁面路徑
-            requestDispatcher.forward(req, resp); // 轉導到下個頁面，並把請求跟回應一併交給
+            requestDispatcher.forward(req, res); // 轉導到下個頁面，並把請求跟回應一併交給
         }
 
         if ("listAll".equals(action)) {
@@ -40,28 +50,22 @@ public class CommodityController extends HttpServlet {
                 //將類別編號當key，類別名稱當Value放進HashMap中
                 classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
             }
-            req.setAttribute("classNameMap",classNameMap);
-            req.setAttribute("commodityList",commodityVOS);
+            req.setAttribute("classNameMap", classNameMap);
+            req.setAttribute("commodityList", commodityVOS);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
-            requestDispatcher.forward(req, resp);
+            requestDispatcher.forward(req, res);
         }
 
         if ("findByID".equals(action)) {
             Integer comNO = Integer.valueOf(req.getParameter("comNO"));
             CommodityVO commodityVO = service.findByID(comNO);
-            req.setAttribute("commodity",commodityVO);
+            req.setAttribute("commodity", commodityVO);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
-            requestDispatcher.forward(req,resp);
+            requestDispatcher.forward(req, res);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        String action = req.getParameter("action");
         if ("insertPage".equals(action)) {
             List<CommodityClassVO> commodityClasses = classService.getAll(); // 取回所有商品類別
-            req.setAttribute("commodityClasses",commodityClasses); // 放到大中小的小
+            req.setAttribute("commodityClasses", commodityClasses); // 放到大中小的小
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/insertNewCommodity.jsp"); // 設定下個頁面路徑
             requestDispatcher.forward(req, res); // 轉導到下個頁面，並把請求跟回應一併交給
         }
@@ -70,7 +74,7 @@ public class CommodityController extends HttpServlet {
         if ("insert".equals(action)) {
             Integer comClassNo = null;
             try {
-                 comClassNo = Integer.valueOf(req.getParameter("comClassNo"));
+                comClassNo = Integer.valueOf(req.getParameter("comClassNo"));
             } catch (NumberFormatException e) {
                 errMsg.put("comClassNo", "請選擇類別");
             }
@@ -80,7 +84,7 @@ public class CommodityController extends HttpServlet {
                 errMsg.put("commodityName", "名稱不得空白");
             }
             byte[] commodityPic = IOUtils.toByteArray(req.getPart("commodityPic").getInputStream());
-            if (commodityPic.length==0) {
+            if (commodityPic.length == 0) {
                 errMsg.put("commodityPic", "請上傳圖片檔");
             }
 
@@ -94,23 +98,23 @@ public class CommodityController extends HttpServlet {
             } catch (Exception e) {
                 errMsg.put("commodityPri", "請輸入價格");
             }
-           if(commodityPri==null||commodityPri<=0){
-               errMsg.put("commodityPri", "價格不得小於零");
-           }
+            if (commodityPri == null || commodityPri <= 0) {
+                errMsg.put("commodityPri", "價格不得小於零");
+            }
             Integer commodityQua = null;
             try {
                 commodityQua = Integer.valueOf(req.getParameter("commodityQua"));
             } catch (Exception e) {
                 errMsg.put("commodityQua", "請輸入數量");
             }
-            if(commodityQua==null||commodityQua<=0){
+            if (commodityQua == null || commodityQua <= 0) {
                 errMsg.put("commodityQua", "數量不得小於零");
             }
 
             if (!errMsg.isEmpty()) {
-                req.setAttribute("errMsg",errMsg);
-                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/CommodityController?action=insertPage");
-                requestDispatcher.forward(req,res);
+                req.setAttribute("errMsg", errMsg);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/CommodityController?action=insertPage");
+                requestDispatcher.forward(req, res);
                 return;
             }
             Integer commodityStatus = Integer.valueOf(req.getParameter("commodityStatus"));
@@ -127,5 +131,62 @@ public class CommodityController extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/succeedInsertCommodity.jsp"); // webapp/index.jsp or index.html
             requestDispatcher.forward(req, res);
         }
+
+        if ("toUpdate".equals(action)) {
+            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
+            CommodityVO commodityVO = service.findByID(comNO);
+            req.setAttribute("commodity", commodityVO);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityUpdate.jsp");
+            requestDispatcher.forward(req, res);
+        }
+
+        if ("update".equals(action)) {
+            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
+            Integer comClassNo = null;
+            try {
+                comClassNo = Integer.valueOf(req.getParameter("comClassNo"));
+            } catch (NumberFormatException e) {
+                errMsg.put("comClassNo", "請選擇類別");
+            }
+
+            String commodityName = req.getParameter("commodityName");
+            if (commodityName == null || commodityName.trim().isEmpty()) {
+                errMsg.put("commodityName", "名稱不得空白");
+            }
+            byte[] commodityPic = IOUtils.toByteArray(req.getPart("commodityPic").getInputStream());
+
+            String commodityDes = req.getParameter("commodityDes");
+            if (commodityDes == null || commodityDes.trim().length() == 0) {
+                errMsg.put("commodityDes", "請加入商品敘述");
+            }
+            Integer commodityPri = null;
+            try {
+                commodityPri = Integer.valueOf(req.getParameter("commodityPri"));
+            } catch (Exception e) {
+                errMsg.put("commodityPri", "請輸入價格");
+            }
+            if (commodityPri == null || commodityPri <= 0) {
+                errMsg.put("commodityPri", "價格不得小於零");
+            }
+            Integer commodityQua = null;
+            try {
+                commodityQua = Integer.valueOf(req.getParameter("commodityQua"));
+            } catch (Exception e) {
+                errMsg.put("commodityQua", "請輸入數量");
+            }
+            if (commodityQua == null || commodityQua <= 0) {
+                errMsg.put("commodityQua", "數量不得小於零");
+            }
+
+            if (!errMsg.isEmpty()) {
+                req.setAttribute("errMsg", errMsg);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/CommodityController?action=toUpdate");
+                requestDispatcher.forward(req, res);
+            }
+
+
+        }
+
+
     }
 }

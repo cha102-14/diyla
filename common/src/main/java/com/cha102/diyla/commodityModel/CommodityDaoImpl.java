@@ -30,6 +30,7 @@ public class CommodityDaoImpl implements CommodityDao {
     public static final String FIND_BY_COM_CLASS_NO = "SELECT * FROM COMMODITY WHERE COM_CLASS_NO = ? and COM_STATE != 0";
     public static final String GET_ALL_STATE = "SELECT * FROM COMMODITY WHERE COM_STATE != 0";
     public static final String GET_ONE_STATE = "SELECT * FROM COMMODITY where COM_NO = ? and COM_STATE != 0";
+    public static final String UPDATE_SQL = "UPDATE COMMODITY SET COM_NAME=?, COM_PIC=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_CLASS_NO=? ";
 
     public int insert(CommodityVO commodity) {
         try (Connection conn = ds.getConnection();
@@ -152,6 +153,20 @@ public class CommodityDaoImpl implements CommodityDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void update(CommodityVO commodity) {
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(UPDATE_SQL);) {
+            CommodityVO commodityVO = new CommodityVO();
+            ResultSet rs = ps.executeQuery();
+            buildCommodityVO(commodityVO,rs);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void buildCommodityVO(CommodityVO commodity, ResultSet rs) throws SQLException {
