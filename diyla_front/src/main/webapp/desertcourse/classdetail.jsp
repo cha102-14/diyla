@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
 <%@ page import="com.cha102.diyla.sweetclass.classModel.ClassService" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
@@ -210,13 +211,15 @@
                             <script>
                                 document.addEventListener('DOMContentLoaded', function () {
                                     var registerButton = document.getElementById('registerButton');
-                                    var courseId = getCourseIdFromQueryString();
+                                    var urlParams = new URLSearchParams(window.location.search);
+                                    var courseId = urlParams.get('id');
                                     function isUserLoggedIn() {
                                         return true;
                                     }
                                     registerButton.addEventListener('click', function () {
+
                                         if (isUserLoggedIn()) {
-                                            window.location.href = 'confirmRegistration.jsp?id=' + courseId;
+                                            window.location.href = 'confirmreserve.jsp?id=' + courseId + '&headcount=' +$('#registerheadcount').val();
                                         } else {
                                             window.location.href = 'register.jsp?courseId=' + courseId;
                                         }
