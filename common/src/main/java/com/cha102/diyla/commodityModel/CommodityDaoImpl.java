@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,8 @@ public class CommodityDaoImpl implements CommodityDao {
     public static final String FIND_BY_COM_CLASS_NO = "SELECT * FROM COMMODITY WHERE COM_CLASS_NO = ? and COM_STATE != 0";
     public static final String GET_ALL_STATE = "SELECT * FROM COMMODITY WHERE COM_STATE != 0";
     public static final String GET_ONE_STATE = "SELECT * FROM COMMODITY where COM_NO = ? and COM_STATE != 0";
-    public static final String UPDATE_SQL = "UPDATE COMMODITY SET COM_NAME=?, COM_PIC=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_CLASS_NO=? ";
+    public static final String UPDATE_SQL = "UPDATE COMMODITY SET COM_CLASS_NO=?,COM_NAME=?, COM_PIC=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_NO=? ";
+    public static final String UPDATE_WITHOUT_PIC = "UPDATE COMMODITY SET COM_CLASS_NO=?,COM_NAME=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_NO=? ";
 
     public int insert(CommodityVO commodity) {
         try (Connection conn = ds.getConnection();
@@ -103,7 +101,7 @@ public class CommodityDaoImpl implements CommodityDao {
             List<CommodityVO> commodityVOS = new ArrayList<>();
             while (rs.next()) {
                 CommodityVO commodityVO = new CommodityVO();
-                buildCommodityVO(commodityVO,rs);
+                buildCommodityVO(commodityVO, rs);
                 commodityVOS.add(commodityVO);
             }
             rs.close();
@@ -124,7 +122,7 @@ public class CommodityDaoImpl implements CommodityDao {
             List<CommodityVO> commodityVOS = new ArrayList<>();
             while (rs.next()) {
                 CommodityVO commodityVO = new CommodityVO();
-                buildCommodityVO(commodityVO,rs);
+                buildCommodityVO(commodityVO, rs);
                 commodityVOS.add(commodityVO);
             }
             rs.close();
@@ -156,17 +154,49 @@ public class CommodityDaoImpl implements CommodityDao {
     }
 
     @Override
-    public void update(CommodityVO commodity) {
-        try (Connection conn = ds.getConnection();
-             PreparedStatement ps = conn.prepareStatement(UPDATE_SQL);) {
-            CommodityVO commodityVO = new CommodityVO();
-            ResultSet rs = ps.executeQuery();
-            buildCommodityVO(commodityVO,rs);
-            ps.executeUpdate();
+    public CommodityVO update(CommodityVO commodity) {
 
+        if (commodity.getComPic().length == 0) {
+            try (Connection conn = ds.getConnection();
+                 PreparedStatement ps = conn.prepareStatement(UPDATE_WITHOUT_PIC)) {
+                ps.setInt(1, commodity.getComClassNo());
+                ps.setString(2, commodity.getComName());
+                ps.setString(3, commodity.getComDes());
+                ps.setDouble(4, commodity.getComPri());
+                ps.setInt(5, commodity.getComQua());
+                ps.setInt(6, commodity.getComState());
+                ps.setInt(7, commodity.getComNO());
+                int i = ps.executeUpdate();
+                if (i > 0) {
+                    return findByID(commodity.getComNO());
+                }
+                return null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        try (Connection conn = ds.getConnection();
+             PreparedStatement ps = conn.prepareStatement(UPDATE_SQL)) {
+            ps.setInt(1, commodity.getComClassNo());
+            ps.setString(2, commodity.getComName());
+            ps.setBytes(3, commodity.getComPic());
+            ps.setString(4, commodity.getComDes());
+            ps.setDouble(5, commodity.getComPri());
+            ps.setInt(6, commodity.getComQua());
+            ps.setInt(7, commodity.getComState());
+            ps.setInt(8,commodity.getComNO());
+            ps.executeUpdate();
+            int i = ps.executeUpdate();
+            if (i > 0) {
+                return findByID(commodity.getComNO());
+            }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
+
     }
 
     private static void buildCommodityVO(CommodityVO commodity, ResultSet rs) throws SQLException {

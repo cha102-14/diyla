@@ -41,6 +41,7 @@
 						<input type="text" value="${commodity.comNO}" name="comNO" hidden>
 					</form>
 					<button type="submit" class="button" form="form1">修改資料</button>
+					<a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" >返回商品清單</button></a>
         </div>
     </div>
 </div>

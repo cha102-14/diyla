@@ -47,7 +47,7 @@
                     <br>
                     <span style="display: block; color: red;">${errMsg["commodityPri"]}</span>
 					<label>價格：</label>
-                    <input type="text" id="price" name="commodityPri" value="${commodity.comPri}">
+                    <input type="number" id="price" name="commodityPri" value="${commodity.comPri}">
 					<br>
                     <span style="display: block; color: red;">${errMsg["commodityQua"]}</span>
                     <label for="quantity">數量:</label>

@@ -26,6 +26,29 @@ public class CommodityController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        String action = req.getParameter("action");
+
+        if ("listAll".equals(action)) {
+            List<CommodityVO> commodityVOS = service.getAll();
+            List<CommodityClassVO> commodityClasses = classService.getAll();
+            HashMap<Integer, String> classNameMap = new HashMap<>();
+            for (CommodityClassVO commodityClassVO : commodityClasses) {
+                //將類別編號當key，類別名稱當Value放進HashMap中
+                classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
+            }
+            req.setAttribute("classNameMap", classNameMap);
+            req.setAttribute("commodityList", commodityVOS);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
+        if ("findByID".equals(action)) {
+            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
+            CommodityVO commodityVO = service.findByID(comNO);
+            req.setAttribute("commodity", commodityVO);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
+            requestDispatcher.forward(req, resp);
+        }
         doPost(req, resp);
 
     }
@@ -42,27 +65,7 @@ public class CommodityController extends HttpServlet {
             requestDispatcher.forward(req, res); // 轉導到下個頁面，並把請求跟回應一併交給
         }
 
-        if ("listAll".equals(action)) {
-            List<CommodityVO> commodityVOS = service.getAll();
-            List<CommodityClassVO> commodityClasses = classService.getAll();
-            HashMap<Integer, String> classNameMap = new HashMap<>();
-            for (CommodityClassVO commodityClassVO : commodityClasses) {
-                //將類別編號當key，類別名稱當Value放進HashMap中
-                classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
-            }
-            req.setAttribute("classNameMap", classNameMap);
-            req.setAttribute("commodityList", commodityVOS);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/listCommodity.jsp");
-            requestDispatcher.forward(req, res);
-        }
 
-        if ("findByID".equals(action)) {
-            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
-            CommodityVO commodityVO = service.findByID(comNO);
-            req.setAttribute("commodity", commodityVO);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
-            requestDispatcher.forward(req, res);
-        }
         if ("insertPage".equals(action)) {
             List<CommodityClassVO> commodityClasses = classService.getAll(); // 取回所有商品類別
             req.setAttribute("commodityClasses", commodityClasses); // 放到大中小的小
@@ -119,14 +122,7 @@ public class CommodityController extends HttpServlet {
             }
             Integer commodityStatus = Integer.valueOf(req.getParameter("commodityStatus"));
 
-            CommodityVO commodityVO = new CommodityVO();
-            commodityVO.setComClassNo(comClassNo);
-            commodityVO.setComName(commodityName);
-            commodityVO.setComPic(commodityPic);
-            commodityVO.setComDes(commodityDes);
-            commodityVO.setComPri(commodityPri);
-            commodityVO.setComQua(commodityQua);
-            commodityVO.setComState(commodityStatus);
+            CommodityVO commodityVO = getCommodityVO(comClassNo, commodityName, commodityPic, commodityDes, commodityPri, commodityQua, commodityStatus);
             service.insert(commodityVO);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/succeedInsertCommodity.jsp"); // webapp/index.jsp or index.html
             requestDispatcher.forward(req, res);
@@ -183,10 +179,28 @@ public class CommodityController extends HttpServlet {
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/CommodityController?action=toUpdate");
                 requestDispatcher.forward(req, res);
             }
-
+            Integer commodityStatus = Integer.valueOf(req.getParameter("commodityStatus"));
+            CommodityVO commodityVO = getCommodityVO(comClassNo, commodityName, commodityPic, commodityDes, commodityPri, commodityQua, commodityStatus);
+            commodityVO.setComNO(comNO);
+            CommodityVO commodityVO1 = service.updateCommodity(commodityVO);
+            req.setAttribute("commodity", commodityVO1);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityPage.jsp");
+            requestDispatcher.forward(req, res);
 
         }
 
 
+    }
+
+    private static CommodityVO getCommodityVO(Integer comClassNo, String commodityName, byte[] commodityPic, String commodityDes, Integer commodityPri, Integer commodityQua, Integer commodityStatus) {
+        CommodityVO commodityVO = new CommodityVO();
+        commodityVO.setComClassNo(comClassNo);
+        commodityVO.setComName(commodityName);
+        commodityVO.setComPic(commodityPic);
+        commodityVO.setComDes(commodityDes);
+        commodityVO.setComPri(commodityPri);
+        commodityVO.setComQua(commodityQua);
+        commodityVO.setComState(commodityStatus);
+        return commodityVO;
     }
 }

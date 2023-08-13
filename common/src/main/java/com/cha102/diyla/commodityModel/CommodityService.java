@@ -48,7 +48,11 @@ public class CommodityService {
         return commodityVOS;
     }
 
-    public void updateCommodity(CommodityVO commodity) {
+    public CommodityVO updateCommodity(CommodityVO commodity) {
+
+        CommodityVO commodityVO = dao.update(commodity);
+        setShowPic(commodityVO);
+        return commodityVO;
 
     }
 
