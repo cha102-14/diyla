@@ -8,8 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommodityDaoImpl implements CommodityDao{
+public class CommodityDaoImpl implements CommodityDao {
     public static DataSource ds = null;
+
     static {
         try {
             Context ctx = new InitialContext();
@@ -18,7 +19,6 @@ public class CommodityDaoImpl implements CommodityDao{
             throw new RuntimeException(e);
         }
     }
-
 
     public static final String GET_ALL_SQL = "SELECT * FROM COMMODITY";
     public static final String INSERT_SQL = "INSERT INTO COMMODITY (COM_CLASS_NO,COM_NAME,COM_PIC,COM_DES,COM_PRI,COM_QUA,COM_STATE) VALUES (?,?,?,?,?,?,?);";
