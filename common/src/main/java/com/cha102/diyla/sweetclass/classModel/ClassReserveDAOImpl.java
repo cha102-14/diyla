@@ -22,7 +22,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
         }
     }
     private static final String INSERT_STMT =
-            "INSERT INTO class_reserve (class_id,mem_id,headcount,status,create_time,total_price) VALUES (?, ?, ?, ?, ?, ?)";
+            "INSERT INTO class_reserve (class_id,mem_id,headcount,status,total_price) VALUES (?, ?, ?, ?, ?)";
     private static final String GET_ALL_STMT =
             "SELECT reserve_id, class_id,mem_id,headcount,status,create_time,total_price FROM class_reserve order by reserve_id";
     private static final String GET_ONE_STMT =
@@ -31,6 +31,8 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             "DELETE FROM class_reserve where reserve_id = ?";
     private static final String UPDATE =
             "UPDATE class_reserve set class_id=?,mem_id=?,headcount=?,status=?,create_time=?,total_price=? where reserve_id = ?";
+    private static final String GET_MEM_BLACKLIST =
+            "SELECT BLACKLIST_CLASS FROM diyla.MEMBER WHERE mem_id = ?";
     @Override
     public void insert(ClassReserveVO classReserveVO) {
         Connection con = null;
@@ -45,9 +47,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             pstmt.setInt(2, classReserveVO.getMemId());
             pstmt.setInt(3, classReserveVO.getHeadcount());
             pstmt.setInt(4, classReserveVO.getStatus());
-            pstmt.setTimestamp(5, classReserveVO.getCreateTime());
-            pstmt.setInt(6, classReserveVO.getTotalPrice());
-            pstmt.setInt(7, classReserveVO.getReserveId());
+            pstmt.setInt(5, classReserveVO.getTotalPrice());
 
             pstmt.executeUpdate();
 
@@ -153,7 +153,24 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             }
         }
     }
+    public Integer findMemBlackListStatus (Integer memID) {
+        try(
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(GET_MEM_BLACKLIST);
+                ){
+            pstmt.setInt(1, memID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("BLACKLIST_CLASS");
+            } else {
+                return 0;
+            }
 
+        } catch(SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+        }
+    }
     @Override
     public ClassReserveVO findByPrimaryKey(Integer resID) {
         ClassReserveVO classReserveVO = null;

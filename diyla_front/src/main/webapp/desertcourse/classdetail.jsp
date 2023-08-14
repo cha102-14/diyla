@@ -219,7 +219,7 @@
                                     registerButton.addEventListener('click', function () {
 
                                         if (isUserLoggedIn()) {
-                                            window.location.href = 'confirmreserve.jsp?id=' + courseId + '&headcount=' +$('#registerheadcount').val();
+                                            window.location.href = 'confirmreserve.jsp?courseId=' + courseId + '&headcount=' +$('#registerheadcount').val();
                                         } else {
                                             window.location.href = 'register.jsp?courseId=' + courseId;
                                         }

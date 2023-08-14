@@ -8,6 +8,7 @@ public interface ClassReserveDAO {
     void update(ClassReserveVO classReserveVO);
 
     void delete(Integer resID);
+    Integer findMemBlackListStatus(Integer memID);
 
     ClassReserveVO findByPrimaryKey(Integer resID);
 

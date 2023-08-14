@@ -64,17 +64,54 @@ public class ClassService {
     public List<ClassVO> getAllClass(){
         return claDAO.getAll();
     }
-    public ClassReserveVO addReserve(Integer classID, Integer memID, Integer headcount, Integer status, Timestamp createTime, Integer totalPrice){
+    public ClassReserveVO userAddReserve(Integer classID, Integer memID, Integer headcount){
         ClassReserveVO classReserveVO = new ClassReserveVO();
+        ClassDAO classDAO = new ClassDAOImpl();
+        ClassVO classVO = classDAO.findByPrimaryKey(classID);
         classReserveVO.setClassId(classID);
         classReserveVO.setMemId(memID);
         classReserveVO.setHeadcount(headcount);
-        classReserveVO.setStatus(status);
-        classReserveVO.setCreateTime(createTime);
-        classReserveVO.setTotalPrice(totalPrice);
+        classReserveVO.setStatus(0);
+        classReserveVO.setTotalPrice(classVO.getPrice() * headcount);
         resDAO.insert(classReserveVO);
         return classReserveVO;
     }
+    public boolean checkMemBlacklist(Integer memID){
+        return false;
+    }
+    public String[] confirmUserReserve(Integer classID, Integer memID, Integer headcount, java.util.Date reserveDate){
+        ClassDAO classDAO = new ClassDAOImpl();
+        ClassReserveDAO classReserveDAO = new ClassReserveDAOImpl();
+        ClassVO classVO = classDAO.findByPrimaryKey(classID);
+        //抓取該member是否有預約課程的權利
+        int blacklistStatus = classReserveDAO.findMemBlackListStatus(memID);
+        //宣告需要比較的參數以及回傳的array
+        int result = classVO.getClassStatus();
+        String[] resultArray = new String[2];
+        int currentHeadcount = classVO.getHeadcount();
+        int limit = classVO.getClassLimit();
+        Date courseEndDate = classVO.getRegEndTime();
+        int dateCompareResult = courseEndDate.compareTo(reserveDate);
+        if(result == 0 || result == 2 || result == 3){
+            resultArray[0] = "false";
+            resultArray[1] = "非常抱歉該課程無法報名,請報名其他課程";
+        } else if (headcount > (limit - currentHeadcount)){
+            resultArray[0] = "false";
+            resultArray[1] = "非常抱歉該課程人數已滿, 請報名其他課程";
+        } else if (dateCompareResult < 0) {
+            resultArray[0] = "false";
+            resultArray[1] = "非常抱歉,該課程報名已截止,請報名其他課程";
+        } else if (blacklistStatus == 1) {
+            resultArray[0] = "false";
+            resultArray[1] = "非常抱歉,似乎您沒有預約課程的權利,若有疑慮請聯絡客服";
+        } else {
+            resultArray[0] = "true";
+            resultArray[1] = "報名成功";
+        }
+        return resultArray;
+    }
+
+
     public ClassReserveVO updateReserve(Integer classID, Integer memID, Integer headcount, Integer status, Timestamp createTime, Integer totalPrice, Integer reserveID){
         ClassReserveVO classReserveVO = new ClassReserveVO();
         classReserveVO.setClassId(classID);

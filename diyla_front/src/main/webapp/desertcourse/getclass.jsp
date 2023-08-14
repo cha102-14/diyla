@@ -9,8 +9,6 @@
     List<ClassVO> courses = classService.getAllClass(); // 從後端獲取課程資料
 
 
-    // SimpleDateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
 
     StringBuilder eventsJson = new StringBuilder();
     for (ClassVO course : courses) {
