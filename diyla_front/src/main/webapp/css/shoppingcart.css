@@ -10,37 +10,37 @@ body {
 	font-family: Arial, sans-serif;
 	margin: 0px;
 }
-div.topPage{
-	z-index:9;
-	width:100%;
-/* 	position: fixed; */
-	
+
+div.topPage {
+	z-index: 9;
+	width: 100%;
+	/* 	position: fixed; */
 }
 
 .mainContent {
-	z-index:3;
+	float:inherit;;
+	z-index: 3;
 	flex: 1;
 	padding: 10px;
 	min-height: 500px;
-	
 }
 
 .heading {
 	text-align: center;
 	font-size: 44px;
-    color: brown;
-    padding: 10px;
-    margin: 10px;
-    position: sticky;
+	color: brown;
+	padding: 10px;
+	margin: 10px;
+	position: sticky;
 	background-color: white;
-
 }
-.heading::after{
+
+.heading::after {
 	background-color: pink;
 }
 
 .title {
-	height:50px;
+	height: 50px;
 	background-color: pink;
 	font-weight: bold;
 }
@@ -63,23 +63,24 @@ tr td.subtitle {
 	white-space: nowrap;
 }
 
-.itemrow{
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    white-space: nowrap;
-    text-align: center;
-    border: 2px solid black;
-     border: none; /* 移除边框 */
-    border-radius: 10px; /* 添加圆角 */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+.itemrow {
+	width: 100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	white-space: nowrap;
+	text-align: center;
+	border: 2px solid black;
+	border: none; /* 移除边框 */
+	border-radius: 10px; /* 添加圆角 */
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.itemrow:hover{
+.itemrow:hover {
 	transform: scale(1.02);
 }
-.compic{
-	width:180px !important;
+
+.compic {
+	width: 180px !important;
 }
 
 .cartTable th {
@@ -92,30 +93,33 @@ tr td.subtitle {
 }
 
 .updateButton {
-	 background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
+
 .deleteButton {
-     background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+	background-color: red;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
 }
 
 .updateButton:hover {
-    background-color: #45a049;
+	background-color: #45a049;
 }
-.deleteButton:hover{
+
+.deleteButton:hover {
 	background-color: #930000;
 }
+
 .total-price {
 	text-align: right;
 	font-weight: bold;
@@ -141,8 +145,6 @@ a, a:visited, a:hover {
 	color: inherit !important;
 	text-decoration: none;
 }
-
-
 
 .shopLink {
 	display: inline-block;
@@ -170,58 +172,77 @@ p.tip {
 .comPic {
 	width: 150px;
 }
-.checkout-btn{
-	margin:10px;
-	padding:10px;
+
+.checkout-btn {
+	margin: 10px;
+	padding: 10px;
 }
+
 .checkout-btn:hover {
 	background-color: #45a049;
 	color: white;
 }
 
-.shopPage{
-	float:left;
-	color:white;
+.shopPage {
+	float: left; color : white;
 	background-color: #f5f5f5;
 	border: 1px solid #ddd;
 	padding: 8px 12px;
 	border-radius: 4px;
 	font-size: 14px;
+	color: white;
 }
 
-.clearButton,
-.shopPage {
-    border: none;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    background-color: #f5f5f5;
+.clearButton, .shopPage {
+	border: none;
+	font-size: 16px;
+	color: #333;
+	cursor: pointer;
+	background-color: #f5f5f5;
 	border: 1px solid #ddd;
 	padding: 10px 16px;
 	border-radius: 4px;
 	font-size: 14px;
 }
-.clearButton:hover,
-.shopPage:hover{
+
+.clearButton:hover, .shopPage:hover {
 	background-color: #ffff80;
 }
 
 .handle {
- display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 20px;
 }
 
 .total-price {
-	float:right;
-	top:20px;
+	float: right; top : 20px;
 	background-color: #f5f5f5;
 	border: 1px solid #ddd;
 	padding: 10px 16px;
 	border-radius: 4px;
 	font-size: 16px;
 	margin-left: auto;
-    font-size: 16px;
-    color: #333;
+	font-size: 16px;
+	color: #333;
+	top: 20px;
+}
+
+.goTopButton {
+	z-index: 999;
+	position: fixed;
+	bottom: 20px;
+	 padding: 10px;
+	border: none;
+	outline: none;
+	background-color: #333;
+	color: white;
+	cursor: pointer;
+	border-radius: 4px;
+	 right: 20px;
+}
+
+.goTopButton:hover {
+	background-color: #555;
 }

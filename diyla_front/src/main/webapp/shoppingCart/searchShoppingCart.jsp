@@ -16,10 +16,10 @@
             <input type="submit" value="送出">
 
 </form>
-新增購物車商品:
-<form action="ShoppingCartServlet" method="post">
-           	<input type="text" name="comId" value="">
-            <input type="hidden" name="action" value="addItem">
+查詢訂單:
+<form action="${ctxPath}/shop/OrderController" method="post">
+           	<input type="text" name="memId" value="">
+            <input type="hidden" name="action" value="listOrder">
             <input type="submit" value="送出">
 
 </form>

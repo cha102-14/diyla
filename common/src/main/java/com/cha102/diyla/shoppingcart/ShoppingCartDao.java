@@ -1,4 +1,4 @@
-package com.cha102.diyla.shoppongcart;
+package com.cha102.diyla.shoppingcart;
 
 import java.util.List;
 

@@ -79,15 +79,15 @@
                 </a>
             </div>
         </aside>
-        <main id="main">
-            <div>
+<!--         <main id="main"> -->
+<!--             <div> -->
 
-                <div id="content">
-                    <!-- <h1 id="selction">請選擇功能</h1> -->
-                </div>
+<!--                 <div id="content"> -->
+<!--                     <h1 id="selction">請選擇功能</h1> -->
+<!--                 </div> -->
 
-            </div>
-        </main>
+<!--             </div> -->
+<!--         </main> -->
     </div>
     
     <script src="./vendors/jquery/jquery-3.7.0.min.js"></script>    

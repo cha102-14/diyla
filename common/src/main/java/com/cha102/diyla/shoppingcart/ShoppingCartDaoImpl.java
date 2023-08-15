@@ -1,4 +1,4 @@
-package com.cha102.diyla.shoppongcart;
+package com.cha102.diyla.shoppingcart;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -45,38 +45,16 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 	public void insert(Integer memId, Integer comNo, Integer amount) {
 
 		try (Connection con = ds.getConnection();
-				PreparedStatement pstmtSelect = con
-						.prepareStatement("Select com_amount from shopping_cart_list where MEM_Id = ? and COM_NO = ?");
-				PreparedStatement pstmtInsertCom = con
-						.prepareStatement("INSERT INTO shopping_cart_list (MEM_Id,com_no,com_amount) VALUES (?, ?, ?)");
-				PreparedStatement pstmtUpdateAmount = con.prepareStatement(
-						"UPDATE shopping_cart_list set com_amount = ? where MEM_Id = ? and COM_NO = ?");) {
-			pstmtSelect.setInt(1, memId);
-			pstmtSelect.setInt(2, comNo);
-			try (ResultSet rs = pstmtSelect.executeQuery();) {
-				if (rs.next()) {
-					Integer existingQuantity = rs.getInt("com_amount");
-					pstmtUpdateAmount.setInt(1, amount + existingQuantity);
-					pstmtUpdateAmount.setInt(2, memId);
-					pstmtUpdateAmount.setInt(3, comNo);
-					pstmtUpdateAmount.executeUpdate();
-
-				} else {
-					pstmtInsertCom.setInt(1, memId);
-					pstmtInsertCom.setInt(2, comNo);
-					pstmtInsertCom.setInt(3, amount);
-					pstmtInsertCom.executeUpdate();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+				PreparedStatement pstmtInsertCom = con.prepareStatement(
+						"INSERT INTO shopping_cart_list (MEM_Id,com_no,com_amount) VALUES (?, ?, ?)");) {
+			pstmtInsertCom.setInt(1, memId);
+			pstmtInsertCom.setInt(2, comNo);
+			pstmtInsertCom.setInt(3, amount);
+			pstmtInsertCom.executeUpdate();
+		} catch (Exception e) {
 			e.printStackTrace();
-		}
 
+		}
 	}
 
 	@Override
@@ -134,8 +112,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 					cartVO.setMemId(memId);
 					cartVO.setComNo(comNo);
 					cartVO.setComAmount(rs.getInt("COM_AMOUNT"));
+					return cartVO;
 				}
-				return cartVO;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -143,7 +121,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 			e.printStackTrace();
 		}
 
-		return cartVO;
+		return null;
 
 	}
 

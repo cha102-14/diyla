@@ -1,5 +1,6 @@
-package com.cha102.diyla.shoppongcart;
+package com.cha102.diyla.shoppingcart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cha102.diyla.commodityModel.CommodityService;
@@ -9,18 +10,23 @@ public class ShoppingCartService {
 	CommodityService commodityService = new CommodityService();
 	ShoppingCartDaoImpl dao = new ShoppingCartDaoImpl();
 	ShoppingCartVO shoppingCartVO = null;
-
+	
 	public ShoppingCartService() {
 		ShoppingCartDaoImpl dao = new ShoppingCartDaoImpl();
-
 	}
 
 	public ShoppingCartVO addShoppingCart(Integer memId, Integer comNo, Integer amount) {
-		//先加進資料庫中更新再取出
-		dao.insert(memId, comNo, amount);
-		ShoppingCartVO shoppingCartVO =dao.getOne(memId, comNo);
+		//先查詢 無則新增 有擇改數量
+		ShoppingCartVO shoppingCartVO = dao.getOne(memId, comNo);
+		if (shoppingCartVO == null) {
+			dao.insert(memId, comNo, amount);
+		}
+		else {
+			Integer currentAmount = shoppingCartVO.getComAmount();
+			dao.update(memId, comNo, currentAmount+amount);
+		}
 		return shoppingCartVO;
-	
+
 	}
 
 	public void delete(Integer memId, Integer comNo) {
@@ -35,22 +41,32 @@ public class ShoppingCartService {
 		dao.update(memId, comNo, amount);
 		return shoppingCartVO;
 	}
+
 	public void clear(Integer memId) {
 		dao.clear(memId);
 	}
+
 	public ShoppingCartVO getOne(Integer memId, Integer comNo) {
-		return dao.getOne( memId,  comNo);
+		return dao.getOne(memId, comNo);
 	}
 
 	public List<ShoppingCartVO> getAll(int memId) {
 		return dao.getAll(memId);
 	}
+	public static List<Integer> getComNoList(List<ShoppingCartVO>shoppingCartList){
+		List<Integer> comNoList = new ArrayList<>();
+		for (ShoppingCartVO cartVO : shoppingCartList) {
+			comNoList.add(cartVO.getComNo());
+		}
+		return comNoList;
+	}
+	
 	
 	public int getTotalPrice(List<ShoppingCartVO> cartlist) {
 		int totalPrice = 0;
-		for(ShoppingCartVO cartItem :cartlist ) {
+		for (ShoppingCartVO cartItem : cartlist) {
 			CommodityVO commodityVO = commodityService.findByID(cartItem.getComNo());
-			totalPrice+=(cartItem.getComAmount()*commodityVO.getComPri());
+			totalPrice += (cartItem.getComAmount() * commodityVO.getComPri());
 		}
 		return totalPrice;
 	}
