@@ -1,10 +1,3 @@
 spring:
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/diyla?useUnicode=yes&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Taipei&allowPublicKeyRetrieval=true
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-server:
-  port: 8080
+  profiles:
+    active: jdbc
