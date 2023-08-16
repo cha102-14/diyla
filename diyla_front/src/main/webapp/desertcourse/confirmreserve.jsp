@@ -11,6 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
     <title>訂單確認</title>
     <%
     String courseId = request.getParameter("courseId");
@@ -84,9 +86,17 @@ $(document).ready(function () {
         })
         .then(function(result){
             if(result.isSuccessful){
-                alert("訂單建立成功!");
+                Swal.fire({
+                    icon: "success",
+                    title: "訂單建立成功",
+                    text: "您的訂單已成功建立!"
+                });
             } else {
-                alert("訂單建立失敗! " + result.message);
+                Swal.fire({
+                    icon: "error",
+                    title: "訂單建立失敗!",
+                    text: "訂單建立失敗!" + result.message
+                });
             }
         })
         .catch(function(error){

@@ -16,6 +16,7 @@ public class modifyReserveServlet extends HttpServlet {
         PrintWriter out = res.getWriter();
         Integer reserveId = Integer.valueOf(req.getParameter("reserveId"));
         ClassService classService = new ClassService();
+        //(0:預約單建立，1:預約單付款完成，2:預約單取消(未退款)，3.預約單取消(退款完成)，4.預約單完成)
         if (classService.getOneReserve(reserveId).getStatus() == 0) {
             classService.updateReserveStatus(reserveId, 3);
         } else if (classService.getOneReserve(reserveId).getStatus() == 1) {

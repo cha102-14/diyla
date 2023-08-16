@@ -1,4 +1,10 @@
 package com.cha102.diyla.sweetclass.classModel;
+import com.cha102.diyla.sweetclass.teaModel.TeacherDAO;
+import com.cha102.diyla.sweetclass.teaModel.TeacherDAOImpl;
+import com.cha102.diyla.sweetclass.teaModel.TeacherVO;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.*;
 import java.sql.*;
 import java.sql.Date;
@@ -126,6 +132,94 @@ public class ClassService {
     }
     public void delReserve(Integer resID){
         resDAO.delete(resID);
+    }
+    public JSONArray getReserveByTeaId(Integer teaId) {
+        ClassService classService = new ClassService();
+        List<ClassReserveVO> courseList = classService.getAllReserve();
+        JSONArray jsonArray = new JSONArray();
+        TeacherDAO teacherDAO = new TeacherDAOImpl();
+        ClassReserveDAO reserveDAO = new ClassReserveDAOImpl();
+        ClassVO course;
+        TeacherVO teacherVO = teacherDAO.findByPrimaryKey(teaId);
+        ClassDAO classDAO = new ClassDAOImpl();
+
+        for (ClassReserveVO reserves : courseList) {
+            Integer reserveTeaId = classDAO.findByPrimaryKey(reserves.getClassId()).getTeaId();
+            Integer courseSeq = classDAO.findByPrimaryKey(reserves.getClassId()).getClassSeq();
+            Date courseDate = classDAO.findByPrimaryKey(reserves.getClassId()).getClassDate();
+            String courseDateSeq = classService.combineDateSeq(courseDate, courseSeq);
+            course = classDAO.findByPrimaryKey(reserves.getClassId());
+            //-1 means get all reserve for admin viewing all the reserve detail.
+            if (teaId == -1 || reserveTeaId == teaId){
+                JSONObject jsonCourse = new JSONObject();
+                jsonCourse.put("reserveId", reserves.getReserveId());
+                jsonCourse.put("memId", reserves.getMemId());
+                jsonCourse.put("memName", reserveDAO.getMemName(reserves.getMemId()));
+                jsonCourse.put("headcount", reserves.getHeadcount());
+                jsonCourse.put("status", getReserveStatus(reserves.getStatus()));
+                jsonCourse.put("courseId", reserves.getClassId());
+                jsonCourse.put("courseName", course.getClassName());
+                jsonCourse.put("courseDateSeq", courseDateSeq);
+                jsonCourse.put("createTime", reserves.getCreateTime());
+                jsonCourse.put("totalPrice", reserves.getTotalPrice());
+                jsonArray.put(jsonCourse);
+            }
+        }
+        return jsonArray;
+    }
+    public String getReserveStatus (Integer status) {
+        ReserveStatus reserveStatus = ReserveStatus.getByValue(status);
+        if (reserveStatus != null) {
+            return reserveStatus.getDescription();
+        } else {
+            throw new IllegalArgumentException("Invalid reserve status value: " + status);
+        }
+    }
+    public enum ReserveStatus {
+        CREATED(0, "預約單建立"),
+        PAID(1, "付款完成"),
+        CANCELED_UNREFUNDED(2, "預約單取消(未退款)"),
+        CANCELED_REFUNDED(3, "預約單取消(已退款)"),
+        COMPLETED(4, "預約單完成");
+
+
+        private final int value;
+        private final String description;
+
+        ReserveStatus(int value, String description) {
+            this.value = value;
+            this.description = description;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public static ReserveStatus getByValue(int value) {
+            for (ReserveStatus reserveStatus : ReserveStatus.values()) {
+                if (reserveStatus.getValue() == value) {
+                    return reserveStatus;
+                }
+            }
+            return null;
+        }
+    }
+
+    public String combineDateSeq(Date courseDate, Integer courseSeq) {
+        String Time = "";
+        if (courseSeq == 0) {
+            Time = "早上";
+        } else if (courseSeq == 1) {
+            Time = "下午";
+        } else if (courseSeq == 2) {
+            Time = "晚上";
+        }
+        String courseDateSeq = courseDate + " " + Time;
+        return courseDateSeq;
     }
     public void updateReserveStatus(Integer resID, Integer status) {
         ClassReserveVO classReserveVO = resDAO.findByPrimaryKey(resID);

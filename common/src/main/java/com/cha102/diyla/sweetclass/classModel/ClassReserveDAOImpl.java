@@ -33,6 +33,8 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             "UPDATE class_reserve set class_id=?,mem_id=?,headcount=?,status=?,create_time=?,total_price=? where reserve_id = ?";
     private static final String GET_MEM_BLACKLIST =
             "SELECT BLACKLIST_CLASS FROM diyla.MEMBER WHERE mem_id = ?";
+    private static final String GET_MEM_NAME =
+            "SELECT MEM_NAME FROM diyla.MEMBER WHERE mem_id = ?";
     @Override
     public void insert(ClassReserveVO classReserveVO) {
         Connection con = null;
@@ -163,7 +165,7 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
             if (rs.next()) {
                 return rs.getInt("BLACKLIST_CLASS");
             } else {
-                return 0;
+                return null;
             }
 
         } catch(SQLException se) {
@@ -287,5 +289,24 @@ public class ClassReserveDAOImpl implements ClassReserveDAO {
         }
         return list;
     }
+
+    public String getMemName(Integer memID) {
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(GET_MEM_NAME);
+        ) {
+            pstmt.setInt(1, memID);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                return rs.getString("MEM_NAME");
+            } else {
+                return null;
+            }
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+        }
     }
+}
+
 

@@ -13,4 +13,5 @@ public interface ClassReserveDAO {
     ClassReserveVO findByPrimaryKey(Integer resID);
 
     List<ClassReserveVO> getAll();
+    String getMemName(Integer memID);
 }
