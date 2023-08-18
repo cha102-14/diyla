@@ -110,31 +110,31 @@
             }
             loadReserve(teaId);
             function deleteReserve(resId) {
-                if (resId === 0){
+
                 $.ajax({
-                    url: '/diyla_front/modifyReserve',
+                    url: '/diyla_back/modifyReserve',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: {reserveId: resId },
                     success: location.reload()
                 });
-                } else if (resId === 1) {
-                    $.ajax({
-                        url: '/diyla_front/refundReserve',
-                        method: 'post',
-                        data: {reserveId: resId},
-                        success: location.reload()
-                    })
-                }
+                // } else if (resId === 1) {
+                //     $.ajax({
+                //         url: '/diyla_back/refundReserve',
+                //         method: 'post',
+                //         data: {reserveId: resId},
+                //         success: location.reload()
+                //     })
+                // }
             }
             function refundReserve(resId) {
                 $.ajax({
-                    url: '/diyla_front/refundReserve',
+                    url: '/diyla_back/refundReserve',
                     method: 'post',
                     data: {reserveId: resId},
                     success: location.reload()
                 })
             }
-            $(document).on('click', '.delete-btn', function () {
+            $(document).on('click', '.delete-btn', '.delete-refund-btn', function () {
                 let reserveId = $(this).data('reserveid');
 
                 // 使用 SweetAlert 的確認視窗
