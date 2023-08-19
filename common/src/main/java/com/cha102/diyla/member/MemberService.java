@@ -1,5 +1,7 @@
 package com.cha102.diyla.member;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -28,13 +30,11 @@ public class MemberService {
 		if (mem_email == null || (mem_email.trim()).length()==0){
 			exMsgs.add("請輸入信箱");
 		}
-//		if (mem_email.equals()){
-//			exMsgs.add("此信箱已註冊");
-//		}
-		//		EmailValidator emailValidator = EmailValidator.getInstance();
-//		if(!emailValidator.isValid(mem_email)){
-//			exMsgs.add("信箱格式錯誤，請重新輸入");
-//		}
+
+		EmailValidator emailValidator = EmailValidator.getInstance();
+		if(!emailValidator.isValid(mem_email)){
+			exMsgs.add("信箱格式錯誤，請重新輸入");
+		}
 
 		if (mem_password == null || (mem_password.trim()).length()==0){
 			exMsgs.add("請輸入密碼");
@@ -52,11 +52,6 @@ public class MemberService {
 			exMsgs.add("電話格式錯誤，請重新輸入");
 		}
 
-//		if (mem_birthday == null){
-//			exMsgs.add("請輸入生日");
-//		}
-
-
 
 		if (mem_gender == null){
 			exMsgs.add("請輸入性別");
@@ -69,7 +64,6 @@ public class MemberService {
 		return mem;
 
 //		保留正確的資訊
-//		信箱不能重複
 
 	}
 	
@@ -112,20 +106,21 @@ public class MemberService {
 		if(mem ==null){
 			exMsgs.add("無此信箱或密碼錯誤");
 		}
+		if(mem.getMemStatus()==0){
+			exMsgs.add("因您的信箱尚未認證，請至您的信箱確認");
+		}
 
-//		EmailValidator emailValidator = EmailValidator.getInstance();
-//		if (!emailValidator.isValid(email)){
-//			exMsgs.add("格式錯誤，請重新輸入");
-//		}
+		EmailValidator emailValidator = EmailValidator.getInstance();
+		if (!emailValidator.isValid(email)){
+			exMsgs.add("格式錯誤，請重新輸入");
+		}
 
 
 		return mem;
 
 	}
 
-//	public boolean email(String email){
-//		L
-//	}
+
 
 
 }

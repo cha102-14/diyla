@@ -18,7 +18,7 @@
 
 <body>
 <h1>新增商品表單</h1>
-<form action="CommodityController" method="post" enctype="multipart/form-data">
+<form action="${ctxPath}/shop/CommodityController" method="post" enctype="multipart/form-data">
     <input type="text" value="insert" hidden="hidden" name="action">
     <span style="display: block; color: red;">${errMsg["comClassNo"]}</span>
     <label for="category_id">商品類別編號:</label>

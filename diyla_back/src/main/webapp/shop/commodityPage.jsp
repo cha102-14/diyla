@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>商品詳情</title>
     <link rel="stylesheet" type="text/css" href="../css/commodityPage.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 </head>
 
 <body>
@@ -33,9 +34,15 @@
 					<label>商品狀態：</label><span>${commodityState[commodity.comState]}</span>
 					<br>
 					<label>更新時間：</label>
-				<fmt:formatDate value="${commodity.updateTime}"
+					<fmt:formatDate value="${commodity.updateTime}"
                                 pattern="yyyy-MM-dd HH:mm:ss"/> <br>
-					<button type="submit"  class="button">修改資料</button>
+					<form method="post" action="${ctxPath}/shop/CommodityController"
+						  id="form1">
+						<input type="text" name="action" value="toUpdate" hidden>
+						<input type="text" value="${commodity.comNO}" name="comNO" hidden>
+					</form>
+					<button type="submit" class="button" form="form1">修改資料</button>
+					<a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" >返回商品清單</button></a>
         </div>
     </div>
 </div>

@@ -4,17 +4,21 @@ import java.util.List;
 
 public interface CommodityDao {
 
-    int insert(CommodityVO commodity);
+	int insert(CommodityVO commodity);
 
-    List<CommodityVO> getAll();
+	List<CommodityVO> getAll();
 
-    CommodityVO findByID(Integer comNO);
+	CommodityVO findByID(Integer comNO);
 
-    List<CommodityVO> findByNameKeyword(String nameKeyword);
+	List<CommodityVO> findByNameKeyword(String nameKeyword);
 
-    List<CommodityVO> findByComClass(Integer comClassNO);
+	List<CommodityVO> findByComClass(Integer comClassNO);
 
-    List<CommodityVO> getAllState();
+	List<CommodityVO> getAllState();
 
+	CommodityVO update(CommodityVO commodity);
+
+	// ++
+	List<CommodityVO> getAllByComNo(List<Integer> comNoList);
 
 }

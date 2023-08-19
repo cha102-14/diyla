@@ -76,10 +76,10 @@ public class CommodityOrderVO {
 		this.updateTime = updateTime;
 	}
 
-	public CommodityOrderVO(Integer opderNO, Integer memId, Timestamp orderTime, Integer orderStatus,
+	public CommodityOrderVO(Integer orderNO, Integer memId, Timestamp orderTime, Integer orderStatus,
 			Integer orderPrice, Integer discountPrice, Integer actualPrice, Timestamp updateTime) {
 		super();
-		this.orderNO = opderNO;
+		this.orderNO = orderNO;
 		this.memId = memId;
 		this.orderTime = orderTime;
 		this.orderStatus = orderStatus;
@@ -93,5 +93,13 @@ public class CommodityOrderVO {
 		super();
 	}
 
+	public CommodityOrderVO(Integer memId, Integer orderStatus, Integer orderPrice, Integer discountPrice,
+			Integer actualPrice) {
+		this.memId = memId;
+		this.orderStatus = orderStatus;
+		this.orderPrice = orderPrice;
+		this.discountPrice = discountPrice;
+		this.actualPrice = actualPrice;
+	}
 
 }
