@@ -12,7 +12,7 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <link rel="shortcut icon" href="images/DIYLA_cakeLOGO.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${ctxPath}/images/DIYLA_cakeLOGO.png" type="image/x-icon">
 
     <title>
         DIYLA
@@ -23,12 +23,12 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
-    <link href="css/responsive.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -88,6 +88,9 @@
                     </a>
                     <form class="form-inline ">
                     </form>
+                    <a href="">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -95,11 +98,11 @@
 
     <!-- end header section -->
 </div>
-<script src="js/jquery-3.4.1.min.js"></script>
+<script src="${ctxPath}/js/jquery-3.4.1.min.js"></script>
 <%--<script src="js/bootstrap.js"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
-<script src="js/custom.js"></script>
+<script src="${ctxPath}/js/custom.js"></script>
 
 </body>
 
