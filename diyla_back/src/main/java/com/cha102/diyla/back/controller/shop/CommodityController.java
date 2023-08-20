@@ -74,6 +74,18 @@ public class CommodityController extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
 
+        if ("changeState".equals(action)) {
+            Integer comState = Integer.valueOf(req.getParameter("comState"));
+            Integer comNO = Integer.valueOf(req.getParameter("comNO"));
+            int i = service.changeState(comState, comNO);
+            if (i == 1) {
+//                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/CommodityController?action=listAll");
+               res.sendRedirect(req.getContextPath()+"/shop/CommodityController?action=listAll");
+            }else {
+                // todo 錯誤頁面
+            }
+        }
+
         if ("insertPage".equals(action)) {
             List<CommodityClassVO> commodityClasses = classService.getAll(); // 取回所有商品類別
             req.setAttribute("commodityClasses", commodityClasses); // 放到大中小的小

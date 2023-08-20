@@ -48,6 +48,9 @@ public class CommodityService {
 		return commodityVOS;
 	}
 
+	public int changeState(Integer comState, Integer comNO) {
+		return dao.changeState(comState, comNO);
+	}
 
     public CommodityVO updateCommodity(CommodityVO commodity) {
 

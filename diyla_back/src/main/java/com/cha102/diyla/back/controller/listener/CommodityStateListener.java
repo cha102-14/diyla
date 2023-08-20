@@ -11,7 +11,7 @@ public class CommodityStateListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        Map<Integer,String> commodityState = Map.of(0,"下架中",1,"上架中",2,"完售");
+        Map<Integer,String> commodityState = Map.of(0,"下架中",1,"上架中");
         servletContext.setAttribute("commodityState",commodityState);
     }
 }

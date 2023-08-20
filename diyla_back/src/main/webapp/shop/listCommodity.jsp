@@ -9,12 +9,15 @@
 <body>
 <div class="container">
     <div class="header">商品列表</div>
-    <a href="${ctxPath}/shop/CommodityController?action=insertPage"><button class="add-button">新增商品</button></a>
+    <a href="${ctxPath}/shop/CommodityController?action=insertPage">
+        <button class="add-button">新增商品</button>
+    </a>
     <div class="search-bar">
     </div>
-    <form action="${ctxPath}/shop/CommodityController" method="get" enctype="application/x-www-form-urlencoded" id="findByClassNOForm">
+    <form action="${ctxPath}/shop/CommodityController" method="get" enctype="application/x-www-form-urlencoded"
+          id="findByClassNOForm">
         <input type="text" name="action" value="findByClassNO" hidden="hidden">
-        <select id="comClassNo" name="comClassNo" >
+        <select id="comClassNo" name="comClassNo">
             <option value="" selected disabled>請選擇商品類別</option>
             <c:forEach var="i" begin="1" end="${classNameMapSize}">
                 <option value="${i}">${classNameMap[i]}</option>
@@ -40,14 +43,25 @@
             <th>價格</th>
             <th>數量</th>
             <th>狀態</th>
+            <th>操作</th>
         </tr>
-        <c:forEach items="${commodityList}" var="commodity"  >
+        <c:forEach items="${commodityList}" var="commodity">
             <tr>
                 <td>${classNameMap[commodity.comClassNo]}</td>
-                <td><a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">${commodity.comName}</a></td>
+                <td>
+                    <a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">${commodity.comName}</a>
+                </td>
                 <td>${commodity.comPri}</td>
                 <td>${commodity.comQua}</td>
-                <td>${commodityState[commodity.comState]}</td>
+                <td>${commodity.comQua==0?"完售":commodityState[commodity.comState]}</td>
+                <td>
+                    <button type="submit" form="changeState${commodity.comNO}" class="add-button">${commodity.comState==0?"上架":"下架"}</button>
+                    <form action="${ctxPath}/shop/CommodityController" method="post" enctype="application/x-www-form-urlencoded" id="changeState${commodity.comNO}">
+                        <input type="text" name="action" value="changeState" hidden="hidden">
+                        <input type="text" name="comState" value="${commodity.comState==0?1:0}" hidden="hidden">
+                        <input type="text" value="${commodity.comNO}" name="comNO" hidden="hidden">
+                    </form>
+                </td>
             </tr>
         </c:forEach>
 
@@ -57,7 +71,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#comClassNo').change(()=>{
+        $('#comClassNo').change(() => {
             $('#findByClassNOForm').submit();
 
         })
