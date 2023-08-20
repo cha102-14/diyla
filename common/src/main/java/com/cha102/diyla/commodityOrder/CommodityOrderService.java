@@ -8,21 +8,23 @@ import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 public class CommodityOrderService {
 	CommodityOrderDaoJNDI dao = new CommodityOrderDaoJNDI();
 
-	public void update(Integer status, Integer orderNO) {
-		dao.update( status,  orderNO);
+	public void updateStatus(Integer status, Integer orderNO) {
+		dao.updateStatus( status,  orderNO);
+	}
+	public void update(Integer status,Integer orderNo,String recipient,String recipientAddress,String phone) {
+		dao.update(status, orderNo,recipient,recipientAddress,phone);
 	}
 
-	public Integer insert(Integer memId) {
-		return dao.insert(memId);
+	public Integer insert(CommodityOrderVO commodityOrderVO) {
+		return dao.insert(commodityOrderVO);
 	}
 
-	public List<CommodityOrderVO> getAll(Integer memId) {
-		return dao.getAll(memId);
+	public List<CommodityOrderVO> getAllByMemId(Integer memId) {
+		return dao.getAllByMemId(memId);
 	}
 
 	public CommodityOrderVO findByOrderNo(Integer OrderNo) {
-		dao.findByOrderNo(OrderNo);
-		return null;
+		return dao.findByOrderNo(OrderNo);
 	}
 
 	public void delete(Integer orderNo) {
@@ -34,5 +36,20 @@ public class CommodityOrderService {
 		List<ShoppingCartVO> cartVOs = cartService.getAll(memId);
 		return cartVOs;
 	}
+	//後台訂單
+	public List<CommodityOrderVO> getAll() {
+		return dao.getAll();
+	}
+//	//依訂單編號排序
+//	public List<CommodityOrderVO> sortByOrderNo(){
+//		String  sql = "SELECT * FROM commodity_order ORDER BY ORDER_NO";
+//		
+//		return dao.sortBy(sql);
+//	}
+//	//依訂單價格排序
+//	public List<CommodityOrderVO> sortByActualPrice(){
+//		String  sql = "SELECT * FROM commodity_order ORDER BY ACTUAL_PRICE";
+//		return dao.sortBy(sql);
+//	}
 }
  

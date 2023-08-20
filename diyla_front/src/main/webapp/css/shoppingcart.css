@@ -245,4 +245,14 @@ p.tip {
 
 .goTopButton:hover {
 	background-color: #555;
+
 }
+.swal-button-container {
+	justify-content: center;
+}
+
+.swal-footer {
+	text-align: center;
+}
+
+

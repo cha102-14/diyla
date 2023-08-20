@@ -79,6 +79,12 @@
                             常見問題
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}">
+                            購物車
+                        </a>
+                    </li>
                 </ul>
                 <div class="user_option">
                     <%--可自行更改href連結--%>

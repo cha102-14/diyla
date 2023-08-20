@@ -35,6 +35,7 @@ public class ShoppingCartServlet extends HttpServlet {
 		List<CommodityVO> comList = null;
 		if ("getAll".equals(action)) {
 			Integer memId = Integer.valueOf(req.getParameter("memId"));
+//			Integer memId = (Integer) session.getAttribute("memId"); //之後改用這個
 			int totalPrice = 0;
 			shoppingCartList = shoppingCartService.getAll(Integer.valueOf(memId));// 取出該會員所有購買商品
 			List<CommodityVO> commodityList = null;

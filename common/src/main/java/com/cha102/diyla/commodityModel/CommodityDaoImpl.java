@@ -10,18 +10,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommodityDaoImpl implements CommodityDao {
-    public static DataSource ds = null;
+	public static DataSource ds = null;
 
-    static {
-        try {
-            Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
     public static final String GET_ALL_SQL = "SELECT * FROM COMMODITY";
     public static final String INSERT_SQL = "INSERT INTO COMMODITY (COM_CLASS_NO,COM_NAME,COM_PIC,COM_DES,COM_PRI,COM_QUA,COM_STATE) VALUES (?,?,?,?,?,?,?);";
@@ -32,6 +33,8 @@ public class CommodityDaoImpl implements CommodityDao {
     public static final String GET_ONE_STATE = "SELECT * FROM COMMODITY where COM_NO = ? and COM_STATE != 0";
     public static final String UPDATE_SQL = "UPDATE COMMODITY SET COM_CLASS_NO=?,COM_NAME=?, COM_PIC=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_NO=? ";
     public static final String UPDATE_WITHOUT_PIC = "UPDATE COMMODITY SET COM_CLASS_NO=?,COM_NAME=?, COM_DES=?, COM_PRI=?, COM_QUA=?, COM_STATE=? WHERE COM_NO=? ";
+
+
 
     public static final String CHANGE_STATE = "UPDATE COMMODITY SET COM_STATE = ? WHERE COM_NO = ?";
 
@@ -172,6 +175,7 @@ public class CommodityDaoImpl implements CommodityDao {
     }
 
 
+
     @Override
     public CommodityVO update(CommodityVO commodity) {
 
@@ -218,6 +222,7 @@ public class CommodityDaoImpl implements CommodityDao {
 
     }
 
+
     // ++
     @Override
     public List<CommodityVO> getAllByComNo(List<Integer> comNoList) {
@@ -262,5 +267,6 @@ public class CommodityDaoImpl implements CommodityDao {
         commodity.setRatingSum(rs.getInt(10));
         commodity.setUpdateTime(rs.getTimestamp(11));
     }
+
 
 }
