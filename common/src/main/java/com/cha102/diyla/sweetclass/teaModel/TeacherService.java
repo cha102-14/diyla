@@ -75,6 +75,16 @@ public class TeacherService {
     public Integer getOneSpecialityID(String speName) {
         return speDAO.findBySpeName(speName);
     }
+    public String getTeacherSpecialityString(Integer teaID){
+        TeacherDAO teacherDAO = new TeacherDAOImpl();
+        List<String> teacherSpecialities = teacherDAO.getTeacherSpeciality(teaID);
+        StringBuilder teacherSpeString = new StringBuilder();
+        for(String teaSpe : teacherSpecialities) {
+            teacherSpeString.append(teaSpe);
+            teacherSpecialities.add(", ");
+        }
+        return teacherSpeString.toString();
+    }
     public List<SpecialityVO> getAllSpeciality(){
         return speDAO.getAll();
     }

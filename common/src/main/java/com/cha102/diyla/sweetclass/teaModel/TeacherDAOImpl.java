@@ -31,6 +31,9 @@ public class TeacherDAOImpl implements TeacherDAO {
             "DELETE FROM teacher where tea_id = ?";
     private static final String UPDATE =
             "UPDATE emp_id=?, tea_name=?, tea_gender=?, tea_phone=?, tea_intro=?, tea_pic=?, tea_email=?, tea_status=? where tea_id = ?";
+    private static final String GET_TEA_SPECIALITY =
+            "SELECT s.SPE_NAME FROM tea_speciality ts JOIN speciality s ON ts.SPE_ID = s.SPE_ID WHERE ts.TEA_ID = ?";
+
     @Override
     public int insert(TeacherVO teacherVO) {
         Connection con = null;
@@ -217,7 +220,24 @@ public class TeacherDAOImpl implements TeacherDAO {
         }
         return teacherVO;
     }
-
+    public List<String> getTeacherSpeciality(Integer teaID) {
+        List<String> specialities = new ArrayList<String>();
+        try(
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(GET_TEA_SPECIALITY);
+                ){
+                ResultSet rs = null;
+                pstmt.setInt(1, teaID);
+                rs = pstmt.executeQuery();
+                while(rs.next()) {
+                    specialities.add(rs.getString("spe_name"));
+                }
+        } catch(SQLException se){
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+        }
+        return specialities;
+    }
     @Override
     public List<TeacherVO> getAll() {
         List<TeacherVO> list = new ArrayList<TeacherVO>();

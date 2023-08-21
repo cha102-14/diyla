@@ -8,7 +8,7 @@ public interface TeacherDAO {
     void update(TeacherVO teacherVO);
 
     void delete(Integer teaID);
-
+    List<String> getTeacherSpeciality(Integer teaID);
     TeacherVO findByPrimaryKey(Integer teaID);
 
     List<TeacherVO> getAll();
