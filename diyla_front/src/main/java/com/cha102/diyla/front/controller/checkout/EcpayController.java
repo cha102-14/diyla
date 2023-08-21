@@ -35,7 +35,13 @@ public class EcpayController {
         } else {
             memNO = memVO.getMemId();
         }
+        // 使用取號機
         String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, itemName);
+
+        // 自訂取號
+//        String tradeNo = "";
+//        String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, itemName,tradeNo);
+
         model.addAttribute("toEcpay", toEcpay);
         return "/checkout/checkoutPage.jsp";
     }
@@ -43,7 +49,8 @@ public class EcpayController {
     @RequestMapping("/ecpayReturn")
     public String ecpayReturn(
             Model model,
-            @RequestParam("RtnCode") String rtnCode) {
+            @RequestParam("RtnCode") String rtnCode,
+            @RequestParam("MerchantTradeNo") String merchantTradeNo) {
         // rtnCode == 1 表示交易成功
         if ("1".equals(rtnCode)) {
             // todo 執行寫入訂單動作，並導引至訂單明細頁面
