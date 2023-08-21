@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.cha102.diyla.member.*"%>
+<% MemVO memVO = (MemVO) request.getAttribute("memVO");%>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -173,9 +175,9 @@
                 <button type="submit" value="login">登入</button><br>
                 <br>
                 <p>or</p>
-                <a href="" class="forget">忘記密碼</a>
+                <a href="${ctxPath}/member/forgetPw.jsp" class="forget">忘記密碼</a>
                 <span>|</span>
-                <a href="" class="reg">前往註冊</a><br>
+                <a href="${ctxPath}/member/mem_register.jsp" class="reg">前往註冊</a><br>
 
             </form>
         </div>

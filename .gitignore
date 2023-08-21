@@ -33,3 +33,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+diyla_front/src/main/resources/application-jdbc.yaml
