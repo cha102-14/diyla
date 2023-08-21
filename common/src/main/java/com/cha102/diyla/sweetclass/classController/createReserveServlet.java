@@ -43,7 +43,7 @@ public class createReserveServlet extends HttpServlet {
         Date currentDate = new Date();
         //判斷該課程是否可預約
         String[] result = classService.confirmUserReserve(courseId,memId,headcount, currentDate);
-        //創建gson來處理回傳的結果
+        //創建json來處理回傳的結果
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("isSuccessful", result[0]);
         jsonObject.put("message", result[1]);

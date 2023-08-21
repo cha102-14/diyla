@@ -3,7 +3,7 @@ package com.cha102.diyla.sweetclass.teaModel;
 import java.util.List;
 
 public interface TeacherDAO {
-    void insert(TeacherVO teacherVO);
+    int insert(TeacherVO teacherVO);
 
     void update(TeacherVO teacherVO);
 

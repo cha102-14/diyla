@@ -1,11 +1,15 @@
 package com.cha102.diyla.sweetclass.teaModel;
 
-import java.util.*;
-import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpecialityDAOImpl implements SpecialityDAO {
     private static DataSource ds = null;
@@ -27,6 +31,8 @@ public class SpecialityDAOImpl implements SpecialityDAO {
             "DELETE FROM speciality where spe_id = ?";
     private static final String UPDATE =
             "UPDATE spe_id=?, spe_name=? where spe_id = ?";
+    private static final String GET_BY_NAME =
+            "SELECT spe_id FROM speciality where spe_name = ?";
     @Override
     public void insert(SpecialityVO specialityVO) {
         Connection con = null;
@@ -188,7 +194,26 @@ public class SpecialityDAOImpl implements SpecialityDAO {
         }
         return specialityVO;
     }
-
+    public Integer findBySpeName(String speName){
+        SpecialityVO specialityVO = null;
+        ResultSet rs = null;
+        try(
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(GET_BY_NAME);
+                ){
+            pstmt.setString(1, speName);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                Integer speId = rs.getInt("spe_id");
+                return speId;
+            } else {
+                return -1;
+            }
+        } catch(SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+        }
+    }
     @Override
     public List<SpecialityVO> getAll() {
         List<SpecialityVO> list = new ArrayList<SpecialityVO>();

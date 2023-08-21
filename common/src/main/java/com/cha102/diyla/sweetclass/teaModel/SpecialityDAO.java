@@ -12,5 +12,7 @@ public interface SpecialityDAO {
 
     SpecialityVO findByPrimaryKey(Integer speID);
 
+    Integer findBySpeName(String speName);
+
     List<SpecialityVO> getAll();
 }

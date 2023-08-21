@@ -12,7 +12,7 @@ public class TeacherService {
         teaSpeDAO = new TeaSpecialityDAOImpl();
     }
 
-    public TeacherVO addTeacher(Integer empID, String teaName, Integer teaGender, String teaPhone,
+    public int addTeacher(Integer empID, String teaName, Integer teaGender, String teaPhone,
                                 String teaIntro, byte[] teaPic, String teaEmail, int teaStatus){
         TeacherVO teacherVO = new TeacherVO();
         teacherVO.setEmpId(empID);
@@ -23,9 +23,9 @@ public class TeacherService {
         teacherVO.setTeaPic(teaPic);
         teacherVO.setTeaEmail(teaEmail);
         teacherVO.setTeaStatus(teaStatus);
-        teaDAO.insert(teacherVO);
+        int pk = teaDAO.insert(teacherVO);
 
-        return teacherVO;
+        return pk;
     }
     public TeacherVO updateTeacher(Integer empID, String teaName, Integer teaGender, String teaPhone,
                                    String teaIntro, byte[] teaPic, String teaEmail, int teaStatus){
@@ -71,6 +71,9 @@ public class TeacherService {
     }
     public SpecialityVO getOneSpeciality(Integer speID) {
         return speDAO.findByPrimaryKey(speID);
+    }
+    public Integer getOneSpecialityID(String speName) {
+        return speDAO.findBySpeName(speName);
     }
     public List<SpecialityVO> getAllSpeciality(){
         return speDAO.getAll();

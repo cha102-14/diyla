@@ -1,11 +1,15 @@
 package com.cha102.diyla.sweetclass.teaModel;
 
-import java.util.*;
-import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeacherDAOImpl implements TeacherDAO {
     private static DataSource ds = null;
@@ -28,7 +32,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     private static final String UPDATE =
             "UPDATE emp_id=?, tea_name=?, tea_gender=?, tea_phone=?, tea_intro=?, tea_pic=?, tea_email=?, tea_status=? where tea_id = ?";
     @Override
-    public void insert(TeacherVO teacherVO) {
+    public int insert(TeacherVO teacherVO) {
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -47,6 +51,10 @@ public class TeacherDAOImpl implements TeacherDAO {
             pstmt.setInt(8, teacherVO.getTeaStatus());
             pstmt.executeUpdate();
 
+            ResultSet generatedKeys = pstmt.getGeneratedKeys();
+            generatedKeys.next();
+            int generatedKey = generatedKeys.getInt(1); // 取得生成的pk
+            return generatedKey;
             // Handle any SQL errors
         } catch (SQLException se) {
             throw new RuntimeException("A database error occured. "
