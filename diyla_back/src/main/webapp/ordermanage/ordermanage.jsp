@@ -27,7 +27,6 @@ body {
 	margin: 0;
 	padding: 0;
 	background-color: #f4f4f4;
-	 overflow: hidden;
 	
 }
 
@@ -53,14 +52,15 @@ th, td {
 #main_content {
 box-sizing:border-box;
 	float: inherit;
-	height: 100vh;
+	height: 800px;
 	margin: 0px auto;
 	background-color: #fff;
 	padding: 5px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	padding: 0px;
 	float: right;
-	width: 980px;
+	width: 960px;
+	overflow: scoll;
 }
 
 .heading {
