@@ -60,7 +60,39 @@
         <button type="submit" class="button" form="addCart">加入購物車</button>
         <button type="submit" class="button">加入追蹤</button>
 
+    </div>
 
+    <!-- 商品評論 -->
+    <div class="review-container">
+        <div class="average-rating">
+            <div class="star-rating">
+                <span class="star-icon">★</span>
+                <span class="star-icon">★</span>
+                <span class="star-icon">★</span>
+                <span class="star-icon">★</span>
+                <span class="star-icon">★</span>
+                <!-- 這裡可以根據平均評分設定星星數量 -->
+            </div>
+            <div>
+                平均評分：4.5
+            </div>
+        </div>
+        <div class="filter-options">
+            <button>有評論</button>
+            <button>有照片</button>
+            <button>由最高到低</button>
+            <button>由最低到高</button>
+        </div>
+        <div class="comment">
+            <div class="member-info">
+                會員名稱：John Doe
+                <span class="rating">★★★★★</span>
+            </div>
+            <div class="date">2023-08-20</div>
+            <div class="comment-content">
+                商品品質很好，物超所值！
+            </div>
+        </div>
     </div>
 </div>
 

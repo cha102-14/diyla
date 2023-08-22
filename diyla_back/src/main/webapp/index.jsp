@@ -12,7 +12,7 @@
 <body>
     <div class="wrapper">
         <aside id="aside">
-            <h1 class="logo"><a href="http://localhost:8081/diyla_back/"><img src="./img/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image"></a></h1>
+            <h1 class="logo"><a href="http://localhost:8081/diyla_back/"><img src="${ctxPath}/img/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image"></a></h1>
             <ul>
                 <li class="func">
                     <a href="http://127.0.0.1:5500/sideBar/test.html" class="func_link">
@@ -79,15 +79,15 @@
                 </a>
             </div>
         </aside>
-        <main id="main">
-            <div>
+<!--         <main id="main"> -->
+<!--             <div> -->
 
-                <div id="content">
-                    <!-- <h1 id="selction">請選擇功能</h1> -->
-                </div>
+<!--                 <div id="content"> -->
+<!--                     <h1 id="selction">請選擇功能</h1> -->
+<!--                 </div> -->
 
-            </div>
-        </main>
+<!--             </div> -->
+<!--         </main> -->
     </div>
     
     <script src="./vendors/jquery/jquery-3.7.0.min.js"></script>    

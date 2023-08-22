@@ -1,3 +1,6 @@
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.cha102.diyla.member.MemberService"%>
+<%@page import="com.cha102.diyla.member.MemVO"%>
 <%@page
 	import="com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService"%>
 <%@page import="com.cha102.diyla.commodityModel.CommodityService"%>
@@ -9,12 +12,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>訂單確認</title>
+<title>填寫付款資訊</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 引入其他所需的 CSS 和 JavaScript 檔案 -->
 <link rel="shortcut icon" href="${ctxPath}/images/DIYLA_cakeLOGO.png"
@@ -32,77 +34,312 @@
 <link href="${ctxPath}/css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
+<style>
+.mainContent {
+	width: 70%;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.orderDetail {
+	margin-bottom: 20px;
+}
+
+.orderDetail table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.orderDetail th, .orderDetail td {
+	border: 1px solid #ccc;
+	padding: 10px;
+	text-align: center;
+}
+
+.title {
+	background-color: #f2f2f2;
+}
+
+.total {
+	display: block;
+	padding: 8px;
+	background-color: #FFFFDF;
+	margin-top: 5px;
+	text-align: right;
+	font-weight: bold;
+	text-align: right;
+}
+
+.form-row {
+	margin-bottom: 10px;
+}
+
+label {
+	display: inline-block;
+	width: 150px;
+	font-weight: bold;
+}
+
+input[type="text"], input[type="tel"], select {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.confirmButton {
+	padding: 10px 20px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.confirmButton:hover {
+	background-color: #0056b3;
+}
+
+.total {
+	float: right;
+}
+
+.container {
+	border: 1px solid #ccc;
+	padding: 20px;
+}
+
+.title {
+	cursor: pointer;
+	padding: 5px;
+	background-color: #FFE4CA;
+	font-weight: bold;
+	border-bottom: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.form-container {
+	display: none;
+}
+
+.form-container.active {
+	display: block;
+}
+
+.form-row {
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.canceled {
+	display: inline-block;
+	/* 	float: right; */
+	padding: 10px 20px;
+	border: 1px solid black;
+	color: teal;
+	background-color: #red;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid black;
+}
+
+.canceled::hover {
+	color: red;
+	background-color: #red;
+}
+
+#card {
+	margin-top: 10px;
+	padding: 0px;
+}
+
+#paidByCard {
+	display: inline-block;
+	padding: 10px 20px;
+	width: 120px;
+	border-radius: 5px;
+	background-color: white;
+	color: black;
+}
+</style>
 </head>
 <body>
 	<div class="topPage">
 		<jsp:include page="../front_header.jsp" />
 	</div>
 	<div class="mainContent">
-		<h1>訂單確認</h1>
+		<h1 style="text-align: center; padding: 20px;">訂購明細</h1>
 
-		<div class="orderDetail">
-			<table cellspacing="0">
-				<tr class="title">
-					<td class="subtitle">商品名稱</td>
-					<td class="subtitle">單價</td>
-					<td class="subtitle">數量</td>
-					<td class="subtitle">小計</td>
-				</tr>
-				<c:forEach var="detail" items="${detailList}">
-					<c:forEach var="comVO" items="${commodityList}">
-						<c:if test="${detail.comNo == comVO.comNO}">
-							<tr class="itemrow">
-								<td class="itemInfo">${comVO.comName}</td>
-								<td class="itemInfo">${comVO.comPri}</td>
-								<td class="itemInfo">${detail.comQuantity}</td>
-								<td class="itemInfo">${comVO.comPri*detail.comQuantity}</td>
-							</tr>
-						</c:if>
+		<form action="${ctxPath}/memberOrder/OrderController" method="post">
+			<div class="orderDetail">
+				<table class="detail">
+					<tr class="title">
+						<td class="subtitle">商品名稱</td>
+						<td class="subtitle">單價</td>
+						<td class="subtitle">數量</td>
+						<td class="subtitle">小計</td>
+					</tr>
+					<c:forEach var="cartItem" items="${shoppingCartList}">
+						<c:forEach var="comVO" items="${commodityList}">
+							<c:if test="${cartItem.comNo == comVO.comNO}">
+								<tr class="itemrow">
+									<td class="itemInfo comName">${comVO.comName}</td>
+									<td class="itemInfo comPri">${comVO.comPri}</td>
+									<td class="itemInfo comAmount">${cartItem.comAmount}</td>
+									<td class="itemInfo">${comVO.comPri*cartItem.comAmount}</td>
+								</tr>
+							</c:if>
+						</c:forEach>
 					</c:forEach>
-				</c:forEach>
-			</table>
-			<span>總金額${totalPrice}</span>
-		</div>
+				</table>
+				<span class="total">總金額${totalPrice}</span>
+			</div>
 
-		<div>
-			<label for="useTokens">使用代幣：</label> <select id="useTokens">
-				<option value="true">是</option>
-				<option value="false">否</option>
-			</select>
-		</div>
-		<div class="orderForm">
-			<h2>填寫訂單資訊</h2>
-			<form action="ConfirmOrderController" method="post">
-				<div class="form-row">
-					<label for="recipientName">收件人姓名：</label> <input type="text"
-						id="recipientName" name="recipientName" required>
+			<div>
+				<label for="useTokens">使用代幣：</label>
+				<div>
+					<input type="radio" id="yes" name="coin" value="0" checked /> <label
+						for="yes">是</label>
 				</div>
-				<div class="form-row">
-					<label for="recipientPhone">收件人電話：</label> <input type="tel"
-						id="recipientPhone" name="recipientPhone" required>
+
+				<div>
+					<input type="radio" id="no" name="coin" value="1" /> <label
+						for="no">否</label>
 				</div>
-				<div class="form-row">
-					<label for="recipientAddress">收件人地址：</label> <input type="text"
-						id="recipientAddress" name="recipientAddress" required>
+			</div>
+			<div class="container">
+				<div class="title">填寫付款資訊</div>
+				<div class="form-container">
+					<div class="form-row">
+
+						<label for="recipientName">收件人姓名：</label> <input type="text"
+							id="recipientName" name="recipient" value="${param.recipient}">
+						<p style="display: block; color: red; padding: 0px 3px;">${errMsg["recipient"]}</p>
+
+					</div>
+					<div class="form-row">
+
+						<label for="recipientPhone">收件人電話：</label> <input type="tel"
+							id="recipientPhone" name="phone" value="${param.phone}">
+						<p style="display: block; color: red; padding: 0px 3px">${errMsg["phone"]}</p>
+					</div>
+					<div class="form-row">
+						<label for="recipientAddress">收件人地址：</label> <input type="text"
+							id="recipientAddress" name="recipientAddress"
+							value="${param.recipientAddress}">
+						<p style="display: block; color: red; padding: 0px 3px">${errMsg["recipientAddress"]}</p>
+
+					</div>
 				</div>
-				<div class="form-row">
-					<label for="paymentMethod">付款方式：</label> <select id="paymentMethod"
-						name="paymentMethod" required>
-						<option value="creditCard">信用卡</option>
-						<option value="cashOnDelivery">貨到付款</option>
-					</select>
-				</div>
-				<div class="form-row">
-					<button type="submit" class="confirmButton">前往付款</button>
-				</div>
+			</div>
+			<div class="form-row">
+				<label for="paymentMethod">付款方式：</label> <select id="paymentMethod"
+					name="paymentMethod" required>
+					<option value="cashOnDelivery">貨到付款</option>
+					<option value="creditCard">信用卡</option>
+				</select>
+			</div>
+			<input type="hidden" name="action" value="orderConfirm"
+				id="actionInput"> <input type="submit" class="confirmButton"
+				value="確認"> <a
+				href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}"
+				class="canceled">返回購物車</a>
+		</form>
+		<div id="card">
+			<form action="${ctxPath}/checkout/ecpay" method="post" id="cardForm">
+				<input type="hidden" name="cardrecipient" value="" id="cardrecipient">
+				<input type="hidden" name="cardrecipientAddress" value="" id="cardrecipientAddress">
+				<input type="hidden" name="cardphone" value="" id="cardphone">
+				<input type="hidden" name="tradeDesc" value="信用卡付款"> 
+				<input type="hidden" name="totalPrice" value="${totalPrice}"> 
+				<input type="hidden" name="itemName" value="商品一批">
+				<input type="hidden" name="memId" value="${memId}">
+				<button type="button" id="paidByCard">前往付款</button>
 			</form>
 		</div>
-
 	</div>
-	<jsp:include page="../front_footer.jsp" />
 
+	<jsp:include page="../front_footer.jsp" />
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		
+		$(document).ready(function() {
+			const formContainer = document.querySelector('.form-container');
+
+			$(".title").click(function() {
+				formContainer.classList.toggle('active');
+			});
+			$("#paymentMethod").change(function() {
+				const selectedPaymentMethod = $(this).val();
+				const actionInput = $("#actionInput");
+				if (selectedPaymentMethod === "creditCard") {
+					actionInput.val("orderConfirmCard");
+				} else if (selectedPaymentMethod === "cashOnDelivery") {
+					actionInput.val("orderConfirm");
+				}
+			});
+			// 預設隱藏信用卡付款表單
+			$("#card").hide();
+
+			// 監聽付款方式選擇變化
+			$("#paymentMethod").change(function() {
+				const selectedPaymentMethod = $(this).val();
+
+				// 如果選擇的是信用卡，顯示信用卡付款表單；否則隱藏
+				if (selectedPaymentMethod === "creditCard") {
+					$("#card").show();
+					$(".confirmButton").hide();
+				} else {
+					$("#card").hide();
+					$(".confirmButton").show();
+				}
+			});
+
+			$("#paidByCard").click(function() {
+				
+				document.getElementsByName("itemName")[0].value = "DIYLA商品一批";
+				document.getElementById("cardForm").submit();
+			});
+
+			 $("#recipientName, #recipientPhone, #recipientAddress").on("input", function() {
+		            // 獲取收件人相關欄位的值
+		            const recipient = $("#recipientName").val();
+		            const recipientPhone = $("#recipientPhone").val();
+		            const recipientAddress = $("#recipientAddress").val();
+		            
+		            // 將收件人值填入下面表單的對應欄位
+		            $("#cardrecipient").val(recipient);
+		            $("#cardrecipientAddress").val(recipientAddress);
+		            $("#cardphone").val(recipientPhone);
+		        });
+			
+			
+			
+			function validateFormFields() {
+				const recipientName = $("#recipientName").val();
+                const recipientPhone = $("#recipientPhone").val();
+                const recipientAddress = $("#recipientAddress").val();
+                const phoneRegex = /^09\d{8}$/; // 電話號碼需以 "09" 開頭，總共 10 位數
+                
+                if (recipientName.trim() === "") {
+                    alert("請填寫收件人姓名");
+                    return false;
+                }
+                
+                if (!phoneRegex.test(recipientPhone)) {
+                    alert("請填寫正確的電話號碼，需以 09 開頭且總共 10 位數");
+                    return false;
+                }
+                
+                if (recipientAddress.trim() === "") {
+                    alert("請填寫收件人地址");
+                    return false;
+                }
+                return true;
+			}
+
+		});
 	</script>
+
+
 </body>
 </html>

@@ -93,13 +93,17 @@
 					</c:forEach>
 				</table>
 				<div class="handle">
-					<form action="ShoppingCartServlet" method="post">
+
+					<form action="${ctxPath}/shop/ShoppingCartServlet" method="post">
+
 						<button type="submit" class="clearButton">清空購物車</button>
 						<input type="hidden" name="action" value="clear">
 					</form>
 					<a href="${ctxPath}/shop/CommodityController?action=listAll"
 						class="shopPage">繼續購物</a> <span class="total-price">總金額:${totalPrice}元</span>
-					<form action="OrderController" method="post">
+
+					<form action="${ctxPath}/memberOrder/OrderController" method="post">
+
 						<input type="hidden" name="action" value="checkout"> <input
 							type="hidden" name="" value="">
 						<button class="checkout-btn" type="submit">結帳</button>
@@ -211,5 +215,6 @@
 
 						});
 	</script>
+	
 </BODY>
 </HTML>

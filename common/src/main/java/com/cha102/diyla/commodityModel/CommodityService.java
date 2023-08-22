@@ -40,12 +40,17 @@ public class CommodityService {
 		return commodityVOS;
 	}
 
+
 	public List<CommodityVO> findByComClass(Integer comClassNO) {
 		List<CommodityVO> commodityVOS = dao.findByComClass(comClassNO);
 		for (CommodityVO commodityVO : commodityVOS) {
 			setShowPic(commodityVO);
 		}
 		return commodityVOS;
+	}
+
+	public int changeState(Integer comState, Integer comNO) {
+		return dao.changeState(comState, comNO);
 	}
 
 

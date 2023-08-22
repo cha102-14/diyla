@@ -35,10 +35,15 @@ public class ShoppingCartServlet extends HttpServlet {
 		List<CommodityVO> comList = null;
 		if ("getAll".equals(action)) {
 			Integer memId = Integer.valueOf(req.getParameter("memId"));
+//			Integer memId = (Integer) session.getAttribute("memId"); //之後改用這個
+//			if(memId==null||memId="") {
+// 			導向登入頁面
+
+//			}
 			int totalPrice = 0;
 			shoppingCartList = shoppingCartService.getAll(Integer.valueOf(memId));// 取出該會員所有購買商品
 			List<CommodityVO> commodityList = null;
-			if (shoppingCartList.size()>0) {
+			if (shoppingCartList.size() > 0) {
 				List<Integer> comNoList = shoppingCartService.getComNoList(shoppingCartList);
 				commodityList = commodityService.getAllByComNo(comNoList);
 				totalPrice = shoppingCartService.getTotalPrice(shoppingCartList);

@@ -16,11 +16,16 @@
             <input type="submit" value="送出">
 
 </form>
-查詢訂單:
-<form action="${ctxPath}/shop/OrderController" method="post">
+前台查詢訂單:
+<form action="${ctxPath}/memberOrder/OrderController" method="post">
            	<input type="text" name="memId" value="">
             <input type="hidden" name="action" value="listOrder">
             <input type="submit" value="送出">
+
+</form>
+後臺管理訂單:
+<form action="${ctxPath}/orderManage/OrderManageController" method="post">
+            <input type="hidden" name="action" value="listAllOrder">
 
 </form>
 

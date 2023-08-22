@@ -1,6 +1,7 @@
 package com.cha102.diyla.commodityOrder;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class CommodityOrderVO {
 	private Integer orderNO;
@@ -11,6 +12,47 @@ public class CommodityOrderVO {
 	private Integer discountPrice;
 	private Integer actualPrice;
 	private Timestamp updateTime;
+	private String recipient;
+	private String recipientAddress;
+
+	public String getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
+	}
+
+	public CommodityOrderVO(Integer memId, Integer orderStatus, Integer orderPrice, Integer discountPrice,
+			Integer actualPrice, String recipient, String recipientAddress, String phone) {
+		super();
+		this.memId = memId;
+		this.orderStatus = orderStatus;
+		this.orderPrice = orderPrice;
+		this.discountPrice = discountPrice;
+		this.actualPrice = actualPrice;
+		this.recipient = recipient;
+		this.recipientAddress = recipientAddress;
+		this.phone = phone;
+	}
+
+	public String getRecipientAddress() {
+		return recipientAddress;
+	}
+
+	public void setRecipientAddress(String recipientAddress) {
+		this.recipientAddress = recipientAddress;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	private String phone;
 
 	public Integer getOrderNO() {
 		return orderNO;
@@ -87,6 +129,26 @@ public class CommodityOrderVO {
 		this.discountPrice = discountPrice;
 		this.actualPrice = actualPrice;
 		this.updateTime = updateTime;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(actualPrice, discountPrice, memId, orderNO, orderPrice, orderStatus, orderTime, updateTime);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommodityOrderVO other = (CommodityOrderVO) obj;
+		return Objects.equals(actualPrice, other.actualPrice) && Objects.equals(discountPrice, other.discountPrice)
+				&& Objects.equals(memId, other.memId) && Objects.equals(orderNO, other.orderNO)
+				&& Objects.equals(orderPrice, other.orderPrice) && Objects.equals(orderStatus, other.orderStatus)
+				&& Objects.equals(orderTime, other.orderTime) && Objects.equals(updateTime, other.updateTime);
 	}
 
 	public CommodityOrderVO() {

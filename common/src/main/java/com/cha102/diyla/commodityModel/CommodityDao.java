@@ -21,4 +21,8 @@ public interface CommodityDao {
 	// ++
 	List<CommodityVO> getAllByComNo(List<Integer> comNoList);
 
+
+	int changeState(Integer comState, Integer comNO);
+
+
 }

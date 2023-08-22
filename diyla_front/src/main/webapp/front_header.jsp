@@ -12,7 +12,7 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <link rel="shortcut icon" href="images/DIYLA_cakeLOGO.png" type="image/x-icon">
+    <link rel="shortcut icon" href="${ctxPath}/images/DIYLA_cakeLOGO.png" type="image/x-icon">
 
     <title>
         DIYLA
@@ -23,12 +23,12 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
-    <link href="css/responsive.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -79,15 +79,34 @@
                             常見問題
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <%--可自行更改href連結--%>
+                        <a class="nav-link" href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}">
+                            購物車
+                        </a>
+                    </li>
                 </ul>
                 <div class="user_option">
+                    <c:choose>
+                        <c:when test="${empty memVO}">
+                            <a href="${ctxPath}/member/mem_login.jsp">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>登入</span>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${ctxPath}/member/會員專區">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>${memVO.memName}你好</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                     <%--可自行更改href連結--%>
-                    <a href="">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        <span>登入</span>
-                    </a>
                     <form class="form-inline ">
                     </form>
+                    <a href="">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -95,11 +114,11 @@
 
     <!-- end header section -->
 </div>
-<script src="js/jquery-3.4.1.min.js"></script>
+<script src="${ctxPath}/js/jquery-3.4.1.min.js"></script>
 <%--<script src="js/bootstrap.js"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
-<script src="js/custom.js"></script>
+<script src="${ctxPath}/js/custom.js"></script>
 
 </body>
 

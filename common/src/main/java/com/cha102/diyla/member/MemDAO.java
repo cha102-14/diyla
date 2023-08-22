@@ -15,7 +15,8 @@ public class MemDAO implements MemDAO_interface {
 //    String userid = "root";
 //    String passwd = "T2012w1221";
 
-    private  static DataSource ds = null;
+    private static DataSource ds = null;
+
     static {
         try {
             Context ctx = new InitialContext();
@@ -24,6 +25,7 @@ public class MemDAO implements MemDAO_interface {
             ne.printStackTrace();
         }
     }
+
     @Override
     public void insert(MemVO memVo) {
 
@@ -45,8 +47,8 @@ public class MemDAO implements MemDAO_interface {
             pre.setString(7, memVo.getMemAddress());
 
             pre.executeUpdate();
-        }  catch (SQLException e) {
-            throw new RuntimeException("A database error occured. "+ e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("A database error occured. " + e.getMessage());
         } finally {
             if (pre != null) {
                 try {
@@ -80,7 +82,7 @@ public class MemDAO implements MemDAO_interface {
             pre = con.prepareStatement("DELETE from member where mem_id =?");
             pre.setInt(1, mem_id);
             pre.executeUpdate();
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (pre != null) {
@@ -126,7 +128,7 @@ public class MemDAO implements MemDAO_interface {
 
             pre.executeUpdate();
 
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (pre != null) {
@@ -143,6 +145,20 @@ public class MemDAO implements MemDAO_interface {
                     e.printStackTrace(System.err);
                 }
             }
+        }
+    }
+
+    @Override
+    public void updatePw(String newPassword,String email) {
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pre = con.prepareStatement("update member set mem_password=? where mem_email=?")
+        ) {
+            pre.setString(1, newPassword);
+            pre.setString(2, email);
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -181,7 +197,7 @@ public class MemDAO implements MemDAO_interface {
                 memVo.setRpmsgCount(rs.getInt("rpmsg_count"));
 
             }
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -247,7 +263,7 @@ public class MemDAO implements MemDAO_interface {
                 memList.add(memVo);
 
             }
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (rs != null) {
@@ -286,8 +302,8 @@ public class MemDAO implements MemDAO_interface {
 
         try (
 //             Connection con = DriverManager.getConnection(url, userid, passwd);
-             Connection con = ds.getConnection();
-             PreparedStatement pre = con.prepareStatement("SELECT * from member where mem_email=? and mem_password=?")) {
+                Connection con = ds.getConnection();
+                PreparedStatement pre = con.prepareStatement("SELECT * from member where mem_email=? and mem_password=?")) {
             pre.setString(1, memEmail);
             pre.setString(2, memPassword);
             try (ResultSet rs = pre.executeQuery()) {
@@ -312,13 +328,49 @@ public class MemDAO implements MemDAO_interface {
                     return mem;
                 }
             }
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
+    @Override
+    public MemVO selectPw(String memEmail, String memPhone) {
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pre = con.prepareStatement("SELECT * from member where mem_email=? and mem_phone=?")
+
+        ) {
+            pre.setString(1, memEmail);
+            pre.setString(2, memPhone);
+            try (ResultSet rs = pre.executeQuery()) {
+                if (rs.next()) {
+                    MemVO mem = new MemVO();
+                    mem.setMemId(rs.getInt("mem_id"));
+                    mem.setMemName(rs.getString("mem_name"));
+                    mem.setMemEmail(rs.getString("mem_email"));
+                    mem.setMemPassword(rs.getString("mem_password"));
+                    mem.setMemPhone(rs.getString("mem_phone"));
+                    mem.setMemBirthday(rs.getDate("mem_birthday"));
+                    mem.setMemGender(rs.getInt("mem_gender"));
+                    mem.setMemAddress(rs.getString("mem_address"));
+                    mem.setMemStatus(rs.getInt("mem_status"));
+                    mem.setMemDate(rs.getDate("mem_date"));
+                    mem.setMemToken(rs.getInt("mem_token"));
+                    mem.setBlacklistCom(rs.getInt("blacklist_com"));
+                    mem.setBlacklistArt(rs.getInt("blacklist_art"));
+                    mem.setBlacklistDiy(rs.getInt("blacklist_diy"));
+                    mem.setBlacklistClass(rs.getInt("blacklist_class"));
+                    mem.setRpmsgCount(rs.getInt("rpmsg_count"));
+                    return mem;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public static void main(String[] args) {
@@ -396,9 +448,8 @@ public class MemDAO implements MemDAO_interface {
 //        mem.delete(8);
 
         //登入查詢
-        MemVO memVo4 = mem.selectLogin("border1@diyla.com","B654321");
+        MemVO memVo4 = mem.selectLogin("border1@diyla.com", "B654321");
         System.out.println(memVo4.getMemName() + ",");
-
 
 
     }

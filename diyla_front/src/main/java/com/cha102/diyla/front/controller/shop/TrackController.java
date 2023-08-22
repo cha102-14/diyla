@@ -1,16 +1,16 @@
 package com.cha102.diyla.front.controller.shop;
 
+import com.cha102.diyla.commodityModel.CommodityVO;
 import com.cha102.diyla.track.CommodityTrackService;
-import com.cha102.diyla.track.CommodityTrackVO;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/shop")
 public class TrackController {
 
@@ -22,12 +22,12 @@ public class TrackController {
     }
 
     @RequestMapping("/track/{comNO}")
-    public List<CommodityTrackVO> track(@PathVariable Integer comNO, Model model) {
+    public String track(@PathVariable Integer comNO, Model model) {
         Integer memNO = 1;
-        String referer = req.getHeader("referer");
-        System.out.println("referer:"+ referer);
-        commodityTrackService.findAllByMemId(1);
-        return commodityTrackService.findAllByMemId(1);
+        List<CommodityVO> commodityVOS = commodityTrackService.findAllByMemId(memNO);
+        model.addAttribute("commodityList", commodityVOS);
+        return "shop/commodityTrack.jsp";
+
     }
 
 

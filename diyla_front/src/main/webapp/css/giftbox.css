@@ -1,0 +1,99 @@
+.gift-animation {
+  margin: 10px;
+}
+.giftbox {
+  position: relative;
+}
+  
+  .giftbox__middle { 
+    position: absolute;
+    top: 50%;
+    left:0;
+    right: 0;
+    z-index:1;
+    animation: couponshake 2.2s cubic-bezier(0.3, 0, 0.9, 1.4) infinite both;
+  }
+  
+  .giftbox__bottom {
+    margin-top: -5px;
+    position: relative;
+    z-index: 2;
+  }
+  svg {
+    margin: 0 auto;
+    display: table;
+  }
+
+
+.gift-animation__text {
+  margin: 30px auto 0;
+  display: table;
+  animation: slideUp 2.2s cubic-bezier(0.3, 0, 0.9, 1.4);
+}
+
+@keyframes slideToggle {
+  0% {
+    transform: translateY(0);
+  }
+  15% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-70px);
+  }
+  80% {
+    transform: translateY(-70px);
+  }
+  90% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes couponshake {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-62px);
+  }
+  45% {
+    transform: translateY(-62px);
+    left: 0;
+  }
+  55% {
+    left: -10px;
+  }
+  60% {
+    left: 10px;
+  }
+  65% {
+    left: -10px;
+  }
+  70% {
+    left: 10px;
+  }
+  75% {
+    left: 0;
+  }
+  78% {
+    transform: translateY(-62px);
+  }
+  90% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  0% { 
+    opacity: 0;
+    transform: translateY(30px)
+  }
+  60% { 
+    opacity: 0;
+    transform: translateY(30px)
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0)
+  }
+};
