@@ -43,8 +43,8 @@ public class LoginServlet extends HttpServlet {
             String url = "/";
             HttpSession session = req.getSession();
             session.setAttribute("memVO", memVO);
-            RequestDispatcher success = req.getRequestDispatcher(url);
-            success.forward(req,res);
+            res.sendRedirect(req.getContextPath()+"/index.jsp");
+
         }
 
 

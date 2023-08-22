@@ -87,11 +87,21 @@
                     </li>
                 </ul>
                 <div class="user_option">
+                    <c:choose>
+                        <c:when test="${empty memVO}">
+                            <a href="${ctxPath}/member/mem_login.jsp">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>登入</span>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="${ctxPath}/member/會員專區">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>${memVO.memName}你好</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                     <%--可自行更改href連結--%>
-                    <a href="">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        <span>登入</span>
-                    </a>
                     <form class="form-inline ">
                     </form>
                     <a href="">
