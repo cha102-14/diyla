@@ -11,7 +11,7 @@
 
 	
 		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li><br>
-		<li><a href='getallorderlist.jsp'>查詢所有訂單</a></li><br>
+		<li><a href='getallorderlist_EL.jsp'>查詢所有訂單</a></li><br>
 		
 
 		<form action="DiyOrderController" method="post">

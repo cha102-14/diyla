@@ -45,7 +45,7 @@ min-width: calc(100% - 300px);
   <div class="center-div">
     <h1>DIY首頁</h1>
     <ul>
-      <li><a href='getallorderlist.jsp'>查詢所有訂單</a><br><br></li>
+      <li><a href='getallorderlist_EL.jsp'>查詢所有訂單</a><br><br></li>
       <li><a href='addorderlist.jsp'>新增訂單</a><br><br></li>
       <li>
         <form method="post" action="DiyOrderController">

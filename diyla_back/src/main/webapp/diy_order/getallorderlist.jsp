@@ -53,7 +53,7 @@ pageContext.setAttribute("DOVOS",DOVOS);
 		<td><%=b.getReservationStatus()%></td>
 		<td><%=b.getPaymentStatus()%></td>
 		<td><%=b.getDiyPrice()%></td>
-		<td>
+			<td>
 			  <FORM METHOD="post" ACTION="DiyOrderController" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="diyOrderNo" value="<%=b.getDiyOrderNo()%>">
