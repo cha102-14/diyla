@@ -79,9 +79,11 @@ public class TeacherService {
         TeacherDAO teacherDAO = new TeacherDAOImpl();
         List<String> teacherSpecialities = teacherDAO.getTeacherSpeciality(teaID);
         StringBuilder teacherSpeString = new StringBuilder();
-        for(String teaSpe : teacherSpecialities) {
-            teacherSpeString.append(teaSpe);
-            teacherSpecialities.add(", ");
+        for (int i = 0; i < teacherSpecialities.size(); i++) {
+            teacherSpeString.append(teacherSpecialities.get(i));
+            if (i < teacherSpecialities.size() - 1) {
+                teacherSpeString.append(", ");
+            }
         }
         return teacherSpeString.toString();
     }

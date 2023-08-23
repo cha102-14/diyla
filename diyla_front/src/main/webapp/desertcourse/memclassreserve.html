@@ -29,15 +29,13 @@
 
 <script>
         $(document).ready(function () {
-            function getMemId() {
-                return 1;
-            }
+            var getMemId = 1;
 
-            function loadReserve(getMemId()) {
+            function loadReserve(getMemId) {
                 $.ajax({
                     url: '/diyla_front/getReserve', // 替換成實際的後端 servlet URL
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                    data: { memberId: memId },
+                    data: { memberId: getMemId },
                     dataType: 'json',
                     success: function (data) {
                         // 使用 jQuery Table 來動態生成表格
@@ -74,7 +72,7 @@
                     }
                 });
             }
-            loadReserve(getMemId());
+            loadReserve(getMemId);
             function deleteReserve(resId) {
                 $.ajax({
                     url: '/diyla_front/modifyReserve',

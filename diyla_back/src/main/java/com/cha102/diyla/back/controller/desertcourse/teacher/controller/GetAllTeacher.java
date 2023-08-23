@@ -1,6 +1,5 @@
 package com.cha102.diyla.back.controller.desertcourse.teacher.controller;
 
-import com.cha102.diyla.sweetclass.classModel.ClassReserveVO;
 import com.cha102.diyla.sweetclass.teaModel.TeacherService;
 import com.cha102.diyla.sweetclass.teaModel.TeacherVO;
 import org.json.JSONArray;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/getAllTeacher")
@@ -42,6 +40,8 @@ public class GetAllTeacher extends HttpServlet {
                 jsonTeacher.put("teacherPic", teachers.getTeaPic());
                 jsonTeacher.put("teacherIntro", teachers.getTeaIntro());
                 jsonTeacher.put("speciality", teacherService.getTeacherSpecialityString(teachers.getTeaId()));
+                jsonTeacher.put("teacherPhone", teachers.getTeaPhone());
+                jsonTeacher.put("teacherEmail", teachers.getTeaEmail());
                 jsonArray.put(jsonTeacher);
 
         }
