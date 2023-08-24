@@ -50,14 +50,15 @@
         <br>
         <label>價格：</label><span id="price">${commodity.comPri}元</span>
         <br>
-        <form action="ShoppingCartServlet" method="post" enctype="application/x-www-form-urlencoded" id="addCart">
+<!--         <form action="ShoppingCartServlet" method="post" enctype="application/x-www-form-urlencoded" id="addCart"> -->
+        	<input type="hidden" name="memId" value="${memId}">
             <input type="hidden" name="action" value="addItem">
-            <input type="text" value="${commodity.comNO}" hidden="hidden" name ="comNo">
+            <input type="text" value="${commodity.comNO}" hidden="hidden" name ="comNo" class="icomNo">
             <label style="font-size: 18px">請輸入購買數量：</label><span id="amount_value" style="font-size: 18px">1</span>
-            <input name="amount" type="range" min="1" max="99" value="1" id="amount">
-        </form>
-
-        <button type="submit" class="button" form="addCart">加入購物車</button>
+            <input name="amount" type="range" min="1" max="99" value="1" class="iamount" id="itemAmount">
+<!--         </form> -->
+		<br>
+        <button type="button" class="button" form="addCart" id="addItem">加入購物車</button>
         <button type="submit" class="button">加入追蹤</button>
 
     </div>
@@ -102,17 +103,73 @@
 
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../js/bootstrap.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="../js/custom.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#amount').mousemove(function () {
-            $('#amount_value').html($('#amount').val());
-        });
-        $('#amount').change(function () {
-            $('#amount_value').html($('#amount').val());
-        });
-    });
+	    $(document).ready(function () {
+	        $('#itemAmount').mousemove(function () {
+	            $('#amount_value').html($('#itemAmount').val());
+	        });
+	        $('#itemAmount').change(function () {
+	            $('#amount_value').html($('#itemAmount').val());
+	        });
+	    });
+</script>
+<script>
+$("#addItem").click(function(e){
+	const button =$(this);
+	let memId = <%=session.getAttribute("memId")%>;
+	  if (memId == null) {
+		  e.preventDefault();
+	    Swal.fire({
+	      icon: 'warning',
+	      title: '請登入',
+	      text: '您需要登入才能加入購物車。',
+	      confirmButtonText: '前往登入',
+	      allowOutsideClick: false  
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        window.location.href = '../member/mem_login.jsp';
+	      }
+	    });
+	  }  else {
+		  const amount = $('.iamount').val();
+		  const comNo =$('.icomNo').val();
+		  console.log(amount);
+		  console.log(comNo);
+		  addCartItem(memId,comNo,amount)
+	  }
+});
+
+function addCartItem(memId,comNo,amount){
+	 $.ajax({
+           url: "ShoppingCartServlet",
+           type: "POST",
+           data: {
+        	   amount:amount,
+        	   comNo:comNo,
+               memId: memId,
+               action: "addItem"
+           },
+           dataType: "json",
+           success: function(data) {
+               if (data.success) {
+               	 swal("成功新增", "", "success");
+                    // 延遲 1 秒後刷新
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1500);
+               } else {
+                   // 處理刪除失敗的情況
+               }
+           },
+           error: function() {
+               // 處理AJAX錯誤的情況
+           }
+       });
+   }
+
 </script>
 </body>
 </html>

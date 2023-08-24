@@ -117,10 +117,11 @@ body {
 				</p>
 				<span>訂單狀態:</span> <select class="status" name="orderStatus">
 					<option value="0" ${order.orderStatus == 0 ? 'selected' : ''}>訂單成立</option>
-					<option value="1" ${order.orderStatus == 1 ? 'selected' : ''}>備貨中</option>
-					<option value="2" ${order.orderStatus == 2 ? 'selected' : ''}>已出貨</option>
-					<option value="3" ${order.orderStatus == 3 ? 'selected' : ''}>已完成</option>
-					<option value="4" ${order.orderStatus == 4 ? 'selected' : ''}>已取消</option>
+					<option value="1" ${order.orderStatus == 1 ? 'selected' : ''}>已付款</option>
+					<option value="2" ${order.orderStatus == 2 ? 'selected' : ''}>備貨中</option>
+					<option value="3" ${order.orderStatus == 3 ? 'selected' : ''}>已出貨</option>
+					<option value="4" ${order.orderStatus == 4 ? 'selected' : ''}>已完成</option>
+					<option value="5" ${order.orderStatus == 5 ? 'selected' : ''}>已取消</option>
 				</select> <span>金額:</span> <input name="orderPrice"
 					value="${order.actualPrice }" type="text"> <span>收件人:</span>
 				<input name="recipient" value="${order.recipient}" type="text">

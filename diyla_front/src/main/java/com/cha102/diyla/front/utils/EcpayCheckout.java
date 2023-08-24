@@ -24,12 +24,13 @@ public class EcpayCheckout {
 		aioCheckOutALL.setMerchantTradeNo(tradeNo);
 		aioCheckOutALL.setMerchantTradeDate(tradeDate); // 交易日期
 		aioCheckOutALL.setTotalAmount(totalPrice + ""); // 設定交易價格
-		System.out.println(aioCheckOutALL.getTotalAmount());
+//		System.out.println(aioCheckOutALL.getTotalAmount());
 		aioCheckOutALL.setTradeDesc(tradeDesc);
 		aioCheckOutALL.setCustomField1("memId" + memNO);
 		aioCheckOutALL.setCustomField2(totalPrice + "");
 		aioCheckOutALL.setCustomField3(receiveInfo);
-		System.out.println("測試:" + 111);
+		aioCheckOutALL.setCustomField4(memNO+"");
+//		System.out.println("測試:" + 111);
 //        String ECPAY_PROD_FORMAT = "品名：%s 數量：%s 價格：%s #";
 		aioCheckOutALL.setItemName("Diyla商品一批"); // 商品敘述不能超過兩百字，否則顯示商品一批
 		aioCheckOutALL.setReturnURL("http://localhost:8081/diyla_front/shop/XxxController"); // 綠界回傳成功訊息的api網址，上線環境才有用

@@ -254,5 +254,9 @@ p.tip {
 .swal-footer {
 	text-align: center;
 }
-
+.swal-modal{
+	margin-top: 80px;
+	top:80px;
+	
+}
 

@@ -81,8 +81,8 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}">
-                            購物車
+                        <a class="nav-link" href="${ctxPath}//memberOrder/OrderController?action=listOrder&memId=${memId}" id="myOrder">
+                            我的訂單
                         </a>
                     </li>
                 </ul>
@@ -104,7 +104,7 @@
                     <%--可自行更改href連結--%>
                     <form class="form-inline ">
                     </form>
-                    <a href="">
+                    <a href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}" id="shoppingcart">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -119,7 +119,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
 <script src="${ctxPath}/js/custom.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
+	<script>
+$("#shoppingcart").click(function(e){
+	let memVO = <%=session.getAttribute("memVO")%>;
+	  if (memVO == null) {
+		  e.preventDefault();
+	    Swal.fire({
+	      icon: 'warning',
+	      title: '請登入',
+	      text: '您需要登入才能使用購物車。',
+	      confirmButtonText: '前往登入',
+	      allowOutsideClick: false  
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        window.location.href = './member/mem_login.jsp';
+	      }
+	    });
+	  } 
+});
+$("#myOrder").click(function(e){
+	let memVO = <%=session.getAttribute("memVO")%>;
+	  if (memVO == null) {
+		  e.preventDefault();
+	    Swal.fire({
+	      icon: 'warning',
+	      title: '請登入',
+	      text: '您需要登入才能查看訂單。',
+	      confirmButtonText: '前往登入',
+	      allowOutsideClick: false  
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        window.location.href = './member/mem_login.jsp';
+	      }
+	    });
+	  } 
+});
+  
+</script>
 </body>
 
 </html>

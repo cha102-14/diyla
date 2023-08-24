@@ -28,7 +28,7 @@
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
 <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
 body {
@@ -56,7 +56,7 @@ th, td {
 }
 
 #main_content {
-	height: 600px;
+	height: 800px;
 	padding-top: 50px;
 	width: 100%;
 	margin: 20px auto;
@@ -78,7 +78,7 @@ th, td {
 	text-align: center;
 	margin-bottom: 20px;
 	font-size: 30px;
-	padding:30px 10px;
+	padding: 30px 10px;
 	background-color: #FFEEDD;
 	border-radius: 5px;
 }
@@ -95,8 +95,11 @@ th, td {
 	background-color: #3399FF; /* 備貨中的顏色 */
 }
 
+.status-paid {
+	background-color: #A6FFA6; /*已付款的顏色*/
+}
 .status-shipping {
-	background-color: #FF79BC;
+	background-color: #FF79BC;	/*出貨*/
 }
 
 .status-completed {
@@ -116,9 +119,11 @@ table {
 .tr_title {
 	background-color: #f2f2f2;
 }
-tr_title{
-background-color: olive;
+
+tr_title {
+	background-color: olive;
 }
+
 .title th {
 	padding: 10px;
 	font-weight: bold;
@@ -189,8 +194,27 @@ div.goShopping {
 .noneOrder {
 	padding-bottom: 50px;
 }
-.orderTable{
-border: 1px solid black;
+
+.orderTable {
+	border: 1px solid black;
+}
+.goTopButton {
+	z-index: 999;
+	position: fixed;
+	bottom: 20px;
+	 padding: 10px;
+	border: none;
+	outline: none;
+	background-color: #333;
+	color: white;
+	cursor: pointer;
+	border-radius: 4px;
+	 right: 20px;
+}
+
+.goTopButton:hover {
+	background-color: #555;
+
 }
 </style>
 </head>
@@ -216,9 +240,9 @@ border: 1px solid black;
 							</tr>
 						</thead>
 
-							<tbody id="order-list">
-						<c:forEach var="orderVO" items="${commodityOrderVOList}"
-							varStatus="loop">
+						<tbody id="order-list">
+							<c:forEach var="orderVO" items="${commodityOrderVOList}"
+								varStatus="loop">
 								<tr class="order_content_title">
 									<td class="order_content">${orderVO.orderNO}</td>
 									<td class="order_content">${orderVO.actualPrice}</td>
@@ -251,8 +275,8 @@ border: 1px solid black;
 									</td>
 								</tr>
 
-						</c:forEach>
-							</tbody>
+							</c:forEach>
+						</tbody>
 
 					</table>
 				</div>
@@ -279,12 +303,28 @@ border: 1px solid black;
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<button class="goTopButton">▲</button>
 	<jsp:include page="../front_footer.jsp" />
 	<script
 		src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 	$(document).ready(function() {
+		
+		$(window).scroll(function() {
+			if ($(this).scrollTop() > 20) {
+				$(".goTopButton").fadeIn();
+			} else {
+				$(".goTopButton").fadeOut();
+			}
+		});
+
+		$(".goTopButton").click(function() {
+			$("html, body").animate({
+				scrollTop : 0
+			}, "slow");
+			return false;
+		});
 		 $(".cancel_order").on("click", function(e) {
 					e.preventDefault();
 					  let form = $(this).closest("form"); // 找到最近的父級 form
@@ -323,11 +363,12 @@ border: 1px solid black;
 
 		  
 		  const statusMapping = {
-			        "0": "訂單成立",
-			        "1": "備貨中",
-			        "2": "已出貨",
-			        "3": "已完成",
-			        "4": "已取消"
+				  "0" : "訂單成立",
+					"1" : "已付款",
+					"2" : "備貨中",
+					"3" : "已出貨",
+					"4" : "已完成",
+					"5" : "已取消"
 			    };
 			    // 找到所有的訂單狀態欄位
 		  $(".orderStatus").each(function() {
@@ -337,13 +378,15 @@ border: 1px solid black;
 		        if (orderStatus === "0") {
 		            $(this).addClass("status-unpaid");
 		            
-		        }  else if (orderStatus === "1") {
+		        }else if (orderStatus === "1") {
+		            $(this).addClass("status-paid");
+		        }else if (orderStatus === "2") {
 		            $(this).addClass("status-processing");
-		        } else if (orderStatus === "2") {
+		        }else if (orderStatus === "3") {
 		            $(this).addClass("status-shipping");
-		        } else if (orderStatus === "3") {
-		            $(this).addClass("status-completed");
 		        }else if (orderStatus === "4") {
+		            $(this).addClass("status-completed");
+		        }else if (orderStatus === "5") {
 		            $(this).addClass("status-canceled");
 		        }
 		    });

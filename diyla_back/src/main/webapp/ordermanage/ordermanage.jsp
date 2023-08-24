@@ -24,9 +24,10 @@ List<CommodityOrderVO> commodityOrderVOList = service.getAll();
 <style>
 body {
 	font-family: Arial, sans-serif;
-	margin: 0;
+	margin-left: 280px;
 	padding: 0;
 	background-color: #f4f4f4;
+	
 	
 }
 
@@ -59,7 +60,7 @@ box-sizing:border-box;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	padding: 0px;
 	float: right;
-	width: 960px;
+	width: 980px;
 	overflow: scoll;
 }
 
@@ -68,7 +69,7 @@ box-sizing:border-box;
 	text-align: center;
 	margin-bottom: 20px;
 	font-size: 30px;
-	padding: 10px 30px;
+	padding: 10px 0px;
 	background-color: #FFEEDD;
 	border-radius: 5px;
 	background-color: #FFEEDD;
@@ -86,10 +87,12 @@ box-sizing:border-box;
 	background-color: #3399FF; /* 備貨中的顏色 */
 }
 
-.status-shipping {
-	background-color: #FF79BC;
+.status-paid {
+	background-color: #A6FFA6; /*已付款的顏色*/
 }
-
+.status-shipping {
+	background-color: #FF79BC;	/*出貨*/
+}
 .status-completed {
 	background-color: #66FF66; /* 已完成的顏色 */
 }
@@ -98,14 +101,14 @@ box-sizing:border-box;
 	background-color: #FF3333; /* 已取消的顏色 */
 }
 
-@media ( max-width :767.98px) {
-	aside.topPage {
-		top: 0;
-		height: 100%;
-		transform: translateX(-100%);
-		transition: all 1s;
-	}
-}
+/* @media ( max-width :767.98px) { */
+/* 	aside.topPage { */
+/* 		top: 0; */
+/* 		height: 100%; */
+/* 		transform: translateX(-100%); */
+/* 		transition: all 1s; */
+/* 	} */
+/* } */
 
 table {
 	width: 100%;
@@ -114,7 +117,9 @@ table {
 }
 
 .tr_title {
-	background-color: #ECECFF;
+	background-color: black;
+	color:white;
+	font-size: 12px;
 }
 
 /* .title th { */
@@ -214,15 +219,15 @@ table {
 			<table id="allOrder">
 				<thead>
 					<tr class="tr_title">
-						<th class="title" style="width: 10%;">訂單編號</th>
-						<th class="title" style="width: 10%;">會員編號</th>
+						<th class="title" style="width: 9%;">訂單編號</th>
+						<th class="title" style="width: 9%;">會員編號</th>
 						<th class="title" style="width: 10%;">訂單金額</th>
-						<th class="title" style="width: 8%;">訂單狀態</th>
+						<th class="title" style="width: 9%;">訂單狀態</th>
 						<th class="title" style="width: 12%;">下單時間</th>
-						<th class="title" style="width: 12%;">收件人姓名</th>
+						<th class="title" style="width: 11%;">收件人姓名</th>
 						<th class="title" style="width: 16%;">收件地址</th>
-						<th class="title" style="width: 8%;">查看明細</th>
-						<th class="title" style="width: 8%;">訂單處理</th>
+						<th class="title" style="width: 9%;">查看明細</th>
+						<th class="title" style="width: 9%;">訂單處理</th>
 					</tr>
 				</thead>
 
@@ -289,10 +294,11 @@ table {
 		$(document).ready(function() {
 			const statusMapping = {
 				"0" : "訂單成立",
-				"1" : "備貨中",
-				"2" : "已出貨",
-				"3" : "已完成",
-				"4" : "已取消"
+				"1" : "已付款",
+				"2" : "備貨中",
+				"3" : "已出貨",
+				"4" : "已完成",
+				"5" : "已取消"
 			};
 			// 找到所有的訂單狀態欄位
 			$(".orderStatus").each(function() {
@@ -302,15 +308,17 @@ table {
 				if (orderStatus === "0") {
 					$(this).addClass("status-unpaid");
 
-				} else if (orderStatus === "1") {
-					$(this).addClass("status-processing");
-				} else if (orderStatus === "2") {
-					$(this).addClass("status-shipping");
-				} else if (orderStatus === "3") {
-					$(this).addClass("status-completed");
-				} else if (orderStatus === "4") {
-					$(this).addClass("status-canceled");
-				}
+				}else if (orderStatus === "1") {
+		            $(this).addClass("status-paid");
+		        }else if (orderStatus === "2") {
+		            $(this).addClass("status-processing");
+		        }else if (orderStatus === "3") {
+		            $(this).addClass("status-shipping");
+		        }else if (orderStatus === "4") {
+		            $(this).addClass("status-completed");
+		        }else if (orderStatus === "5") {
+		            $(this).addClass("status-canceled");
+		        }
 			});
 
 		});

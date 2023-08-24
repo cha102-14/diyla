@@ -34,11 +34,15 @@
 <link href="${ctxPath}/css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+
 <style>
 .mainContent {
 	width: 70%;
-	margin: 0 auto;
+	margin: 20px auto;
 	padding: 20px;
+	border: 1px solid gray;
 }
 
 .orderDetail {
@@ -195,20 +199,18 @@ input[type="text"], input[type="tel"], select {
 				<span class="total">總金額${totalPrice}</span>
 			</div>
 
-			<div>
-				<label for="useTokens">使用代幣：</label>
+			<div class="tokenblock">
+				<p>(使用代幣則無法獲得回饋)</p>
+				<label for="useTokens" style="width: 80px">使用代幣：</label><span
+					id="amount_value" style="font-size: 18px">0</span>
 				<div>
-					<input type="radio" id="yes" name="coin" value="0" checked /> <label
-						for="yes">是</label>
+					<input name="token" type="range" min="0" max="99" value="0"
+						id="tokenAmount">
 				</div>
-
-				<div>
-					<input type="radio" id="no" name="coin" value="1" /> <label
-						for="no">否</label>
-				</div>
+				<span style="margin:30px 0px;">本次預計獲得回饋:</span><input type="hidden" value="1" name="tokenback">
 			</div>
 			<div class="container">
-				<div class="title">填寫付款資訊</div>
+				<div class="title">+填寫付款資訊</div>
 				<div class="form-container">
 					<div class="form-row">
 
@@ -241,19 +243,20 @@ input[type="text"], input[type="tel"], select {
 			</div>
 			<input type="hidden" name="action" value="orderConfirm"
 				id="actionInput"> <input type="submit" class="confirmButton"
-				value="確認"> <a
+				value="確認" id="orderconfirm"> <a
 				href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}"
 				class="canceled">返回購物車</a>
 		</form>
 		<div id="card">
 			<form action="${ctxPath}/checkout/ecpay" method="post" id="cardForm">
-				<input type="hidden" name="cardrecipient" value="" id="cardrecipient">
-				<input type="hidden" name="cardrecipientAddress" value="" id="cardrecipientAddress">
+				<input type="hidden" name="cardrecipient" value=""
+					id="cardrecipient"> <input type="hidden"
+					name="cardrecipientAddress" value="" id="cardrecipientAddress">
 				<input type="hidden" name="cardphone" value="" id="cardphone">
-				<input type="hidden" name="tradeDesc" value="信用卡付款"> 
-				<input type="hidden" name="totalPrice" value="${totalPrice}"> 
-				<input type="hidden" name="itemName" value="商品一批">
-				<input type="hidden" name="memId" value="${memId}">
+				<input type="hidden" name="tradeDesc" value="信用卡付款"> <input
+					type="hidden" name="totalPrice" value="${totalPrice}"> <input
+					type="hidden" name="itemName" value="商品一批"> <input
+					type="hidden" name="memId" value="${memId}">
 				<button type="button" id="paidByCard">前往付款</button>
 			</form>
 		</div>
@@ -261,83 +264,142 @@ input[type="text"], input[type="tel"], select {
 
 	<jsp:include page="../front_footer.jsp" />
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+
 	<script>
-		$(document).ready(function() {
-			const formContainer = document.querySelector('.form-container');
+		$(document)
+				.ready(
+						function() {
+							const formContainer = document
+									.querySelector('.form-container');
+							//開合付款資訊
+							$(".title").click(function() {
+								formContainer.classList.toggle('active');
+							});
+							$("#paymentMethod")
+									.change(
+											function() {
+												const selectedPaymentMethod = $(
+														this).val();
+												const actionInput = $("#actionInput");
+												if (selectedPaymentMethod === "creditCard") {
+													actionInput
+															.val("orderConfirmCard");
+												} else if (selectedPaymentMethod === "cashOnDelivery") {
+													actionInput
+															.val("orderConfirm");
+												}
+											});
+							// 預設隱藏信用卡付款表單
+							$("#card").hide();
 
-			$(".title").click(function() {
-				formContainer.classList.toggle('active');
-			});
-			$("#paymentMethod").change(function() {
-				const selectedPaymentMethod = $(this).val();
-				const actionInput = $("#actionInput");
-				if (selectedPaymentMethod === "creditCard") {
-					actionInput.val("orderConfirmCard");
-				} else if (selectedPaymentMethod === "cashOnDelivery") {
-					actionInput.val("orderConfirm");
-				}
-			});
-			// 預設隱藏信用卡付款表單
-			$("#card").hide();
+							// 監聽付款方式選擇變化
+							$("#paymentMethod").change(function() {
+								const selectedPaymentMethod = $(this).val();
 
-			// 監聽付款方式選擇變化
-			$("#paymentMethod").change(function() {
-				const selectedPaymentMethod = $(this).val();
+								// 如果選擇的是信用卡，顯示信用卡付款表單；否則隱藏
+								if (selectedPaymentMethod === "creditCard") {
+									$("#card").show();
+									$(".confirmButton").hide();
+								} else {
+									$("#card").hide();
+									$(".confirmButton").show();
+								}
+							});
 
-				// 如果選擇的是信用卡，顯示信用卡付款表單；否則隱藏
-				if (selectedPaymentMethod === "creditCard") {
-					$("#card").show();
-					$(".confirmButton").hide();
-				} else {
-					$("#card").hide();
-					$(".confirmButton").show();
-				}
-			});
+							$("#paidByCard")
+									.click(
+											function(event) {
+												if (!validateFormFields()) {
+													event.preventDefault();
+												} else {
+													document
+															.getElementsByName("itemName")[0].value = "DIYLA商品一批";
+													document.getElementById(
+															"cardForm")
+															.submit();
+												}
+											});
 
-			$("#paidByCard").click(function() {
-				
-				document.getElementsByName("itemName")[0].value = "DIYLA商品一批";
-				document.getElementById("cardForm").submit();
-			});
+							$("#orderconfirm").click(function(event) {
+								if (!validateFormFields()) {
+									event.preventDefault();
+								}
+							});
 
-			 $("#recipientName, #recipientPhone, #recipientAddress").on("input", function() {
-		            // 獲取收件人相關欄位的值
-		            const recipient = $("#recipientName").val();
-		            const recipientPhone = $("#recipientPhone").val();
-		            const recipientAddress = $("#recipientAddress").val();
-		            
-		            // 將收件人值填入下面表單的對應欄位
-		            $("#cardrecipient").val(recipient);
-		            $("#cardrecipientAddress").val(recipientAddress);
-		            $("#cardphone").val(recipientPhone);
-		        });
-			
-			
-			
-			function validateFormFields() {
-				const recipientName = $("#recipientName").val();
-                const recipientPhone = $("#recipientPhone").val();
-                const recipientAddress = $("#recipientAddress").val();
-                const phoneRegex = /^09\d{8}$/; // 電話號碼需以 "09" 開頭，總共 10 位數
-                
-                if (recipientName.trim() === "") {
-                    alert("請填寫收件人姓名");
-                    return false;
-                }
-                
-                if (!phoneRegex.test(recipientPhone)) {
-                    alert("請填寫正確的電話號碼，需以 09 開頭且總共 10 位數");
-                    return false;
-                }
-                
-                if (recipientAddress.trim() === "") {
-                    alert("請填寫收件人地址");
-                    return false;
-                }
-                return true;
-			}
+							$(
+									"#recipientName, #recipientPhone, #recipientAddress")
+									.on(
+											"input",
+											function() {
+												// 獲取收件人相關欄位的值
+												const recipient = $(
+														"#recipientName").val();
+												const recipientPhone = $(
+														"#recipientPhone")
+														.val();
+												const recipientAddress = $(
+														"#recipientAddress")
+														.val();
 
-		});
+												// 將收件人值填入下面表單的對應欄位
+												$("#cardrecipient").val(
+														recipient);
+												$("#cardrecipientAddress").val(
+														recipientAddress);
+												$("#cardphone").val(
+														recipientPhone);
+											});
+
+							function validateFormFields() {
+								const recipientName = $("#recipientName").val();
+								const recipientPhone = $("#recipientPhone")
+										.val();
+								const recipientAddress = $("#recipientAddress")
+										.val();
+								const phoneRegex = /^09\d{8}$/; // 電話號碼需以 "09" 開頭，總共 10 位數
+
+								if (recipientName.trim() === "") {
+									Swal.fire({
+										icon : 'error',
+										title : '錯誤',
+										text : '請填寫收件人姓名'
+									});
+									return false;
+								}
+
+								if (!phoneRegex.test(recipientPhone)) {
+									Swal.fire({
+										icon : 'error',
+										title : '錯誤',
+										text : '請填寫正確的電話號碼，需以 09 開頭且總共 10 位數'
+									});
+									return false;
+								}
+
+								if (recipientAddress.trim() === "") {
+									Swal.fire({
+										icon : 'error',
+										title : '錯誤',
+										text : '請填寫收件人地址'
+									});
+									return false;
+								}
+								return true;
+							}
+							$('#tokenAmount').mousemove(
+									function() {
+										$('#amount_value').html(
+												$('#tokenAmount').val());
+									});
+							$('#tokenAmount').change(
+									function() {
+										$('#amount_value').html(
+												$('#tokenAmount').val());
+									});
+
+						});
 	</script>
 
 

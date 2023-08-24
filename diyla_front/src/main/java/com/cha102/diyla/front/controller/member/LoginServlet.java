@@ -42,7 +42,9 @@ public class LoginServlet extends HttpServlet {
         } else {
             String url = "/";
             HttpSession session = req.getSession();
+            Integer memId =memVO.getMemId();
             session.setAttribute("memVO", memVO);
+            session.setAttribute("memId", memId);
             res.sendRedirect(req.getContextPath()+"/index.jsp");
 
         }
