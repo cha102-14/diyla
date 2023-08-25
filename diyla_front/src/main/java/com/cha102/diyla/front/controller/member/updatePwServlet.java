@@ -10,7 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -38,7 +41,7 @@ public class updatePwServlet extends HttpServlet {
         for (int r = 1; r <= 10; r++) {
             code += String.valueOf(s.charAt((int) (Math.random() * 61)));
         }
-        res.getWriter().write("{\"status\": \"success\"}");
+//        res.getWriter().write("{\"status\": \"success\"}");
 
         //忘記密碼
         if ("forgetPw".equals(action)) {
@@ -46,10 +49,18 @@ public class updatePwServlet extends HttpServlet {
             String phone = req.getParameter("phonenumber");
             MemVO memVO = memSer.forgetPw(exMsgs, email, phone);
             //AJAX
+            BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()));
+            StringBuffer strb = new StringBuffer();
+            String line;
+            while ((line = reader.readLine()) !=null){
+                strb.append(line);
+            }
+            String json = strb.toString();
+            System.out.println(json);
+//            JSONObject datas = new JSONObject(json);
 //            HashMap jsonMap = new HashMap();
 //            jsonMap.put("memVO",memVO);
-//            JSONObject mem = new JSONObject(jsonMap);
-//            PrintWriter out = res.getWriter();
+//            JSONObject mem = new JSONObject(json);
 
 
             String title = "【DIYLA】密碼重置信";
@@ -57,40 +68,33 @@ public class updatePwServlet extends HttpServlet {
             if (exMsgs.isEmpty()){
                 mailService.sendEmail(email,title,context);
                 memSer.updateNewPw(exMsgs,code,email);
-//                out.println(mem);
-            }
-//            res.getWriter().write("{\"status\": \"success\"}");
-//            res.println("success");
-            req.setAttribute("memVO",memVO);
+                res.getWriter().write("{\"status\": \"success\"}");
+//                res.getWriter().print("success");
+//                res.getWriter().write(String.valueOf(mem));
 
-            RequestDispatcher forget = req.getRequestDispatcher("/member/forgetPw.jsp");
-            forget.forward(req, res);
+            }
+
+            req.setAttribute("memVO",memVO);
 
         }
 
-        //修改密碼
+//        修改密碼
         if ("updatePw".equals(action)) {
             String upemail = req.getParameter("upemail");
-            String temPw = req.getParameter("temPw");
             String upPw = req.getParameter("upPw");
             String upPwcheck = req.getParameter("upPwcheck");
-            if(!temPw.equals(code)){
-                exMsgs.add("請輸入臨時密碼");
-            }
+
             if (!upPwcheck.equals(upPw)){
                 exMsgs.add("該密碼與您設定的密碼不一致");
             }
 
             MemVO memVO = memSer.updateNewPw(exMsgs,upPw,upemail);
 
-            if (!exMsgs.isEmpty()) {
-                req.setAttribute("memVO",memVO);
-                RequestDispatcher failure = req.getRequestDispatcher("/member/updatePw.jsp");
-                failure.forward(req, res);
-                return;
-            }
-            RequestDispatcher success = req.getRequestDispatcher("/member/mem_login.jsp");
-            success.forward(req, res);
+            HttpSession session = req.getSession();
+            session.setAttribute("memVO", memVO);
+            RequestDispatcher failure = req.getRequestDispatcher("/member/updatePw.jsp");
+            failure.forward(req, res);
+
         }
 
     }

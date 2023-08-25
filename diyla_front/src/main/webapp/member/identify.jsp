@@ -2,13 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.member.*"%>
-<%@ page import="java.util.*"%>
-<%@ page import="javax.servlet.*"%>
-<%@ page isELIgnored="false" %>
-
-<%
-    MemVO memVO = (MemVO)session.getAttribute("memVO");
-%>
+<% MemVO memVO = (MemVO) request.getAttribute("memVO");%>
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -47,19 +41,12 @@
              </div>
         </c:if>
         <div class="">
-            <form method="post" action="updatePw">
-                <label>姓名<br>
-                <input type="text" name="memName" value="${memVO.memName}" disabled></label><br>
-                <label>帳號<br>
-                <input type="email" name="upemail" value="${memVO.memEmail}" disabled></label><br>
-                <label>修改密碼<br>
-                <input type="password" name="upPw" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" ></label><br>
-                <span  id ="memPassword.errors" class="error">${exMsgs.memPassword}<br/></span>
-                <label>確認密碼<br>
-                <input type="password" name="upPwcheck" placeholder="再次輸入密碼" ></label><br>
-                <span  id ="pwcheck.errors" class="error">${exMsgs.pwcheck}<br/></span>
-                <input type="hidden" name="memId" value="${memVO.memId}"><br>
-                <button type="submit" value="updatePw">送出修改</button>
+            <form method="post" action="identify">
+                <label>帳號</label><br>
+                <input type="email" name="email" placeholder="請輸入信箱" id="email" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
+                <label>驗證碼</label><br>
+                <input type="text" name="identifycode" placeholder="請輸入驗證信的驗證碼" ><br>
+                <button type="submit" value="identify">確認驗證</button><br>
             </form>
         </div>
     </div>

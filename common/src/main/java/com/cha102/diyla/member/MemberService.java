@@ -4,6 +4,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class MemberService {
 	private MemDAO_interface dao;
@@ -54,9 +55,10 @@ public class MemberService {
 		String addReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-,)]$";
 		if (mem_address == null || (mem_address.trim()).length()==0){
 			exMsgs.add("請輸入地址");
-		} else if (!(mem_address.matches(addReg))){
-			exMsgs.add("地址格式只能為中、英文字母、數字、-和,");
 		}
+//		else if (!(mem_address.matches(addReg))){
+//			exMsgs.add("地址格式只能為中、英文字母、數字、-和,");
+//		}
 
 		MemberService memSer = new MemberService();
 		List<MemVO> lists = memSer.selectAll();
@@ -75,14 +77,39 @@ public class MemberService {
 
 	}
 	
-	public MemVO updateMem(String mem_name,String mem_password,String mem_phone,String mem_address) {
+	public MemVO updateMem(Map<String,String> exMsgs, String mem_password, String mem_phone, String mem_address,Integer mem_id) {
 		MemVO mem = new MemVO();
-		mem.setMemName(mem_name);
 		mem.setMemPassword(mem_password);
 		mem.setMemPhone(mem_phone);
 		mem.setMemAddress(mem_address);
-		dao.update(mem);
-		return mem;
+		mem.setMemId(mem_id);
+
+		String pwReg = "^\\w{6,12}$";
+		if (mem_password == null || (mem_password.trim()).length()==0){
+			exMsgs.put("memPassword","請輸入密碼");
+		} else if (!(mem_password.matches(pwReg))){
+			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
+		}
+
+		String phoneReg ="^\\d{10,}$";
+		if (mem_phone == null || (mem_phone.trim()).length()==0){
+			exMsgs.put("memPhone","請輸入電話");
+		} else if(!(mem_phone.matches(phoneReg))){
+			exMsgs.put("memPhone","電話格式錯誤，請重新輸入");
+		}
+
+		String addReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-,)]$";
+		if (mem_address == null || (mem_address.trim()).length()==0){
+			exMsgs.put("memAddress","請輸入地址");
+		}
+//		else if (!(mem_address.matches(addReg))){
+//			exMsgs.put("memAddress","地址格式只能為中、英文字母、數字、-和,");
+//		}
+		if (exMsgs.isEmpty()){
+			dao.update(mem);
+		}
+
+		return dao.findByPrimaryKey(mem_id);
 		
 	}
 
@@ -115,9 +142,7 @@ public class MemberService {
 	}
 	
 	public MemVO selectMem(Integer memId) {
-		MemVO mem = new MemVO();
-		dao.findByPrimaryKey(memId);
-		return mem;
+		return dao.findByPrimaryKey(memId);
 	}
 	
 	public List<MemVO> selectAll(){
@@ -166,6 +191,21 @@ public class MemberService {
 		}
 
 		return mem;
+
+	}
+
+	public MemVO upStatus (List<String> exMsgs,String email){
+		MemVO memVO = new MemVO();
+		EmailValidator emailValidator = EmailValidator.getInstance();
+		if(email == null || (email.trim()).isEmpty()){
+			exMsgs.add("請輸入信箱");
+		} else if (!emailValidator.isValid(email)){
+			exMsgs.add("格式錯誤，請重新輸入");
+		}
+		if (exMsgs.isEmpty()){
+			dao.updateStatus(email);
+		}
+		return memVO;
 
 	}
 

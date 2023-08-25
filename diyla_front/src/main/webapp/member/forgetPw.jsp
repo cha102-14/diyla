@@ -38,47 +38,59 @@
                   <c:forEach var="message" items="${exMsgs}">
                        ${message}
                   </c:forEach>
-             </div>
+            </div>
         </c:if>
         <div class="forget">
-            請輸入您的Email帳號，系統將會寄送密碼更新連結到您的Email信箱。
-            <form method="post" action="updatePw">
+            請輸入您的Email帳號，系統將會寄送新密碼到您的Email信箱。
                 <label>帳號</label><br>
-                <input type="email" name="email" placeholder="請輸入信箱" id="email" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
+                <input type="email" name="email" id="email" placeholder="請輸入信箱"  value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
                 <label>電話</label><br>
-                <input type="tel" name="phonenumber" placeholder="請輸入註冊時填的手機號碼" id="phonenumber" value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"><br>
+                <input type="tel" name="phonenumber" id="phonenumber" placeholder="請輸入註冊時填的手機號碼"  value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"><br>
                 <input type="hidden" name="action" value="forgetPw">
-                <button type="submit" value=""　id="sub">送出重製密碼信件</button><br>
+                <button type="submit" value=""　id="sub" >送出重製密碼信件</button><br>
                 <span id="response">若仍未收到請至聯絡我們</span>
-            </form>
         </div>
     </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script>
-            let obj = {
-                email:$("#email").val(),
-                phonenumber:$("#phonenumber").val()
+        var email = document.getElementById('email');
+        var phonenumber = document.getElementById('phonenumber');
+        var sub = document.getElementById('sub');
+
+        sub.addEventListener('click',function(){
+            alert(email.value);
+            alert(phonenumber.value);
+
+            var obj ={
+            email: email.value,
+            phonenumber: phonenumber.value
             }
-            console.log($("#email").val());
-            console.log($("#phonenumber").val());
+            let formDataUrlEncoded = new URLSearchParams();
+            for (let key in obj){
+            formDataUrlEncoded.append(key,obj[key])
+            }
 
-                            $('#sub').click(function(){
-                                $.ajax({
-                                    url:'updatePw',
-                                    method:'post',
-                                    contentType:'application/json',
-                                    data:JSON.stringify(obj),
-                                    dataType:'text',
-                                    success:function(response){
-                                        console.log(response);
-                                        $('#response').text(data);
-                                    },
-                                    error:function(){
-                                        $('#response').text('error');
-                                    }
+            fetch("/updatePw",{
+            method:"post",
+            body:formDataUrlEncoded
+            }).then(function(response){
+                return response.text();
+            }).then(function(data){
+                if(data.indexOf("success")>=0){
+                    Swal.fire('發信成功！');
+                }
+            })
+            .catch(function(error){
+                console.log("error");
+            })
 
-                                });
-                                $('#sub').click();
-                            });
+
+        })
+
+
+
+
+
 
         </script>
 

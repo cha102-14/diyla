@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.cha102.diyla.member.*"%>
 <%@ page import="java.util.*"%>
-<% MemVO memVO = (MemVO) request.getAttribute("memVO");%>
-<% String address = (String) request.getAttribute("address");%>
+<%@ page import="javax.servlet.*"%>
+<%@ page import="com.cha102.diyla.member.*"%>
 <%@ page isELIgnored="false" %>
+
+<%
+    MemVO memVO = (MemVO)session.getAttribute("memVO");
+%>
+
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -15,7 +19,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <link rel="shortcut icon" href="images/DIYLA_cakeLOGO.png" type="image/x-icon">
-<title>註冊會員</title>
+<title>會員資訊管理</title>
 
     <!-- slider stylesheet -->
     <link rel="stylesheet" type="text/css"
@@ -23,71 +27,50 @@
 
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
-    
+
     <!-- Custom styles for this template -->
     <link href="../css/style.css" rel="stylesheet"/>
-    
+
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
-    <style>
-
-    </style>
 
 
 </head>
 <body>
 
-	<jsp:include page="../front_header.jsp"/>
-	<h4>會員註冊</h4>
-	<div>
-    <c:if test="${not empty exMsgs}">
-        <div style="color:red">
-        <c:forEach var="message" items="${exMsgs}">
-        ${message}
-        </c:forEach>
-        </div>
-    </c:if>
-            <form method="post" action="register">
+    <jsp:include page="../front_header.jsp"/>
+
+    <h4>會員資訊管理</h4>
+
+            <form method="post" action="update">
                 <label>姓名<br>
-                <input type="text" name="newName" value="<%= (memVO==null)? "" : memVO.getMemName()%>"></label><br>
+                <input type="text" name="memName" value="${memVO.memName}" disabled></label><br>
                 <label>帳號<br>
-                <input type="email" name="user" placeholder="請輸入信箱" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"></label><br>
-                <label>密碼<br>
-                <input type="password" name="password" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" value="<%= (memVO==null)? "" : memVO.getMemPassword()%>"></label><br>
+                <input type="email" name="user" value="${memVO.memEmail}" disabled></label><br>
+                <label>修改密碼<br>
+                <input type="password" name="password" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" ></label><br>
+                <span  id ="memPassword.errors" class="error">${exMsgs.memPassword}<br/></span>
                 <label>確認密碼<br>
                 <input type="password" name="pwcheck" placeholder="再次輸入密碼" ></label><br>
-                <label for="gender" required="required">性別
-                <input type="radio" name="gender" value="0"  ${(0==memVO.memGender)? 'checked':''}>男
-                <input type="radio" name="gender" value="1"  ${(1==memVO.memGender)? 'checked':''}>女</label><br>
-                <label>生日
-                <input type="date" name="birthday" id="birthday" max="" value="<%= (memVO==null)? "" : memVO.getMemBirthday()%>"></label><br>
+                <span  id ="pwcheck.errors" class="error">${exMsgs.pwcheck}<br/></span>
+                <label for="gender" >性別
+                <input type="radio" name="gender" value="0" disabled ${(0==memVO.memGender)? 'checked':'' }>男
+                <input type="radio" name="gender" value="1" disabled ${(1==memVO.memGender)? 'checked':'' }>女</label><br>
+                <label >生日
+                <input type="date" name="birthday" id="birthday" value="${memVO.memBirthday}" disabled></label><br>
                 <label>聯絡電話<br>
-                <input type="tel" name="phone" minlength="10" value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"></label><br>
+                <input type="tel" name="phone" minlength="10" value="${memVO.memPhone}" ></label><br>
+                <span  id ="memPhone.errors" class="error">${exMsgs.memPhone}<br/></span>
                 <div>聯絡地址</label><br>
                 <label for="city">縣市</label><br>
-                <select id="city" name="city" ></select><br>
+                <select id="city" name="city"></select><br>
                 <label for="district">地區</label><br>
-                <select id="district" name="district" $((param.district==addMap.district)? 'selected':'')></select><br>
+                <select id="district" name="district"></select><br>
                 <label for="address">詳細地址</label><br>
-                <input type="text" id="address" name="address" value="${addMap.address}"><br>
-                </div>
-                <label for="agree" class="agree">
-                    <input type="checkbox" class="agree" name="agree" style="vertical-align:middle;"  required="required" >
-                    <span style="vertical-align:middle;">我同意DIYLA使用者條款和隱私權政策</span><br>
-                </label><br>
-                <label for="notice" class="notice">
-                    <input type="checkbox" class="notice" name="notice" style="vertical-align:middle;">
-                    <span style="vertical-align:middle;">我想收到DIYLA的最新消息和活動優惠</span><br>
-                </label><br>
-
-                <button type="submit" value="register" id="b">註冊</button>
-
-            <!-- 滑到最底下才能打勾 or 另跳頁面-->
-            </form>
-    </div>
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/jquery-twzipcode@1.7.14/jquery.twzipcode.min.js"></script>
+                <input type="text" id="address" name="address" value="${memVO.memAddress}"><br>
+                <span  id ="memAddress.errors" class="error">${exMsgs.memAddress}<br/></span>
+                <input type="hidden" name="memId" value="${memVO.memId}"><br>
+                <button type="submit" value="update">送出修改</button>
 
     <script>
 
@@ -150,8 +133,9 @@
         city_el.dispatchEvent(new Event('change'));
 
 
-
     </script>
 	<jsp:include page="../front_footer.jsp"/>
 </body>
+
+
 </html>

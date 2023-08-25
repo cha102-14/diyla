@@ -179,7 +179,8 @@
                 <span>|</span>
                 <a href="${ctxPath}/member/mem_register.jsp" class="reg">前往註冊</a><br>
 
-            </form>
+
+
         </div>
     </div>
 

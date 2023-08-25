@@ -1,7 +1,16 @@
 package com.cha102.diyla.member;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.sql.Date;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class MemVO implements java.io.Serializable{
 	private Integer memId;
 	private String memName;
@@ -18,7 +27,6 @@ public class MemVO implements java.io.Serializable{
 	private Integer blacklistArt;
 	private Integer blacklistDiy;
 	private Integer blacklistClass;
-
 	private Integer rpmsgCount;
 
 	public Integer getMemId() {
