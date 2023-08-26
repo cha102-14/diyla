@@ -16,4 +16,8 @@ public class CommodityClassJpaService {
     public List<CommodityClassEntity> getAll() {
         return commodityClassRepository.findAll();
     }
+
+    public void save(CommodityClassEntity commodityClassEntity) {
+        commodityClassRepository.save(commodityClassEntity);
+    }
 }

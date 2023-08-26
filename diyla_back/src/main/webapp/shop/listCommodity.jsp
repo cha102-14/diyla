@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div class="header">商品列表</div>
-    <a href="${ctxPath}/shop/insertNewCommodityClass.jsp">
+    <a href="${ctxPath}/shop/commodityClassManage.jsp">
         <button class="add-button">商品類別管理</button>
     </a>
     <a href="${ctxPath}/shop/CommodityController?action=insertPage">

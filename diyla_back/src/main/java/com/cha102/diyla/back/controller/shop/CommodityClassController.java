@@ -37,7 +37,7 @@ public class CommodityClassController extends HttpServlet {
             }
             if (!errMsgs.isEmpty()) {
                 req.setAttribute("errMsgs", errMsgs);
-                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/insertNewCommodityClass.jsp");
+                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/commodityClassManage.jsp");
                 requestDispatcher.forward(req,res);
                 return;
             }
@@ -52,7 +52,7 @@ public class CommodityClassController extends HttpServlet {
             }else {
                 req.setAttribute("message","失敗");
             }
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/succeedInsertCommodityClass.jsp"); // webapp/index.jsp or index.html
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityClassManage.jsp"); // webapp/index.jsp or index.html
             requestDispatcher.forward(req,res);
         }
     }
