@@ -4,7 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="javax.servlet.*"%>
 <%@ page import="com.cha102.diyla.member.*"%>
-<%@ page isELIgnored="false" %>
+
 
 <%
     MemVO memVO = (MemVO)session.getAttribute("memVO");

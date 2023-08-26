@@ -47,7 +47,7 @@
                 <label>電話</label><br>
                 <input type="tel" name="phonenumber" id="phonenumber" placeholder="請輸入註冊時填的手機號碼"  value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"><br>
                 <input type="hidden" name="action" value="forgetPw">
-                <button type="submit" value=""　id="sub" >送出重製密碼信件</button><br>
+                <button type="submit" value=""　id="sub" onclick="test()">送出重製密碼信件</button><br>
                 <span id="response">若仍未收到請至聯絡我們</span>
         </div>
     </div>
@@ -57,9 +57,9 @@
         var phonenumber = document.getElementById('phonenumber');
         var sub = document.getElementById('sub');
 
-        sub.addEventListener('click',function(){
-            alert(email.value);
-            alert(phonenumber.value);
+
+        function test(){
+
 
             var obj ={
             email: email.value,
@@ -70,10 +70,14 @@
             formDataUrlEncoded.append(key,obj[key])
             }
 
-            fetch("/updatePw",{
+            fetch("updatePw",{
             method:"post",
-            body:formDataUrlEncoded
+            headers:{
+                "content-type": "application/json"
+            },
+            body:JSON.stringify(obj)
             }).then(function(response){
+            console.log(response);
                 return response.text();
             }).then(function(data){
                 if(data.indexOf("success")>=0){
@@ -85,7 +89,7 @@
             })
 
 
-        })
+        }
 
 
 

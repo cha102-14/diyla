@@ -45,7 +45,17 @@ public class LoginServlet extends HttpServlet {
             Integer memId =memVO.getMemId();
             session.setAttribute("memVO", memVO);
             session.setAttribute("memId", memId);
-            res.sendRedirect(req.getContextPath()+"/index.jsp");
+            try {
+                String location = (String) session.getAttribute("location");
+                if (location != null) {
+                    session.removeAttribute("location"); // 看看有無來源網頁
+                    // (-->如有來源網頁:則重導至來源網頁)
+                    res.sendRedirect(location);
+                    return;
+                }
+            } catch (Exception ignored) {
+            }
+//            res.sendRedirect(req.getContextPath()+"/index.jsp");
 
         }
 
