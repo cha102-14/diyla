@@ -4,6 +4,7 @@ import com.cha102.diyla.commodityClassModel.CommodityClassService;
 import com.cha102.diyla.commodityClassModel.CommodityClassVO;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/shop/CommodityClassController")
 public class CommodityClassController extends HttpServlet {
@@ -45,7 +47,8 @@ public class CommodityClassController extends HttpServlet {
 
             if (i > 0) {
                 req.setAttribute("message","成功");
-
+                ServletContext servletContext = getServletContext();
+                List<CommodityClassVO> commodityClassVOS = service.getAll();
             }else {
                 req.setAttribute("message","失敗");
             }

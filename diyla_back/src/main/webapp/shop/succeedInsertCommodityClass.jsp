@@ -6,5 +6,6 @@
 </head>
 <body>
 <H1>新增商品類別${message}</H1>
+<a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" >返回商品清單</button></a>
 </body>
 </html>
