@@ -31,74 +31,64 @@
 </div>
 <script>
     let commodityClasses;
-
-    class CommodityClassEntity {
-        comClassNo;
-        comClassName;
-        updateTime;
-    }
     document.addEventListener("DOMContentLoaded", () => {
         axios.get("${ctxPath}/shop/commodityClass/getAll").then((res) => {
             console.log(res);
             commodityClasses = res.data;
-
             for (i = 0; i < commodityClasses.length; i++) {
-
                 $('#commodityClasses').append(
-                    `<div class="category-item" id="commodityClassDiv`+commodityClasses[i].comClassNo+`">
-                        <span class="" id="commodityClass`+commodityClasses[i].comClassNo+`">` + commodityClasses[i].comClassName +
+                    `<div class="category-item" id="commodityClassDiv`+i+`">
+                        <span class="" id="commodityClass`+i+`">` + commodityClasses[i].comClassName +
                     `   </span>
-                        <button id="commodityClassEditButton`+commodityClasses[i].comClassNo+`" onclick="editClass(`+commodityClasses[i].comClassNo+`)">修改</button>
+                        <button id="commodityClassEditButton`+i+`" onclick="editClass(`+i+`)">修改</button>
                     </div>`
                 )
-
             }
-
-
         })
 
 
     });
-    function editClass(id) {
-        let no = commodityClasses[id - 1].comClassNo;
-        let name = commodityClasses[id - 1].comClassName;
-        $('#commodityClassDiv' + id).html(
-            `<input type="text" id="comClassName`+no+`" value="` + commodityClasses[id - 1].comClassName + `">
-             <button id="commodityClassSubmitButton`+no+`" onclick="editSubmit(`+no+`)">完成</button>
-             <button id="commodityClassCancelButton`+no+`" onclick="editCancel(`+no+`)">取消</button>`
+
+    function editClass(i) {
+        $('#commodityClassDiv' + i).html(
+            `<input type="text" id="comClassName`+i+`" value="` + commodityClasses[i].comClassName + `">
+             <button id="commodityClassSubmitButton`+i+`" onclick="editSubmit(`+i+`)">完成</button>
+             <button id="commodityClassCancelButton`+i+`" onclick="editCancel(`+i+`)">取消</button>`
 
         );
-
     }
-    function editCancel(id){
-        let no = commodityClasses[id - 1].comClassNo;
-        let name = commodityClasses[id - 1].comClassName;
 
-        $('#commodityClassDiv' + id).html(
-            `<span class="" id="commodityClass`+no+`">` + name +
-        ` </span>
-        <button id="commodityClassEditButton`+no+`" onclick= " editClass(`+no+`)">修改</button>
+
+    function editCancel(i){
+        let name = commodityClasses[i].comClassName;
+        $('#commodityClassDiv' + i).html(
+            `<span class="" id="commodityClass` + i + `">` + name +
+            `</span>
+        <button id="commodityClassEditButton` + i + `" onclick= " editClass(` + i + `)">修改</button>
         `
-        )
+        );
     }
 
-    function editSubmit(id) {
-        let name=$('#comClassName'+id).val();
+    function editSubmit(i) {
+        let name=$('#comClassName'+i).val();
+        if (name.length === 0 || name === null) {
+            alert("類別名稱不得為空白，請輸入類別名稱！")
+            return
+        }
         let commodityClassEntity= {
             "comClassName":name,
-            "comClassNo":commodityClasses[id - 1].comClassNo,
+            "comClassNo":commodityClasses[i].comClassNo,
             "updateTime": null
-        }
+        };
 
         axios.post('${ctxPath}/shop/commodityClass/update',commodityClassEntity)
             .then((res)=>{
                 commodityClasses=res.data
-                $('#commodityClassDiv' + id).html(
-                    `<span class="" id="commodityClass`+commodityClasses[id-1].comClassNo+`">` + commodityClasses[id-1].comClassName +
+                $('#commodityClassDiv' + i).html(
+                    `<span class="" id="commodityClass`+i+`">` + commodityClasses[i].comClassName +
                     `</span>
-                     <button id="commodityClassEditButton`+commodityClasses[id-1].comClassNo+`" onclick="editClass(`+commodityClasses[id-1].comClassNo+`)">修改</button>`
+                     <button id="commodityClassEditButton`+i+`" onclick="editClass(`+i+`)">修改</button>`
                 )
-
             }
         )
     }
