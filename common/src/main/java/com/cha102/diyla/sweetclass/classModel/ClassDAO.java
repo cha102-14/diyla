@@ -1,5 +1,6 @@
 package com.cha102.diyla.sweetclass.classModel;
-import java.util.*;
+
+import java.util.List;
 public interface ClassDAO {
 
     void insert(ClassVO classVO);

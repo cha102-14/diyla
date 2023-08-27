@@ -1,11 +1,12 @@
 package com.cha102.diyla.sweetclass.teaModel;
 
-import java.util.*;
-import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
     private static DataSource ds = null;
     static {
@@ -27,7 +28,7 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
     private static final String UPDATE =
             "UPDATE spe_id=? where tea_id = ?";
     @Override
-    public void insert(TeaSpecialityVO teaSpecialityVO) {
+    public void insert(TeaSpecialityVO teaSpecialityVO){
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -41,6 +42,8 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
             pstmt.executeUpdate();
 
             // Handle any SQL errors
+        } catch (SQLIntegrityConstraintViolationException UKerror) {
+          throw new RuntimeException("UKerror");
         } catch (SQLException se) {
             throw new RuntimeException("A database error occured. "
                     + se.getMessage());

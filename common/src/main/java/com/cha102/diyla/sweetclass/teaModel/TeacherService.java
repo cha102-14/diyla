@@ -50,11 +50,12 @@ public class TeacherService {
 
         return teaDAO.findByPrimaryKey(teaID);
     }
+
     public List<TeacherVO> getAllTeacher(){
 
         return teaDAO.getAll();
     }
-    public SpecialityVO addSpeciality(String speName){
+    public SpecialityVO addSpeciality(String speName) throws RuntimeException{
         SpecialityVO specialityVO = new SpecialityVO();
         specialityVO.setSpeName(speName);
         speDAO.insert(specialityVO);
@@ -90,7 +91,7 @@ public class TeacherService {
     public List<SpecialityVO> getAllSpeciality(){
         return speDAO.getAll();
     }
-    public TeaSpecialityVO addTeaSpeciality(Integer teaID, Integer speID){
+    public TeaSpecialityVO addTeaSpeciality(Integer teaID, Integer speID) throws RuntimeException{
         TeaSpecialityVO teaSpecialityVO = new TeaSpecialityVO();
         teaSpecialityVO.setTeaId(teaID);
         teaSpecialityVO.setSpeId(speID);

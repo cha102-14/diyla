@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +44,10 @@ public class SpecialityDAOImpl implements SpecialityDAO {
             pstmt.executeUpdate();
 
             // Handle any SQL errors
-        } catch (SQLException se) {
+        } catch (SQLIntegrityConstraintViolationException UKerror) {
+            throw new RuntimeException("UKerror");
+        }
+        catch (SQLException se) {
             throw new RuntimeException("A database error occured. "
                     + se.getMessage());
             // Clean up JDBC resources

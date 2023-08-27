@@ -1,13 +1,14 @@
 package com.cha102.diyla.sweetclass.classModel;
+
 import com.cha102.diyla.sweetclass.teaModel.TeacherDAO;
 import com.cha102.diyla.sweetclass.teaModel.TeacherDAOImpl;
 import com.cha102.diyla.sweetclass.teaModel.TeacherVO;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.*;
-import java.sql.*;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 public class ClassService {
     private ClassDAO claDAO;
@@ -18,9 +19,9 @@ public class ClassService {
         resDAO = new ClassReserveDAOImpl();
         ingDAO = new ClassINGDAOImpl();
     }
-    public ClassVO addClass(Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
+    public ClassVO addClass(Integer category, Integer teaID, java.sql.Date regEndTime, java.sql.Date classDate, Integer classSEQ,
                             byte[] classPic, Integer classLimit, Integer price, String intro, String className,
-                            Integer headcount, Integer classStatus) {
+                            Integer headcount, Integer classStatus) throws RuntimeException{
         ClassVO classVO = new ClassVO();
         classVO.setCategory(category);
         classVO.setTeaId(teaID);
@@ -70,7 +71,7 @@ public class ClassService {
     public List<ClassVO> getAllClass(){
         return claDAO.getAll();
     }
-    public ClassReserveVO userAddReserve(Integer classID, Integer memID, Integer headcount){
+    public ClassReserveVO userAddReserve(Integer classID, Integer memID, Integer headcount)  {
         ClassReserveVO classReserveVO = new ClassReserveVO();
         ClassDAO classDAO = new ClassDAOImpl();
         ClassVO classVO = classDAO.findByPrimaryKey(classID);

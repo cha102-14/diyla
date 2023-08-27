@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>甜點課程訂單</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
@@ -35,7 +35,7 @@
 
             //確認是否有後台瀏覽權限
             function checkAuth() {
-                return 1;
+                return 0;
             }
             var authCode = checkAuth();
             //若checkAuth為0 = 管理員,則將teaId設-1,可瀏覽全部課程, 1則為後台教師,則將teaId設為該教師

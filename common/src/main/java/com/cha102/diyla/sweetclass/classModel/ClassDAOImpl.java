@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class ClassDAOImpl implements ClassDAO{
@@ -37,7 +34,7 @@ public class ClassDAOImpl implements ClassDAO{
             "SELECT class_id FROM class where tea_id = ?";
 
     @Override
-    public void insert(ClassVO classVO) {
+    public void insert(ClassVO classVO){
 
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -63,11 +60,13 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.executeUpdate();
 
             // Handle any SQL errors
+        }
+        catch (SQLIntegrityConstraintViolationException sice) {
+            throw new RuntimeException("該場次已有其他課程。");
         } catch (SQLException se) {
-            throw new RuntimeException("A database error occured. "
-                    + se.getMessage());
-            // Clean up JDBC resources
-        } finally {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+        }
+        finally {
             if (pstmt != null) {
                 try {
                     pstmt.close();

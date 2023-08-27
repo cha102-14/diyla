@@ -31,7 +31,11 @@ public class GetAllTeacher extends HttpServlet {
                 JSONObject jsonTeacher = new JSONObject();
                 jsonTeacher.put("teacherId", teachers.getTeaId());
                 jsonTeacher.put("teacherName", teachers.getTeaName());
-                jsonTeacher.put("gender", teachers.getTeaGender());
+                if(teachers.getTeaGender() == 0) {
+                    jsonTeacher.put("gender", "男");
+                } else {
+                    jsonTeacher.put("gender", "女");
+                }
                 if(teachers.getTeaStatus() == 0){
                     jsonTeacher.put("teacherStatus", "在職");
                 } else{

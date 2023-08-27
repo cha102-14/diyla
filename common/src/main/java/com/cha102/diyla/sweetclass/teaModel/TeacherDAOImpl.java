@@ -4,10 +4,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +39,7 @@ public class TeacherDAOImpl implements TeacherDAO {
         try {
 
             con = ds.getConnection();
-            pstmt = con.prepareStatement(INSERT_STMT);
+            pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS); // 設定 RETURN_GENERATED_KEYS
 
             pstmt.setInt(1, teacherVO.getEmpId());
             pstmt.setString(2, teacherVO.getTeaName());

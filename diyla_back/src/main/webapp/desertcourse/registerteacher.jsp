@@ -12,7 +12,9 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
-    <% String empname = "John";
+    <%
+
+        String empname = "John";
         session.setAttribute("empname", empname);
         Integer isTeacher = 0;
         session.setAttribute("isTeacher", isTeacher);
@@ -28,8 +30,8 @@
     </div>
 
     <div id="genderBlock">
-    <label for="gender">性別：</label>
-    <select id="gender" name="teaGender">
+    <label for="teagender">性別：</label>
+    <select id="teagender" name="teaGender">
         <option value="0">男</option>
         <option value="1">女</option>
     </select><br>
@@ -39,7 +41,6 @@
     <label for="phone">電話：</label>
     <input type="tel" id="phone" name="teaPhone" required>
     <span class="error" style="display: none">請輸入有效的電話號碼 (10位數字)。</span><br>
-    <%-- <span id="teaphone.errors" class="error">${errorMsgs.teaPhone}<br/></span> --%>
     </div>
     <div id="specialityBlock">
     <label for="speciality"> 專長1: </label>
@@ -51,20 +52,17 @@
     <label for="intro">簡介：</label>
     <textarea id="intro" name="teaIntro" rows="4" maxlength="500" required></textarea>
     <span class="error" style="display: none">簡介不可超過500字。</span><br>
-    <%-- <span id="teaintro.errors" class="error">${errorMsgs.teaIntro}<br/></span> --%>
     </div>
 
     <div id="mailBlock">
     <label for="email">電子郵件：</label>
     <input type="email" id="email" name="teaEmail" required>
-    <%-- <span id="teaemail.errors" class="error">${errorMsgs.teaEmail}<br/></span> --%>
     <span class="error" style="display: none">請輸入有效的電子郵件地址。</span><br>
     </div>
 
     <div id="picBlock">
     <label for="profilePic">上傳圖片：</label>
     <input type="file" id="teaPic" name="teaPic" accept="image/*"><br>
-    <span id="teapic.errors" class="error">${errorMsgs.teaPic}<br/></span>
     </div>
     <div id="picPreviewBlock" style="display: none;">
         <img id="picPreview" src="#" alt="圖片預覽" style="max-width: 280px; max-height: 280px;">
@@ -98,31 +96,39 @@
                 });
                 //做表單的請求處理
                 $("form").submit(function(event){
+                    var form = $('form')[0];
+                    var formData = new FormData(form);
+                    console.log(formData);
+                    for (var pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
                     event.preventDefault();
-                    $.ajax({
-                        url: "/${ctxPath}/registerTeacher",
-                        type: "post",
-                        dataType: "json",
-                        success: function(data) {
-                            if(data.success === 1) {
+
+            fetch("${ctxPath}"+"/registerTeacher", {
+            method: "post",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.isSuccessful) {
                                 Swal.fire({
-                                    title: "註冊成功!",
+                                    title: data.errorMessage,
                                     icon: "success",
                                     confirmButtonText: "確定"
                                 }).then(function(result){
                                     if(result.isConfirmed) {
-                                        window.location.href = "/${ctxPath}/index.jsp";
+                                        window.location.href = "/${ctxPath}/listallteacher.jsp?defaultSearchValue="+result.teacherId;
                                     }
                                 });
                             } else {
                                 Swal.fire({
-                                    title: "註冊失敗...請稍後再試",
+                                    title: data.errorMessage,
                                     icon: "error",
                                     confirmButtonText: "確定"
                                 });
                             }
-                        }
-                    });
+        });
+
                 });
 
 
@@ -179,7 +185,7 @@
                             const reader = new FileReader();
                             reader.onload = function (e) {
                                 preview.attr("src", e.target.result);
-                                // 启用提交按钮
+                                // 啟用提交按鈕
                                 $("#submitButton").prop("disabled", false);
                             };
                             reader.readAsDataURL(input.files[0]);
