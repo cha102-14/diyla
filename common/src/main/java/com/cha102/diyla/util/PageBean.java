@@ -15,7 +15,13 @@ public class PageBean {
 		super();
 	}
 
-//getPage()、setPage(int page): 獲取和設置目前頁碼。
+	public PageBean(Integer page,Integer pageSize) {
+		this.page = page;
+		this.rows = pageSize;
+	}
+
+	//getPage()、setPage(int page): 獲取和設置目前頁碼。
+
 	public int getPage() {
 		return page;
 	}
@@ -24,7 +30,7 @@ public class PageBean {
 		this.page = page;
 	}
 
-//getRows()、setRows(int rows): 獲取和設置每頁顯示的記錄數。
+	//getRows()、setRows(int rows): 獲取和設置每頁顯示的記錄數。
 	public int getRows() {
 		return rows;
 	}
@@ -33,7 +39,7 @@ public class PageBean {
 		this.rows = rows;
 	}
 
-//getTotal()、setTotal(int total)、setTotal(String total): 獲取和設置總記錄數。
+	//getTotal()、setTotal(int total)、setTotal(String total): 獲取和設置總記錄數。
 	public int getTotal() {
 		return total;
 	}
@@ -46,7 +52,7 @@ public class PageBean {
 		this.total = Integer.parseInt(total);
 	}
 
-//isPagination()、setPagination(boolean pagination): 獲取和設置是否進行分頁。
+	//isPagination()、setPagination(boolean pagination): 獲取和設置是否進行分頁。
 	public boolean isPagination() {
 		return pagination;
 	}
@@ -55,7 +61,7 @@ public class PageBean {
 		this.pagination = pagination;
 	}
 
-//getData()、setData(Object data): 獲取和設置查詢結果資料。
+	//getData()、setData(Object data): 獲取和設置查詢結果資料。
 	public Object getData() {
 		return data;
 	}
@@ -64,14 +70,14 @@ public class PageBean {
 		this.data = data;
 	}
 
-//getStartIndex(): 計算起始記錄的索引。
+	//getStartIndex(): 計算起始記錄的索引。
 	public int getStartIndex() {
 		return (this.page - 1) * this.rows;
 	}
 
 	/*
 	 * toString(): 重新撰寫了Object類別的toString()方法 用於將PageBean物件轉換為字串表示，包括各個屬性的值。
-	 * 
+	 *
 	 */
 	@Override
 	public String toString() {

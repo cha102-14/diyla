@@ -1,7 +1,8 @@
-package com.cha102.diyla.diyForum;
+package com.cha102.diyla.diyforum;
+
+import com.cha102.diyla.util.PageBean;
 
 import java.util.List;
-import com.cha102.diyla.util.PageBean;
 
 public interface DiyForumDAO_Interface {
 	public void insert(DiyForumVO DiyForumVO);   //插入（新增）一筆 DIY 評論的資料。
