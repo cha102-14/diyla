@@ -33,7 +33,6 @@
     let commodityClasses;
     document.addEventListener("DOMContentLoaded", () => {
         axios.get("${ctxPath}/shop/commodityClass/getAll").then((res) => {
-            console.log(res);
             commodityClasses = res.data;
             for (i = 0; i < commodityClasses.length; i++) {
                 $('#commodityClasses').append(
