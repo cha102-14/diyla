@@ -33,4 +33,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+/.metadata/
+common/src/main/resources/application-jdbc.yaml
+common/bin/src/main/resources/application.yaml
+
 diyla_front/src/main/resources/application-jdbc.yaml

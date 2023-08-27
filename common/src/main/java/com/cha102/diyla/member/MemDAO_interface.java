@@ -16,6 +16,8 @@ public interface MemDAO_interface {
 	public MemVO selectLogin(String memEmail,String memPassword);
 
 	public MemVO selectPw(String memEmail,String memPhone);
+
+	public void updateStatus(String email);
 	
 	
 }

@@ -11,7 +11,7 @@
     color: white;
     /* background-color: royalblue; */
     background-color: rgba(252, 229, 205);
-    width: 300px;
+    width: 280px;
     height: 100vh;
     padding: 24px 15px;
     font-size: 20px;
@@ -95,7 +95,7 @@
     }
 
     100% {
-        width: 100px;
+        width: 80px;
     }
 }
 

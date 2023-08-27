@@ -157,3 +157,9 @@ h1 {
     margin-top: 10px;
     color: #333;
 }
+
+.swal-modal{
+	margin-top: 120px;
+	top:100px;
+	
+}

@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.cha102.diyla.commodityModel.*;
-import com.cha102.diyla.shoppingcart.*;
-import java.lang.reflect.Method;
+import org.json.JSONObject;
+
+import com.cha102.diyla.commodityModel.CommodityService;
+import com.cha102.diyla.commodityModel.CommodityVO;
+import com.cha102.diyla.member.MemVO;
+import com.cha102.diyla.shoppingcart.ShoppingCartService;
+import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 @WebServlet("/shop/ShoppingCartServlet")
 public class ShoppingCartServlet extends HttpServlet {
@@ -34,12 +38,19 @@ public class ShoppingCartServlet extends HttpServlet {
 		List<ShoppingCartVO> shoppingCartList = (ArrayList<ShoppingCartVO>) session.getAttribute("shoppingCartList");
 		List<CommodityVO> comList = null;
 		if ("getAll".equals(action)) {
-			Integer memId = Integer.valueOf(req.getParameter("memId"));
+//			Integer memId = Integer.valueOf(req.getParameter("memId"));
 //			Integer memId = (Integer) session.getAttribute("memId"); //之後改用這個
-//			if(memId==null||memId="") {
-// 			導向登入頁面
-
-//			}
+//			===============
+//			沒有登入就導向導向登入頁面
+			MemVO memVO =(MemVO) session.getAttribute("memVO");
+			if(memVO==null) {
+				System.out.println("no login info");
+				String loginURL ="/member/mem_login.jsp";
+				RequestDispatcher login = req.getRequestDispatcher(loginURL); 
+				login.forward(req, res);
+			}
+			 Integer memId =memVO.getMemId();
+//			=================
 			int totalPrice = 0;
 			shoppingCartList = shoppingCartService.getAll(Integer.valueOf(memId));// 取出該會員所有購買商品
 			List<CommodityVO> commodityList = null;
@@ -61,9 +72,18 @@ public class ShoppingCartServlet extends HttpServlet {
 
 		}
 		if ("addItem".equals(action)) {
+//			===============
+//			沒有登入就導向導向登入頁面
+			MemVO memVO =(MemVO) session.getAttribute("memVO");
+			if(memVO==null) {
+				String loginURL ="/member/mem_login.jsp";
+				RequestDispatcher login = req.getRequestDispatcher(loginURL); 
+				login.forward(req, res);
+			}
+			 Integer memId =memVO.getMemId();
+//			=================
 			Integer comNo = Integer.valueOf(req.getParameter("comNo"));
 			Integer amount = Integer.valueOf(req.getParameter("amount"));
-			Integer memId = (Integer) session.getAttribute("memId");
 			ShoppingCartVO cartVO = shoppingCartService.addShoppingCart(memId, comNo, amount);
 			if (shoppingCartList == null) {
 				shoppingCartList = new ArrayList<ShoppingCartVO>();
@@ -71,13 +91,16 @@ public class ShoppingCartServlet extends HttpServlet {
 			} else {
 				shoppingCartList.add(cartVO);
 			}
-//			session.setAttribute("commodityVO", commodityVO);
-//			int totalPrice = shoppingCartService.getTotalPrice(shoppingCartList);
-//			session.setAttribute("totalPrice", totalPrice);
+			session.setAttribute("memId", memId);
 			session.setAttribute("shoppingCartList", shoppingCartList);
-			res.sendRedirect(req.getContextPath() + "/shop/CommodityController?action=findByID&comNO=" + comNo);
-
+			//true or false 用js接值跳框 window.location res.getWriter()
+//			res.sendRedirect(req.getContextPath() + "/shop/CommodityController?action=findByID&comNO=" + comNo);
+			 JSONObject jsonResponse = new JSONObject();
+	            jsonResponse.put("success", true);
+	            res.setContentType("application/json");
+	            res.getWriter().write(jsonResponse.toString());
 		}
+		//修改數量
 		if ("changeAmount".equals(action)) {
 			Integer memId = (Integer) session.getAttribute("memId");
 			Integer comNo = Integer.valueOf(req.getParameter("comNo"));
@@ -102,22 +125,28 @@ public class ShoppingCartServlet extends HttpServlet {
 			int totalPrice = shoppingCartService.getTotalPrice(shoppingCartList);
 			session.setAttribute("totalPrice", totalPrice);
 			session.setAttribute("shoppingCartList", shoppingCartList);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/shoppingCart/listAll.jsp");
-			dispatcher.forward(req, res);
+			  JSONObject jsonResponse = new JSONObject();
+	            jsonResponse.put("success", true);
+	            res.setContentType("application/json");
+	            res.getWriter().write(jsonResponse.toString());
 		}
 
 		if ("delete".equals(action)) {
-			Integer memId = (Integer) session.getAttribute("memId");
-			Integer comNo = Integer.valueOf(req.getParameter("comNo"));
-			shoppingCartService.delete(memId, comNo);
-			shoppingCartList.removeIf(cartVO -> cartVO.getComNo() == comNo && cartVO.getMemId() == memId);
-			int totalPrice = shoppingCartService.getTotalPrice(shoppingCartList);
-			session.setAttribute("totalPrice", totalPrice);
-			session.setAttribute("shoppingCartList", shoppingCartList);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/shoppingCart/listAll.jsp");
-			dispatcher.forward(req, res);
+			  Integer memId = Integer.valueOf(req.getParameter("memId"));
+	            Integer comNo = Integer.valueOf(req.getParameter("comNo"));
+
+	            // 刪除購物車項目
+	            ShoppingCartService shoppingCartService = new ShoppingCartService();
+	            shoppingCartService.delete(memId, comNo);
+
+	            // 返回JSON響應表示刪除成功
+	            JSONObject jsonResponse = new JSONObject();
+	            jsonResponse.put("success", true);
+	            res.setContentType("application/json");
+	            res.getWriter().write(jsonResponse.toString());
 
 		}
+		//整個清空
 		if ("clear".equals(action)) {
 			Integer memId = (Integer) session.getAttribute("memId");
 			shoppingCartService.clear(memId);
@@ -125,8 +154,10 @@ public class ShoppingCartServlet extends HttpServlet {
 			int totalPrice = 0;
 			session.setAttribute("totalPrice", totalPrice);
 			session.setAttribute("shoppingCartList", shoppingCartList);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/shoppingCart/listAll.jsp");
-			dispatcher.forward(req, res);
+			JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("success", true);
+            res.setContentType("application/json");
+            res.getWriter().write(jsonResponse.toString());
 		}
 	}
 }

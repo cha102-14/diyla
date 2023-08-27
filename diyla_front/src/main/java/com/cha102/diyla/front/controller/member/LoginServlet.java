@@ -42,8 +42,20 @@ public class LoginServlet extends HttpServlet {
         } else {
             String url = "/";
             HttpSession session = req.getSession();
+            Integer memId =memVO.getMemId();
             session.setAttribute("memVO", memVO);
-            res.sendRedirect(req.getContextPath()+"/index.jsp");
+            session.setAttribute("memId", memId);
+            try {
+                String location = (String) session.getAttribute("location");
+                if (location != null) {
+                    session.removeAttribute("location"); // 看看有無來源網頁
+                    // (-->如有來源網頁:則重導至來源網頁)
+                    res.sendRedirect(location);
+                    return;
+                }
+            } catch (Exception ignored) {
+            }
+//            res.sendRedirect(req.getContextPath()+"/index.jsp");
 
         }
 

@@ -1,11 +1,16 @@
 package com.cha102.diyla.front.controller.shoppingCart;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.cha102.diyla.commodityModel.CommodityService;
+import com.cha102.diyla.commodityModel.CommodityVO;
+import com.cha102.diyla.commodityOrder.CommodityOrderService;
+import com.cha102.diyla.commodityOrder.CommodityOrderVO;
+import com.cha102.diyla.commodityOrder.MailService;
+import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
+import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailVO;
+import com.cha102.diyla.member.MemVO;
+import com.cha102.diyla.member.MemberService;
+import com.cha102.diyla.shoppingcart.ShoppingCartService;
+import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,17 +19,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.cha102.diyla.commodityModel.CommodityService;
-import com.cha102.diyla.commodityModel.CommodityVO;
-import com.cha102.diyla.commodityOrder.CommodityOrderService;
-import com.cha102.diyla.commodityOrder.CommodityOrderVO;
-import com.cha102.diyla.commodityOrder.MailService;
-import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
-import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailVO;
-import com.cha102.diyla.member.MemberService;
-import com.cha102.diyla.shoppingcart.ShoppingCartService;
-import com.cha102.diyla.shoppingcart.ShoppingCartVO;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/memberOrder/OrderController")
 public class OrderController extends HttpServlet {
@@ -54,11 +54,17 @@ public class OrderController extends HttpServlet {
 		}
 		// 前台顯示訂單
 		if ("listOrder".equals(action)) {
-			Integer memId = Integer.valueOf(req.getParameter("memId"));
-//			Integer memId = (Integer) session.getAttribute("memId"); //之後改用這個
-//			if(memId==null) {
-//				//請先登入會員，跳轉到登入頁面
-//			}
+//			Integer memId = Integer.valueOf(req.getParameter("memId"));
+//			===============
+//			沒有登入就導向導向登入頁面
+			MemVO memVO =(MemVO) session.getAttribute("memVO");
+			if(memVO==null) {
+				String loginURL ="/member/mem_login.jsp";
+				RequestDispatcher login = req.getRequestDispatcher(loginURL); 
+				login.forward(req, res);
+			}
+			 Integer memId =memVO.getMemId();
+//			=================		}
 			List<CommodityOrderVO> list = commodityOrderService.getAllByMemId(memId);
 			session.setAttribute("memId", memId);
 			session.setAttribute("commodityOrderVOList", list);

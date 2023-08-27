@@ -56,7 +56,7 @@
 					<c:forEach var="cartItem" items="${shoppingCartList}">
 						<c:forEach var="comVO" items="${commodityList}">
 							<c:if test="${cartItem.comNo == comVO.comNO}">
-								<tr class="itemrow">
+								<tr class="itemrow${comVO.comNO} itemrow">
 									<td class="itemInfo compic"><a
 										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${comVO.comNO}"
 										class="commodityPage"> <img src="${comVO.showPic}"
@@ -65,41 +65,29 @@
 										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${comVO.comNO}"
 										class="commodityPage">${comVO.comName}</a></td>
 									<td class="itemInfo">${comVO.comPri}</td>
-									<td class="itemInfo">
-										<form action="ShoppingCartServlet" method="post">
-											<input type="hidden" name="comNo" value="${cartItem.comNo}">
-											<input type="hidden" name="memId" value="${cartItem.memId}">
-											<input class="quantity-input" type="number" name="amount"
-												min="0" value="${cartItem.comAmount}"
-												data-original-amount="${cartItem.comAmount}" /> <input
-												type="hidden" name="action" value="changeAmount" />
-											<button type="submit" class="updateButton">更新</button>
-										</form>
-									</td>
+									<td class="itemInfo"><input type="hidden" name="comNo"
+										value="${cartItem.comNo}" class="ucomNo"> <input
+										type="hidden" name="memId" value="${cartItem.memId}"
+										class="umemId"> <input class="quantity-input"
+										type="number" name="amount" min="0"
+										value="${cartItem.comAmount}"
+										data-original-amount="${cartItem.comAmount}" />
+										<button type="button" class="updateButton">更新</button></td>
 									<td class="itemInfo">${comVO.comPri*cartItem.comAmount}</td>
-									<td class="itemInfo">
-										<form action="ShoppingCartServlet" method="post"
-											id="deleteForm">
-											<input type="hidden" name="comNo" value="${cartItem.comNo}">
-											<input type="hidden" name="memId" value="${cartItem.memId}">
-											<input type="hidden" name="action" value="delete"
-												id="delaction">
-											<button type="submit" class="deleteButton">刪除</button>
-										</form>
-									</td>
+									<td class="itemInfo"><input type="hidden" name="comNo"
+										value="${cartItem.comNo}" class="dcomNo"> <input
+										type="hidden" name="memId" value="${cartItem.memId}"
+										class="dmemId">
+										<button type="button" class="deleteButton">刪除</button></td>
 								</tr>
 							</c:if>
 						</c:forEach>
 					</c:forEach>
 				</table>
 				<div class="handle">
-
-					<form action="${ctxPath}/shop/ShoppingCartServlet" method="post">
-
-						<button type="submit" class="clearButton">清空購物車</button>
-						<input type="hidden" name="action" value="clear">
-					</form>
-					<a href="${ctxPath}/shop/CommodityController?action=listAll"
+					<button type="button" class="clearButton" id="clearCart">清空購物車</button>
+					<input type="hidden" name="action" value="clear"> <a
+						href="${ctxPath}/shop/CommodityController?action=listAll"
 						class="shopPage">繼續購物</a> <span class="total-price">總金額:${totalPrice}元</span>
 
 					<form action="${ctxPath}/memberOrder/OrderController" method="post">
@@ -141,63 +129,7 @@
 	<script src="../js/jquery-3.4.1.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			 $('.updateButton').on('click', function(e) {
-				 e.preventDefault();
-			        const inputField = $(this).closest('form').find('.quantity-input');
-			        const originalAmount = parseInt(inputField.data('original-amount'));
-			        const amount = parseInt(inputField.val());
-                	const form = $(this).closest('form');
-
-			        if (amount === 0) {
-			            swal({
-			                title: "數量為 0，確定要從購物車移除嗎？",
-			                icon: "warning",
-			            	buttons : true
-			            }).then((removeItem) => {
-			                if (removeItem) {
-			                    // 在這裡執行表單提交的相關操作
-			                    form.submit();
-			                } else {
-			                    inputField.val(originalAmount); // 恢復到原始數量
-			                }
-			            });
-			        }
-			        else{
-	                	const form = $(this).closest('form');
-			        	form.submit();
-			        }
-			    });
-
-			 $('.deleteButton').on('click',function(e){
-				e.preventDefault();
-				const form = $(this).closest('form');
-			 swal({
-				 title: "確認刪除？",
-	                icon: "warning",
-	            	buttons : true
-			 }).then((deleteItem)=>{
-				 if(deleteItem){
-					 form.submit();
-				 }
-			 });
-			  
-			 });
-			 
-			 $('.clearButton').on('click',function(e){
-					e.preventDefault();
-					const form = $(this).closest('form');
-				 swal({
-					 title: "確認將購物車清空？",
-		                icon: "warning",
-		            	buttons : true
-				 }).then((deleteItem)=>{
-					 if(deleteItem){
-						 form.submit();
-					 }
-				 });
-				  
-				 });
-
+							//置頂按鈕
 							$(window).scroll(function() {
 								if ($(this).scrollTop() > 20) {
 									$(".goTopButton").fadeIn();
@@ -212,9 +144,158 @@
 								}, "slow");
 								return false;
 							});
-
 						});
 	</script>
+	<script>
+	$(document).ready(function(){
+		$(".deleteButton").click(function() {
+			const button =$(this);
+			const comNo = button.closest('tr').find(".dcomNo").val();
+			const memId =button.closest('tr').find(".dmemId").val();
+			console.log(comNo);
+			console.log(memId);
+			 swal({
+		            title: "確定要從購物車刪除嗎？",
+		            icon: "warning",
+		            buttons: true
+			 }).then((removeItem) => {
+	            if (removeItem) {
+	                deleteCartItem(comNo,memId);
+	            }
+	        });
+	    });
 	
+	//刪除
+	 function deleteCartItem(comNo,memId){
+		 $.ajax({
+	            url: "ShoppingCartServlet",
+	            type: "POST",
+	            data: {
+	                comNo: comNo,
+	                memId: memId,
+	                action: "delete"
+	            },
+	            dataType: "json",
+	            success: function(data) {
+	                if (data.success) {
+	                	 swal("成功刪除", "", "success");
+	                     // 延遲 1 秒後刷新
+	                     setTimeout(function() {
+	                         window.location.reload("#mainContent");
+	                     }, 1500);
+	                } else {
+	                    // 處理刪除失敗的情況
+	                }
+	            },
+	            error: function() {
+	                // 處理AJAX錯誤的情況
+	            }
+	        });
+	    }
+	 
+	 //修改
+	 $('.updateButton').click(function(){
+		 	const button = $(this);
+		    const inputField = button.closest('tr').find('.quantity-input'); 
+	        const originalAmount = parseInt(inputField.data('original-amount'));
+	        const amount =  inputField.val(); 
+	        const comNo = button.closest('tr').find(".ucomNo").val();
+			const memId =button.closest('tr').find(".umemId").val();
+			console.log(amount);
+			console.log(inputField);
+			console.log(comNo);
+			console.log(memId);
+	        if (amount === "0") {
+	            swal({
+	                title: "數量為 0，確定要從購物車移除嗎？",
+	                icon: "warning",
+	            	buttons : true
+	            }).then((removeItem) => {
+	                if (removeItem) {
+	                	deleteCartItem(comNo,memId);
+	                } else {
+	                	inputField.val(originalAmount); // 恢復到原始數量
+	                }
+	            });
+	        }
+	        else{
+	        	updateCartItem(comNo,memId,amount);
+	        }
+	    });
+	//修改的方法
+	 function updateCartItem(comNo,memId,amount){
+		 $.ajax({
+	            url: "ShoppingCartServlet",
+	            type: "POST",
+	            data: {
+	                comNo: comNo,
+	                memId: memId,
+	                amount:amount,
+	                action: "changeAmount"
+	            },
+	            dataType: "json",
+	            success: function(data) {
+	                if (data.success) {
+	                	 swal("成功修改", "", "success");
+	                     // 延遲 1 秒後刷新
+	                     setTimeout(function() {
+	                         window.location.reload("#mainContent");
+	                     }, 1500);
+	                } else {
+	                    // 處理刪除失敗的情況
+	                }
+	            },
+	            error: function() {
+	                // 處理AJAX錯誤的情況
+	            }
+	        });
+	    };
+	    
+	    //清空購物車用
+		 $('#clearCart').on('click',function(e){
+				const memId = <%=session.getAttribute("memId")%>;
+			 swal({
+				 title: "確認將購物車清空？",
+	                icon: "warning",
+	            	buttons : true
+			 }).then((deleteItem)=>{
+				 if(deleteItem){
+					 clearCartItem(memId);
+				 }
+			 });
+			  
+			 });
+		 
+		    //清空購物車用
+		 function clearCartItem(memId){
+			 $.ajax({
+		            url: "ShoppingCartServlet",
+		            type: "POST",
+		            data: {
+		                memId: memId,
+		                action: "clear"
+		            },
+		            dataType: "json",
+		            success: function(data) {
+		                if (data.success) {
+		                	 swal("成功清空購物車", "", "success");
+		                     // 延遲 1 秒後刷新
+		                     setTimeout(function() {
+		                         window.location.reload("#mainContent");
+		                     }, 1500);
+		                } else {
+		                    // 處理刪除失敗的情況
+		                }
+		            },
+		            error: function() {
+		                // 處理AJAX錯誤的情況
+		            }
+		        });
+		    }
+		 
+
+	 
+	});
+	</script>
 </BODY>
 </HTML>
