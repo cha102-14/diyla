@@ -71,7 +71,7 @@ DiyOrderVO diyOrderVO = (DiyOrderVO) request.getAttribute("diyOrderVO"); //EmpSe
 			<label for="reservationStatus">預約狀態: </label>		
 			<select name="reservationStatus" id="reservationStatus" >				
 				<option value="0" <%= (diyOrderVO.getReservationStatus()==0)? "selected": "" %>>訂位完成</option>
-				<option value="1" <%= (diyOrderVO.getReservationStatus()==1)? "selected": "" %>>訂位取消</option>
+				<option value="1" <%= (diyOrderVO.getReservationStatus()==1)? "selected": "" %>>訂位已取消，尚未退款完成</option>
 				<option value="2" <%= (diyOrderVO.getReservationStatus()==2)? "selected": "" %>>退款完成</option>
 				<option value="3" <%= (diyOrderVO.getReservationStatus()==3)? "selected": "" %>>當日未到</option>
 			</select>

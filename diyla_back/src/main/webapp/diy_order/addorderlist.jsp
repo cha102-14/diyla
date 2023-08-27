@@ -59,18 +59,18 @@
 			
 			<label for="reservationStatus">預約狀態: </label>		
 			<select name="reservationStatus" id="reservationStatus">				
-				<option value="0">待審核</option>
-				<option value="1">訂位完成</option>
-				<option value="2">訂位取消</option>
+				<option value="0">訂位完成</option>
+				<option value="1">訂位已取消，尚未退款完成</option>
+				<option value="2">退款完成</option>
 				<option value="3">當日未到</option>
 			</select>
 			<br> 
 			<label for="paymentStatus">付款狀態: </label> 
 			<select name="paymentStatus" id="paymentStatus">
-				<option value="0">未付款</option>
-				<option value="1">已付款</option>
-				<option value="2">已退款</option>
-				<option value="3">沒收訂金-不退款</option>
+				<option value="0">已付款</option>
+				<option value="1">已完成訂單</option>
+				<option value="2">已失效訂單</option>
+				<option value="3">已退款訂單</option>
 			</select>
 			<br> 
 			<label for="diyPrice">DIY訂單金額 </label> 

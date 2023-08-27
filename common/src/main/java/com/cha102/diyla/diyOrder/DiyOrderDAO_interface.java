@@ -8,4 +8,5 @@ public interface DiyOrderDAO_interface {
     public void delete(Integer diyOrderNo);
     public DiyOrderVO findByPrimaryKey(Integer diyOrderNo);
     public List<DiyOrderVO> getAll();
+    public List<DiyOrderVO> getAllByMemID(Integer memId);
 }

@@ -94,6 +94,10 @@ div.inline {
 	gap: 8px;
 }
 
+.pennyrequest1{
+margin-top: 20px;
+}
+
 
 </style>
 </head>
@@ -105,6 +109,8 @@ div.inline {
 			<p class="header-subtitle">
 				<a href='diyorderfront.jsp'>返回DIY首頁</a><br>
 				<a href='addorderlist.jsp'>新增訂單</a>
+				</div>
+				
 			</p>
 		</span>
 	</header>
@@ -128,8 +134,7 @@ div.inline {
 
 			<th id="inn">操作</th>
 		</tr>
-		<jsp:useBean id="doser" scope="page"
-			class="com.cha102.diyla.diyOrder.DiyOrderService" />
+		<jsp:useBean id="doser" scope="page" class="com.cha102.diyla.diyOrder.DiyOrderService" />
 		<c:forEach var="DiyOrderVO" items="${doser.all}">
 
 			<tr>
@@ -179,7 +184,7 @@ div.inline {
 						<td>訂位完成</td>
 					</c:when>
 					<c:when test="${DiyOrderVO.reservationStatus == 1}">
-						<td>訂位取消</td>
+						<td>訂位已取消，尚未退款完成</td>
 					</c:when>
 					<c:when test="${DiyOrderVO.reservationStatus == 2}">
 						<td>退款完成</td>
@@ -233,7 +238,7 @@ div.inline {
 
 	</table>
 
-	<div>
+	<div class="pennyrequest1">
 		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li>
 	</div>
 
