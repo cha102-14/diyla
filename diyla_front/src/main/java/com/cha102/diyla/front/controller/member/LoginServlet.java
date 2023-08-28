@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
             Integer memId =memVO.getMemId();
             session.setAttribute("memVO", memVO);
             session.setAttribute("memId", memId);
+
             try {
                 String location = (String) session.getAttribute("location");
                 if (location != null) {
@@ -56,6 +57,7 @@ public class LoginServlet extends HttpServlet {
             } catch (Exception ignored) {
             }
 //            res.sendRedirect(req.getContextPath()+"/index.jsp");
+
 
         }
 

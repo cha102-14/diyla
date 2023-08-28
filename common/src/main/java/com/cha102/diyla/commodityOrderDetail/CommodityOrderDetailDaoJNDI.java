@@ -42,17 +42,16 @@ public class CommodityOrderDetailDaoJNDI implements CommodityOrderDetailDao {
 		}
 		String sql = sqlBuffer.substring(0, sqlBuffer.length() - 1)+");";
 		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(sql);) {
-				List<Integer> comNoList = ShoppingCartService.getComNoList(shoppingCartList);
-				List<CommodityVO >commodityList = commodityService.getAllByComNo(comNoList);
+//				List<Integer> comNoList = ShoppingCartService.getComNoList(shoppingCartList);
+//				List<CommodityVO >commodityList = commodityService.getAllByComNo(comNoList);
 				
 				for(int i =0;i<size;i++) {
 				ShoppingCartVO shoppingCartVO = shoppingCartList.get(i);
-				CommodityVO commodityVO = commodityList.get(i);
-				int comPri =commodityVO.getComPri();
+				int comPri =shoppingCartVO.getComPri();
 				int amount = shoppingCartVO.getComAmount();
 				 int parameterIndex = i * 4; 
 				pstm.setInt(1+parameterIndex, orderNo);
-				pstm.setInt(2+parameterIndex, commodityVO.getComNO());
+				pstm.setInt(2+parameterIndex, shoppingCartVO.getComNo());
 				pstm.setInt(3+parameterIndex, amount);
 				pstm.setInt(4+parameterIndex, comPri * amount);
 				}

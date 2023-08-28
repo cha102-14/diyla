@@ -54,17 +54,17 @@
 						<td class="subtitle">刪除商品</td>
 					</tr>
 					<c:forEach var="cartItem" items="${shoppingCartList}">
-						<c:forEach var="comVO" items="${commodityList}">
-							<c:if test="${cartItem.comNo == comVO.comNO}">
-								<tr class="itemrow${comVO.comNO} itemrow">
+<%-- 						<c:forEach var="comVO" items="${commodityList}"> --%>
+<%-- 							<c:if test="${cartItem.comNo == comVO.comNO}"> --%>
+								<tr class="itemrow${cartItem.comNo} itemrow">
 									<td class="itemInfo compic"><a
-										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${comVO.comNO}"
-										class="commodityPage"> <img src="${comVO.showPic}"
+										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
+										class="commodityPage"> <img src="${cartItem.showPic}"
 											class="comPic"></a></td>
 									<td class="itemInfo"><a
-										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${comVO.comNO}"
-										class="commodityPage">${comVO.comName}</a></td>
-									<td class="itemInfo">${comVO.comPri}</td>
+										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
+										class="commodityPage">${cartItem.comName}</a></td>
+									<td class="itemInfo">${cartItem.comPri}</td>
 									<td class="itemInfo"><input type="hidden" name="comNo"
 										value="${cartItem.comNo}" class="ucomNo"> <input
 										type="hidden" name="memId" value="${cartItem.memId}"
@@ -73,15 +73,15 @@
 										value="${cartItem.comAmount}"
 										data-original-amount="${cartItem.comAmount}" />
 										<button type="button" class="updateButton">更新</button></td>
-									<td class="itemInfo">${comVO.comPri*cartItem.comAmount}</td>
+									<td class="itemInfo">${cartItem.comPri*cartItem.comAmount}</td>
 									<td class="itemInfo"><input type="hidden" name="comNo"
 										value="${cartItem.comNo}" class="dcomNo"> <input
 										type="hidden" name="memId" value="${cartItem.memId}"
 										class="dmemId">
 										<button type="button" class="deleteButton">刪除</button></td>
 								</tr>
-							</c:if>
-						</c:forEach>
+<%-- 							</c:if> --%>
+<%-- 						</c:forEach> --%>
 					</c:forEach>
 				</table>
 				<div class="handle">
