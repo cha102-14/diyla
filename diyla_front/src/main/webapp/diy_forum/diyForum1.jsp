@@ -1,4 +1,4 @@
-<%@ page import="com.cha102.diyla.diyforum.MemberEntity" %>
+<%@ page import="com.cha102.diyla.diyforummodel.MemberEntity" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!--JSP 標籤，用於設置網頁的語言和編碼方式-->

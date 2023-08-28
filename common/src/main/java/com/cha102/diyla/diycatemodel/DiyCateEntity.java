@@ -1,4 +1,4 @@
-package com.cha102.diyla.diycate;
+package com.cha102.diyla.diycatemodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

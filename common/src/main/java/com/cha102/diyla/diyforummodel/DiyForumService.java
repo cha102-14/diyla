@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyforum;
+package com.cha102.diyla.diyforummodel;
 
 import com.cha102.diyla.util.PageBean;
 import org.springframework.beans.BeanUtils;

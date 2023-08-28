@@ -1,8 +1,8 @@
 package com.cha102.diyla.back.controller.diyreserve;
 
 
-import com.cha102.diyla.diyreserveresult.DIYReserveVO;
-import com.cha102.diyla.diyreserveresult.DiyReserveResultService;
+import com.cha102.diyla.diyreservemodel.DIYReserveVO;
+import com.cha102.diyla.diyreservemodel.DiyReserveResultService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

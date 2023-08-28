@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyforum;
+package com.cha102.diyla.diyforummodel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

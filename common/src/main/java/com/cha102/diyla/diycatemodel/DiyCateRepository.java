@@ -1,4 +1,4 @@
-package com.cha102.diyla.diycate;
+package com.cha102.diyla.diycatemodel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

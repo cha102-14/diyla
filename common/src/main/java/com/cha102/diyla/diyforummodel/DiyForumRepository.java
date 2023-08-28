@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyforum;
+package com.cha102.diyla.diyforummodel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

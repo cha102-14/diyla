@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyreserveresult;
+package com.cha102.diyla.diyreservemodel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DiyReserveResultEntityRepository extends JpaRepository<DiyReserveResultEntity, Integer> {
 
-    @Query("SELECT new com.cha102.diyla.diyreserveresult.DIYReserveVO(d.diyReserveDate, d.diyPeriod, SUM(d.itemQuantity)) FROM DiyReserveResultEntity d " +
+    @Query("SELECT new com.cha102.diyla.diyreservemodel.DIYReserveVO(d.diyReserveDate, d.diyPeriod, SUM(d.itemQuantity)) FROM DiyReserveResultEntity d " +
             "WHERE d.diyReserveDate BETWEEN CURRENT_DATE AND :endDate " +
             // "AND d.diyPeriod = :period " +
             "GROUP BY d.diyReserveDate, d.diyPeriod")

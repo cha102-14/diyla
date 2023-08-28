@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyforum;
+package com.cha102.diyla.diyforummodel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

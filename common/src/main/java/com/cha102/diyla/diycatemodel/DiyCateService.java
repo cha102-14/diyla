@@ -1,4 +1,4 @@
-package com.cha102.diyla.diycate;
+package com.cha102.diyla.diycatemodel;
 
 import com.cha102.diyla.util.PageBean;
 import org.springframework.data.domain.Page;

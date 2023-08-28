@@ -1,4 +1,4 @@
-package com.cha102.diyla.diycate;
+package com.cha102.diyla.diycatemodel;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyreserveresult;
+package com.cha102.diyla.diyreservemodel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 package com.cha102.diyla.back.controller.diycate;
 
-import com.cha102.diyla.diycate.DiyCateEntity;
-import com.cha102.diyla.diycate.DiyCateService;
+import com.cha102.diyla.diycatemodel.DiyCateEntity;
+import com.cha102.diyla.diycatemodel.DiyCateService;
 import com.cha102.diyla.util.PageBean;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
