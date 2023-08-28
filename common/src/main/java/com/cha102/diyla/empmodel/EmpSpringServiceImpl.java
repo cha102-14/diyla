@@ -71,28 +71,44 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject empJSONObject = empJPADAO.validEmpLogin(empAccount, empPassword);
-        ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
-        String typeFun = "";
-        String empId = "";
+        List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
 
-        if(ObjectUtils.isEmpty(empJSONObject)){
+        ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
+        Integer empId = null;
+        List<EmpDTO> empDTOList = new ArrayList<>();
+        List<String> empTypeFunList = new ArrayList<>();
+        if(ObjectUtils.isEmpty(empDataList)){
             errorMsgMap.put("errorMsg", "請輸入員工帳號及密碼");
         } else {
-            typeFun =empJSONObject.getString("TYPE_FUN");
-            empId =empJSONObject.getString("EMP_ID");
+            empDTOList = empDataList.stream().map(o -> {
+                EmpDTO empDTO = new EmpDTO();
+                empDTO.setTypeFun((String)o[0]);
+                empDTO.setEmpId((Integer) o[1]);
+                return empDTO;
+            }).collect(Collectors.toList());
+            empId = empDTOList.stream().map(EmpDTO::getEmpId).collect(Collectors.toList()).get(0);
+            empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
-        req.getSession().setAttribute("typeFun", typeFun);
+
+        req.getSession().setAttribute("typeFun", empTypeFunList);
         req.getSession().setAttribute("empId", empId);
         req.setAttribute("loginErrorMsgMap", errorMsgMap);
 
-        String url = ObjectUtils.isEmpty(typeFun) ? "empLogin.jsp" : "/index.jsp";
+        String url = ObjectUtils.isEmpty(empTypeFunList) ? "empLogin.jsp" : "/";
+//        String url = ObjectUtils.isEmpty(typeFun) ? "empLogin.jsp" : req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath();
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(url);
         try {
             requestDispatcher.forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void logout(String empId, HttpServletRequest req, HttpServletResponse resp) {
+        //清空Session
+        req.getSession().removeAttribute("empId");
+        req.getSession().removeAttribute("typeFun");
     }
 
     public static void main(String[] args) {

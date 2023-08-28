@@ -195,42 +195,52 @@ INSERT INTO DIY_ING(DIY_NO, ING_ID, ING_COUNT)
     ('7', '3', '500'),
     ('7', '4', '300');
 
-INSERT INTO EMPLOYEE (EMP_NAME, EMP_ACCOUNT, EMP_PASSWORD, EMP_STATUS)
-VALUES ('女王', 'root', '123456', '0');
+INSERT INTO EMPLOYEE (EMP_NAME,EMP_ACCOUNT,EMP_PASSWORD,EMP_EMAIL,EMP_STATUS)
+VALUES ('女王','Root','tibame515','while8@gmail.com','1'),
+('襪襪是廚師', 'D100002', 'seefood', 'seefood@yahoo.tw', '1'),
+('襪襪是隻貓', 'D100003', 'meowmeow', 'meowmeow@gmail.com', '1'),
+('襪襪吃肉泥', 'D100004', 'eatmeat', 'eatmeat@gmail.com', '1'),
+('襪襪睡覺覺', 'D100005', 'sleep666', 'sleep666@gmail.com', '1'),
+('襪襪出去玩', 'D100006', 'outdoor', 'outdoor@msn.com', '1'),
+('襪襪裝起來', 'D100007', 'bagmeow', 'bagmeow@yahoo.com', '1');
 
-INSERT INTO AUTH_FUN (AUTH_ID, AUTH_FUN)
-VALUES ('1', '商品訂單管理'),
-       ('2', '商品管理'),
-       ('3', 'DIY類別設定'),
-       ('4', 'DIY訂單管理'),
-       ('5', '甜點課程訂單管理'),
-       ('6', '師傅資料管理'),
-       ('7', '回覆聊天室訊息'),
-       ('8', '甜點課程管理'),
-       ('9', '會員帳號管理'),
-       ('10', '黑名單管理'),
-       ('11', '食材管理'),
-       ('12', '進貨管理'),
-       ('13', '常見問題管理'),
-       ('14', '帖子討論區管理'),
-       ('15', '後台帳號管理');
 
-INSERT INTO AUTHORITY(EMP_ID, AUTH_ID)
-VALUES ('1', '1'),
-       ('1', '2'),
-       ('1', '3'),
-       ('1', '4'),
-       ('1', '5'),
-       ('1', '6'),
-       ('1', '7'),
-       ('1', '8'),
-       ('1', '9'),
-       ('1', '10'),
-       ('1', '11'),
-       ('1', '12'),
-       ('1', '13'),
-       ('1', '14'),
-       ('1', '15');
+INSERT INTO BACKSTAGE_FUN (AUTH_ID,AUTH_FUN,TYPE_FUN)
+VALUES ('1','商品訂單管理','SHOP'),
+('2','商品管理','SHOP'),
+('3','DIY類別設定','CLASS'),
+('4','DIY訂單管理','CLASS'),
+('5','甜點課程訂單管理','MASTER'),
+('6','師傅資料管理','MASTER'),
+('7','回覆聊天室訊息','MASTER'),
+('8','甜點課程管理','MASTER'),
+('9','會員帳號管理','MEMADMIN'),
+('10','黑名單管理','MEMADMIN'),
+('11','食材管理','STORADMIN'),
+('12','進貨管理','STORADMIN'),
+('13','常見問題管理','CUSTORSERVICE'),
+('14','帖子討論區管理','CUSTORSERVICE'),
+('15','後台帳號管理','BACKADMIN');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID,AUTH_ID)
+VALUES
+('1','1'),
+('1','2'),
+('1','3'),
+('1','4'),
+('1','5'),
+('1','6'),
+('1','7'),
+('1','8'),
+('1','9'),
+('1','10'),
+('1','11'),
+('1','12'),
+('1','13'),
+('1','14'),
+('1','15');
+
+
 
 INSERT INTO NOTICE(MEM_ID, NOTICE_TITLE, NOTICE_CONTEXT, NOTICE_TIME)
 VALUES (1, '預約DIY甜點體驗成功！', '親愛的用戶，您已成功預約本店的DIY甜點體驗活動。請記得準時到店參加，我們期待您的到來！',
