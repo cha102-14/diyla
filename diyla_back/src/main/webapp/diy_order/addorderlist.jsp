@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>DIY資料新增</h1>
+<h1>DIY資料新增(日後需接上會員訂位功能)</h1>
 
 	
 		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li><br>

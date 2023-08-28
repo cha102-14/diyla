@@ -36,5 +36,9 @@ public class DiyOrderService {
 	public List<DiyOrderVO> findMemIdAllOrder(Integer memId) {
 		return dao.getAllByMemID(memId);
 	}
+	
+	public List<DiyOrderVO> getAllRefundod() {
+		return dao.getAllRefundod();
+	}
 
 }

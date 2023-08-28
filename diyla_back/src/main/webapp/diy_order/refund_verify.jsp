@@ -2,13 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/index.jsp" />
 <%@ page isELIgnored="false"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
-<title>所有訂單</title>
+<title>退款審核</title>
 
 <style type="text/css">
 body {
@@ -58,7 +57,7 @@ table {
 	width: 100%; /* 設定表格寬度 */
 	font-family: Arial, sans-serif; /* 設定字體 */
 	border: 1px solid black; /* 設定邊框 */
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	
 }
 
@@ -105,17 +104,11 @@ margin-top: 20px;
 
 	<header>
 		<span>
-			<h1 class="header-title">所有訂單查詢</h1>
-			<p class="header-subtitle">
-				<a href='diyorderfront.jsp'>返回DIY首頁</a><br>
-				<a href='addorderlist.jsp'>新增訂單</a>
-				</div>
-				
-			</p>
+			<h1 class="header-title">退款訂單審核</h1>
 		</span>
 	</header>
 	
-<div id="padding">
+	<div id="padding">
 
 	<table>
 		<tr>
@@ -132,10 +125,10 @@ margin-top: 20px;
 			<th>付款狀態</th>
 			<th>DIY訂單金額</th>
 
-			<th id="inn">操作</th>
+			<th id="inn">退款審核操作</th>
 		</tr>
 		<jsp:useBean id="doser" scope="page" class="com.cha102.diyla.diyOrder.DiyOrderService" />
-		<c:forEach var="DiyOrderVO" items="${doser.all}">
+		<c:forEach var="DiyOrderVO" items="${doser.allRefundod}">
 
 			<tr>
 
@@ -217,13 +210,13 @@ margin-top: 20px;
 						<FORM METHOD="post" ACTION="DiyOrderController"
 							style="margin-bottom: 0px;">
 <!-- 							<input type="submit" value="修改">  -->
-							<input type="submit" value="修改"> 
+							<input type="submit" value="審核通過"> 
 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
 							<input type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
 						<FORM METHOD="post" ACTION="DiyOrderController"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> 
+							<input type="submit" value="審查不通過"> 
 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
 							<input type="hidden" name="action" value="delete">
 						</FORM>
@@ -245,8 +238,6 @@ margin-top: 20px;
 
 
 </div>	
-
-
 
 </body>
 </html>

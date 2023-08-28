@@ -40,6 +40,9 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 	// SQL指令 - 查詢所有訂單
 	private final String GET_ALL_BY_MEMID_SQL = "SELECT Diy_Order_No, Mem_Id, Diy_No, Contact_Person, Contact_Phone, Reservation_Num, Diy_Period, Diy_Reserve_Date, Create_Time, Reservation_Status, Payment_Status, Diy_Price FROM diy_order where MEM_ID = ? ORDER BY Diy_Order_No;";
 
+	// SQL指令 - 查詢所有退款訂單
+	private final String GET_ALL_REFUND_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE RESERVATION_STATUS=1;";
+	
 	@Override
 	public void insert(DiyOrderVO diyOrderVO) {
 		try (Connection conn = ds.getConnection(); PreparedStatement ps = conn.prepareStatement(INSERT_SQL);) {
@@ -173,6 +176,36 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 		try (Connection conn = ds.getConnection();
 				PreparedStatement ps = conn.prepareStatement(GET_ALL_BY_MEMID_SQL);) {
 			ps.setInt(1, memId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					DiyOrderVO diyOrderVO = new DiyOrderVO();
+					diyOrderVO.setDiyOrderNo(rs.getInt("DIY_ORDER_NO"));
+					diyOrderVO.setMemId(rs.getInt("MEM_ID"));
+					diyOrderVO.setDiyNo(rs.getInt("DIY_NO"));
+					diyOrderVO.setContactPerson(rs.getString("CONTACT_PERSON"));
+					diyOrderVO.setContactPhone(rs.getString("CONTACT_Phone"));
+					diyOrderVO.setReservationNum(rs.getInt("RESERVATION_NUM"));
+					diyOrderVO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
+					diyOrderVO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
+					diyOrderVO.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					diyOrderVO.setReservationStatus(rs.getInt("RESERVATION_STATUS"));
+					diyOrderVO.setPaymentStatus(rs.getInt("PAYMENT_STATUS"));
+					diyOrderVO.setDiyPrice(rs.getInt("DIY_PRICE"));
+					diyOrderList.add(diyOrderVO);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diyOrderList;
+	}
+
+	@Override
+	public List<DiyOrderVO> getAllRefundod() {
+		List<DiyOrderVO> diyOrderList = new ArrayList<>();
+		try (Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_ALL_REFUND_SQL);) {
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					DiyOrderVO diyOrderVO = new DiyOrderVO();

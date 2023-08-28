@@ -126,7 +126,7 @@
 			
 		<br>
 	
-	<form action="DiyOrderFrontController" method="post" id="form">
+	<form action="DiyOrderFrontController" method="post" id="form1">
 	
 	<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
 	<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
@@ -142,6 +142,22 @@
 	
 	<input type="hidden" name="action" value="cancel_order_comfirm">
 	<input type="submit" value="確定取消訂單">
+	
+	</form>
+	
+	<form action="DiyOrderFrontController" method="post" id="form2">
+	
+	<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
+	<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
+	<input type="hidden" name="diyNo" value="${DiyOrderVO.diyNo}">
+	<input type="hidden" name="contactPerson" value="${DiyOrderVO.contactPerson}">
+	<input type="hidden" name="contactPhone" value="${DiyOrderVO.contactPhone}">
+	<input type="hidden" name="reservationNum" value="${DiyOrderVO.reservationNum}">
+	<input type="hidden" name="diyPeriod" value="${DiyOrderVO.diyPeriod}">
+	<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}">
+	<input type="hidden" name="reservationStatus" value="${DiyOrderVO.reservationStatus}">
+	<input type="hidden" name="paymentStatus" value="${DiyOrderVO.paymentStatus}">
+	<input type="hidden" name="diyPrice" value="${DiyOrderVO.diyPrice}">
 	
 	<input type="hidden" name="action" value="keep_order">
 	<input type="submit" value="保留訂單">

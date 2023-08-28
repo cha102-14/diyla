@@ -46,7 +46,11 @@ min-width: calc(100% - 300px);
     <h1>DIY首頁</h1>
     <ul>
       <li><a href='getallorderlist_EL.jsp'>查詢所有訂單</a><br><br></li>
-      <li><a href='addorderlist.jsp'>新增訂單</a><br><br></li>
+      <li><a href='getallorderlist_EL.jsp'>查詢會員所有訂單</a><br><br></li>
+      <li><a href='getallorderlist_EL.jsp'>查詢某時段參加會員及訂單</a><br><br></li>
+      
+      <li><a href='refund_verify.jsp'>查詢所有退款訂單</a><br><br></li>
+      <li><a href='addorderlist.jsp'>新增訂單 (日後需接上會員訂位功能)</a><br><br></li>
       <li>
         <form method="post" action="DiyOrderController">
           <b>輸入訂單編號 (如1):</b><input type="text" name="diyorderno">

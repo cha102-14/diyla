@@ -16,6 +16,8 @@ import com.cha102.diyla.diyOrder.DiyOrderVO;
 @WebServlet("/diy_order/DiyOrderController")
 public class DiyOrderController extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -127,5 +129,6 @@ public class DiyOrderController extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
 		}
+		
 	}
 }
