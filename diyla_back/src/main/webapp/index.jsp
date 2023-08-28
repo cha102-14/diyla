@@ -12,7 +12,6 @@
 <body>
     <div class="wrapper">
         <aside id="aside">
-	
             <h1 class="logo"><a href="http://localhost:8081/diyla_back/"><img src="${ctxPath}/img/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image"></a></h1>
             <ul>
             <c:choose>

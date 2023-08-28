@@ -48,33 +48,34 @@
                                    border-radius: 5px;
                                    background-color: #FFEEDD;
                               }
+
+                             .error {
+                                   color:red ;
+                                   font-family: "微軟正黑體", Arial, sans-serif;
+                                   font-weight: bold;
+                             }
                          </style>
                     </HEAD>
 
                     <BODY>
 
-                         <%-- 錯誤表列 --%>
-                              <c:if test="${not empty errorMsgs}">
-                                   <font style="color:red">請修正以下錯誤:</font>
-                                   <ul>
-                                        <c:forEach var="message" items="${errorMsgs}">
-                                             <li style="color:red">${message}</li>
-                                        </c:forEach>
-                                   </ul>
-                              </c:if>
+
 
                               <div class="emp_insert_title">
 
                               </div>
                               <div class="emp_content">
-                              <FORM METHOD="post" ACTION="empInsert">
+                              <FORM METHOD="post" ACTION="empInsert" enctype="multipart/form-data">
                                    <table>
                                         
                                              <tr>
                                                   <td>管理員名稱:</td>
                                                   <td><input type="TEXT" name="name"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpName()%>"
-                                                            placeholder="請輸入管理員名稱" size="30" /></td>
+                                                            placeholder="請輸入管理員名稱" size="30" />
+                                             <span  id ="upFiles.errors" class="error">${errorMsgMap.empName}</span>
+
+                                                            </td>
 
                                              </tr>
 
@@ -85,14 +86,18 @@
                                                   <td>管理員密碼:</td>
                                                   <td><input type="TEXT" name="password"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpPassword()%>"
-                                                            placeholder="請輸入管理員密碼" size="30" /></td>
+                                                            placeholder="請輸入管理員密碼" size="30" />
+                                                            <span  id ="upFiles.errors" class="error">${errorMsgMap.empPassword}</span>
+                                                            </td>
                                              </tr>
                                              <tr>
 
                                                   <td>管理員信箱:</td>
                                                   <td><input type="TEXT" name="email"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpEmail()%>"
-                                                            placeholder="請輸入管理員信箱" size="30" /></td>
+                                                            placeholder="請輸入管理員信箱" size="30" />
+                                                            <span  id ="errors" class="error">${errorMsgMap.empEmail}</span>
+                                                            </td>
                                              </tr>
                                              <tr>
 
@@ -114,11 +119,15 @@
                                                             <option value="MEMADMIN">會員權限管理人員</option>
                                                             <option value="STORADMIN">倉儲管理人員</option>
                                                             <option value="CUSTORSERVICE">客服人員</option>
-                                                            <option value="BACKADMIN">後台管理員</option>
                                                        </select></td>
 
 
                                              </tr>
+                                             <label for="upFiles">照片:</label>
+                                             <input id ="upFiles" name="upFiles" type="file" onclick="previewImage()"  onchange="hideContent('upFiles.errors');" />
+                                             <div id="blob_holder"></div>
+                                             </div>
+
                                              <tr>
                                                   <td>
                                                        <input type="SUBMIT" value="新增員工帳號">
@@ -133,7 +142,57 @@
                                    </table>
                               </FORM>
                          </div>
-                                        <jsp:include page="/index.jsp" />
+
+                         <script>
+                         //清除提示信息
+                         function hideContent(d) {
+                         document.getElementById(d).style.display = "none";
+                         }
+                         //照片上傳-預覽用
+                         var filereader_support = typeof FileReader != 'undefined';
+                         if (!filereader_support) {
+                         	alert("No FileReader support");
+                         }
+                         acceptedTypes = {
+                         		'image/png' : true,
+                         		'image/jpeg' : true,
+                         		'image/gif' : true
+                         };
+                         function previewImage() {
+                         	var upfile1 = document.getElementById("upFiles");
+                         	upfile1.addEventListener("change", function(event) {
+                         		var files = event.target.files || event.dataTransfer.files;
+                         		for (var i = 0; i < files.length; i++) {
+                         			previewfile(files[i])
+                         		}
+                         	}, false);
+                         }
+                         function previewfile(file) {
+                         	if (filereader_support === true && acceptedTypes[file.type] === true) {
+                         		var reader = new FileReader();
+                         		reader.onload = function(event) {
+                         			var image = new Image();
+                         			image.src = event.target.result;
+                         			image.width = 100;
+                         			image.height = 75;
+                         			image.border = 2;
+                         			if (blob_holder.hasChildNodes()) {
+                         				blob_holder.removeChild(blob_holder.childNodes[0]);
+                         			}
+                         			blob_holder.appendChild(image);
+                         		};
+                         		reader.readAsDataURL(file);
+                         		document.getElementById('submit').disabled = false;
+                         	} else {
+                         		blob_holder.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
+                         				+ "<br>" + "● ContentTyp: " + file.type
+                         				+ "<br>" + "● size: " + file.size + "bytes"
+                         				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+                         		document.getElementById('submit').disabled = true;
+                         	}
+                         }
+                         </script>
+                         <jsp:include page="/index.jsp" />
                     </BODY>
 
                     </HTML>
