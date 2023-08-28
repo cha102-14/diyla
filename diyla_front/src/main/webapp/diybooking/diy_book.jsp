@@ -17,16 +17,16 @@
     <meta name="author" content=""/>
     <link rel="shortcut icon" href="images/DIYLA_cakeLOGO.png" type="image/x-icon">
     <link rel="stylesheet" href="/diyla_front/diy/css/all.min.css">
-    <link rel="stylesheet" href="diy/css/bootstrap.min.css">
-    <link rel="stylesheet" href="diy/css/slick.css">
-    <link rel="stylesheet" href="diy/css/nice-select.css">
-    <link rel="stylesheet" href="diy/css/venobox.min.css">
-    <link rel="stylesheet" href="diy/css/animate.css">
-    <link rel="stylesheet" href="diy/css/jquery.exzoom.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/slick.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/nice-select.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/venobox.min.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/animate.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/jquery.exzoom.css">
 
-    <link rel="stylesheet" href="diy/css/spacing.css">
-    <link rel="stylesheet" href="diy/css/style.css">
-    <link rel="stylesheet" href="diy/css/responsive.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/spacing.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/style.css">
+    <link rel="stylesheet" href="/diyla_front/diy/css/responsive.css">
 
     <title>
         商店
@@ -37,12 +37,12 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/css/owl.carousel.min.css"/>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/diyla_front/css/bootstrap.css"/>
 
     <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="/diyla_front/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
-    <link href="css/responsive.css" rel="stylesheet"/>
+    <link href="/diyla_front/css/responsive.css" rel="stylesheet"/>
     <link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
 
 </head>
@@ -50,63 +50,7 @@
 <body>
 <div class="hero_area">
     <!-- header section strats -->
-    <header class="header_section">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="index.jsp">
-                <img src="./images/DIYLA_LOGO.png" alt="DIYLA!" class="logo-image">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class=""></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav  ">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="about_us.html">關於我們
-                            <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="diy.html">DIY體驗
-
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="dessert_course.html">
-                            甜點課程
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="shop/listCommodity.jsp">
-                            商店
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="community_sharing.html">
-                            社群分享
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="problem.html">
-                            常見問題
-                        </a>
-                    </li>
-                </ul>
-                <div class="user_option">
-                    <a href="">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        <span>登入</span>
-                    </a>
-
-                    <form class="form-inline ">
-
-                    </form>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <jsp:include page="/front_header.jsp"/>
     <!-- end header section -->
 </div>
 <section class="tf__reservation mt_100 xs_mt_70 mb_100">
@@ -205,91 +149,34 @@
 </section>
 
 <!-- footer section -->
-<section class="info_section  layout_padding2-top">
-
-    <div class="info_container ">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-3">
-                    <h6>
-                        營業時間
-                    </h6>
-                    <p>
-                        08：00 ～ 12：00
-                        <br>
-                        13：00 ～ 20：00
-                    </p>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <h6>
-                        聯絡我們
-                    </h6>
-                    <div class="info_link-box">
-                        <div id="address">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>320 桃園市中壢區復興路46號8樓</span>
-                        </div>
-                        <div>
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span>03 425 1108</span>
-                        </div>
-                        <div>
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span> service@tibame.com</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- footer section -->
-    <footer class=" footer_section">
-        <div class="container">
-            <p>
-                Copyright © 2023 DIYLA. All rights reserved.
-                <br>
-                本網站為緯育TibaMe_java雲端服務開發技術養成班學員專題成果作品，本平台僅供學習、展示之用。
-                <br>
-                若有侵權疑慮，您可以私訊<a href="https://www.facebook.com/TibaMe/?locale=zh_TW">「緯育TibaMe」</a>，後續會由專人協助處理。
-            </p>
-        </div>
-    </footer>
-    <!-- footer section -->
-
-</section>
-<!-- footer section -->
-
-</section>
-
+<jsp:include page="/front_footer.jsp"/>
 <!-- end info section -->
 
 
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="/diyla_front/js/jquery-3.4.1.min.js"></script>
+<script src="/diyla_front/js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
-<script src="js/custom.js"></script>
+<script src="/diyla_front/js/custom.js"></script>
 <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
 <script>
-    // 获取项目路径
+    // 取得專案路徑
     <%--var projectPath = '<%= request.getContextPath() %>';--%>
     layui.use(['laydate', 'layer'], function () {
         var laydate = layui.laydate;
         var layer = layui.layer;
 
-        // 监听点击事件
+        // 監聽點擊事件
         $('#ID-laydate-mark').on('click', function () {
-            var selectedDate = $(this).val(); // Get the selected date
+            var selectedDate = $(this).val(); // 取得選擇的日期
 
 
-            // 发送 AJAX 请求获取数据并渲染日期选框的内容
+            // 發送 AJAX 請求取得資料並渲染日期選框的內容
             $.ajax({
                 url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
                 data: {
-                    // endDate: selectedDate, // Use the selected date as endDate
-                    period: 0 // Replace with the desired period
+                    // endDate: selectedDate, // 使用選擇的日期作為結束日期
+                    period: 0 // 替換為所需的時間段
                 },
                 success: function (data) {
 
@@ -310,22 +197,22 @@
 
                         }
                         if (itemQuantity >= 30) {
-                            mar[diyReserveDate] = '已满';
+                            mar[diyReserveDate] = '已滿';
                         }
 
                     }
-                    // Handle the received JSON data here and update the datepicker's content
-                    // For example, you can use mark: {} to customize marked dates
+                    // 在這裡處理接收到的 JSON 資料並更新日期選擇框的內容
+                    // 例如，您可以使用 mark: {} 來自定義標記的日期
                     laydate.render({
                         elem: '#ID-laydate-mark',
                         min: 0,
                         max: 60,
-                        mark: mar, // Use the received data to mark dates
+                        mark: mar, // 使用接收到的資料來標記日期
                         done: function (value, date) {
-                            // Your done function logic
+                            // 您的 done 函式邏輯
                             for (let key in mar) {
                                 if (key === value) {
-                                    layer.msg("无法选择该日期！", {icon: 2});
+                                    layer.msg("無法選擇該日期！", {icon: 2});
                                     $('#ID-laydate-mark').val("");
                                 }
                             }
@@ -337,10 +224,10 @@
                                 }
                             }
 
-                            // 移除所有选项的 disabled 属性
+                            // 移除所有選項的 disabled 屬性
                             $("#select_time option").prop("disabled", false);
 
-                            // 设置是否不可选
+                            // 設定是否不可選
                             $("#select_time option").each(function() {
                                 let value = $(this).val();
 
@@ -356,8 +243,8 @@
                     });
                 },
                 error: function (error) {
-                    console.log("Error fetching data:", error);
-                    layer.msg("Error fetching data: " + error.responseText, {icon: 2});
+                    console.log("取得資料時發生錯誤:", error);
+                    layer.msg("取得資料時發生錯誤：" + error.responseText, {icon: 2});
                 }
             });
         });

@@ -5,6 +5,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="zh-Hant">
 
+<%
+    //檢查使用者是否已經登入，如果尚未登入則會重新導向使用者到登入頁面。
+    //如果使用者已經登入，則會從 session 中獲取名為 "member" 的屬性並將其賦值給 memberEntity 變數。
+    MemberEntity memberEntity = null;
+    // 檢查 session 中是否存在登入資訊
+    // if (session.getAttribute("member") == null) {
+    //     // 未登入，重新導向到登入頁面
+    //     response.sendRedirect("login.jsp");
+    //     return;
+    // } else {
+    //     memberEntity = (MemberEntity) session.getAttribute("member");
+    // }
+%>
 
 <!-- 網頁的設定和樣式 css -->
 <head>
