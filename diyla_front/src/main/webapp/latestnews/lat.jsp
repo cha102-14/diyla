@@ -12,18 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-th{
- min-width : 100px;
-}
-td{
-    text-align: center;
-}
-#show_img >  img{
-    width: 360px;
-}
-</style>
-<title>員工資料 - listOneEmp.jsp</title>
+<title>最新消息</title>
  <!-- slider stylesheet -->
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
@@ -35,32 +24,32 @@ td{
     <link href="../css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/lat.css" rel="stylesheet"/>
 </head>
-<body bgcolor='white'>
+<body>
 <jsp:include page="/front_header.jsp"/>
-<table>
-    <tr>
-        <th>公告編號</th>
-        <th>公告內容</th>
-        <th>公告圖片</th>
-
-    </tr>
-    <tr>
-    <% List<LatestnewsVO> scvList = (List)pageContext.getAttribute("list"); %>
-    <% if (scvList != null) { %>
-        <% for (LatestnewsVO a : scvList) { %>
+<div class="lat_container">
+    <h1>最新消息</h1>
+    <table>
+        <tr>
+            <th>公告編號</th>
+            <th>公告內容</th>
+            <th>公告圖片</th>
+        </tr>
+        <c:forEach var="a" items="${list}">
             <tr>
-                <td><%= a.getNewsNo() %></td>
-                <td><%= a.getNewsContext() %></td>
+                <td>${a.newsNo}</td>
+                <td>${a.newsContext}</td>
                 <td>
-                <hr style="border-color: #fce5cd" >
-    		    <td><p id="show_img"><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(a.getAnnPic()) %>" alt="公告圖片"></p></td>
+                    <hr>
+                    <div id="show_img">
+                        <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(a.annPic)}" alt="公告圖片">
+                    </div>
                 </td>
             </tr>
-        <% } %>
-    <% } %>
-    </tr>
-</table>
+        </c:forEach>
+    </table>
+</div>
 <jsp:include page="/front_footer.jsp"/>
 
 

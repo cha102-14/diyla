@@ -63,6 +63,7 @@
            <% } %>
 
         <a href="addlat.jsp">返回</a>
+        <a href="getlistone.jsp">返回全部常見問題</a>
     </div>
 </body>
 </html>

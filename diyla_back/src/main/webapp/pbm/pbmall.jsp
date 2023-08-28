@@ -61,8 +61,8 @@
         <input type="hidden" name="action" value="delete_pbm">
         <button type="submit">❌刪除</button>
     </form>
-	</tr>
 	</td>
+	</tr>
 	</c:forEach>
 </table>
 

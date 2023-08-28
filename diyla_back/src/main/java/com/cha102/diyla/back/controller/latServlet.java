@@ -52,7 +52,7 @@ public class latServlet extends HttpServlet {
             String newsNo = req.getParameter("newsNo");
             latSvc.deleteLat(Integer.valueOf(newsNo));
 
-            String url = "/latestnews/getlistone.jsp";
+            String url = "/latestnews/latall.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }
@@ -90,7 +90,7 @@ public class latServlet extends HttpServlet {
             latSvc.updateLat(latVO);
 
             ips.close();
-            String url = "/latestnews/getlistone.jsp";
+            String url = "/latestnews/latall.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }
