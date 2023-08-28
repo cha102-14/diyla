@@ -195,8 +195,15 @@ INSERT INTO DIY_ING(DIY_NO, ING_ID, ING_COUNT)
     ('7', '3', '500'),
     ('7', '4', '300');
 
-INSERT INTO EMPLOYEE (EMP_NAME,EMP_PIC,EMP_ACCOUNT,EMP_PASSWORD,EMP_EMAIL,EMP_STATUS)
-VALUES ('女王','Root','tibame515','while8@gmail.com','1');
+INSERT INTO EMPLOYEE (EMP_NAME,EMP_ACCOUNT,EMP_PASSWORD,EMP_EMAIL,EMP_STATUS)
+VALUES ('女王','Root','tibame515','while8@gmail.com','1'),
+('襪襪是廚師', 'D100002', 'seefood', 'seefood@yahoo.tw', '1'),
+('襪襪是隻貓', 'D100003', 'meowmeow', 'meowmeow@gmail.com', '1'),
+('襪襪吃肉泥', 'D100004', 'eatmeat', 'eatmeat@gmail.com', '1'),
+('襪襪睡覺覺', 'D100005', 'sleep666', 'sleep666@gmail.com', '1'),
+('襪襪出去玩', 'D100006', 'outdoor', 'outdoor@msn.com', '1'),
+('襪襪裝起來', 'D100007', 'bagmeow', 'bagmeow@yahoo.com', '1');
+
 
 INSERT INTO BACKSTAGE_FUN (AUTH_ID,AUTH_FUN,TYPE_FUN)
 VALUES ('1','商品訂單管理','SHOP'),
