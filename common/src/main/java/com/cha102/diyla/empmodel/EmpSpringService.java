@@ -14,4 +14,8 @@ public interface EmpSpringService {
         String changeEmpStatus(JSONObject jsonObject);
 
         void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp);
+
+        void logout(String empId, HttpServletRequest req, HttpServletResponse resp);
+
+
 }

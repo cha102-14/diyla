@@ -35,6 +35,6 @@ public interface EmpJPADAO extends JpaRepository<EmpVO, Long> {
 
     @Query(nativeQuery = true,
             value = "SELECT DISTINCT f.TYPE_FUN, a.EMP_ID FROM diyla.backstage_auth a join diyla.backstage_fun f on a.AUTH_ID = f.AUTH_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
-    JSONObject validEmpLogin(String empAccount, String empPassword);
+    List<Object[]> validEmpLogin(String empAccount, String empPassword);
 
 }
