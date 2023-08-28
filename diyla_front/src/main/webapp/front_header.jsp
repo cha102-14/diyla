@@ -95,7 +95,7 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="${ctxPath}/member/會員專區">
+                            <a href="${ctxPath}/member/mem_update.jsp">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span>${memVO.memName}你好</span>
                             </a>

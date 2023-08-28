@@ -25,8 +25,13 @@ public class UpdateServlet extends HttpServlet {
         res.setContentType("text/html;charset=UTF-8");
         Map<String,String> exMsgs = new LinkedHashMap<String,String>();
         req.setAttribute("exMsgs",exMsgs);
+        Integer memId = null;
+        try{
+            memId = Integer.valueOf(req.getParameter("memId"));
+        }catch (NumberFormatException n){
+            n.printStackTrace();
+        }
 
-        Integer memId = Integer.valueOf(req.getParameter("memId"));
         String password = req.getParameter("password");
         String pwcheck = req.getParameter("pwcheck");
         String phone = req.getParameter("phone");

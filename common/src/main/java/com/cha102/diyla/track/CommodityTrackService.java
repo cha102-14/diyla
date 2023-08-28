@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class CommodityTrackService {
 
     private CommodityTrackDAO commodityTrackDAO;
+    private  CommodityTrackRepository commodityTrackRepository;
     private CommodityDao commodityDao = new CommodityDaoImpl();
     public CommodityTrackService(CommodityTrackDAO commodityTrackDAO) {
         this.commodityTrackDAO = commodityTrackDAO;
@@ -25,4 +26,26 @@ public class CommodityTrackService {
         }
         return null;
     }
+
+    public List<CommodityTrackDTO> findById(Integer id){
+        List<Object[]> r = commodityTrackRepository.findAll(id);
+
+        List<CommodityTrackDTO> returnCommodityTrackVOList = r.stream().map(CommodityTrackDTO::new).collect(Collectors.toList());
+
+        return returnCommodityTrackVOList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

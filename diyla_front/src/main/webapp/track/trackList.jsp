@@ -1,3 +1,16 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.cha102.diyla.track.*"%>
+<%@ page import="java.util.*"%>
+
+<%
+    CommodityTrackService service = new CommodityTrackService();
+    Integer memId = (Integer) session.getAttribute("memId");
+    List<CommodityTrackDTO> track = service.findById(memId);
+
+
+%>
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -28,17 +41,17 @@
     <jsp:include page="../front_header.jsp"/>
     <div class="title">
         <h4>追蹤清單</h4>
-        <c:if test="${not empty exMsgs}">
-             <div style="color:red" class="error">
-                  <c:forEach var="message" items="${exMsgs}">
-                       ${message}
-                  </c:forEach>
-             </div>
-        </c:if>
-        <div class="">
-            <form method="post" action="">
-            </form>
-        </div>
+        <c:choose>
+            <c:when test="${not empty track}">
+              <c:forEach var="track" items="${track}">
+                   ${track.comNO}
+                   ${track.comName}
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+                 <span>您目前還沒有追蹤的商品</span>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 

@@ -172,6 +172,7 @@
                     <input type="checkbox" class="remember" name="remember" style="vertical-align:middle;">
                     <span style="vertical-align:middle;">記住我</span><br>
                 </label>
+                <input type="hidden" name="action" value="login">
                 <button type="submit" value="login">登入</button><br>
                 <br>
                 <p>or</p>

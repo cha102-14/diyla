@@ -38,7 +38,7 @@
 
     <jsp:include page="../front_header.jsp"/>
     <div class="title">
-        <h4>驗證信箱</h4>
+        <h4>修改密碼</h4>
         <c:if test="${not empty exMsgs}">
              <div style="color:red" class="error">
                   <c:forEach var="message" items="${exMsgs}">
@@ -50,8 +50,10 @@
             <form method="post" action="updatePw">
                 <label>姓名<br>
                 <input type="text" name="memName" value="${memVO.memName}" disabled></label><br>
+                <br>
                 <label>帳號<br>
                 <input type="email" name="upemail" value="${memVO.memEmail}" disabled></label><br>
+                <br>
                 <label>修改密碼<br>
                 <input type="password" name="upPw" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" ></label><br>
                 <span  id ="memPassword.errors" class="error">${exMsgs.memPassword}<br/></span>
