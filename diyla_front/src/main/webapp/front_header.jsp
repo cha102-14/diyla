@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav  ">
                     <li class="nav-item ">
-                        <a class="nav-link" href="about_us.html">關於我們
+                        <a class="nav-link" href="${ctxPath}/aboutus/aboutus.jsp">關於我們
                             <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
@@ -69,13 +69,13 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="index.jsp">
+                        <a class="nav-link" href="${ctxPath}/art/art.jsp">
                             社群分享
                         </a>
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="index.jsp">
+                        <a class="nav-link" href="${ctxPath}/pbm/pbm.jsp">
                             常見問題
                         </a>
                     </li>

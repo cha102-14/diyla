@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+main{
+display:none;
+}
+.art_header {
+    display: flex;
+    height: 80px;
+    text-align: justify;
+    padding: 15px 10px;
+    background-color: #b45f06;
+    color: aliceblue;
+    align-items: center;
+}
+
+.art_header h1 {
+    font-size: 40px;
+    padding: 15px 35px 15px 10px;
+}
+
+.art_header div span {
+    font-size: 32px;
+    padding: 15px 20px 15px 10px;
+}
+.art_header div span a{
+    text-decoration: none;
+    color: aliceblue;
+}

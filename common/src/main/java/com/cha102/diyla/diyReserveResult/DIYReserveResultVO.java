@@ -1,4 +1,4 @@
-package com.cha102.diyla.diyReserveResult;
+package com.cha102.diyla.diyreserveresult;
 
 import java.io.Serializable;
 import java.sql.Date;

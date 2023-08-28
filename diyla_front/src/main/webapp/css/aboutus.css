@@ -1,0 +1,48 @@
+                body {
+                    height: 1vw;
+                }
+                main#main{
+                   display: none;
+                }
+                h1#aboutus {
+                    font-size: 30px;
+                    background-color: #b45f06;
+                    height: 70px;
+                    line-height: 70px;
+                    color: white;
+                    padding: 0 0 0 10px;
+                }
+
+                h2 {
+                    font-size: 40px;
+                    margin: 0 0 15px 0;
+                }
+
+                div.column {
+                    display: flex;
+                    align-items: center;
+                    margin: 50px 30px;
+                    height: calc( 100% - 90px);
+                }
+
+                img {
+                    width: 50%;
+                }
+
+                div.text {
+                    width: 50%;
+                    padding: 30px;
+                    line-height: 30px;
+                }
+                .button-container {
+                    position: absolute;
+                    top: 80px;
+                    right: 25px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                }
+                button {
+                    background-color: bisque;
+                    display:sticky;
+                }
