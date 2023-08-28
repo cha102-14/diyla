@@ -22,7 +22,7 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
     private static final String GET_ALL_STMT =
             "SELECT tea_id, spe_id FROM tea_speciality order by tea_id";
     private static final String GET_ONE_STMT =
-            "SELECT tea_id, spe_id FROM tea_speciality where tea_id = ?";
+            "SELECT spe_id FROM tea_speciality where tea_id = ?";
     private static final String DELETE =
             "DELETE FROM tea_speciality where tea_id = ?";
     private static final String UPDATE =
@@ -103,7 +103,7 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
     }
 
     @Override
-    public void delete(Integer teaID, Integer speID) {
+    public void delete(Integer teaID) {
         Connection con = null;
         PreparedStatement pstmt = null;
 
@@ -113,7 +113,6 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
             pstmt = con.prepareStatement(DELETE);
 
             pstmt.setInt(1, teaID);
-            pstmt.setInt(2, speID);
 
             pstmt.executeUpdate();
 
@@ -140,9 +139,10 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
         }
     }
 
+
     @Override
-    public TeaSpecialityVO findByPrimaryKey(Integer teaID) {
-        TeaSpecialityVO teaSpecialityVO = null;
+    public List<Integer> findByTeaId(Integer teaID) {
+        List<Integer> teaSpeArray = new ArrayList<Integer>();
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -157,9 +157,7 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                teaSpecialityVO = new TeaSpecialityVO();
-                teaSpecialityVO.setTeaId(rs.getInt("tea_id"));
-                teaSpecialityVO.setSpeId(rs.getInt("spe_id"));
+                teaSpeArray.add(rs.getInt("spe_id"));
             }
 
             // Handle any driver errors
@@ -190,7 +188,7 @@ public class TeaSpecialityDAOImpl implements TeaSpecialityDAO {
                 }
             }
         }
-        return teaSpecialityVO;
+        return teaSpeArray;
     }
 
     @Override

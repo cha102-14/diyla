@@ -93,9 +93,12 @@
                             }, {
                                 targets: 9, // 對應操作按鈕的索引（從 0 開始）
                                 render: function (data, type, row, meta) {
-                                    if (teacherId === -1) {
+                                    if (teacherId === -1 && row.teacherStatus == "在職") {
                                         return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>'
-                                            + '<button class="delete-btn" data-teacherId="' + row.teacherId + '">刪除師傅</button>';
+                                            + '<button class="delete-btn" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">刪除師傅</button>';
+                                    } else if (teacherId === -1 && row.teacherStatus == "離職") {
+                                        return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>'
+                                            + '<button class="back-btn" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">覆職師傅</button>';
                                     } else if (teacherId > 0 && row.teacherId === teacherId) {
                                         return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>';
                                     }
@@ -112,23 +115,24 @@
             loadTeacher(teacherId);
             // function modifyTeacher(teaId) {
             //     $.ajax({
-            //         url: '${ctxPath}'+'/modifyTeacher',
+            //         url: '/${ctxPath}'+'/modifyTeacher',
             //         method: 'post',
             //         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
             //         data: { teacherId: teaId },
             //         success: function(response){
-            //                 window.location.href='/${ctxPath}/teacherActionVerify?action=modify&teacherId=' + teaId;
+            //                 window.location.href='${ctxPath}'+'/verifyTeacherAction?action=modify&teacherId=' + teaId;
             //         }
             //     });
             // }
-            $(document).on('click', '.modify-btn', function(){
+            $(document).on('click', '.modify-btn', function(modifyAction){
                 //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
-                window.location.href='/${ctxPath}/teacherActionVerify?action=modify&teacherId=' + teacherId;
+                let rowTeacherId = $(this).data('teacherid');
+                window.location.href="${ctxPath}"+"/verifyTeacherAction?action=modify&teacherId=" + rowTeacherId;
             });
-
+            //處理刪除按鈕事件
             $(document).on('click', '.delete-btn', function () {
-                let delTeacherName = $(this).data('teacherName');
-                let delTeacherId = $(this).data('teacherId');
+                let delTeacherName = $(this).data('teachername');
+                let delTeacherId = $(this).data('teacherid');
 
                 // 使用 SweetAlert 的確認視窗
                 Swal.fire({
@@ -141,8 +145,8 @@
                     if (result.isConfirmed) {
                         //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
                     $.ajax({
-                    url: "${ctxPath}"+"/teacherActionVerify",
-                    method: 'post',
+                    url: "${ctxPath}"+"/verifyTeacherAction",
+                    method: 'get',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     dataType: 'json',
                     data: {
@@ -157,7 +161,7 @@
                                 }).then((result) => {
                                     if(result.isConfirmed) {
                                         let searchValue = delTeacherName;
-                                        let url= "${ctxPath}"+"/listallteacher.jsp?defaultSearchValue=" + encodeURIComponment(delTeacherName);
+                                        let url= "${ctxPath}"+"/desertcourse/listallteacher.jsp?defaultSearchValue=" + delTeacherName;
                                         window.location.href= url;
                                     }
                                 })
@@ -173,7 +177,54 @@
                     }
                 });
             });
+            //覆職按鈕事件處理
+            $(document).on('click', '.back-btn', function () {
+                let backTeacherName = $(this).data('teachername');
+                let backTeacherId = $(this).data('teacherid');
 
+                // 使用 SweetAlert 的確認視窗
+                Swal.fire({
+                    title: '確定要覆職該位師傅嗎？',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
+                    $.ajax({
+                    url: "${ctxPath}"+"/verifyTeacherAction",
+                    method: 'get',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    dataType: 'json',
+                    data: {
+                        action: "back",
+                        teacherId: backTeacherId },
+                    success: function(response){
+                            if(response.isAllowed) {
+                                Swal.fire({
+                                    title:'覆職師傅成功!',
+                                    icon: 'success',
+                                    confirmButtonText: '確定'
+                                }).then((result) => {
+                                    if(result.isConfirmed) {
+                                        let searchValue = backTeacherName;
+                                        let url= "${ctxPath}"+"/desertcourse/listallteacher.jsp?defaultSearchValue=" + backTeacherName;
+                                        window.location.href= url;
+                                    }
+                                })
+                            } else{
+                                Swal.fire({
+                                    title: '無權限! 覆職師傅失敗!',
+                                    icon: 'error',
+                                    confirmButtonText: '確定'
+                                })
+                            }
+                    }
+                });
+                    }
+                });
+            });
         });
     </script>
 

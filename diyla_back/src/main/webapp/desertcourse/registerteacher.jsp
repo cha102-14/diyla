@@ -130,7 +130,22 @@
         });
 
                 });
+                 // 清空按鈕事件處理
+                    $("#clearbutton").click(function () {
+                        // 清空電話號碼和簡介
+                        $("#phone").val("");
+                        $("#intro").val("");
 
+                        // 清空專長
+                        $(".speciality-row").remove();
+                        specialityCount = 1;
+                        appendSpecialityRow(specialityCount);
+
+                        // 隱藏圖片預覽
+                        $("#picPreviewBlock").hide();
+                        // 禁用提交按鈕
+                        $("#submitButton").prop("disabled", true);
+                    });
 
                 // 移除專長的按鈕事件處理
                 specialityBlock.on('click', '.remove-speciality', function () {
@@ -196,7 +211,7 @@
                             $("#submitButton").prop("disabled", true);
                         }
                     });
-                // 電子郵件格式驗證
+             // 電子郵件格式驗證
             $("#email").on("blur", function () {
             const emailInput = $(this);
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

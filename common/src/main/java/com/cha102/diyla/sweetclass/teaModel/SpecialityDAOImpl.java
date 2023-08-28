@@ -23,7 +23,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
     private static final String GET_ALL_STMT =
             "SELECT spe_id, spe_name FROM speciality order by spe_id";
     private static final String GET_ONE_STMT =
-            "SELECT spe_id, spe_name FROM speciality where spe_id = ?";
+            "SELECT spe_name FROM speciality where spe_id = ?";
     private static final String DELETE =
             "DELETE FROM speciality where spe_id = ?";
     private static final String UPDATE =
@@ -143,8 +143,8 @@ public class SpecialityDAOImpl implements SpecialityDAO {
     }
 
     @Override
-    public SpecialityVO findByPrimaryKey(Integer speID) {
-        SpecialityVO specialityVO = null;
+    public String findBySpeId(Integer speID) {
+        String speName = null;
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -159,9 +159,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                specialityVO = new SpecialityVO();
-                specialityVO.setSpeId(rs.getInt("spe_id"));
-                specialityVO.setSpeName(rs.getString("spe_name"));
+                speName = rs.getString("spe_name");
             }
 
             // Handle any driver errors
@@ -192,7 +190,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
                 }
             }
         }
-        return specialityVO;
+        return speName;
     }
     public Integer findBySpeName(String speName){
         SpecialityVO specialityVO = null;

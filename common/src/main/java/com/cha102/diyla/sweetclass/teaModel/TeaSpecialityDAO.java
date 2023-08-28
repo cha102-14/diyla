@@ -7,9 +7,10 @@ public interface TeaSpecialityDAO {
 
     void update(TeaSpecialityVO teaSpecialityVO);
 
-    void delete(Integer teaID,Integer speID);
+    void delete(Integer teaID);
 
-    TeaSpecialityVO findByPrimaryKey(Integer teaID);
+    List<Integer> findByTeaId(Integer teaID);
 
     List<TeaSpecialityVO> getAll();
+
 }

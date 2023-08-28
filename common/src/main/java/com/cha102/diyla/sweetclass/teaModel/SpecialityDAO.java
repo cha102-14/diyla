@@ -10,7 +10,7 @@ public interface SpecialityDAO {
 
     void delete(Integer speID);
 
-    SpecialityVO findByPrimaryKey(Integer speID);
+    String findBySpeId(Integer speID);
 
     Integer findBySpeName(String speName);
 

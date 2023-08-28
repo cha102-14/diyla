@@ -27,7 +27,7 @@ public class TeacherDAOImpl implements TeacherDAO {
     private static final String DELETE =
             "DELETE FROM teacher where tea_id = ?";
     private static final String UPDATE =
-            "UPDATE emp_id=?, tea_name=?, tea_gender=?, tea_phone=?, tea_intro=?, tea_pic=?, tea_email=?, tea_status=? where tea_id = ?";
+            "UPDATE teacher SET emp_id=?, tea_name=?, tea_gender=?, tea_phone=?, tea_intro=?, tea_pic=?, tea_email=?, tea_status=? WHERE tea_id = ?";
     private static final String GET_TEA_SPECIALITY =
             "SELECT s.SPE_NAME FROM tea_speciality ts JOIN speciality s ON ts.SPE_ID = s.SPE_ID WHERE ts.TEA_ID = ?";
 
@@ -96,6 +96,7 @@ public class TeacherDAOImpl implements TeacherDAO {
             pstmt.setBytes(6, teacherVO.getTeaPic());
             pstmt.setString(7, teacherVO.getTeaEmail());
             pstmt.setInt(8, teacherVO.getTeaStatus());
+            pstmt.setInt(9, teacherVO.getTeaId());
             pstmt.executeUpdate();
 
             // Handle any driver errors
