@@ -37,7 +37,10 @@
     <div class="info_container ">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4 col-centered">
+                    <img src="${ctxPath}/images/LOGO_white.png" alt="DIYLA">
+                </div>
+                <div class="col-md-6 col-lg-4 col-centered">
                     <h6>
                         營業時間
                     </h6>
@@ -48,7 +51,7 @@
                     </p>
                 </div>
 
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-6 col-lg-4">
                     <h6>
                         聯絡我們
                     </h6>
