@@ -89,12 +89,12 @@ public class EmpSpringServiceImpl implements EmpSpringService {
             empId = empDTOList.stream().map(EmpDTO::getEmpId).collect(Collectors.toList()).get(0);
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
-
+        empTypeFunList.stream().forEach(t ->System.out.println(t));
         req.getSession().setAttribute("typeFun", empTypeFunList);
         req.getSession().setAttribute("empId", empId);
         req.setAttribute("loginErrorMsgMap", errorMsgMap);
 
-        String url = ObjectUtils.isEmpty(empTypeFunList) ? "empLogin.jsp" : "/";
+        String url = ObjectUtils.isEmpty(empTypeFunList) ? "empLogin.jsp" : "welcome.jsp";
 //        String url = ObjectUtils.isEmpty(typeFun) ? "empLogin.jsp" : req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath();
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(url);
         try {
