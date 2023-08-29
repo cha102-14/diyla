@@ -84,7 +84,6 @@ public class RegisterServlet extends HttpServlet {
         String context = "親愛的DIYLA會員您好，感謝您加入DIYLA，您的驗證碼為"+code+"，完成信箱認證後，才能登入DIYLA使用服務功能。" ;
 
         Jedis jedis = new Jedis("localhost",6379);
-//        jedis.select(15);
         jedis.set(email,code);
         jedis.expire(email,86400);
 

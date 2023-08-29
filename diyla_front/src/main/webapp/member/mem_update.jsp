@@ -41,9 +41,10 @@
 <body>
 
     <jsp:include page="../front_header.jsp"/>
-        <a href="${ctxPath}/member/mem_update.jsp">會員資訊管理</a>
-    <a href="${ctxPath}/track?action=track&memId=${memId}">我的商品追蹤清單</a>
+    <a href="${ctxPath}/member/mem_update.jsp">會員資訊管理</a>
     <a href="${ctxPath}/member/updatePw.jsp">修改密碼</a>
+    <a href="${ctxPath}/track/track?memId=${memId}">我的商品追蹤</a>
+    <a href="${ctxPath}/token/MyToken.jsp">我的代幣</a>
     <a href="${ctxPath}/member/login?action=logout">登出</a>
     <h4>會員資訊管理</h4>
 
