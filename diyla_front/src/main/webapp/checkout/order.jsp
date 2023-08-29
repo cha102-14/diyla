@@ -201,8 +201,8 @@ input[type="text"], input[type="tel"], select {
 
 			<div class="tokenblock">
 				<p>(使用代幣則無法獲得回饋)</p>
-				<label for="useTokens" style="width: 80px">使用代幣：</label><span
-					id="amount_value" style="font-size: 18px">0</span>
+				<label for="useTokens" style="width: 80px">使用代幣：</label>
+				<span id="amount_value" style="font-size: 18px">0</span>
 				<div>
 					<input name="tokenUse" type="range" min="0" max="${maxToken}"
 						 id="tokenAmount">
@@ -402,7 +402,11 @@ input[type="text"], input[type="tel"], select {
 												$('#tokenAmount').val());
 									});
 							
-							
+							const maxTokenValue = ${maxToken};
+					        const tokenAmountInput = $("#tokenAmount");
+
+					        // 如果maxTokenValue==null||==""，max=>0
+					        tokenAmountInput.attr("max", maxTokenValue || 0);
 
 						});
 	</script>

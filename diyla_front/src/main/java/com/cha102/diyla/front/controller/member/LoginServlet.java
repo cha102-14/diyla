@@ -56,6 +56,7 @@ public class LoginServlet extends HttpServlet {
                         return;
                     }
                 } catch (Exception ignored) {
+//>>>>>>> main
                 }
                 res.sendRedirect(req.getContextPath()+"/index.jsp");
 
@@ -67,6 +68,7 @@ public class LoginServlet extends HttpServlet {
         if ("logout".equals(action)){
             session.removeAttribute("memVO");
             res.sendRedirect(req.getContextPath()+"/index.jsp");
+
 
         }
 

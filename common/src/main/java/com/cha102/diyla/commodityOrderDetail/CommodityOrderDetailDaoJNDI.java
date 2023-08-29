@@ -35,36 +35,63 @@ public class CommodityOrderDetailDaoJNDI implements CommodityOrderDetailDao {
 
 	@Override
 	public void insert(Integer orderNo, List<ShoppingCartVO> shoppingCartList) {
-		StringBuffer sqlBuffer = new StringBuffer("INSERT INTO commodity_order_detail (ORDER_NO,COM_NO,COM_QUANTITY,COM_PRICE) VALUES (?,?,?,?)");
+		StringBuffer sqlBuffer = new StringBuffer(
+				"INSERT INTO commodity_order_detail (ORDER_NO,COM_NO,COM_QUANTITY,COM_PRICE) VALUES (?,?,?,?)");
 		int size = shoppingCartList.size();
-		for (int i = 0; i < size-1; i++) {
+		for (int i = 0; i < size - 1; i++) {
 			sqlBuffer.append(",(?,?,?,?)");
 		}
-		String sql = sqlBuffer.substring(0, sqlBuffer.length() - 1)+");";
+		String sql = sqlBuffer.substring(0, sqlBuffer.length() - 1) + ");";
 		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(sql);) {
 //				List<Integer> comNoList = ShoppingCartService.getComNoList(shoppingCartList);
 //				List<CommodityVO >commodityList = commodityService.getAllByComNo(comNoList);
-				
-				for(int i =0;i<size;i++) {
+
+			for (int i = 0; i < size; i++) {
 				ShoppingCartVO shoppingCartVO = shoppingCartList.get(i);
-				int comPri =shoppingCartVO.getComPri();
+				int comPri = shoppingCartVO.getComPri();
 				int amount = shoppingCartVO.getComAmount();
-				 int parameterIndex = i * 4; 
-				pstm.setInt(1+parameterIndex, orderNo);
-				pstm.setInt(2+parameterIndex, shoppingCartVO.getComNo());
-				pstm.setInt(3+parameterIndex, amount);
-				pstm.setInt(4+parameterIndex, comPri * amount);
-				}
-				pstm.executeUpdate();
+				int parameterIndex = i * 4;
+				pstm.setInt(1 + parameterIndex, orderNo);
+				pstm.setInt(2 + parameterIndex, shoppingCartVO.getComNo());
+				pstm.setInt(3 + parameterIndex, amount);
+				pstm.setInt(4 + parameterIndex, comPri * amount);
+			}
+			pstm.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Override
+//	@Override
+//	public List<CommodityOrderDetailVO> getAll(Integer orderNo) {
+//		List<CommodityOrderDetailVO> commodityOrderDetailVOs = new ArrayList<>();
+//		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(GET_ALL);) {
+//			pstm.setInt(1, orderNo);
+//			try (ResultSet rs = pstm.executeQuery();) {
+//				while (rs.next()) {
+//					CommodityOrderDetailVO commodityOrderDetailVO = new CommodityOrderDetailVO();
+//					commodityOrderDetailVO.setOrderNo(rs.getInt("ORDER_NO"));
+//					commodityOrderDetailVO.setComNo(rs.getInt("COM_NO"));
+//					commodityOrderDetailVO.setComPrice(rs.getInt("COM_PRICE"));
+//					commodityOrderDetailVO.setComQuantity(rs.getInt("COM_QUANTITY"));
+//					commodityOrderDetailVOs.add(commodityOrderDetailVO);
+//				}
+//				return commodityOrderDetailVOs;
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+
 	public List<CommodityOrderDetailVO> getAll(Integer orderNo) {
 		List<CommodityOrderDetailVO> commodityOrderDetailVOs = new ArrayList<>();
-		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(GET_ALL);) {
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstm = con.prepareStatement(
+						"SELECT COD.*, C.COM_PRI FROM COMMODITY C JOIN COMMODITY_ORDER_DETAIL COD ON C.COM_NO=COD.COM_NO WHERE ORDER_NO =?;");) {
 			pstm.setInt(1, orderNo);
 			try (ResultSet rs = pstm.executeQuery();) {
 				while (rs.next()) {
@@ -73,17 +100,17 @@ public class CommodityOrderDetailDaoJNDI implements CommodityOrderDetailDao {
 					commodityOrderDetailVO.setComNo(rs.getInt("COM_NO"));
 					commodityOrderDetailVO.setComPrice(rs.getInt("COM_PRICE"));
 					commodityOrderDetailVO.setComQuantity(rs.getInt("COM_QUANTITY"));
+					commodityOrderDetailVO.setUnitPrice(rs.getInt("COM_PRI"));
 					commodityOrderDetailVOs.add(commodityOrderDetailVO);
 				}
 				return commodityOrderDetailVOs;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return commodityOrderDetailVOs;
 	}
 
 }

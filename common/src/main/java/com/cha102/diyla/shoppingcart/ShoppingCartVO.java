@@ -50,6 +50,7 @@ public class ShoppingCartVO {
 }
 
 class ShoppongCartId implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer memId;
 	private Integer comNo;
 
