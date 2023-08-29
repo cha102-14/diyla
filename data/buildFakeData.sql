@@ -154,14 +154,14 @@ values (10, 0, 1),
        (-3, 3, 2);
 
 INSERT INTO diy_cate ( DIY_NAME, DIY_GRA_PEOCOUNT, DIY_GRA_STARCOUNT
-                     , DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS)
-VALUES ('乳酪蛋糕', 298, 5, 1, 1, '我是乳酪蛋糕'),
-       ('超大麵包', 34, 4, 0, 3, '我是大麵包'),
-       ('巧克力蛋糕', '150', '270', '0', 1, '巧克力做成的蛋糕'),
-       ('芒果蛋糕', '190', '250', '0', 1, '芒果做成的蛋糕'),
-       ('巧克力餅乾', '210', '380', '0', 2, '巧克力做成的餅乾'),
-       ('草莓蛋糕', '120', '360', '0', 1, '草莓做成的蛋糕'),
-       ('芒果泡芙', '100', '420', '0', 0, '芒果做成的泡芙');
+                     , DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS, AMOUNT)
+VALUES ('乳酪蛋糕', 298, 5, 0, 3, '我是乳酪蛋糕', 700),
+       ('超大麵包', 34, 4, 0, 0, '我是大麵包', 450),
+       ('巧克力蛋糕', 150, 5, 0, 1, '巧克力做成的蛋糕', 600),
+       ('芒果蛋糕', 190, 4, 0, 1, '芒果做成的蛋糕', 550),
+       ('巧克力餅乾', 210, 5, 0, 0, '巧克力做成的餅乾', 450),
+       ('草莓蛋糕', 120, 5, 0, 1, '草莓做成的蛋糕', 790),
+       ('芒果泡芙', 100, 5, 1, 0, '芒果做成的泡芙', 660);
 
 INSERT INTO diy_order (MEM_ID, DIY_NO, CONTACT_PERSON, CONTACT_PHONE, RESERVATION_NUM, DIY_PERIOD, DIY_RESERVE_DATE,
                        CREATE_TIME, RESERVATION_STATUS, PAYMENT_STATUS, DIY_PRICE)
@@ -169,21 +169,21 @@ VALUES (1, 1, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580
        (2, 2, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
 
 
-INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA)
-VALUES ('1', '1', '我覺得...(1)', '3'),
-       ('2', '2', '我覺得...(2)', '4'),
-       ('3', '3', '我覺得...(3)', '1'),
-       ('1', '4', '我覺得...(4)', default),
-       ('4', '4', '我覺得...(5)', '2');
+INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA, CREATE_TIME)
+VALUES (4, 4, '我覺得超級好玩', 5, DEFAULT),
+       (4, 4, '專題好累', 3, DEFAULT),
+       (4, 4, '為了專題做蛋糕', 2, DEFAULT),
+       (4, 4, '買85度C回家吃實在', 1, DEFAULT),
+       (4, 4, '希望做完蛋糕能追到妹仔 讚讚讚 下次還要來', 5, DEFAULT);
 
 
 INSERT INTO DIY_RESERVE_RESULT( DIY_RESERVE_DATE, DIY_PERIOD, PEO_COUNT
-                              , RESERVE_STATUS, RESERVE_UPD_TIME, PEO_LIMIT)
-VALUES ('2023-05-31', default, '3', default, default, 20),
-       ('2023-03-29', '2', '3', default, default, 20),
-       ('2023-04-03', '1', '3', default, default, 20),
-       ('2023-05-31', default, '3', default, default, 20),
-       ('2023-05-29', '3', '3', default, default, 20);
+                              , RESERVE_STATUS, RESERVE_UPD_TIME, PEO_LIMIT, ITEM_QUANTITY)
+VALUES ('2023-05-31', 0, 4, 0, default, 30, 20),
+       ('2023-03-29', 2, 2, 1, default, 30, 20),
+       ('2023-04-03', 1, 1, default, default, 30, 20),
+       ('2023-05-31', 2, 4, default, default, 30, 20),
+       ('2023-05-29', 1, 3, default, default, 30, 20);
 INSERT INTO ING_STORAGE( BRAND, ING_NUMS, ING_NAME
                        , `STATUS`, SERVING_SIZE)
     VALUE ('A牌', 2000, '蛋白液', '0', '80'),
