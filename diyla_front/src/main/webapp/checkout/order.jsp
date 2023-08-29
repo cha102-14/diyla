@@ -202,8 +202,10 @@ input[type="text"], input[type="tel"], select {
 			<div class="tokenblock">
 				<p>(使用代幣則無法獲得回饋)</p>
 
+
 				<label for="useTokens" style="width: 80px">使用代幣：</label>
 				<span id="amount_value" style="font-size: 18px">0</span>
+
 				<div>
 					<input name="tokenUse" type="range" min="0"
 						max="<%=session.getAttribute("maxToken")%>" id="tokenAmount">
@@ -407,8 +409,10 @@ input[type="text"], input[type="tel"], select {
 									.getElementById("tokenAmount");
 							const maxTokenValue = tokenAmountInput
 									.getAttribute("max");
-							if (maxTokenValue == null || maxTokenValue == "") {
+							if (maxTokenValue == null || maxTokenValue == ""||maxTokenValue=="null") {
 								tokenAmountInput.setAttribute("max", "0");
+								tokenAmountInput.value = "0"; // 設置輸入框的值為 0
+								tokenAmountInput.disabled = true; // 禁用輸入框
 							}
 
 						});

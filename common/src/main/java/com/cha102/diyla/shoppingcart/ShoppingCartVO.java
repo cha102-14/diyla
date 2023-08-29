@@ -22,7 +22,11 @@ import lombok.Setter;
 @IdClass(ShoppongCartId.class)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShoppingCartVO {
+public class ShoppingCartVO implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "MEM_ID")
 	private Integer memId;
