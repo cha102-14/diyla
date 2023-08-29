@@ -45,6 +45,7 @@
     <link href="/diyla_front/css/responsive.css" rel="stylesheet"/>
     <link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -202,7 +203,8 @@
 
                     }
                     // 在這裡處理接收到的 JSON 資料並更新日期選擇框的內容
-                    // 例如，您可以使用 mark: {} 來自定義標記的日期
+                    // 可以使用 mark: {} 來自定義標記的日期
+
                     laydate.render({
                         elem: '#ID-laydate-mark',
                         min: 0,
@@ -252,6 +254,7 @@
 
 
 </script>
+
 
 </body>
 
