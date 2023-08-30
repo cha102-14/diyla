@@ -80,12 +80,12 @@ public class OrderController extends HttpServlet {
 		if ("showDetail".equals(action)) {
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
 			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
-			List<Integer> comNoList = new ArrayList<>();
-			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
-				comNoList.add(commodityOrderDetailVO.getComNo());
-			}
-			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
-			session.setAttribute("commodityList", commodityList);
+//			List<Integer> comNoList = new ArrayList<>();
+//			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
+//				comNoList.add(commodityOrderDetailVO.getComNo());
+//			}
+//			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
+//			session.setAttribute("commodityList", commodityList);
 			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/memberOrder/showOrderDetail.jsp");
 			dispatcher.forward(req, res);
@@ -132,7 +132,15 @@ public class OrderController extends HttpServlet {
 			}
 			Integer memId = (Integer) session.getAttribute("memId");
 			Integer totalPrice = (Integer) session.getAttribute("totalPrice");
-			Integer tokenUse = Integer.valueOf(req.getParameter("tokenUse"));
+			Integer tokenUse=0;
+			try {
+				 tokenUse=Integer.valueOf(req.getParameter("tokenUse"));
+			} catch (NumberFormatException e) {
+				//null無法轉換 故接到錯誤將代幣值設為0
+				System.out.println(req.getParameter("tokenUse"));
+				tokenUse=0;
+			}
+			
 			// 若無使用代幣則新增一筆代幣
 			if (tokenUse == 0) {
 				TokenVO token = tokenService.addToken((totalPrice / 10), (byte) 1, memId);

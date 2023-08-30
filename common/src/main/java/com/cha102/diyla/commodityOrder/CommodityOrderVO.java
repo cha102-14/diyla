@@ -3,25 +3,51 @@ package com.cha102.diyla.commodityOrder;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Entity
+@Table(name = "commodity_order")
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommodityOrderVO {
+	@Id
+	@Column(name = "ORDER_NO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderNO;
+	@Column(name = "MEM_ID")
 	private Integer memId;
+	@Column(name = "ORDER_TIME")
 	private Timestamp orderTime;
+	@Column(name = "ORDER_STATUS")
 	private Integer orderStatus;
+	@Column(name = "ORDER_PRICE")
 	private Integer orderPrice;
+	@Column(name = "DISCOUNT_PRICE")
 	private Integer discountPrice;
+	@Column(name = "ACTUAL_PRICE")
 	private Integer actualPrice;
+	@Column(name = "UPDATE_TIME")
 	private Timestamp updateTime;
+	@Column(name = "RECIPIENT")
 	private String recipient;
+	@Column(name = "RECIPIENT_ADDRESS")
 	private String recipientAddress;
-
-	public String getRecipient() {
-		return recipient;
-	}
-
-	public void setRecipient(String recipient) {
-		this.recipient = recipient;
-	}
+	@Column(name = "PHONE")
+	private String phone;
 
 	public CommodityOrderVO(Integer memId, Integer orderStatus, Integer orderPrice, Integer discountPrice,
 			Integer actualPrice, String recipient, String recipientAddress, String phone) {
@@ -34,88 +60,6 @@ public class CommodityOrderVO {
 		this.recipient = recipient;
 		this.recipientAddress = recipientAddress;
 		this.phone = phone;
-	}
-
-	public String getRecipientAddress() {
-		return recipientAddress;
-	}
-
-	public void setRecipientAddress(String recipientAddress) {
-		this.recipientAddress = recipientAddress;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	private String phone;
-
-	public Integer getOrderNO() {
-		return orderNO;
-	}
-
-	public void setOrderNO(Integer opderNO) {
-		this.orderNO = opderNO;
-	}
-
-	public Integer getMemId() {
-		return memId;
-	}
-
-	public void setMemId(Integer memId) {
-		this.memId = memId;
-	}
-
-	public Timestamp getOrderTime() {
-		return orderTime;
-	}
-
-	public void setOrderTime(Timestamp orderTime) {
-		this.orderTime = orderTime;
-	}
-
-	public Integer getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(Integer orderStatus) {
-		this.orderStatus = orderStatus;
-	}
-
-	public Integer getOrderPrice() {
-		return orderPrice;
-	}
-
-	public void setOrderPrice(Integer orderPrice) {
-		this.orderPrice = orderPrice;
-	}
-
-	public Integer getDiscountPrice() {
-		return discountPrice;
-	}
-
-	public void setDiscountPrice(Integer discountPrice) {
-		this.discountPrice = discountPrice;
-	}
-
-	public Integer getActualPrice() {
-		return actualPrice;
-	}
-
-	public void setActualPrice(Integer actualPrice) {
-		this.actualPrice = actualPrice;
-	}
-
-	public Timestamp getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Timestamp updateTime) {
-		this.updateTime = updateTime;
 	}
 
 	public CommodityOrderVO(Integer orderNO, Integer memId, Timestamp orderTime, Integer orderStatus,
@@ -149,10 +93,6 @@ public class CommodityOrderVO {
 				&& Objects.equals(memId, other.memId) && Objects.equals(orderNO, other.orderNO)
 				&& Objects.equals(orderPrice, other.orderPrice) && Objects.equals(orderStatus, other.orderStatus)
 				&& Objects.equals(orderTime, other.orderTime) && Objects.equals(updateTime, other.updateTime);
-	}
-
-	public CommodityOrderVO() {
-		super();
 	}
 
 	public CommodityOrderVO(Integer memId, Integer orderStatus, Integer orderPrice, Integer discountPrice,

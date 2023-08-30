@@ -2,6 +2,10 @@ package com.cha102.diyla.diyOrder;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import com.cha102.diyla.member.MemVO;
+import com.cha102.diyla.member.MemberService;
+
 import java.sql.Date;
 
 public class DiyOrderVO implements Serializable {
@@ -18,6 +22,7 @@ public class DiyOrderVO implements Serializable {
     private Integer reservationStatus;
     private Integer paymentStatus;
     private Integer diyPrice;
+    private MemVO memVO;
     
     // 無參數
     public DiyOrderVO() {
@@ -125,5 +130,12 @@ public class DiyOrderVO implements Serializable {
                 + ", diyReserveDate=" + diyReserveDate + ", createTime=" + createTime
                 + ", reservationStatus=" + reservationStatus + ", paymentStatus=" + paymentStatus
                 + ", diyPrice=" + diyPrice + "]";
+    }
+    
+    public MemVO getMemVO() {
+        MemberService memSvc = new MemberService();
+        MemVO memVO = memSvc.selectMem(memId);
+        
+        return memVO;
     }
 }

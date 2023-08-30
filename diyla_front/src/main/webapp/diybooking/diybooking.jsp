@@ -45,6 +45,7 @@
     <link href="/diyla_front/css/responsive.css" rel="stylesheet"/>
     <link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -84,12 +85,6 @@
                                     <div class="tf__reservation_input_single">
                                         <label for="name">name</label>
                                         <input type="text" id="name" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6">
-                                    <div class="tf__reservation_input_single">
-                                        <label for="email">email</label>
-                                        <input type="email" id="email" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
@@ -202,7 +197,8 @@
 
                     }
                     // 在這裡處理接收到的 JSON 資料並更新日期選擇框的內容
-                    // 例如，您可以使用 mark: {} 來自定義標記的日期
+                    // 可以使用 mark: {} 來自定義標記的日期
+
                     laydate.render({
                         elem: '#ID-laydate-mark',
                         min: 0,
@@ -252,6 +248,7 @@
 
 
 </script>
+
 
 </body>
 

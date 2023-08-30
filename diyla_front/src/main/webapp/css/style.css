@@ -6,6 +6,10 @@ body {
   background-color: #ffffff;
 }
 
+h2{
+  color: #B26021;
+}
+
 .layout_padding {
   padding-top: 90px;
   padding-bottom: 90px;
@@ -47,10 +51,6 @@ body {
   font-weight: bold;
 }
 
-.heading_container h2 span {
-  color: #f89cab;
-}
-
 .heading_container.heading_center {
   -webkit-box-align: center;
       -ms-flex-align: center;
@@ -76,14 +76,14 @@ body {
   padding: 15px 0;
 }
 
-#navbarSupportedContent.innerpage_navbar {
+#navbarSupportedContent.navbar {
   background-color: white;
   border-radius: 10px;
   -webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
           box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.25);
 }
 
-#navbarSupportedContent.innerpage_navbar .nav-item.active .nav-link {
+#navbarSupportedContent.navbar .nav-item.active .nav-link {
   background-color: #FCE5CD;
 }
 
@@ -192,8 +192,6 @@ a:focus {
   height: 4px;
   background-color: #000000;
   margin: 7px 0;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
   position: relative;
   border-radius: 5px;
   -webkit-transition: all .3s;
@@ -218,17 +216,14 @@ a:focus {
 }
 
 .custom_nav-container .navbar-toggler[aria-expanded="true"] {
-  -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
 }
 
 .custom_nav-container .navbar-toggler[aria-expanded="true"] span {
-  -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
 }
 
 .custom_nav-container .navbar-toggler[aria-expanded="true"] span::before, .custom_nav-container .navbar-toggler[aria-expanded="true"] span::after {
-  -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
   top: 0;
 }
@@ -435,170 +430,6 @@ a:focus {
   color: #B26021;
 }
 
-.saving_section {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.saving_section .box {
-  padding-top: 45px;
-  background-color: #7fd7eb;
-  color: #ffffff;
-  border-radius: 15px;
-}
-
-.saving_section .row {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.saving_section .img-box {
-  padding: 15px 0 0 25px;
-}
-
-.saving_section .img-box img {
-  width: 100%;
-}
-
-.saving_section .detail-box {
-  padding: 0 25px;
-}
-
-.saving_section .detail-box p {
-  margin-top: 5px;
-}
-
-.saving_section .detail-box .btn-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  margin: 35px -5px 0;
-}
-
-.saving_section .detail-box .btn-box a {
-  width: 165px;
-  text-align: center;
-  margin: 5px;
-}
-
-.saving_section .detail-box .btn-box .btn1 {
-  display: inline-block;
-  padding: 10px 0;
-  background-color: #109dbd;
-  color: #ffffff;
-  border: 1px solid #109dbd;
-  border-radius: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-}
-
-.saving_section .detail-box .btn-box .btn1:hover {
-  background-color: transparent;
-  color: #109dbd;
-}
-
-.saving_section .detail-box .btn-box .btn2 {
-  display: inline-block;
-  padding: 10px 0;
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-}
-
-.saving_section .detail-box .btn-box .btn2:hover {
-  background-color: transparent;
-  color: #ffffff;
-}
-
-.why_section .box {
-  text-align: center;
-  margin-top: 45px;
-  background-color: #f9f8f7;
-  padding: 25px;
-  border-radius: 5px;
-}
-
-.why_section .box .img-box {
-  margin-bottom: 15px;
-}
-
-.why_section .box .img-box svg {
-  width: 55px;
-  height: auto;
-  fill: #320b57;
-}
-
-.gift_section {
-  padding-left: 45px;
-  padding-right: 45px;
-}
-
-.gift_section .box {
-  background-color: #6929a5;
-  border-radius: 15px;
-  color: #ffffff;
-}
-
-.gift_section .row {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.gift_section .img-box {
-  padding: 60px 0 60px 25px;
-}
-
-.gift_section .img-box img {
-  width: 100%;
-}
-
-.gift_section .detail-box {
-  padding: 0 25px;
-}
-
-.gift_section .detail-box p {
-  margin-top: 5px;
-}
-
-.gift_section .detail-box .btn-box {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  margin: 35px -5px 0;
-}
-
-.gift_section .detail-box .btn-box a {
-  width: 165px;
-  text-align: center;
-  margin: 5px;
-}
-
-.gift_section .detail-box .btn-box .btn1 {
-  display: inline-block;
-  padding: 10px 0;
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #ffffff;
-  border-radius: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-}
-
-.gift_section .detail-box .btn-box .btn1:hover {
-  background-color: transparent;
-  color: #ffffff;
-}
-
-
 .contact_section {
   position: relative;
 }
@@ -618,10 +449,6 @@ a:focus {
           align-items: stretch;
 }
 
-.contact_section form {
-  padding-right: 35px;
-  padding: 45px 20px;
-}
 
 .contact_section input {
   width: 100%;
@@ -655,11 +482,9 @@ a:focus {
 }
 
 .contact_section button {
-  display: inline-block;
   padding: 12px 45px;
-  background-color: #db4f66;
-  color: #ffffff;
-  border: 1px solid #db4f66;
+  background-color: #B26021;
+  border: 1px solid #B26021;
   border-radius: 0;
   -webkit-transition: all .3s;
   transition: all .3s;
@@ -670,7 +495,7 @@ a:focus {
 
 .contact_section button:hover {
   background-color: transparent;
-  color: #db4f66;
+  color: #B26021;
 }
 
 .contact_section .map_container {
@@ -704,7 +529,7 @@ a:focus {
 
 .client_section .box .client_info .client_name h5 {
   font-weight: 600;
-  color: #db4f66;
+  color: #B26021;
 }
 
 .client_section .box .client_info .client_name h6 {
@@ -726,13 +551,12 @@ a:focus {
 .client_section .carousel-control-next {
   width: 45px;
   height: 125px;
-  background-color: #db4f66;
+  background-color: #B26021;
   opacity: 1;
   font-size: 28px;
   font-weight: bold;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .client_section .carousel-control-prev {
@@ -855,6 +679,10 @@ a:focus {
 
 .footer_section a {
   color: #FCE5CD;
+}
+
+.col-centered {
+  text-align: center;
 }
 
 /* end footer section*/

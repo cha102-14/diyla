@@ -11,43 +11,14 @@ public class DiyOrderService {
 		dao = new DiyOrderDaoImpl();
 	}
 
-	public void addOD(int memId, int diyNo, String contactPerson, String contactPhone, int reservationNum,
-			int diyPeriod, Date diyReserveDate,  int reservationStatus, int paymentStatus,
-			int diyPrice) {
-		DiyOrderVO DOVO = new DiyOrderVO();
-		DOVO.setMemId(memId);
-		DOVO.setDiyNo(diyNo);
-		DOVO.setContactPerson(contactPerson);
-		DOVO.setContactPhone(contactPhone);
-		DOVO.setReservationNum(reservationNum);
-		DOVO.setDiyPeriod(diyPeriod);
-		DOVO.setDiyReserveDate(diyReserveDate);
-		DOVO.setReservationStatus(reservationStatus);
-		DOVO.setPaymentStatus(paymentStatus);
-		DOVO.setDiyPrice(diyPrice);
-		dao.insert(DOVO);
+	public DiyOrderVO addOD(DiyOrderVO diyOrderVO) {
+		dao.insert(diyOrderVO);
+		return diyOrderVO;
 	}
-
-	public void upOD(int memId, int diyNo, String contactPerson, 
-			String contactPhone, int reservationNum, int diyPeriod, 
-			Date diyReserveDate, int reservationStatus, 
-			int paymentStatus,int diyPrice, int diyOrderNo) {
-
-		DiyOrderVO DOVO = new DiyOrderVO();
-		DOVO.setMemId(memId);
-		DOVO.setDiyNo(diyNo);
-		DOVO.setContactPerson(contactPerson);
-		DOVO.setContactPhone(contactPhone);
-		DOVO.setReservationNum(reservationNum);
-		DOVO.setDiyPeriod(diyPeriod);
-		DOVO.setDiyReserveDate(diyReserveDate);
-//		DOVO.setCreateTime(createTime);
-		DOVO.setReservationStatus(reservationStatus);
-		DOVO.setPaymentStatus(paymentStatus);
-		DOVO.setDiyPrice(diyPrice);
-		DOVO.setDiyOrderNo(diyOrderNo);
-		dao.update(DOVO);
-
+	
+	public DiyOrderVO  upOD(DiyOrderVO diyOrderVO) {	
+		dao.update( diyOrderVO);
+		return diyOrderVO;
 	}
 
 	public void deleteDO(Integer diyOrderNo) {
@@ -57,9 +28,39 @@ public class DiyOrderService {
 	public DiyOrderVO getOneDO(Integer diyOrderNo) {
 		return dao.findByPrimaryKey(diyOrderNo);
 	}
-	
-	public List<DiyOrderVO> getAll(){
+
+	public List<DiyOrderVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<DiyOrderVO> findMemIdAllOrder(Integer memId) {
+		return dao.getAllByMemID(memId);
+	}
+	
+	// 查詢所有退款審核訂單(後台)
+	public List<DiyOrderVO> getAllRefundod() {
+		List<DiyOrderVO> d1 = dao.getAllRefundod();
+		
+//		if (d1.isEmpty()) {
+//			
+//		}
+		
+		return d1;
+	}
+	
+	//
+	public List<DiyOrderVO> getDeleteByID(Integer memId) {
+		return dao.getDeleteByID(memId);
+	}
 
+	// 查詢特定時段的所有訂單(後台)
+	public List<DiyOrderVO> getAllByDatePeriod(Date diyReserveDate, Integer diyPeriod) {
+		return dao.getAllByDatePeriod(diyReserveDate,diyPeriod);
+	}
+	
+	// 查時段的有效訂單(點名FOR現場人員) -- 已點
+	public List<DiyOrderVO> getAllByDatePeriodAfter(Date diyReserveDate, Integer diyPeriod) {
+		return dao.getAllByDatePeriodAfter(diyReserveDate,diyPeriod);
+	}
+		
 }

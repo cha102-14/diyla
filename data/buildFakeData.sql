@@ -1,12 +1,12 @@
 INSERT INTO MEMBER(MEM_NAME, MEM_EMAIL, MEM_PASSWORD, MEM_PHONE,
                    MEM_BIRTHDAY, MEM_GENDER, MEM_ADDRESS, MEM_DATE)
-VALUES ('apache', 'app@diyla.com', 'api123456', '0900111222', '2004-12-31', '2', '台北市信義區信義路五段7號89樓',
+VALUES ('apache', 'app@diyla.com', 'api123456', '0900111222', '2004-12-31', '0', '台北市信義區信義路五段7號89樓',
         '2021-4-1'),
        ('blob', 'border@diyla.com', 'b654321', '0900222333', '1997-12-9', '1', '桃園市中壢區復興路46號9樓之805',
         '2020-5-5'),
        ('const', 'chatgpt@diyla.com', '123c456', '0912333444', '1980-3-10', '1', '臺中市清水區美堤街8號', '2020-02-29'),
-       ('david', 'doget@diyla.com', '098765d', '0955888999', '1950-6-30', '2', '花蓮縣壽豐鄉福德189號', '2022-12-31'),
-       ('exception', 'error@diyla.com', '3456e78', '0977888666', '1977-9-3', '2', '屏東縣鹽埔鄉仕絨村東平街25號',
+       ('david', 'doget@diyla.com', '098765d', '0955888999', '1950-6-30', '0', '花蓮縣壽豐鄉福德189號', '2022-12-31'),
+       ('exception', 'error@diyla.com', '3456e78', '0977888666', '1977-9-3', '0', '屏東縣鹽埔鄉仕絨村東平街25號',
         '2023-4-4');
 
 
@@ -54,12 +54,13 @@ VALUES (1, '擀麵棍', null, '取材等級最高的A級櫸木,竹木紋理完�
 
 
 INSERT INTO diyla.commodity_order (MEM_ID, ORDER_TIME, ORDER_STATUS, ORDER_PRICE, DISCOUNT_PRICE, ACTUAL_PRICE,
-                                   UPDATE_TIME)
-VALUES (1, DEFAULT, 3, 85, 0, 85, DEFAULT),
+ UPDATE_TIME,RECIPIENT,RECIPIENT_ADDRESS,PHONE)
 
-       (2, DEFAULT, 2, 400, 0, 400, DEFAULT),
+VALUES (1, DEFAULT, 3, 85, 0, 85, DEFAULT,'老爹',0987654321,'南方公園'),
 
-       (3, DEFAULT, 2, 295, 0, 295, DEFAULT);
+       (2, DEFAULT, 2, 400, 0, 400, DEFAULT,'大頭',0987654321,'南方公園'),
+
+       (3, DEFAULT, 2, 295, 0, 295, DEFAULT,'凱子',0987654321,'南方公園');
 
 INSERT INTO diyla.commodity_order_detail (ORDER_NO, COM_NO, COM_QUANTITY, COM_PRICE)
 VALUES (1, 11, 2, 25),
@@ -153,14 +154,14 @@ values (10, 0, 1),
        (-3, 3, 2);
 
 INSERT INTO diy_cate ( DIY_NAME, DIY_GRA_PEOCOUNT, DIY_GRA_STARCOUNT
-                     , DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS)
-VALUES ('乳酪蛋糕', 298, 5, 1, 1, '我是乳酪蛋糕'),
-       ('超大麵包', 34, 4, 0, 3, '我是大麵包'),
-       ('巧克力蛋糕', '150', '270', '0', 1, '巧克力做成的蛋糕'),
-       ('芒果蛋糕', '190', '250', '0', 1, '芒果做成的蛋糕'),
-       ('巧克力餅乾', '210', '380', '0', 2, '巧克力做成的餅乾'),
-       ('草莓蛋糕', '120', '360', '0', 1, '草莓做成的蛋糕'),
-       ('芒果泡芙', '100', '420', '0', 0, '芒果做成的泡芙');
+                     , DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS, AMOUNT)
+VALUES ('乳酪蛋糕', 298, 5, 0, 3, '我是乳酪蛋糕', 700),
+       ('超大麵包', 34, 4, 0, 0, '我是大麵包', 450),
+       ('巧克力蛋糕', 150, 5, 0, 1, '巧克力做成的蛋糕', 600),
+       ('芒果蛋糕', 190, 4, 0, 1, '芒果做成的蛋糕', 550),
+       ('巧克力餅乾', 210, 5, 0, 0, '巧克力做成的餅乾', 450),
+       ('草莓蛋糕', 120, 5, 0, 1, '草莓做成的蛋糕', 790),
+       ('芒果泡芙', 100, 5, 1, 0, '芒果做成的泡芙', 660);
 
 INSERT INTO diy_order (MEM_ID, DIY_NO, CONTACT_PERSON, CONTACT_PHONE, RESERVATION_NUM, DIY_PERIOD, DIY_RESERVE_DATE,
                        CREATE_TIME, RESERVATION_STATUS, PAYMENT_STATUS, DIY_PRICE)
@@ -168,21 +169,21 @@ VALUES (1, 1, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580
        (2, 2, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
 
 
-INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA)
-VALUES ('1', '1', '我覺得...(1)', '3'),
-       ('2', '2', '我覺得...(2)', '4'),
-       ('3', '3', '我覺得...(3)', '1'),
-       ('1', '4', '我覺得...(4)', default),
-       ('4', '4', '我覺得...(5)', '2');
+INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA, CREATE_TIME)
+VALUES (4, 4, '我覺得超級好玩', 5, DEFAULT),
+       (4, 4, '專題好累', 3, DEFAULT),
+       (4, 4, '為了專題做蛋糕', 2, DEFAULT),
+       (4, 4, '買85度C回家吃實在', 1, DEFAULT),
+       (4, 4, '希望做完蛋糕能追到妹仔 讚讚讚 下次還要來', 5, DEFAULT);
 
 
 INSERT INTO DIY_RESERVE_RESULT( DIY_RESERVE_DATE, DIY_PERIOD, PEO_COUNT
-                              , RESERVE_STATUS, RESERVE_UPD_TIME, PEO_LIMIT)
-VALUES ('2023-05-31', default, '3', default, default, 20),
-       ('2023-03-29', '2', '3', default, default, 20),
-       ('2023-04-03', '1', '3', default, default, 20),
-       ('2023-05-31', default, '3', default, default, 20),
-       ('2023-05-29', '3', '3', default, default, 20);
+                              , RESERVE_STATUS, RESERVE_UPD_TIME, PEO_LIMIT, ITEM_QUANTITY)
+VALUES ('2023-05-31', 0, 4, 0, default, 30, 20),
+       ('2023-03-29', 2, 2, 1, default, 30, 20),
+       ('2023-04-03', 1, 1, default, default, 30, 20),
+       ('2023-05-31', 2, 4, default, default, 30, 20),
+       ('2023-05-29', 1, 3, default, default, 30, 20);
 INSERT INTO ING_STORAGE( BRAND, ING_NUMS, ING_NAME
                        , `STATUS`, SERVING_SIZE)
     VALUE ('A牌', 2000, '蛋白液', '0', '80'),
@@ -268,6 +269,34 @@ VALUES (1, 5, '2023-7-26 13:20:45',
        (4, 2, '2021-12-31 01:02:03',
         '想要做一個蛋糕可以帶來新年新氣象，同時展現台灣煙火文化又有新年傳統的寓意，老師您有辦法嗎', 1),
        (5, 1, '2020-01-01 22:22:22', '夢裡什麼都有哦', 0);
+INSERT INTO diyla.teacher (`TEA_ID`, `EMP_ID`, `TEA_NAME`, `TEA_GENDER`, `TEA_PHONE`, `TEA_INTRO`, `TEA_EMAIL`, `TEA_STATUS`) VALUES ('1', '1', '無詠致', '0', '0988772332', '多年的Java糕點經驗,具有多張烘焙執照,想做出好甜點找他就對了', 'wuyuanzi@gmail.com', '0');
+INSERT INTO diyla.speciality(`SPE_ID`, `SPE_NAME`) VALUES ('1', '烘焙丙級'), ('2', '烘焙乙級'), ('3', '烘焙甲級');
+INSERT INTO diyla.tea_speciality(`TEA_ID`, `SPE_ID`) VALUES ('1', '3');
+INSERT INTO diyla.class(`CLASS_ID`, `CATEGORY`, `TEA_ID`, `REG_END_TIME`, `CLASS_DATE`, `CLASS_SEQ`, `LIMIT`, `PRICE`, `INTRO`, `CLASS_NAME`, `HEADCOUNT`, `CLASS_STATUS`) VALUES
+('1', '1', '1', '2023-07-30 12:00:00','2023-08-01', '0', '5', '1500', '或許各位都有在店面看過輕乳酪蛋糕或重乳酪蛋糕,那箇中差異為何?以及能夠變化出什麼花樣呢?想知道的話就來上課吧!
+目前課程價格只要: 1300元喔!', '起司蛋糕詳解課程', '3', '1' ),
+('2', '3', '1', '2023-07-31 12:00:00','2023-08-02', '0', '5', '1000', '相信大家都有吃過軟或硬的法國麵包,此課程詳細說明法國麵包的作法,讓你做出屬於自己的法國麵包
+目前課程價格只要: 1200元喔!','法國麵包課程', '2', '1' );
+INSERT INTO diyla.class_reserve(`RESERVE_ID`, `CLASS_ID`, `MEM_ID`, `HEADCOUNT`,`STATUS`, `CREATE_TIME`, `TOTAL_PRICE`) VALUES ('1', '1', '1', '3', '0',CURRENT_TIMESTAMP, '4500');
+INSERT INTO diyla.ing_storage(`ING_ID`, `BRAND`, `ING_NUMS`, `ING_NAME`, `STATUS`, `SERVING_SIZE`) VALUES
+('1', '安佳', '4500', '奶油', '0', '45'),
+('2','台糖','50000', '砂糖', '0','500'),
+('3', '四方', '60000', '鮮奶', '0', '1000'),
+('4', '聯華', '0', '高筋麵粉', '1', '10000'),
+('5', '日正食品', '100000', '高筋麵粉', '0', '1000'),
+('6', '日正食品', '100000', '中筋麵粉', '0', '1000'),
+('7', '日正食品', '50000', '低筋麵粉', '0', '1000'),
+('8', '安佳', '50000', '鮮奶油', '0', '1000'),
+('9', '石安牧場', '6000', '雞蛋', '0', '60'),
+('10', '得福', '1000', '吉利丁片','0', '50'),
+('11', '菲力', '5000', '鮮奶油乳酪', '0', '250');
+INSERT INTO diyla.class_ing(`CLASS_ID`, `ING_ID`, `ING_NUMS`) VALUES
+('1','11', '250'),
+('1','8', '125'),
+('1','9', '180'),
+('1','2', '60'),
+('1','7', '10');
+
 
 
 

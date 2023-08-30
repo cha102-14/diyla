@@ -1,7 +1,11 @@
 package com.cha102.diyla.track;
 
-import javax.persistence.Column;
+import lombok.Getter;
 
+import javax.persistence.Column;
+import java.util.Arrays;
+
+@Getter
 public class CommodityTrackDTO {
     private Integer trackId;
     private Integer memId;
@@ -10,6 +14,7 @@ public class CommodityTrackDTO {
     private byte[] comPic;
     private Integer comPri;
     private Integer comQua;
+
 
 
     public CommodityTrackDTO(Object[] objects){

@@ -65,7 +65,11 @@
                 <input type="tel" name="phone" minlength="10" value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"></label><br>
                 <div>聯絡地址</label><br>
                 <label for="city">縣市</label><br>
-                <select id="city" name="city"></select><br>
+                <select id="city" name="city">
+                    <c:forEach items="${cityList}" var="city">
+                        <option value="${city}" ${(city==addMap.city)? 'selected':''}></option>
+                    </c:forEach>
+                </select><br>
                 <label for="district">地區</label><br>
                 <select id="district" name="district"></select><br>
 

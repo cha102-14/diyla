@@ -3,13 +3,6 @@
 <%@ page import="com.cha102.diyla.track.*"%>
 <%@ page import="java.util.*"%>
 
-<%
-    CommodityTrackService service = new CommodityTrackService();
-    Integer memId = (Integer) session.getAttribute("memId");
-    List<CommodityTrackDTO> track = service.findById(memId);
-
-
-%>
 
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -42,10 +35,15 @@
     <div class="title">
         <h4>追蹤清單</h4>
         <c:choose>
-            <c:when test="${not empty track}">
-              <c:forEach var="track" items="${track}">
-                   ${track.comNO}
-                   ${track.comName}
+            <c:when test="${not empty trackList}">
+              <c:forEach var="CommodityTrackDTO" items="${trackList}">
+              <c:out value="${CommodityTrackDTO.comName}" />
+              <c:out value="${CommodityTrackDTO.comNO}" />
+              <div id="show_img">
+                <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(CommodityTrackDTO.comPic)}" alt="公告圖片">
+              </div>
+              <c:out value="${CommodityTrackDTO.comPri}" />
+              <c:out value="${CommodityTrackDTO.comQua}" />
               </c:forEach>
             </c:when>
             <c:otherwise>

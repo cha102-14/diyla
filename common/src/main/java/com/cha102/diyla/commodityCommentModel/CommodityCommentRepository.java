@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface CommodityCommentRepository extends JpaRepository<CommodityCommentVO,Integer> {
     List<CommodityCommentVO> findAllByComNo(Integer comNo);
+
+    void deleteByComCommentNo(Integer comCommentNo);
 }
