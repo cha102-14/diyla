@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+application-jdbc.yaml
 ### Eclipse ###
 .apt_generated
 .classpath

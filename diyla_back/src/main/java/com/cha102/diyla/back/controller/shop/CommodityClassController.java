@@ -4,6 +4,7 @@ import com.cha102.diyla.commodityClassModel.CommodityClassService;
 import com.cha102.diyla.commodityClassModel.CommodityClassVO;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @WebServlet("/shop/CommodityClassController")
 public class CommodityClassController extends HttpServlet {
@@ -35,7 +37,7 @@ public class CommodityClassController extends HttpServlet {
             }
             if (!errMsgs.isEmpty()) {
                 req.setAttribute("errMsgs", errMsgs);
-                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/insertNewCommodityClass.jsp");
+                RequestDispatcher requestDispatcher= req.getRequestDispatcher("/shop/commodityClassManage.jsp");
                 requestDispatcher.forward(req,res);
                 return;
             }
@@ -45,11 +47,12 @@ public class CommodityClassController extends HttpServlet {
 
             if (i > 0) {
                 req.setAttribute("message","成功");
-
+                ServletContext servletContext = getServletContext();
+                List<CommodityClassVO> commodityClassVOS = service.getAll();
             }else {
                 req.setAttribute("message","失敗");
             }
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/succeedInsertCommodityClass.jsp"); // webapp/index.jsp or index.html
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/commodityClassManage.jsp"); // webapp/index.jsp or index.html
             requestDispatcher.forward(req,res);
         }
     }

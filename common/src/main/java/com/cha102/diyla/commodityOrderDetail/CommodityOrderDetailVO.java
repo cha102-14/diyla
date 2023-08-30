@@ -1,62 +1,71 @@
 package com.cha102.diyla.commodityOrderDetail;
 
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Table(name = "commodity_order_detail")
+@IdClass(CommodityOrderDetailVOId.class)
 public class CommodityOrderDetailVO {
-    // 複合主鍵
-    private Integer orderNo;
-    private Integer comNo;
+	// 複合主鍵
+	@Id
+	@Column(name = "ORDER_NO")
+	private Integer orderNo;
+	@Id
+	@Column(name = "COM_NO")
+	private Integer comNo;
+	private String comName;
+	@Column(name = "COM_QUANTITY")
+	private Integer comQuantity;
+	@Column(name = "COM_PRICE")
+	private Integer comPrice;
+	@Transient
+	private Integer unitPrice;
 
-    private Integer comQuantity;
-    private Integer comPrice;
+	@Override
+	public String toString() {
+		return "CommodityOrderDetailVO{" + "orderNo=" + orderNo + ", comNo=" + comNo + ", comQuantity=" + comQuantity
+				+ ", comPrice=" + comPrice + '}';
+	}
 
-    // 建構子
-    public CommodityOrderDetailVO(Integer orderNo, Integer comNo, Integer comQuantity, Integer comPrice) {
-        this.orderNo = orderNo;
-        this.comNo = comNo;
-        this.comQuantity = comQuantity;
-        this.comPrice = comPrice;
-    }
-
-    // Getter 和 Setter
-    public Integer getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(Integer orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public Integer getComNo() {
-        return comNo;
-    }
-
-    public void setComNo(Integer comNo) {
-        this.comNo = comNo;
-    }
-
-    public Integer getComQuantity() {
-        return comQuantity;
-    }
-
-    public void setComQuantity(Integer comQuantity) {
-        this.comQuantity = comQuantity;
-    }
-
-    public Integer getComPrice() {
-        return comPrice;
-    }
-
-    public void setComPrice(Integer comPrice) {
-        this.comPrice = comPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "CommodityOrderDetailVO{" +
-                "orderNo=" + orderNo +
-                ", comNo=" + comNo +
-                ", comQuantity=" + comQuantity +
-                ", comPrice=" + comPrice +
-                '}';
-    }
 }
 
+class CommodityOrderDetailVOId implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Integer orderNo;
+	private Integer comNo;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(comNo, orderNo);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommodityOrderDetailVOId other = (CommodityOrderDetailVOId) obj;
+		return Objects.equals(comNo, other.comNo) && Objects.equals(orderNo, other.orderNo);
+	}
+
+}
