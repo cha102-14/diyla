@@ -40,7 +40,7 @@ min-width: calc(100% - 300px);
 <body>
 <div class="flex-container">
   
-    <jsp:include page="../backendpage.jsp" />
+    <jsp:include page="../index.jsp" />
 </div>
   <div class="center-div">
     <h1>DIY管理首頁</h1>

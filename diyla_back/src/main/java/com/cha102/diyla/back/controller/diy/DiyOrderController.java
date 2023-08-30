@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyOrder.DiyOrderVO;
-import com.cha102.diyla.diyforum.DiyForumDAO;
 import com.cha102.diyla.member.*;
 
 @WebServlet("/diy_order/DiyOrderController")

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/index.jsp" />
 <%@ page isELIgnored="false"%>
 
@@ -177,7 +178,7 @@ margin-top: 20px;
 				</c:choose>
 
 				<td>${DiyOrderVO.diyReserveDate}</td>
-				<td>${DiyOrderVO.createTime}</td>
+				<td><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
 
 				<c:choose>
 					<c:when test="${DiyOrderVO.reservationStatus == 0}">

@@ -18,6 +18,8 @@ import com.cha102.diyla.diyOrder.DiyOrderVO;
 @WebServlet("/diyOrder/DiyOrderFrontController")
 public class DiyOrderFrontController extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
 	}
@@ -98,6 +100,8 @@ public class DiyOrderFrontController extends HttpServlet {
 			
 			Date currentDate = new Date(System.currentTimeMillis());
 			Date diyReserveDate = Date.valueOf(req.getParameter("diyReserveDate"));
+			DiyOrderService DOser = new DiyOrderService();
+			DiyOrderVO diyOrderVO = DOser.getOneDO(diyOrderNo);
 			
 			// 計算日期差距（以天為單位）
 	        long differenceInMilliseconds = diyReserveDate.getTime() - currentDate.getTime();
@@ -106,13 +110,17 @@ public class DiyOrderFrontController extends HttpServlet {
 	        // 比較差距與 3 天
 	        if (differenceInDays > 3) {
 	            System.out.println("可正常退款");
+	            
+	            diyOrderVO.setReservationStatus(1);    
+	            
 	        } else {
 	            System.out.println("不能退款");
+	            
+	            diyOrderVO.setReservationStatus(3);   
 	        }
 			
-			
-			DiyOrderService DOser = new DiyOrderService();
-			DiyOrderVO diyOrderVO = DOser.getOneDO(diyOrderNo);
+	        DOser.upOD(diyOrderVO);
+	        
 			req.setAttribute("DiyOrderVO", diyOrderVO);
 
 			String url = "/diyOrder/deleteod_front.jsp";
