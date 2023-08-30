@@ -71,6 +71,15 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
+//        //      TODO 新增
+//        if(!ObjectUtils.isEmpty(req.getSession().getAttribute("empId"))){
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
+//            try {
+//                requestDispatcher.forward(req, resp);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
         List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
 
         ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
@@ -86,7 +95,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                 empDTO.setEmpId((Integer) o[1]);
                 return empDTO;
             }).collect(Collectors.toList());
-            empId = empDTOList.stream().map(EmpDTO::getEmpId).collect(Collectors.toList()).get(0);
+            empId = empDTOList.stream().map(EmpDTO::getEmpId).findFirst().get();
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
 
@@ -109,6 +118,13 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         //清空Session
         req.getSession().removeAttribute("empId");
         req.getSession().removeAttribute("typeFun");
+
+        RequestDispatcher requestDispatcher =req.getRequestDispatcher("empLogin.jsp");
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

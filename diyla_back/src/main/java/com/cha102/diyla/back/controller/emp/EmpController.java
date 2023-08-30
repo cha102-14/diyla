@@ -49,9 +49,9 @@ public class EmpController {
         empSpringService.validEmpLogin(empAccount,empPassword, req, resp);
     }
 
-    @PostMapping("/logOut")
+    @GetMapping("/logout")
     public void logout(@RequestParam("empId") String empId, HttpServletRequest req, HttpServletResponse resp){
-
+        empSpringService.logout(empId, req, resp);
     }
 
 
