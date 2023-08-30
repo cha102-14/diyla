@@ -60,7 +60,6 @@
 
         function test(){
 
-
             var obj ={
             email: email.value,
             phonenumber: phonenumber.value
@@ -80,8 +79,10 @@
             console.log(response);
                 return response.text();
             }).then(function(data){
-                if(data.indexOf("success")>=0){
+                if(data.indexOf("success") === 0){
                     Swal.fire('發信成功！');
+                } else {
+                    Swal.fire('請重新輸入');
                 }
             })
             .catch(function(error){

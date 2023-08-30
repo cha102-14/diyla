@@ -1,3 +1,4 @@
+<%@page import="com.cha102.diyla.tokenModel.TokenService"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="com.cha102.diyla.member.MemberService"%>
 <%@page import="com.cha102.diyla.member.MemVO"%>
@@ -11,7 +12,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -184,16 +184,16 @@ input[type="text"], input[type="tel"], select {
 						<td class="subtitle">小計</td>
 					</tr>
 					<c:forEach var="cartItem" items="${shoppingCartList}">
-						<c:forEach var="comVO" items="${commodityList}">
-							<c:if test="${cartItem.comNo == comVO.comNO}">
-								<tr class="itemrow">
-									<td class="itemInfo comName">${comVO.comName}</td>
-									<td class="itemInfo comPri">${comVO.comPri}</td>
-									<td class="itemInfo comAmount">${cartItem.comAmount}</td>
-									<td class="itemInfo">${comVO.comPri*cartItem.comAmount}</td>
-								</tr>
-							</c:if>
-						</c:forEach>
+						<%-- 						<c:forEach var="comVO" items="${commodityList}"> --%>
+						<%-- 							<c:if test="${cartItem.comNo == comVO.comNO}"> --%>
+						<tr class="itemrow">
+							<td class="itemInfo comName">${cartItem.comName}</td>
+							<td class="itemInfo comPri">${cartItem.comPri}</td>
+							<td class="itemInfo comAmount">${cartItem.comAmount}</td>
+							<td class="itemInfo">${cartItem.comPri*cartItem.comAmount}</td>
+						</tr>
+						<%-- 							</c:if> --%>
+						<%-- 						</c:forEach> --%>
 					</c:forEach>
 				</table>
 				<span class="total">總金額${totalPrice}</span>
@@ -201,13 +201,16 @@ input[type="text"], input[type="tel"], select {
 
 			<div class="tokenblock">
 				<p>(使用代幣則無法獲得回饋)</p>
-				<label for="useTokens" style="width: 80px">使用代幣：</label><span
-					id="amount_value" style="font-size: 18px">0</span>
+
+
+				<label for="useTokens" style="width: 80px">使用代幣：</label>
+				<span id="amount_value" style="font-size: 18px">0</span>
+
 				<div>
-					<input name="token" type="range" min="0" max="99" value="0"
-						id="tokenAmount">
+					<input name="tokenUse" type="range" min="0"
+						max="<%=session.getAttribute("maxToken")%>" id="tokenAmount">
 				</div>
-				<span style="margin:30px 0px;">本次預計獲得回饋:</span><input type="hidden" value="1" name="tokenback">
+				<!-- 				<span style="margin:30px 0px;">本次預計獲得回饋:</span><input type="hidden" value="1" name="tokenback"> -->
 			</div>
 			<div class="container">
 				<div class="title">+填寫付款資訊</div>
@@ -249,6 +252,7 @@ input[type="text"], input[type="tel"], select {
 		</form>
 		<div id="card">
 			<form action="${ctxPath}/checkout/ecpay" method="post" id="cardForm">
+				<input type="hidden" name="tokenUse" value="" id="tokenAmountCard">
 				<input type="hidden" name="cardrecipient" value=""
 					id="cardrecipient"> <input type="hidden"
 					name="cardrecipientAddress" value="" id="cardrecipientAddress">
@@ -266,7 +270,6 @@ input[type="text"], input[type="tel"], select {
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
-
 	<script>
 		$(document)
 				.ready(
@@ -342,6 +345,8 @@ input[type="text"], input[type="tel"], select {
 												const recipientAddress = $(
 														"#recipientAddress")
 														.val();
+												const token = $("#tokenAmount")
+														.val();
 
 												// 將收件人值填入下面表單的對應欄位
 												$("#cardrecipient").val(
@@ -350,6 +355,8 @@ input[type="text"], input[type="tel"], select {
 														recipientAddress);
 												$("#cardphone").val(
 														recipientPhone);
+												$("#tokenAmountCard")
+														.val(token);
 											});
 
 							function validateFormFields() {
@@ -398,6 +405,15 @@ input[type="text"], input[type="tel"], select {
 										$('#amount_value').html(
 												$('#tokenAmount').val());
 									});
+							const tokenAmountInput = document
+									.getElementById("tokenAmount");
+							const maxTokenValue = tokenAmountInput
+									.getAttribute("max");
+							if (maxTokenValue == null || maxTokenValue == ""||maxTokenValue=="null") {
+								tokenAmountInput.setAttribute("max", "0");
+								tokenAmountInput.value = "0"; // 設置輸入框的值為 0
+								tokenAmountInput.disabled = true; // 禁用輸入框
+							}
 
 						});
 	</script>

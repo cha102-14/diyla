@@ -32,6 +32,8 @@ public class EmpVO implements java.io.Serializable {
     private Integer empId;
     @Column(name = "EMP_NAME")
     private String empName;
+    @Column(name = "EMP_PIC")
+    private byte[] empPic;
     @Column(name = "EMP_ACCOUNT")
     private String empAccount;
     @Column(name = "EMP_PASSWORD")
@@ -41,12 +43,13 @@ public class EmpVO implements java.io.Serializable {
     @Column(name = "EMP_STATUS")
     private Boolean empStatus;
 
-    public EmpVO(String empName, String empAccount, String empPassword, String empEmail, Boolean empStatus){
+    public EmpVO(String empName, byte[] empPic, String empAccount, String empPassword, String empEmail, Boolean empStatus){
         this.empName = empName;
         this.empAccount = empAccount;
         this.empPassword = empPassword;
         this.empEmail = empEmail;
         this.empStatus = empStatus;
+        this.empPic = empPic;
 
     }
     public EmpVO(String empName,String empAccount,String empPassword,String empEmail,Boolean empStatus, Integer empId){

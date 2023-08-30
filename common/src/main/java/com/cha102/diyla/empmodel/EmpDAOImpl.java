@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmpDAOImpl implements EmpDAO {
-    private static final String INSERT_STMT = "INSERT INTO employee (EMP_NAME,EMP_ACCOUNT,EMP_PASSWORD,EMP_EMAIL,EMP_STATUS) VALUES(?,?,?,?,?)";
+    private static final String INSERT_STMT = "INSERT INTO employee (EMP_NAME,EMP_PIC,EMP_ACCOUNT,EMP_PASSWORD,EMP_EMAIL,EMP_STATUS) VALUES(?,?,?,?,?,?)";
     private static final String INSERT_BACKSTAGEAUTH = "INSERT INTO backstage_auth (EMP_ID,AUTH_ID) VALUES(?,?)";
     private static final String UPDATE = "UPDATE employee set EMP_NAME=?,EMP_ACCOUNT=?,EMP_PASSWORD=?,EMP_EMAIL=?,EMP_STATUS=? WHERE EMP_ID=?";
     private static final String DELETE = "DELETE FROM employee WHERE EMP_ID=? ";
@@ -62,12 +62,12 @@ public class EmpDAOImpl implements EmpDAO {
         try {
 //            con = DriverManager.getConnection(URL, USER, PASSWORD);
             pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);
-
             pstmt.setString(1, empVO.getEmpName());
-            pstmt.setString(2, empVO.getEmpAccount());
-            pstmt.setString(3, empVO.getEmpPassword());
-            pstmt.setString(4, empVO.getEmpEmail());
-            pstmt.setBoolean(5, empVO.getEmpStatus());
+            pstmt.setBytes( 2,empVO.getEmpPic());
+            pstmt.setString(3, empVO.getEmpAccount());
+            pstmt.setString(4, empVO.getEmpPassword());
+            pstmt.setString(5, empVO.getEmpEmail());
+            pstmt.setBoolean(6, empVO.getEmpStatus());
 //            TODO 取得AutoIncrement的值並把取得的empId做return
             int insertRow = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();

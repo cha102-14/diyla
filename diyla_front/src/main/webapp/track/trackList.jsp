@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.cha102.diyla.track.*"%>
+<%@ page import="java.util.*"%>
+
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -28,17 +34,22 @@
     <jsp:include page="../front_header.jsp"/>
     <div class="title">
         <h4>追蹤清單</h4>
-        <c:if test="${not empty exMsgs}">
-             <div style="color:red" class="error">
-                  <c:forEach var="message" items="${exMsgs}">
-                       ${message}
-                  </c:forEach>
-             </div>
-        </c:if>
-        <div class="">
-            <form method="post" action="">
-            </form>
-        </div>
+        <c:choose>
+            <c:when test="${not empty trackList}">
+              <c:forEach var="CommodityTrackDTO" items="${trackList}">
+              <c:out value="${CommodityTrackDTO.comName}" />
+              <c:out value="${CommodityTrackDTO.comNO}" />
+              <div id="show_img">
+                <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(CommodityTrackDTO.comPic)}" alt="公告圖片">
+              </div>
+              <c:out value="${CommodityTrackDTO.comPri}" />
+              <c:out value="${CommodityTrackDTO.comQua}" />
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+                 <span>您目前還沒有追蹤的商品</span>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 

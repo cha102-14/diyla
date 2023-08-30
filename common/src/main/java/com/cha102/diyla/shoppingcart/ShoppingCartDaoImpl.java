@@ -154,6 +154,34 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 		}
 		return cartList;
 	}
+	//只需透過此方法可以不用再另調用商品service
+	public List<ShoppingCartVO> getCartList(Integer memId) {
+		List<ShoppingCartVO> cartList = new ArrayList();
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmtCartList = con.prepareStatement(
+						"SELECT s.* ,c.COM_NAME,c.COM_PRI,c.COM_Pic FROM commodity c JOIN shopping_cart_list s ON c.COM_NO=s.COM_NO WHERE MEM_ID=?")) {
+			pstmtCartList.setInt(1, memId);
+			try (ResultSet rs = pstmtCartList.executeQuery();) {
+				while (rs.next()) {
+					ShoppingCartVO cartVO = new ShoppingCartVO();
+					cartVO.setMemId(rs.getInt("MEM_Id"));
+					cartVO.setComNo(rs.getInt("COM_NO"));
+					cartVO.setComAmount(rs.getInt("COM_AMOUNT"));
+					cartVO.setComName(rs.getString("COM_NAME"));
+					cartVO.setComPri(rs.getInt("COM_PRI"));
+					cartVO.setComPic(rs.getBytes("COM_PIC"));
+					cartList.add(cartVO);
+				}
+				return cartList;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cartList;
+
+	}
 
 	public static void main(String[] args) {
 		ShoppingCartDaoImpl shoppingCartDaoImp = new ShoppingCartDaoImpl();

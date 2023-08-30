@@ -65,23 +65,24 @@ public class updatePwServlet extends HttpServlet {
         JSONObject fetchPostRequest = getFetchPostRequest(req);
         String email = fetchPostRequest.getString("email");
         String phone = fetchPostRequest.getString("phonenumber");
-
+//        if (email ==null||email.isEmpty()){
+//            res.getWriter().write("ng");
+//        }
+//        if (phone ==null||phone.isEmpty()){
+//            res.getWriter().write("ng");
+//        }
         MemberService memSer = new MemberService();
         MemVO memVO = memSer.forgetPw(exMsgs, email, phone);
-        System.out.println(email);
-        System.out.println(phone);
-        if (memVO!=null) {
-
+        if (memVO !=null) {
             String title = "【DIYLA】密碼重置信";
-            String context = "親愛的會員您好，您的臨時密碼為" + code + "，請點選以下連結輸入臨時密碼並盡快修改密碼";
+            String context = "親愛的會員您好，您的臨時密碼為" + code + "，請登入並盡快修改密碼";
             mailService.sendEmail(email, title, context);
             memSer.updateNewPw(exMsgs, code, email);
-            res.getWriter().write("{\"status\":\"success\"};");
+            res.getWriter().write("success");
+            return;
         } else {
-            req.setAttribute("memVO", memVO);
-            RequestDispatcher failure = req.getRequestDispatcher("/member/forgetPw.jsp");
-            failure.forward(req, res);
-        };
+            res.getWriter().write("ng");
+        }
         HttpSession session = req.getSession();
         session.setAttribute("memVO", memVO);
 

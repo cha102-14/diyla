@@ -1,10 +1,10 @@
 package com.cha102.diyla.back.controller.diyforum;
 
-import com.cha102.diyla.diyforum.DiyForumEntity;
-import com.cha102.diyla.diyforum.DiyForumService;
-import com.cha102.diyla.diyforum.DiyForumVO;
-import com.cha102.diyla.diyforum.MemberEntity;
-import com.cha102.diyla.diyforum.MemberRepository;
+import com.cha102.diyla.diyforummodel.DiyForumEntity;
+import com.cha102.diyla.diyforummodel.DiyForumService;
+import com.cha102.diyla.diyforummodel.DiyForumVO;
+import com.cha102.diyla.diyforummodel.MemberEntity;
+import com.cha102.diyla.diyforummodel.MemberRepository;
 import com.cha102.diyla.util.PageBean;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,8 +73,8 @@ public class DiyForumController {
 
 
 //import com.cha102.diyla.commodityClassModel.CommodityClassVO;
-//import com.cha102.diyla.diyforum.DiyForumService;
-//import com.cha102.diyla.diyforum.DiyForumVO;
+//import com.cha102.diyla.diyforummodel.DiyForumService;
+//import com.cha102.diyla.diyforummodel.DiyForumVO;
 //import com.cha102.diyla.util.PageBean;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import javax.servlet.RequestDispatcher;

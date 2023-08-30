@@ -35,17 +35,105 @@
 					<br>
 					<label>更新時間：</label>
 					<fmt:formatDate value="${commodity.updateTime}"
-                                pattern="yyyy-MM-dd HH:mm:ss"/> <br>
+                                    pattern="yyyy-MM-dd HH:mm:ss"/> <br>
 					<form method="post" action="${ctxPath}/shop/CommodityController"
-						  id="form1">
+                          id="form1">
 						<input type="text" name="action" value="toUpdate" hidden>
 						<input type="text" value="${commodity.comNO}" name="comNO" hidden>
 					</form>
 					<button type="submit" class="button" form="form1">修改資料</button>
-					<a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" >返回商品清單</button></a>
+					<a href="${ctxPath}/shop/CommodityController?action=listAll"><button
+                            class="button">返回商品清單</button></a>
+        </div>
+
+        <div class="review-container">
+            <div class="average-rating">
+                <div id="averageRating">
+                    平均評分：
+                </div>
+            </div>
+            <div class="filter-options">
+                <button>有評論</button>
+                <button>由最高到低</button>
+                <button>由最低到高</button>
+            </div>
+            <div class="commentArea" id="commentArea">
+            </div>
         </div>
     </div>
 </div>
+
+<script src="${ctxPath}/vendors/jquery/jquery-3.7.0.min.js"></script>
+<script src="${ctxPath}/vendors/axios/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let commodityComments;
+        let sum = 0;
+        let average = 0;
+        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}").then((res) => {
+            commodityComments = res.data
+            for (i = 0; i < commodityComments.length; i++) {
+                sum += commodityComments[i].rating;
+
+                $('#commentArea').append(
+                    `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                        <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
+                            會員名稱：` + commodityComments[i].memName + `
+                            <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
+                        </div>
+                        <div className="date" style="color: #888;font-size: 0.8em;">` + commodityComments[i].commentTime + `</div>
+                        <div className="comment-content" style="margin-top: 10px;color: #333;">
+                            ` + commodityComments[i].comContent + `
+                        </div>
+						<button class="delete-button" style="color: red; font-size: 0.8em; margin-top: 10px;" onclick="deleteByComCommentNo(` + i + `)">
+							刪除
+						</button>
+                    </div>`
+                )
+            }
+
+            average = (sum / commodityComments.length).toFixed(1);
+            $('#averageRating').html("平均評分" + average);
+
+        })
+
+        function deleteByComCommentNo(commentIndex) {
+            const comCommentNo = commodityComments[commentIndex].comCommentNo;
+
+            axios.post("${ctxPath}/shop/commodityComment/delete/" + comCommentNo)
+                .then((res) => {
+                    if (res.data === "success") {
+                        $('#commentArea').empty();
+                        for (let i = 0; i < commodityComments.length; i++) {
+                            if (i !== commentIndex) {
+                                `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                        <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
+                            會員名稱：` + commodityComments[i].memName + `
+                            <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
+                        </div>
+                        <div className="date" style="color: #888;font-size: 0.8em;">` + commodityComments[i].commentTime + `</div>
+                        <div className="comment-content" style="margin-top: 10px;color: #333;">
+                            ` + commodityComments[i].comContent + `
+                        </div>
+						<button class="delete-button" style="color: red; font-size: 0.8em; margin-top: 10px;" onclick="deleteByComCommentNo(` + i + `)">
+							刪除
+						</button>
+                    </div>`
+                            }
+                        }
+                    } else {
+                        console.log("刪除失敗");
+                    }
+                })
+                .catch((error) => {
+                    console.error("刪除請求錯誤:", error);
+                });
+        }
+    });
+
+</script>
 
 </body>
 </html>

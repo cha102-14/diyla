@@ -3,6 +3,7 @@ package com.cha102.diyla.track;
 import com.cha102.diyla.commodityModel.CommodityDao;
 import com.cha102.diyla.commodityModel.CommodityDaoImpl;
 import com.cha102.diyla.commodityModel.CommodityVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,7 +13,12 @@ import java.util.stream.Collectors;
 public class CommodityTrackService {
 
     private CommodityTrackDAO commodityTrackDAO;
+
+    @Autowired
+    private  CommodityTrackRepository commodityTrackRepository;
     private CommodityDao commodityDao = new CommodityDaoImpl();
+
+    public CommodityTrackService() {}
     public CommodityTrackService(CommodityTrackDAO commodityTrackDAO) {
         this.commodityTrackDAO = commodityTrackDAO;
     }
@@ -25,4 +31,26 @@ public class CommodityTrackService {
         }
         return null;
     }
+
+    public List<CommodityTrackDTO> findById(Integer id){
+        List<Object[]> r = commodityTrackRepository.findAll(id);
+
+        List<CommodityTrackDTO> returnCommodityTrackVOList = r.stream().map(CommodityTrackDTO::new).collect(Collectors.toList());
+
+        return returnCommodityTrackVOList;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

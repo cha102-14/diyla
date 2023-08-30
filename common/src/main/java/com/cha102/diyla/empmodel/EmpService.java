@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class EmpService {
@@ -117,48 +118,48 @@ public class EmpService {
     }
 
 
-    public EmpVO insertValidEmpParam(EmpDAO daoImpl, List<String> errorMsgs, String empName, String empAccount, String empPassword,
+    public EmpVO insertValidEmpParam(byte[] empPic, EmpDAO daoImpl, Map<String, String> errorMsgMap, String empName, String empAccount, String empPassword,
                                      String empEmail, Boolean empStatus) {
         // 驗證
         if (ObjectUtils.isEmpty(empName)) {
-            errorMsgs.add("請輸入管理員名稱");
+            errorMsgMap.put("empName", "請輸入管理員名稱");
         } else {
             empName = empName.trim();
             if (empName.length() > 10) {
-                errorMsgs.add(("管理員名稱不得超過10個字"));
+                errorMsgMap.put("empName", "管理員名稱不得超過10個字");
             }
         }
         if (ObjectUtils.isEmpty(empPassword)) {
-            errorMsgs.add("請輸入管理員密碼");
+            errorMsgMap.put("empPassword", "請輸入管理員密碼");
             // TODO 英數字混合 符合6~12碼
         } else {
             empPassword = empPassword.trim();
             if (empPassword.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,12}$")) {
             } else {
-                System.out.println("請輸入6-12碼英數字混合的密碼");
+                System.out.println("請輸入6-12碼英數字混合密碼");
             }
         }
 
         // TODO e-mail驗證(正則表達式)
         if (ObjectUtils.isEmpty(empEmail)) {
-            errorMsgs.add("請輸入管理員email");
+            errorMsgMap.put("empEmail","請輸入管理員Email");
         } else {
             empEmail = empEmail.trim();
             if (!EmailValidator.getInstance().isValid(empEmail)) {
-                errorMsgs.add("Email格式不正確");
+                errorMsgMap.put("empEmail","Email格式不正確");
             } else {
                 Boolean isDuplicate = daoImpl.checkEmpEmailForRegister(empEmail);
                 if (isDuplicate) {
-                    errorMsgs.add("email重複");
+                    errorMsgMap.put("empEmail","Email重複");
                 }
             }
         }
 
-        if (ObjectUtils.isEmpty(empStatus)) {
-
-            errorMsgs.add("請輸入管理員狀態");
-        }
-        return new EmpVO(empName, empAccount, empPassword, empEmail, empStatus);
+//        if (ObjectUtils.isEmpty(empStatus)) {
+//
+//            errorMsgMap.put("empStatus","請輸入管理員狀態");
+//        }
+        return new EmpVO(empName, empPic, empAccount, empPassword, empEmail, empStatus);
 //       此處為call by reference ,不需return errorMsgs但有透過記憶體位置有操作到heap的物件
     }
 

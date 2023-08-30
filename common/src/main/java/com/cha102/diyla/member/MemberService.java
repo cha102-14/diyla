@@ -173,24 +173,38 @@ public class MemberService {
 	}
 
 	public MemVO forgetPw(List<String> exMsgs,String email, String phone){
-		MemVO mem = dao.selectPw(email,phone);
+
 		EmailValidator emailValidator = EmailValidator.getInstance();
 		if(email == null || (email.trim()).isEmpty()){
-			exMsgs.add("請輸入信箱");
+			return null;
 		} else if (!emailValidator.isValid(email)){
-			exMsgs.add("格式錯誤，請重新輸入");
+			return null;
 		}
 		String phoneReg ="^\\d{10,}$";
 		if(phone == null || (phone.trim()).isEmpty()){
-			exMsgs.add("請輸入電話");
+			return null;
 		} else if(!(phone.matches(phoneReg))){
-			exMsgs.add("電話格式錯誤，請重新輸入");
+			return null;
 		}
-		if(mem ==null){
-			exMsgs.add("無此信箱或電話錯誤");
-		}
-
+		MemVO mem = dao.selectPw(email,phone);
 		return mem;
+
+//		if(email == null || (email.trim()).isEmpty()){
+//			exMsgs.add("請輸入信箱");
+//		} else if (!emailValidator.isValid(email)){
+//			exMsgs.add("格式錯誤，請重新輸入");
+//		}
+//		String phoneReg ="^\\d{10,}$";
+//		if(phone == null || (phone.trim()).isEmpty()){
+//			exMsgs.add("請輸入電話");
+//		} else if(!(phone.matches(phoneReg))){
+//			exMsgs.add("電話格式錯誤，請重新輸入");
+//		}
+//		if(mem ==null){
+//			exMsgs.add("無此信箱或電話錯誤");
+//		}
+
+//		return mem;
 
 	}
 

@@ -98,8 +98,9 @@ th, td {
 .status-paid {
 	background-color: #A6FFA6; /*已付款的顏色*/
 }
+
 .status-shipping {
-	background-color: #FF79BC;	/*出貨*/
+	background-color: #FF79BC; /*出貨*/
 }
 
 .status-completed {
@@ -198,23 +199,23 @@ div.goShopping {
 .orderTable {
 	border: 1px solid black;
 }
+
 .goTopButton {
 	z-index: 999;
 	position: fixed;
 	bottom: 20px;
-	 padding: 10px;
+	padding: 10px;
 	border: none;
 	outline: none;
 	background-color: #333;
 	color: white;
 	cursor: pointer;
 	border-radius: 4px;
-	 right: 20px;
+	right: 20px;
 }
 
 .goTopButton:hover {
 	background-color: #555;
-
 }
 </style>
 </head>
@@ -235,8 +236,10 @@ div.goShopping {
 								<th class="title" style="width: 100px;">訂單狀態</th>
 								<th class="title" style="width: 150px;">下單時間</th>
 								<th class="title" style="width: 180px;">收件地址</th>
-								<th class="title" style="width: 120px;">查看明細</th>
-								<th class="title" style="width: 120px;">訂單處理</th>
+								<th class="title" style="width: 110px;">查看明細</th>
+								<th class="title" style="width: 110px;">訂單處理</th>
+								<th class="title" style="width: 30px;">代幣使用</th>
+
 							</tr>
 						</thead>
 
@@ -273,6 +276,7 @@ div.goShopping {
 											form="form${loop.index}">取消訂單</button>
 										</form>
 									</td>
+									<td class="discountSymbol">${orderVO.discountPrice}</td>
 								</tr>
 
 							</c:forEach>
@@ -388,6 +392,19 @@ div.goShopping {
 		            $(this).addClass("status-completed");
 		        }else if (orderStatus === "5") {
 		            $(this).addClass("status-canceled");
+		        }
+		    });
+			    
+
+		  $(".discountSymbol").each(function () {
+		        const $cell = $(this);
+		        //獲得discountPrice值
+		        const discountPrice = parseFloat($cell.text());
+				//有用代幣就打勾 沒用打x
+		        if (discountPrice == 0) {
+		            $cell.text("✘"); // X
+		        } else {
+		            $cell.text("✔"); // 打勾
 		        }
 		    });
 

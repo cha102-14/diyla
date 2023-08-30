@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,6 +66,10 @@ h1 {
 .giftbox {
 	text-align: center;
 }
+.tokenGet{
+font-size: 28px;
+margin: 30px;
+}
 </style>
 </head>
 <body><jsp:include page="/front_header.jsp" />
@@ -114,10 +120,16 @@ h1 {
   </svg>
 				</div>
 			</div>
-
+			
+			
+			
+			<c:if test="${tokenFeedBack!=0}">
+			<p class="tokenGet">本次代幣回饋為:<span class="tokenGet">${tokenFeedBack}</span></p>
 			<div class="gift-animation__text" style="font-size: 40px;">感謝您的購買</div>
-
-			<!--<div class="gift-animation__text">Tudo certo! Você já pode resgatar seu mimo.</div>-->
+			</c:if>
+			
+			
+			
 		</div>
 	</div>
 	<div class="link">

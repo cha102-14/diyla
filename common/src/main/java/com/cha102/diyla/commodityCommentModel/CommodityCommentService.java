@@ -28,6 +28,10 @@ public class CommodityCommentService {
 
     }
 
+    public void deleteByComCommentNo(Integer comCommentNo) {
+        commodityCommentRepository.deleteByComCommentNo(comCommentNo);
+    }
+
 
     public void save(CommodityCommentVO commodityCommentVO) {
         commodityCommentRepository.save(commodityCommentVO);
