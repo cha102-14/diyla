@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>甜點課程</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <style>
+        .categorySpan{
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+<h2>甜點課程</h2>
+<div id = "courseCatContainer" class="scrollMenu">
+    <span class="categorySpan" data-category="-1">全部</span></div>
+<div id= "courseContainer"></div>
+
+</body>
+<script>
+    $(document).ready(function() {
+    function loadCourses(catId = -1) {
+        $.ajax({
+            url: '/diyla_front/getDesertCourse',
+            method: 'GET',
+            data: {categoryId: catId},
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: 'json',
+            success: function(data) {
+                var courseContainer = $('#courseContainer');
+                $('#courseContainer').empty();
+                data.forEach(function(course) {
+                    var courseHtml = '<div class=' + course.courseCat +'>';
+                    courseHtml += '<img src="data:image/jpeg;base64,' + course.coursePic + '" alt="' + course.courseName + '">';
+                    courseHtml += '<h3 class="courseName" data-courseId="' + String(course.courseId) + '">' + course.courseName + '</h3>';
+                    courseHtml += '<p>' + course.courseDate + '</p>';
+                    courseHtml += '<p>' + course.courseIntro + '</p>';
+                    courseHtml += '</div>';
+                    courseContainer.append(courseHtml);
+                });
+            },
+            error: function() {
+                console.log('Error fetching course data');
+            }
+        });
+        }
+        loadCourses();
+        $.ajax({
+            url: '/diyla_front/getDesertCourseCat',
+            method: 'GET',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType: 'json',
+            success: function(data) {
+                var courseCat = $('#courseCatContainer');
+                data.forEach(function(cat) {
+                    var catHtml = '<span class="categorySpan" data-category=' + cat.courseCatId +'>' + cat.catName + '</span>';
+                    courseCat.append(catHtml);
+                });
+            },
+            error: function() {
+                console.log('Error fetching courseCat data');
+            }
+        });
+
+    $('#courseCatContainer').on('click', '.categorySpan', function(){
+        var category = $(this).data('category');
+        loadCourses(category);
+    });
+    });
+        $('#courseContainer').on('click', '.courseName', function(){
+        var courseId = $(this).data('courseid');
+        window.location.href = 'classdetail.jsp?id=' + courseId;
+    });
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+<table id="reserveTable">
+    <thead>
+    <tr>
+        <th data-field="reserveId">訂單編號</th>
+        <th data-field="courseId">課程編號</th>
+        <th data-field="memId">會員編號</th>
+        <th data-field="headcount">人數</th>
+        <th data-field="status">訂單狀態</th>
+        <th data-field="createTime">訂單創建日期</th>
+        <th data-field="totalPrice">總金額</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+</table>
+
+<script>
+        $(document).ready(function () {
+            var getMemId = 1;
+
+            function loadReserve(getMemId) {
+                $.ajax({
+                    url: '/diyla_front/getReserve', // 替換成實際的後端 servlet URL
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: { memberId: getMemId },
+                    dataType: 'json',
+                    success: function (data) {
+                        // 使用 jQuery Table 來動態生成表格
+                        $('#reserveTable').DataTable({
+                            data: data,
+                            columns: [
+                                { data: 'reserveId' },
+                                { data: 'courseId' },
+                                { data: 'memId' },
+                                { data: 'headcount' },
+                                { data: 'status' },
+                                { data: 'createTime' },
+                                { data: 'totalPrice' }
+                            ],
+                            columnDefs: [{
+                                targets: 7,
+                                render: function (data, type, row, meta) {
+                                    if (row.status === 0) {
+                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">刪除</button>'
+                                            + '<button class="pay-btn" data-reserveId="' + row.reserveId + '">付款</button>';
+                                    }
+                                    else if (row.status === 1) {
+                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">刪除</button>';
+                                    } else {
+                                        return '';
+                                    }
+                                }
+                            }
+                            ]
+                        });
+                    },
+                    error: function () {
+                        alert('Failed to fetch data from server.');
+                    }
+                });
+            }
+            loadReserve(getMemId);
+            function deleteReserve(resId) {
+                $.ajax({
+                    url: '/diyla_front/modifyReserve',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: { reserveId: resId },
+                    success: location.reload()
+                });
+            }
+            $(document).on('click', '.delete-btn', function () {
+                let reserveId = $(this).data('reserveid');
+
+                // 使用 SweetAlert 的確認視窗
+                Swal.fire({
+                    title: '確定要刪除訂單嗎？',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確定',
+                    cancelButtonText: '取消'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteReserve(reserveId);
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
