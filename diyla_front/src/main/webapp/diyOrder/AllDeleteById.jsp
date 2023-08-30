@@ -13,7 +13,7 @@ pageContext.setAttribute("memVO", memVO);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>個人訂單管理</title>
+<title>取消訂單列表</title>
 
 <style type="text/css">
 
@@ -101,7 +101,7 @@ div#body{
 
 	<header>
 		<span>
-			<h1 class="header-title">所有訂單列表</h1>
+			<h1 class="header-title">已取消訂單列表</h1>
 		</span>
 	</header>
 	
@@ -112,7 +112,6 @@ div#body{
 <!-- 		<th>會員編號</th>  -->
 
 
-		<th>操作</th>
 		<th>DIY品項編號</th>
 		<th>聯絡人</th>
 		<th>聯絡電話</th>
@@ -133,48 +132,6 @@ div#body{
 <%-- 		<td>${DiyOrderVO.diyOrderNo}</td> --%>
 <%-- 		<td>${DiyOrderVO.memId}</td> --%>
 
-
-
-				<td >
-					<div id="buttom"buttom>
-						<FORM METHOD="post" ACTION="DiyOrderFrontController"
-							style="margin-bottom: 0px;">
-							<c:choose>
-								<c:when test="${(DiyOrderVO.reservationStatus) == 1}">
-									<input type="submit" value="變更聯絡資訊" disabled> 
-								</c:when>
-								<c:when test="${(DiyOrderVO.reservationStatus) == 2}">
-									<input type="submit" value="變更聯絡資訊" disabled> 
-								</c:when>
-								<c:otherwise>
-									<input type="submit" value="變更聯絡資訊" > 
-								</c:otherwise>		
-							</c:choose>
-							
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
- 							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="action" value="getOne_For_Update_front">
-						</FORM>
-						<FORM METHOD="post" ACTION="DiyOrderFrontController"
-							style="margin-bottom: 0px;">
-							
-							
-							<c:choose>
-								<c:when test="${(DiyOrderVO.reservationStatus) == 0}">
-									<input type="submit" value="取消訂單並退款" > 
-								</c:when>
-								<c:otherwise>
-									<input type="submit" value="取消訂單並退款" disabled> 
-								</c:otherwise>		
-							</c:choose>
-							
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
-							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}"> 	
-							<input type="hidden" name="action" value="cancel_order_front">
-						</FORM>
-					</div>
-				</td>
 
 				<c:choose>
 			<c:when test="${DiyOrderVO.diyNo == 0}">
@@ -253,8 +210,7 @@ div#body{
 </table>
 	
 <li><a href='diyOrder_front.jsp'>回訂單管理</a></li>
-<br>
-	
+	<li><a href=''>待用連結</a></li>
 </div>
 
 
@@ -262,8 +218,10 @@ div#body{
 <span> <svg  width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
 </svg>註:
-</span>每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消並退款"，並重新新增訂單。
+</span>訂單取消後，需三個工作天內處理退款程序。
 </div>
+
+
 
 
 <jsp:include page="/front_footer.jsp" />

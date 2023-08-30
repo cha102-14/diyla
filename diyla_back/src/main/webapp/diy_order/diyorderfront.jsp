@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-<title>Insert title here</title>
+<title>DIY管理首頁</title>
 
 <style>
 /* 將 body 設置為 flex 容器，水平置中 */
@@ -43,19 +43,26 @@ min-width: calc(100% - 300px);
     <jsp:include page="../backendpage.jsp" />
 </div>
   <div class="center-div">
-    <h1>DIY首頁</h1>
+    <h1>DIY管理首頁</h1>
     <ul>
       <li><a href='getallorderlist_EL.jsp'>查詢所有訂單</a><br><br></li>
-      <li><a href='getallorderlist_EL.jsp'>查詢會員所有訂單</a><br><br></li>
-      <li><a href='getallorderlist_EL.jsp'>查詢某時段參加會員及訂單</a><br><br></li>
-      
+      <li><a href='getodByPeriod_front.jsp'>時段參加會員及訂單(點名系統for現場管理員)</a><br><br></li>      
       <li><a href='refund_verify.jsp'>查詢所有退款訂單</a><br><br></li>
-      <li><a href='addorderlist.jsp'>新增訂單 (日後需接上會員訂位功能)</a><br><br></li>
+      
       <li>
         <form method="post" action="DiyOrderController">
           <b>輸入訂單編號 (如1):</b><input type="text" name="diyorderno">
           <input type="hidden" name="action" value="getOne_For_Display">
-          <input type="submit" value="查詢單筆資料">
+          <input type="submit" value="查詢單筆訂單資料">
+        </form>
+      </li>
+      
+      <li>
+        <form method="post" action="DiyOrderController">
+          <b>輸入會員編號 (如1):</b>
+          <input type="text" name="memId">
+          <input type="hidden" name="action" value="getOneMemId_For_Display">
+          <input type="submit" value="查詢該會員所有訂單資料">
         </form>
       </li>
     </ul>

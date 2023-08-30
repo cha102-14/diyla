@@ -12,7 +12,7 @@
 
 <style type="text/css">
 body {
-	margin-left: 300px;
+	margin-left: 280px;
 	font-size: 0;
 
 }
@@ -107,8 +107,8 @@ margin-top: 20px;
 		<span>
 			<h1 class="header-title">所有訂單查詢</h1>
 			<p class="header-subtitle">
-				<a href='diyorderfront.jsp'>返回DIY首頁</a><br>
-				<a href='addorderlist.jsp'>新增訂單</a>
+				<a href='diyorderfront.jsp'>返回DIY首頁</a>
+				<br>
 				</div>
 				
 			</p>
@@ -214,9 +214,7 @@ margin-top: 20px;
 
 				<td id="inn">
 					<div class="inline">
-						<FORM METHOD="post" ACTION="DiyOrderController"
-							style="margin-bottom: 0px;">
-<!-- 							<input type="submit" value="修改">  -->
+						<FORM METHOD="post" ACTION="DiyOrderController" style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> 
 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
 							<input type="hidden" name="action" value="getOne_For_Update">

@@ -2,16 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/index.jsp" />
 <%@ page isELIgnored="false"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
-<title>退款審核</title>
-
+<title>訂單列表 for Period</title>
 <style type="text/css">
 body {
-	margin-left: 300px;
+	margin-left: 280px;
 	font-size: 0;
 
 }
@@ -57,7 +58,7 @@ table {
 	width: 100%; /* 設定表格寬度 */
 	font-family: Arial, sans-serif; /* 設定字體 */
 	border: 1px solid black; /* 設定邊框 */
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 	
 }
 
@@ -104,11 +105,33 @@ margin-top: 20px;
 
 	<header>
 		<span>
-			<h1 class="header-title">退款訂單審核</h1>
+			<h1 class="header-title">
+			以下為 ${diyOrderVO1.diyReserveDate}
+			
+			<c:choose>
+					<c:when test="${diyOrderVO1.diyPeriod == 0}">
+						<span> 上午</span>
+					</c:when>
+					<c:when test="${diyOrderVO1.diyPeriod == 1}">
+						<span> 下午</span>
+					</c:when>
+					<c:when test="${diyOrderVO1.diyPeriod == 2}">
+						<span> 晚上</span>
+					</c:when>
+			</c:choose>
+			
+			的訂單列表(By Period)
+			</h1>
 		</span>
 	</header>
 	
-	<div id="padding">
+	
+	--${diyOrderVO1.diyReserveDate}--
+	--${diyOrderVO1.diyPeriod}--
+
+
+	
+<div id="padding">
 
 	<table>
 		<tr>
@@ -125,10 +148,9 @@ margin-top: 20px;
 			<th>付款狀態</th>
 			<th>DIY訂單金額</th>
 
-			<th id="inn">退款審核操作</th>
+			<th id="inn">操作</th>
 		</tr>
-		<jsp:useBean id="doser" scope="page" class="com.cha102.diyla.diyOrder.DiyOrderService" />
-		<c:forEach var="DiyOrderVO" items="${doser.allRefundod}">
+		<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 			<tr>
 
@@ -210,24 +232,50 @@ margin-top: 20px;
 						<FORM METHOD="post" ACTION="DiyOrderController"
 							style="margin-bottom: 0px;">
 <!-- 							<input type="submit" value="修改">  -->
-							<input type="submit" value="審核通過"> 
+							<c:choose>
+								<c:when test="${(DiyOrderVO.paymentStatus) == 1}">
+									<input type="submit" value="實到" disabled> 
+								</c:when>
+								<c:when test="${(DiyOrderVO.paymentStatus) == 2}"> 
+									<input type="submit" value="實到" disabled>  
+								</c:when> 
+ 								<c:when test="${(DiyOrderVO.paymentStatus) == 3}"> 
+ 									<input type="submit" value="實到" disabled>   
+ 								</c:when> 
+								<c:otherwise>
+									<input type="submit" value="實到" > 
+								</c:otherwise>		
+							</c:choose>
+							
 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
-							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="reservationStatus" value="${DiyOrderVO.reservationStatus}">
-							<input type="hidden" name="paymentStatus" value="${DiyOrderVO.paymentStatus}">
+							<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}">
+							<input type="hidden" name="diyPeriod" value="${DiyOrderVO.diyPeriod}">
 							<input type="hidden" name="result" value="0">
-							<input type="hidden" name="action" value="refund_okORnot">
+							<input type="hidden" name="action" value="comeORnot">
 						</FORM>
 						<FORM METHOD="post" ACTION="DiyOrderController"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="審查不通過"> 
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
-							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="reservationStatus" value="${DiyOrderVO.reservationStatus}">
-							<input type="hidden" name="paymentStatus" value="${DiyOrderVO.paymentStatus}">
+							
+							<c:choose>
+								<c:when test="${(DiyOrderVO.paymentStatus) == 1}">
+									<input type="submit" value="未到" disabled> 
+								</c:when>
+								<c:when test="${(DiyOrderVO.paymentStatus) == 2}"> 
+									<input type="submit" value="未到" disabled>  
+								</c:when> 
+ 								<c:when test="${(DiyOrderVO.paymentStatus) == 3}"> 
+ 									<input type="submit" value="未到" disabled>   
+ 								</c:when> 
+								<c:otherwise>
+									<input type="submit" value="未到" > 
+								</c:otherwise>		
+							</c:choose>
+							
 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
+							<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}">
+							<input type="hidden" name="diyPeriod" value="${DiyOrderVO.diyPeriod}">
 							<input type="hidden" name="result" value="1">
-							<input type="hidden" name="action" value="refund_okORnot">
+							<input type="hidden" name="action" value="comeORnot">
 						</FORM>
 					</div>
 				</td>
@@ -247,6 +295,8 @@ margin-top: 20px;
 
 
 </div>	
+
+
 
 </body>
 </html>

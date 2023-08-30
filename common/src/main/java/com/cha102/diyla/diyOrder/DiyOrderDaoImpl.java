@@ -37,12 +37,21 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 	// SQL指令 - 查詢所有訂單
 	private final String GET_ALL_SQL = "SELECT * FROM DIYLA.DIY_ORDER;";
 
-	// SQL指令 - 查詢所有訂單
+	// SQL指令 - 查詢某會員所有訂單
 	private final String GET_ALL_BY_MEMID_SQL = "SELECT Diy_Order_No, Mem_Id, Diy_No, Contact_Person, Contact_Phone, Reservation_Num, Diy_Period, Diy_Reserve_Date, Create_Time, Reservation_Status, Payment_Status, Diy_Price FROM diy_order where MEM_ID = ? ORDER BY Diy_Order_No;";
 
-	// SQL指令 - 查詢所有退款訂單
-	private final String GET_ALL_REFUND_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE RESERVATION_STATUS=1;";
-	
+	// SQL指令 - 查詢所有退款訂單(後台)
+	private final String GET_ALL_REFUND_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE RESERVATION_STATUS=1 AND PAYMENT_STATUS = 0;";
+
+	// SQL指令 - 查詢該會員退款訂單(前台)
+	private final String GET_ALL_REFUND_BYMEMID_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE RESERVATION_STATUS=1 AND PAYMENT_STATUS = 0 AND MEM_ID = ? ;";
+
+	// SQL指令 - 查詢該時段所有正常訂單的會員
+	private final String GET_ALL_ORDER_BY_PERIOD_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE DIY_RESERVE_DATE = ? AND DIY_PERIOD = ? AND RESERVATION_STATUS = 0 AND (PAYMENT_STATUS = 0 or 1);;";
+
+	// SQL指令 - 查詢該時段所有正常訂單的會員(已點名完總覽)
+	private final String GET_ALL_ORDER_BY_PERIOD_AFTER_SQL = "SELECT * FROM DIYLA.DIY_ORDER WHERE DIY_RESERVE_DATE = ? AND DIY_PERIOD = ? AND (RESERVATION_STATUS = 0 or 3) AND (PAYMENT_STATUS = 0 or 1 or 2);;";
+
 	@Override
 	public void insert(DiyOrderVO diyOrderVO) {
 		try (Connection conn = ds.getConnection(); PreparedStatement ps = conn.prepareStatement(INSERT_SQL);) {
@@ -61,7 +70,6 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 			ps.setInt(10, diyOrderVO.getDiyPrice());
 
 			ps.executeUpdate();
-
 			// 提交事務
 			conn.commit();
 		} catch (SQLException e) {
@@ -169,7 +177,7 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 		}
 		return diyOrderVO;
 	}
-	
+
 	@Override
 	public List<DiyOrderVO> getAllByMemID(Integer memId) {
 		List<DiyOrderVO> diyOrderList = new ArrayList<>();
@@ -201,11 +209,21 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 		return diyOrderList;
 	}
 
+	// 查會員於該時間以及時段內的訂單
 	@Override
-	public List<DiyOrderVO> getAllRefundod() {
+	public List<DiyOrderVO> getAllByMemIDDatePeriod(Integer memId, Date diyReserveDate, Integer diyPeriod) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// 查時段的有效訂單(點名FOR現場人員)
+	@Override
+	public List<DiyOrderVO> getAllByDatePeriod(Date diyReserveDate, Integer diyPeriod) {
 		List<DiyOrderVO> diyOrderList = new ArrayList<>();
 		try (Connection conn = ds.getConnection();
-				PreparedStatement ps = conn.prepareStatement(GET_ALL_REFUND_SQL);) {
+				PreparedStatement ps = conn.prepareStatement(GET_ALL_ORDER_BY_PERIOD_SQL);) {
+			ps.setDate(1, diyReserveDate);
+			ps.setInt(2, diyPeriod);
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
 					DiyOrderVO diyOrderVO = new DiyOrderVO();
@@ -228,6 +246,105 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return diyOrderList;
 	}
+
+	// 查時段的有效訂單(點名FOR現場人員) -- 已點
+	@Override
+	public List<DiyOrderVO> getAllByDatePeriodAfter(Date diyReserveDate, Integer diyPeriod) {
+		List<DiyOrderVO> diyOrderList = new ArrayList<>();
+		try (Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_ALL_ORDER_BY_PERIOD_AFTER_SQL);) {
+			ps.setDate(1, diyReserveDate);
+			ps.setInt(2, diyPeriod);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					DiyOrderVO diyOrderVO = new DiyOrderVO();
+					diyOrderVO.setDiyOrderNo(rs.getInt("DIY_ORDER_NO"));
+					diyOrderVO.setMemId(rs.getInt("MEM_ID"));
+					diyOrderVO.setDiyNo(rs.getInt("DIY_NO"));
+					diyOrderVO.setContactPerson(rs.getString("CONTACT_PERSON"));
+					diyOrderVO.setContactPhone(rs.getString("CONTACT_Phone"));
+					diyOrderVO.setReservationNum(rs.getInt("RESERVATION_NUM"));
+					diyOrderVO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
+					diyOrderVO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
+					diyOrderVO.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					diyOrderVO.setReservationStatus(rs.getInt("RESERVATION_STATUS"));
+					diyOrderVO.setPaymentStatus(rs.getInt("PAYMENT_STATUS"));
+					diyOrderVO.setDiyPrice(rs.getInt("DIY_PRICE"));
+					diyOrderList.add(diyOrderVO);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return diyOrderList;
+	}
+
+	// 查詢該會員退款訂單(前台)
+	@Override
+	public List<DiyOrderVO> getDeleteByID(Integer memId) {
+		List<DiyOrderVO> diyOrderList = new ArrayList<>();
+		try (Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_ALL_REFUND_BYMEMID_SQL);) {
+			ps.setInt(1, memId);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					DiyOrderVO diyOrderVO = new DiyOrderVO();
+					diyOrderVO.setDiyOrderNo(rs.getInt("DIY_ORDER_NO"));
+					diyOrderVO.setMemId(rs.getInt("MEM_ID"));
+					diyOrderVO.setDiyNo(rs.getInt("DIY_NO"));
+					diyOrderVO.setContactPerson(rs.getString("CONTACT_PERSON"));
+					diyOrderVO.setContactPhone(rs.getString("CONTACT_Phone"));
+					diyOrderVO.setReservationNum(rs.getInt("RESERVATION_NUM"));
+					diyOrderVO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
+					diyOrderVO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
+					diyOrderVO.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					diyOrderVO.setReservationStatus(rs.getInt("RESERVATION_STATUS"));
+					diyOrderVO.setPaymentStatus(rs.getInt("PAYMENT_STATUS"));
+					diyOrderVO.setDiyPrice(rs.getInt("DIY_PRICE"));
+					diyOrderList.add(diyOrderVO);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return diyOrderList;
+	}
+	
+	// 查詢所有會員退款訂單(後台)
+		@Override
+		public List<DiyOrderVO> getAllRefundod() {
+			List<DiyOrderVO> diyOrderList = new ArrayList<>();
+			try (Connection conn = ds.getConnection(); PreparedStatement ps = conn.prepareStatement(GET_ALL_REFUND_SQL);) {
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						DiyOrderVO diyOrderVO = new DiyOrderVO();
+						diyOrderVO.setDiyOrderNo(rs.getInt("DIY_ORDER_NO"));
+						diyOrderVO.setMemId(rs.getInt("MEM_ID"));
+						diyOrderVO.setDiyNo(rs.getInt("DIY_NO"));
+						diyOrderVO.setContactPerson(rs.getString("CONTACT_PERSON"));
+						diyOrderVO.setContactPhone(rs.getString("CONTACT_Phone"));
+						diyOrderVO.setReservationNum(rs.getInt("RESERVATION_NUM"));
+						diyOrderVO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
+						diyOrderVO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
+						diyOrderVO.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+						diyOrderVO.setReservationStatus(rs.getInt("RESERVATION_STATUS"));
+						diyOrderVO.setPaymentStatus(rs.getInt("PAYMENT_STATUS"));
+						diyOrderVO.setDiyPrice(rs.getInt("DIY_PRICE"));
+						diyOrderList.add(diyOrderVO);
+					}
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return diyOrderList;
+		}
+
 }
