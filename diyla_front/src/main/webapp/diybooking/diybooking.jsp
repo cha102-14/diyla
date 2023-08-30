@@ -89,12 +89,6 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label for="email">email</label>
-                                        <input type="email" id="email" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-6">
-                                    <div class="tf__reservation_input_single">
                                         <label for="phone">phone</label>
                                         <input type="text" id="phone" placeholder="Phone">
                                     </div>
