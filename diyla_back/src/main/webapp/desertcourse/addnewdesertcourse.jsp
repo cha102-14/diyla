@@ -275,7 +275,7 @@
                     confirmButtonText: "確定"
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        window.location.href = "${ctxPath}" + "/viewAllCourseCalendar";
+                        window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                     }
                 })
             }

@@ -81,12 +81,8 @@ public class AddNewCourseServlet extends HttpServlet {
             } catch (Exception e) {
                 errorMessage.put("errorMessage", "創建課程失敗，請再試一次");
             }
-
         out.print(errorMessage);
         out.flush();
-
-
-
 
     }
 }

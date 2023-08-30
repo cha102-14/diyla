@@ -62,7 +62,12 @@ public class ClassDAOImpl implements ClassDAO{
             // Handle any SQL errors
         }
         catch (SQLIntegrityConstraintViolationException sice) {
-            throw new RuntimeException("該場次已有其他課程。");
+            int errorCode = sice.getErrorCode();
+            if(errorCode == 1169 || errorCode == 1062) {
+                throw new RuntimeException("該場次已有其他課程。");
+            } else {
+                throw new RuntimeException("查無該師傅編號。");
+            }
         } catch (SQLException se) {
             throw new RuntimeException("A database error occured. " + se.getMessage());
         }

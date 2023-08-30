@@ -9,7 +9,6 @@
     List<ClassVO> courses = classService.getAllClass(); // 從後端獲取課程資料
 
 
-
     StringBuilder eventsJson = new StringBuilder();
     for (ClassVO course : courses) {
         int classSeq = course.getClassSeq();

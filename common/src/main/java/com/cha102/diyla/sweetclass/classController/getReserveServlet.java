@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
 @WebServlet("/getReserve")
 public class getReserveServlet extends HttpServlet {
     public void doGet (HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -29,6 +31,8 @@ public class getReserveServlet extends HttpServlet {
         ClassService classService = new ClassService();
         List<ClassReserveVO> courseList = classService.getAllReserve();
         JSONArray jsonArray = new JSONArray();
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 
         for (ClassReserveVO reserves : courseList) {
             //-1 means get all reserve for admin viewing all the reserve detail.
@@ -39,7 +43,7 @@ public class getReserveServlet extends HttpServlet {
                 jsonCourse.put("headcount", reserves.getHeadcount());
                 jsonCourse.put("status", reserves.getStatus());
                 jsonCourse.put("courseId", reserves.getClassId());
-                jsonCourse.put("createTime", reserves.getCreateTime());
+                jsonCourse.put("createTime", dateFormat.format(reserves.getCreateTime()));
                 jsonCourse.put("totalPrice", reserves.getTotalPrice());
                 jsonArray.put(jsonCourse);
             }

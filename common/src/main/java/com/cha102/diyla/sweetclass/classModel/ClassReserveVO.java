@@ -1,5 +1,7 @@
 package com.cha102.diyla.sweetclass.classModel;
+
 import java.sql.Timestamp;
+
 public class ClassReserveVO {
 
 

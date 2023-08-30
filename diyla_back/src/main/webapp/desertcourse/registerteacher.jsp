@@ -14,7 +14,7 @@
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
     <%
 
-        String empname = "John";
+        String empname = "老師";
         session.setAttribute("empname", empname);
         Integer isTeacher = 0;
         session.setAttribute("isTeacher", isTeacher);

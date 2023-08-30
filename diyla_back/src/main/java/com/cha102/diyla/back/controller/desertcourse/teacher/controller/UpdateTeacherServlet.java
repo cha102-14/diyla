@@ -31,17 +31,22 @@ public class UpdateTeacherServlet extends HttpServlet {
         PrintWriter out = res.getWriter();
         HttpSession session = req.getSession();
         // EmpVO empVO = (EmpVO)session.getAttribute("empVO");
-        //宣告會用到的Teacher相關Service
+        //宣告會用到的Teacher相關Service和變數
         TeacherVO updatedTeacherVO = new TeacherVO();
         TeacherService teacherService = new TeacherService();
         Integer modifyTeacherId = Integer.parseInt(req.getParameter("teacherId"));
-        //判斷是否admin
-        //session.getAttribute("adminAuthCode");
-        int adminAuthCode = 1;
+        Integer updateCode = null;
         // 創建回傳的json,放入success: 1or0 代表註冊成功或失敗
         StringBuilder errorMessage = new StringBuilder();
         JSONObject jsonObject = new JSONObject();
-        Integer registerCode = null;
+        //判斷要修改的師傅ID是否存在
+        if (!teacherService.verifyTeacherId(modifyTeacherId)) {
+            updateCode = 0;
+            errorMessage.append("修改的師傅ID不存在。");
+        }
+        //判斷是否admin
+        //session.getAttribute("adminAuthCode");
+        int adminAuthCode = 1;
 
         //接受前端參數,前端已做格式檢查, 修改時empId不會改變
         //Integer empId = empVO.getEmpId();
@@ -77,7 +82,7 @@ public class UpdateTeacherServlet extends HttpServlet {
                 in.read(teaPic);
                 in.close();
             } else {
-                registerCode = 0;
+                updateCode = 0;
                 errorMessage.append("未上傳師傅圖片!");
             }
         }
@@ -103,14 +108,18 @@ public class UpdateTeacherServlet extends HttpServlet {
                 teacherService.addTeaSpeciality(modifyTeacherId,speIDArray[i]);
             }
         } catch (RuntimeException re) {
-            registerCode = 0;
-            errorMessage.append("修改師傅時發生錯誤，請再嘗試");
+            updateCode = 0;
+            //若前方沒有其他errorMessage,才將通用的錯誤訊息放入
+            if(errorMessage.equals("")) {
+                errorMessage.append("修改師傅時發生錯誤，請再嘗試");
+            }
             re.printStackTrace();
         }
-        if(registerCode == null) {
-            registerCode = 1;
+        //若前面都沒發生錯誤, updateCode會是null, 將其指定為1
+        if(updateCode == null) {
+            updateCode = 1;
         }
-        if(registerCode == 1){
+        if(updateCode == 1){
             jsonObject.put("isSuccessful", true);
             jsonObject.put("teacherId", modifyTeacherId);
             jsonObject.put("errorMessage", "修改成功");

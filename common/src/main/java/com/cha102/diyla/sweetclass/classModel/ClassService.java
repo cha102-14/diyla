@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ClassService {
@@ -143,6 +144,8 @@ public class ClassService {
         ClassVO course;
         TeacherVO teacherVO = teacherDAO.findByPrimaryKey(teaId);
         ClassDAO classDAO = new ClassDAOImpl();
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
 
         for (ClassReserveVO reserves : courseList) {
             Integer reserveTeaId = classDAO.findByPrimaryKey(reserves.getClassId()).getTeaId();
@@ -161,7 +164,8 @@ public class ClassService {
                 jsonCourse.put("courseId", reserves.getClassId());
                 jsonCourse.put("courseName", course.getClassName());
                 jsonCourse.put("courseDateSeq", courseDateSeq);
-                jsonCourse.put("createTime", reserves.getCreateTime());
+                System.out.println(reserves.getCreateTime());
+                jsonCourse.put("createTime", dateFormat.format(reserves.getCreateTime()));
                 jsonCourse.put("totalPrice", reserves.getTotalPrice());
                 jsonArray.put(jsonCourse);
             }
@@ -254,6 +258,9 @@ public class ClassService {
     }
     public ClassINGVO getOneClassIng(Integer classID, Integer ingID){
         return ingDAO.findByPrimaryKey(classID,ingID);
+    }
+    public List<Integer> getOneClassIngID(Integer classID) {
+        return ingDAO.findIngIdByClaId(classID);
     }
     public List<ClassINGVO> findAllClassIng(){
         return ingDAO.getAll();
