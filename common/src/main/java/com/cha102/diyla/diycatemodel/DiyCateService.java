@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class DiyCateService {
@@ -42,5 +43,10 @@ public class DiyCateService {
     // 刪除指定 ID 的 DIY 分類資料
     public void deleteDiyCate(int id) {
         diyCateRepository.deleteById(id);
+    }
+
+    // 瀏覽 DIY 列表
+    public List<DiyCateEntity> getAllDiyCates() {
+        return diyCateRepository.findAll();
     }
 }
