@@ -1,5 +1,6 @@
 package com.cha102.diyla.back.controller.desertcourse.course.controller;
 
+import com.cha102.diyla.sweetclass.classModel.ClassINGVO;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
 import com.cha102.diyla.sweetclass.classModel.ClassVO;
 import org.json.JSONObject;
@@ -27,9 +28,10 @@ public class AddNewCourseServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
         PrintWriter out = res.getWriter();
-        //宣告用的到的service
+        //宣告用的到的service和變數
         ClassService classService = new ClassService();
         ClassVO classVO = new ClassVO();
+
 //        ClassINGVO classINGVO = new ClassINGVO();
 
         JSONObject errorMessage = new JSONObject();
@@ -61,22 +63,25 @@ public class AddNewCourseServlet extends HttpServlet {
 //        }
         // 取得表單傳遞的食材資料陣列
         String[] ingredientTypes = req.getParameterValues("ingredientType[]");
-        System.out.println();
         String[] ingredientQuantities = req.getParameterValues("ingredientQuantity[]");
 
-        // 檢查是否為空，並確認數量一致
-        if (ingredientTypes != null && ingredientQuantities != null &&
-                ingredientTypes.length == ingredientQuantities.length) {
-            for (int i = 0; i < ingredientTypes.length; i++) {
-                String ingredientType = ingredientTypes[i];
-                String ingredientQuantity = ingredientQuantities[i];
-                // 在這裡進行相應的處理，例如存入 List 或其他資料結構中
-            }
-        }
         //用service加入課程
-            try {
-                classService.addClass(category, teacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName, 0, 0);
-            } catch (RuntimeException re) {
+        try {
+            int newCourseId = classService.addClass(category, teacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName, 0, 0).getClassId();
+            // 檢查回傳食材是否為空。
+            if (ingredientTypes != null && ingredientQuantities != null &&
+                    ingredientTypes.length == ingredientQuantities.length) {
+                for (int i = 0; i < ingredientTypes.length; i++) {
+                    //產生對應的classingVO來存放課程食材資訊
+                    ClassINGVO classINGVO = new ClassINGVO();
+                    Integer ingredientType = Integer.parseInt(ingredientTypes[i]);
+                    Integer ingredientQuantity = Integer.parseInt(ingredientQuantities[i]);
+                    // 在這裡進行相應的處理，例如存入 List 或其他資料結構中,最後再放進資料庫
+                    classService.addClassING(newCourseId, ingredientType, ingredientQuantity);
+                }
+            }
+        } catch (RuntimeException re) {
+                re.printStackTrace();
                 errorMessage.put("errorMessage", re.getMessage());
             } catch (Exception e) {
                 errorMessage.put("errorMessage", "創建課程失敗，請再試一次");

@@ -17,7 +17,7 @@ public class ClassINGDAOImpl implements ClassINGDAO {
     static {
         try {
             Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -33,8 +33,8 @@ public class ClassINGDAOImpl implements ClassINGDAO {
             "DELETE FROM class_ing where class_id = ?, ing_id=?";
     private static final String UPDATE =
             "UPDATE class_id set ing_id=?,ing_nums=? where class_id = ?";
-    private static final String GET_ING_ID_STMT =
-            "SELECT ing_id FROM diyla.class_ing where class_id=? order by ing_id";
+    private static final String GET_ING_ID_NUMS_STMT =
+            "SELECT ing_id, ing_nums FROM diyla.class_ing where class_id=? order by ing_id";
 
     @Override
     public void insert(ClassINGVO classINGVO) {
@@ -265,22 +265,25 @@ public class ClassINGDAOImpl implements ClassINGDAO {
 
     }
 
-    public List<Integer> findIngIdByClaId(Integer claID) {
-        List<Integer> courseIngIdList = new ArrayList<>();
+    public List<ClassINGVO> findIngIdAmountByClaId(Integer claID) {
+        List<ClassINGVO> courseIngIdAmountList = new ArrayList<>();
         try(
                 Connection con = ds.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(GET_ING_ID_STMT);
+                PreparedStatement pstmt = con.prepareStatement(GET_ING_ID_NUMS_STMT);
                 ){
             pstmt.setInt(1, claID);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()) {
-                courseIngIdList.add(rs.getInt("ing_id"));
+                ClassINGVO classINGVO = new ClassINGVO();
+                classINGVO.setIngId(rs.getInt("ing_id"));
+                classINGVO.setIngNums(rs.getInt("ing_nums"));
+                courseIngIdAmountList.add(classINGVO);
             }
 
         } catch(SQLException se) {
             throw new RuntimeException("A database error occured. "
                     + se.getMessage());
         }
-        return courseIngIdList;
+        return courseIngIdAmountList;
     }
 }

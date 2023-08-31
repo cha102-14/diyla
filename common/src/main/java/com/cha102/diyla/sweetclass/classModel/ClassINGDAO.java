@@ -12,5 +12,5 @@ public interface ClassINGDAO {
     ClassINGVO findByPrimaryKey(Integer claID, Integer ingID);
 
     List<ClassINGVO> getAll();
-    List<Integer> findIngIdByClaId(Integer claID);
+    List<ClassINGVO> findIngIdAmountByClaId(Integer claID);
 }

@@ -36,15 +36,22 @@ public class ClassService {
         classVO.setClassName(className);
         classVO.setHeadcount(headcount);
         classVO.setClassStatus(classStatus);
-        claDAO.insert(classVO);
-
+        int pk = claDAO.insert(classVO);
+        if (pk != -1) {
+            classVO.setClassId(pk);
+        } else {
+            throw new RuntimeException("產生課程失敗");
+        }
         return classVO;
     }
-    public ClassVO updateClass(Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
-                               byte[] classPic, Integer classLimit, Integer price, String intro, String className,
-                               Integer headcount, Integer classStatus){
+    public ClassVO updateClass(Integer claID, Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
+                               byte[] classPic, Integer classLimit, Integer price, String intro, String className
+                               ) throws RuntimeException{
 
         ClassVO classVO = new ClassVO();
+        Integer headcount = getOneClass(claID).getHeadcount();
+        Integer classStatus = getOneClass(claID).getClassStatus();
+        classVO.setClassId(claID);
         classVO.setCategory(category);
         classVO.setTeaId(teaID);
         classVO.setRegEndTime(regEndTime);
@@ -238,7 +245,7 @@ public class ClassService {
         return resDAO.getAll();
     }
     public ClassINGVO addClassING(Integer classID, Integer ingId, Integer ingNums){
-        ClassINGVO classINGVO =new ClassINGVO();
+        ClassINGVO classINGVO = new ClassINGVO();
         classINGVO.setClassId(classID);
         classINGVO.setIngId(ingId);
         classINGVO.setIngNums(ingNums);
@@ -259,8 +266,8 @@ public class ClassService {
     public ClassINGVO getOneClassIng(Integer classID, Integer ingID){
         return ingDAO.findByPrimaryKey(classID,ingID);
     }
-    public List<Integer> getOneClassIngID(Integer classID) {
-        return ingDAO.findIngIdByClaId(classID);
+    public List<ClassINGVO> getOneClassIngID(Integer classID) {
+        return ingDAO.findIngIdAmountByClaId(classID);
     }
     public List<ClassINGVO> findAllClassIng(){
         return ingDAO.getAll();
