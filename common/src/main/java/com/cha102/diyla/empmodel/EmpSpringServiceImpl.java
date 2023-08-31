@@ -71,7 +71,6 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
-//        //      TODO 新增
 //        if(!ObjectUtils.isEmpty(req.getSession().getAttribute("empId"))){
 //            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
 //            try {

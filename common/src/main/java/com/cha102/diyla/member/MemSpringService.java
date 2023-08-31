@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 public interface MemSpringService {
 
 
-    String getAllMemList(JSONObject jsonObject);
+    String getAllMem(JSONObject jsonObject);
+
+    String changeMemStatus(JSONObject jsonObject);
 
 }
 

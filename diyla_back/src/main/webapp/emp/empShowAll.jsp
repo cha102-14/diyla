@@ -86,8 +86,7 @@
 
             </div>
             <jsp:include page="/index.jsp" />
-            <!-- TODO  優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
-            <!-- TODO  補管理員圖片 -->
+            <!--   優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
             <script>
                 let emp_totalSize = 0;
                 function resetCurrentPageIndex() {

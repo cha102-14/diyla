@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@page import="com.cha102.diyla.empmodel.EmpVO"%>
 <%@page import="com.cha102.diyla.empmodel.EmpDAOImpl"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -7,13 +6,8 @@
   	Integer empId =(Integer)session.getAttribute("empId");
   	EmpVO empVO = dao.getOne(empId);
   	
-  %>    
-=======
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    
->>>>>>> main
+  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

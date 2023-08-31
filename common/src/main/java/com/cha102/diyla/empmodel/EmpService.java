@@ -59,7 +59,7 @@ public class EmpService {
         // 將 newEmpAccount 取得的新值 insert至EmpAccount
         empVO.setEmpAccount(newEmpAccount);
 //      String[] lastEmpAccountNumber = input.split("[^0-9]+");
-//TODO   4.查詢後insert至authority(綁交易機制)
+//   4.查詢後insert至authority(綁交易機制)
         Connection connection = null;
         //因為交易控制把原本的try catch resource改為try catch,並把此處的連線傳入insertBackStageAuthType作其中一個參數傳入EmpDAOImpl的insertEmp
 //        及EmpService的insertBackStageAuthType
@@ -70,7 +70,7 @@ public class EmpService {
             //此處調用了EmpDAOImpl的insertEmp方法,因此insertEmp最後返回的值getAutoEmpId等同於empId
             //將empID insert至empVO,寫入BackStageAuthVO及EmpInsertController  2張表
             Integer empId = daoImpl.insertEmp(empVO, connection);
-            //TODO 取得的empID比對insert.jsp選取的TYPE_FUN中文相同value英文 將其AUTH_ID新增至該EMP_ID並寫入BACKSTAGE_AUTH
+            // 取得的empID比對insert.jsp選取的TYPE_FUN中文相同value英文 將其AUTH_ID新增至該EMP_ID並寫入BACKSTAGE_AUTH
             List<BackStageAuthVO> backStageAuthVOList = insertBackStageAuthType(authFun, empId, connection);
 
             daoImpl.insertBackStageAuthVO(backStageAuthVOList, connection);
@@ -96,7 +96,7 @@ public class EmpService {
 
     }
 
-    // TODO 將EMP_ID及AUTH_ID寫入BackStageAuthVO
+    //  將EMP_ID及AUTH_ID寫入BackStageAuthVO
 
     //        EMP_ID 透過 Integer empId = daoImpl.insertEmp(empVO, connection); 新增AI(自增主鍵) 值時查詢並取出
     public List<BackStageAuthVO> insertBackStageAuthType(String authFun, Integer empId, Connection con) {
@@ -131,7 +131,7 @@ public class EmpService {
         }
         if (ObjectUtils.isEmpty(empPassword)) {
             errorMsgMap.put("empPassword", "請輸入管理員密碼");
-            // TODO 英數字混合 符合6~12碼
+            //  英數字混合 符合6~12碼
         } else {
             empPassword = empPassword.trim();
             if (empPassword.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,12}$")) {
@@ -140,7 +140,7 @@ public class EmpService {
             }
         }
 
-        // TODO e-mail驗證(正則表達式)
+        //  e-mail驗證(正則表達式)
         if (ObjectUtils.isEmpty(empEmail)) {
             errorMsgMap.put("empEmail","請輸入管理員Email");
         } else {

@@ -3,21 +3,11 @@ package com.cha102.diyla.back.controller.emp;
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.empmodel.EmpJPADAO;
 import com.cha102.diyla.empmodel.EmpSpringService;
-import com.cha102.diyla.empmodel.EmpSpringServiceImpl;
-import com.cha102.diyla.empmodel.EmpVO;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController //可以直接返回JSON格式 也是component的一種
 @RequestMapping("/emp")
@@ -54,6 +44,9 @@ public class EmpController {
         empSpringService.logout(empId, req, resp);
     }
 
+
+//    @PostMapping("/memLogin")
+//    public void memLogin
 
 
 //  示範用SpringDataJPA 取得資料
