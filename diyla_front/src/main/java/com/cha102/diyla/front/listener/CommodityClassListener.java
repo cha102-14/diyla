@@ -17,9 +17,12 @@ public class CommodityClassListener implements ServletContextListener {
         CommodityClassService classService = new CommodityClassService();
         List<CommodityClassVO> commodityClasses = classService.getAll();
         HashMap<Integer, String> classNameMap = new HashMap<>();
+        int i = 1;
         for (CommodityClassVO commodityClassVO : commodityClasses) {
+
             //將類別編號當key，類別名稱當Value放進HashMap中
-            classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
+            classNameMap.put(i, commodityClassVO.getComClassName());
+            i++;
         }
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("classNameMap", classNameMap);
