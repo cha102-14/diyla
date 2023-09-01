@@ -135,6 +135,9 @@
 
                         </c:otherwise>
                     </c:choose>
+                    <%--可自行更改href連結--%>
+                    <form class="form-inline ">
+                    </form>
                 </div>
             </div>
         </nav>
@@ -190,11 +193,9 @@ $("#myOrder").click(function(e){
 </script>
 <script>
 $(document).ready(function() {
-	console.log("hhhhhh");
     updateCartQuantity();
 });
 function updateCartQuantity() {
-	console.log("qqqhhhhhh");
 
 let cartQuantitySpan = $("#cartQuantity");
 let memId = cartQuantitySpan.data("memid");

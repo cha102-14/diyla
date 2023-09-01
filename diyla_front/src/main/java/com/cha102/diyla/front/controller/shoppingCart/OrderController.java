@@ -68,7 +68,6 @@ public class OrderController extends HttpServlet {
 				login.forward(req, res);
 			}
 			Integer memId = memVO.getMemId();
-//			=================		}
 			List<CommodityOrderVO> list = commodityOrderService.getAllByMemId(memId);
 			session.setAttribute("memId", memId);
 			session.setAttribute("commodityOrderVOList", list);
@@ -80,12 +79,9 @@ public class OrderController extends HttpServlet {
 		if ("showDetail".equals(action)) {
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
 			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
-//			List<Integer> comNoList = new ArrayList<>();
-//			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
-//				comNoList.add(commodityOrderDetailVO.getComNo());
-//			}
-//			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
-//			session.setAttribute("commodityList", commodityList);
+			CommodityOrderVO commodityOrderVO =commodityOrderService.findByOrderNo(orderNo);
+			session.setAttribute("orderTime", commodityOrderVO.getOrderTime());
+			session.setAttribute("orderNo", orderNo);
 			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/memberOrder/showOrderDetail.jsp");
 			dispatcher.forward(req, res);
