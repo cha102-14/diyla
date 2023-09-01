@@ -1,5 +1,7 @@
 package com.cha102.diyla.commodityOrder;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.cha102.diyla.shoppingcart.ShoppingCartService;
@@ -15,7 +17,32 @@ public class CommodityOrderService {
 		dao.update(status, orderNo,recipient,recipientAddress,phone);
 	}
 
-	public Integer insert(CommodityOrderVO commodityOrderVO) {
+	public Integer insert(CommodityOrderVO commodityOrderVO,List<ShoppingCartVO>list) {
+		Connection connection=null;
+			try {
+				connection = dao.getConnectionForTx();
+				connection.setAutoCommit(false);
+				Integer orderNo=dao.insertAll(commodityOrderVO, connection);
+				dao.insertDetail(orderNo, list, connection);
+	            connection.commit();
+
+			}catch (Exception e) {
+				 try {
+		                connection.rollback();
+		            } catch (SQLException ex) {
+		                throw new RuntimeException(ex);
+		            }
+			}
+			finally {
+	            if (connection != null) {
+	                try {
+	                    connection.setAutoCommit(true);
+	                    connection.close();
+	                } catch (SQLException se) {
+	                    se.printStackTrace();
+	                }
+	            }
+			}
 		return dao.insert(commodityOrderVO);
 	}
 

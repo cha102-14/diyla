@@ -155,13 +155,13 @@ public class OrderController extends HttpServlet {
 			List<ShoppingCartVO> shoppingCartList = shoppingCartService.getCartList(memId);
 			CommodityOrderVO commodityOrderVO = new CommodityOrderVO(memId, 0, totalPrice, tokenUse,
 					totalPrice - tokenUse, recipient, recipientAddress, phone);
-			Integer orderNo = commodityOrderService.insert(commodityOrderVO);
+			Integer orderNo = commodityOrderService.insert(commodityOrderVO,shoppingCartList);
 //			String memMail = memberService.selectMem(memId).getMemEmail();
 			String messageContent = "訂單詳情:\n" + "訂單編號:" + orderNo + "\n" + "收件人:" + recipient + "\n" + "收件地址:"
 					+ recipientAddress + "\n" + "購買日期:" + formattedDate + "\n" + "_____________________\n"
 					+ "DIYLA感謝您的訂購，我們將盡快將商品寄出";
 			mailService.sendMail("t1993626@gmail.com", "訂購成功", messageContent);
-			commodityOrderDetailService.insert(orderNo, shoppingCartList);
+//			commodityOrderDetailService.insert(orderNo, shoppingCartList);
 			// 訂單生成清空購物車
 			shoppingCartService.clear(memId);
 			res.sendRedirect(req.getContextPath() + "/checkout/checkoutSucess.jsp");

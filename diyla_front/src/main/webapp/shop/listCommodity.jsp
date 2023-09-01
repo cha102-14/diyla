@@ -28,7 +28,7 @@
     <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="../css/shop/listCommodity.jsp">
+    <link rel="stylesheet" type="text/css" href="../css/shop/listCommodity.css">
 </head>
 
 <body>
@@ -37,53 +37,53 @@
 
 <section class="shop_section layout_padding">
     <div class="container">
-        <div class="heading_container heading_center">
-            <form action="${ctxPath}/shop/CommodityController" method="get" enctype="application/x-www-form-urlencoded" id="findByClassNOForm">
-                <input type="text" name="action" value="findByClassNO" hidden="hidden">
-                <select id="comClassNo" name="comClassNo" >
-                    <option value="" selected disabled>請選擇商品類別</option>
-                    <c:forEach var="i" begin="1" end="${classNameMapSize}">
-                        <option value="${i}">${classNameMap[i]}</option>
-                    </c:forEach>
-                </select>
-
-            </form>
-            <div>
+        <div class="heading_container heading_center" style="display: flex;justify-content: space-between;align-items: center;">
+            <div class="left-align" style="text-align: left;">
+                <form action="${ctxPath}/shop/CommodityController" method="get"
+                      enctype="application/x-www-form-urlencoded" id="findByClassNOForm">
+                    <input type="text" name="action" value="findByClassNO" hidden="hidden">
+                    <select id="comClassNo" name="comClassNo">
+                        <option value="" selected disabled>請選擇商品類別</option>
+                        <c:forEach var="i" begin="1" end="${classNameMapSize}">
+                            <option value="${i}">${classNameMap[i]}</option>
+                        </c:forEach>
+                    </select>
+                </form>
+            </div>
+            <div class="right-align" style="text-align: left;">
                 <form action="${ctxPath}/shop/CommodityController" method="get"
                       enctype="application/x-www-form-urlencoded">
-                    <input type="text" name="action" value="search" hidden="hidden">
+                    <input type="text" name="action" value="search" hidden="hidden" style="color:#B26021">
                     <input type="text" class="search-box" value="請輸入關鍵字" name="keyword"
                            onfocus="if (this.value=='請輸入關鍵字') this.value='';"
                            onblur="if (this.value=='') this.value='請輸入關鍵字';">
-                    <button type="submit">搜尋</button>
+                    <button type="submit" style="height:43px;width:100px;border-radius: 4px;background-color:#B26021;color:#ffffff;border:none;">搜尋</button>
                 </form>
-
-
             </div>
         </div>
-        <div class="row">
-            <c:forEach items="${commodityList}" var="commodity">
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="box">
-                        <a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">
-                            <div class="img-box">
-                                <img src="${commodity.showPic}" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h6>
-                                        ${commodity.comName}
-                                </h6>
-                                <h6>
+    </div>
+    <div class="row">
+        <c:forEach items="${commodityList}" var="commodity">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="box">
+                    <a href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${commodity.comNO}">
+                        <div class="img-box">
+                            <img src="${commodity.showPic}" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h6>
+                                    ${commodity.comName}
+                            </h6>
+                            <h6>
                     <span>
                         NT$${commodity.comPri}元
                   </span>
-                                </h6>
-                            </div>
-                        </a>
-                    </div>
+                            </h6>
+                        </div>
+                    </a>
                 </div>
-            </c:forEach>
-        </div>
+            </div>
+        </c:forEach>
     </div>
 </section>
 
@@ -99,7 +99,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#comClassNo').change(()=>{
+        $('#comClassNo').change(() => {
             $('#findByClassNOForm').submit();
 
         })

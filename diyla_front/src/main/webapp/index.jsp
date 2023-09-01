@@ -107,14 +107,29 @@
         </div>
     </div>
 </div>
-
 <!-- end slider section -->
+
+
+
+<section class="latest_news ">
+    <div class="heading_container heading_center " style="margin-top: 60px;">
+        <h2>
+            最新消息
+        </h2>
+    </div>
+
+    <!-- 你的東西 -->
+
+</section>
+
+
+
 
 <!-- contact section -->
 
 <section class="contact_section ">
     <div class="container">
-        <div class="heading_container heading_center " style="margin-top: 40px;">
+        <div class="heading_container heading_center " style="margin-top: 60px;">
             <h2 class="">
                 我們的位置
             </h2>

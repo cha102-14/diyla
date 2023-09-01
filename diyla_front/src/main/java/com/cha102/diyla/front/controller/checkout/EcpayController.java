@@ -44,13 +44,16 @@ public class EcpayController {
 			@RequestParam String cardrecipientAddress, @RequestParam String cardphone, @RequestParam String tokenUse) {
 		// todo 未來串接從session取得會員資料
 		HttpSession session = req.getSession();
-		Integer memId = (Integer) session.getAttribute("memId");
+		MemVO memVO = (MemVO) session.getAttribute("memVO");
 		String token = tokenUse;
-		int memNO = memId;
+		int memNO = memVO.getMemId();
 		//會員編號先另存
 		memberHolder.put("memId" + memNO, memNO);
 		String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone;
 		// 使用取號機
+		if("".equals(token)) {
+			token=0+"";
+		}
 		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo);
 		// 自訂取號
 		model.addAttribute("toEcpay", toEcpay);
@@ -79,6 +82,7 @@ public class EcpayController {
 			Integer memId = memberHolder.get(memKey);
 			System.out.println(memKey + "," + memId);
 			//收件人資訊取出
+			System.out.println(receiveInfo);
 			String[] info = receiveInfo.split(",");
 			String recipient = info[0];
 			String recipientAddress = info[1];
@@ -90,7 +94,7 @@ public class EcpayController {
 			Integer totalPri = Integer.valueOf(totalPrice);
 			CommodityOrderVO commodityOrderVO = new CommodityOrderVO(memId, 1, totalPri, tokenUse, totalPri - tokenUse,
 					recipient, recipientAddress, phone);
-			Integer orderNo = commodityOrderService.insert(commodityOrderVO);
+			Integer orderNo = commodityOrderService.insert(commodityOrderVO,shoppingCartList);
 			//回饋功能
 			if (tokenUse == 0) {
 				TokenVO tokenVO = tokenService.addToken((totalPri / 10), (byte) 1, memId);

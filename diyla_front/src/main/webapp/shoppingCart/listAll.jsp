@@ -27,7 +27,7 @@
 <link href="${ctxPath}/css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="../css/shoppingcart.css">
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/shoppingcart.css">
 <style>
 </style>
 </HEAD>
@@ -88,7 +88,7 @@
 					<button type="button" class="clearButton" id="clearCart">清空購物車</button>
 					<input type="hidden" name="action" value="clear"> <a
 						href="${ctxPath}/shop/CommodityController?action=listAll"
-						class="shopPage">繼續購物</a> <span class="total-price">總金額:${totalPrice}元</span>
+						class="shopPage">繼續購物</a> <span class="total-price" >總金額:${totalPrice}元</span>
 
 					<form action="${ctxPath}/memberOrder/OrderController" method="post">
 
@@ -168,12 +168,11 @@
 	//刪除
 	 function deleteCartItem(comNo,memId){
 		 $.ajax({
-	            url: "ShoppingCartServlet",
+	            url: "http://localhost:8081/diyla_front/shop/delete",
 	            type: "POST",
 	            data: {
 	                comNo: comNo,
-	                memId: memId,
-	                action: "delete"
+	                memId: memId
 	            },
 	            dataType: "json",
 	            success: function(data) {
@@ -222,34 +221,35 @@
 	        	updateCartItem(comNo,memId,amount);
 	        }
 	    });
-	//修改的方法
-	 function updateCartItem(comNo,memId,amount){
-		 $.ajax({
-	            url: "ShoppingCartServlet",
-	            type: "POST",
-	            data: {
-	                comNo: comNo,
-	                memId: memId,
-	                amount:amount,
-	                action: "changeAmount"
-	            },
-	            dataType: "json",
-	            success: function(data) {
-	                if (data.success) {
-	                	 swal("成功修改", "", "success");
-	                     // 延遲 1 秒後刷新
-	                     setTimeout(function() {
-	                         window.location.reload("#mainContent");
-	                     }, 1500);
-	                } else {
-	                    // 處理刪除失敗的情況
-	                }
-	            },
-	            error: function() {
-	                // 處理AJAX錯誤的情況
-	            }
-	        });
-	    };
+	 function updateCartItem(comNo,memId,amount) {
+		fetch("http://localhost:8081/diyla_front/shop/update",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               memId:memId,
+               comNo:comNo,
+               comAmount:amount
+            })
+        }).then(response => response.json())
+          .then(data => {
+            if (data.success) {
+                swal("成功修改", "", "success");
+                // 延遲 1 秒後刷新
+                setTimeout(function () {
+                	window.location.reload("#mainContent");
+                }, 1500);
+            } else {
+                // 處理刪除失敗的情況
+            }
+        })
+        .catch(error => {
+            // 處理錯誤情況
+        });
+	}
+	 
+
 	    
 	    //清空購物車用
 		 $('#clearCart').on('click',function(e){
@@ -269,11 +269,11 @@
 		    //清空購物車用
 		 function clearCartItem(memId){
 			 $.ajax({
-		            url: "ShoppingCartServlet",
-		            type: "POST",
+		            url: "http://localhost:8081/diyla_front/shop/clear/"+${memId},
+		            type: "DELETE",
 		            data: {
-		                memId: memId,
-		                action: "clear"
+		                memId: memId
+// 		                action: "clear"
 		            },
 		            dataType: "json",
 		            success: function(data) {
