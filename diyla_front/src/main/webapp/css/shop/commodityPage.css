@@ -52,7 +52,7 @@ h1 {
 }
 
 /* 商品名稱樣式 */
-.commodityDescription label {
+.commodityPage label {
     color: var(--primary-color);
     font-weight: bold;
 }
