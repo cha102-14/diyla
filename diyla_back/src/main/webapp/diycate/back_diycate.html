@@ -21,10 +21,39 @@
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
+    <!-- Page level plugins -->
+    <script src="/diyla_back/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/diyla_back/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/diyla_back/js/demo/datatables-demo.js"></script>
+
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <!--DataTable的連結 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css"/>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <!--樣式連結 -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Bootstrap core JavaScript-->
+    <script src="/diyla_back/vendors/jquery/jquery-3.7.0.min.js"></script>
+    <script src="/diyla_back/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/diyla_back/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/diyla_back/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/diyla_back/js/demo/datatables-demo.js"></script>
+
+    <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
 
     <!-- 自訂css -->
     <style>
@@ -66,10 +95,8 @@
         }
 
 
-
     </style>
     <link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
-
 
 
 </head>
@@ -169,7 +196,7 @@
                                 <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th>DIY品項編號</th>
+                                        <th class="sorting">DIY品項編號</th>
                                         <th>DIY品項名稱</th>
                                         <th>DIY類別</th>
                                         <th>DIY狀態</th>
@@ -216,7 +243,6 @@
 
 <!-- End of Content Wrapper -->
 
-</div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
@@ -244,106 +270,9 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-
-        layui.use(function(){
-            let laypage = layui.laypage;
-
-            function getList(s) {
-                let xhr = new XMLHttpRequest();
-                let url = 'http://localhost:8081/diyla_back/api/diy-cates'; // Servlet URL
-                let params = '';
-
-                if (s == null || s == "") {
-                    params += "&page=1&pageSize=10";
-                } else {
-                    params += s;
-                }
-
-                xhr.open('GET', url + '?' + params, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        let jsonData = JSON.parse(xhr.responseText);
-                        renderCates(jsonData);
-                    }
-                };
-                xhr.send();
-            }
-
-            getList(null);
-
-            function renderCates(data) {
-                let commentContainer = document.getElementById('cateContainer');
-                if (data.length === 0) {
-                    commentContainer.innerHTML = '<p>商品列表為空。</p>';
-                } else {
-                    let html = '';
-                    for (let i = 0; i < data.content.length; i++) {
-                        let item = data.content[i];
-                        html += '<tr>'
-                        // ... 其他表格內容的渲染 ...
-                        html += '</tr>'
-                    }
-
-                    laypage.render({
-                        elem: 'demo-laypage-theme-3',
-                        curr: data.number+1,
-                        count: data.totalElements,
-                        theme: '#FFB800',
-                        jump: function(obj, first){
-                            if(!first){
-                                getList('&page='+ (obj.curr) +'&pageSize=10');
-                            }
-                        }
-                    });
-
-                    commentContainer.innerHTML = html;
-                }
-            }
-        });
-    });
-
-    function deleteRow(button, diyNo) {
-        let row = button.closest('tr');
-
-        $.ajax({
-            type: "DELETE",
-            url: "http://localhost:8081/diyla_back/api/diy-cates/" + diyNo,
-            success: function(data) {
-                console.log("請求成功：", data);
-                console.log(button)
-                row.remove();
-            },
-            error: function(error) {
-                console.log("請求失敗：", error);
-            }
-        });
-    }
-</script>
-
-
-
-<!-- Bootstrap core JavaScript-->
-<script src="/diyla_back/vendors/jquery/jquery-3.7.0.min.js"></script>
-<script src="/diyla_back/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="/diyla_back/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="/diyla_back/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="/diyla_back/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/diyla_back/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/diyla_back/js/demo/datatables-demo.js"></script>
-
-<script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
 <!-- 自定義 JavaScript -->
 <script>
+
     $(document).ready(function () {
         layui.use(function(){
             let laypage = layui.laypage;
@@ -400,9 +329,6 @@
                             '<td><button class="btn btn-outline-danger" onClick="deleteRow(this,' + item.diyNo +')">刪除</button></td>';
                         html += '</tr>'
                     }
-
-                    // 添加分頁
-
                     // 自定義主題
                     laypage.render({
                         elem: 'demo-laypage-theme-3',
@@ -425,7 +351,10 @@
 
     function deleteRow(button, diyNo) {
         let row = button.closest('tr');
-
+        layer.msg('已刪除', {
+            icon: 1,
+            time: 2000 // 2秒關閉
+        });
         $.ajax({
             type: "DELETE",
             url: "http://localhost:8081/diyla_back/api/diy-cates/" + diyNo,

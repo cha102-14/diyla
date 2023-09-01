@@ -47,7 +47,7 @@ public class DiyForumController {
 
 	@RequestMapping("/add")
 	public DiyForumVO add(DiyForumEntity diyForum, HttpSession httpSession) {
-		//TODO 請使用登錄後獲取的會員資訊，之後使用預設的
+		//TODO 使用登錄後獲取的會員資訊，之後使用預設的
 		// MemberEntity memberEntity = (MemberEntity)httpSession.getAttribute("member");
 
 		// 這是預設的

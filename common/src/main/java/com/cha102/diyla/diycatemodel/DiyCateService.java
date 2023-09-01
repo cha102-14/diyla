@@ -16,9 +16,12 @@ public class DiyCateService {
     @Resource
     DiyCateRepository diyCateRepository;
 
+    public DiyCateEntity findById(int id){
+        return diyCateRepository.findById(id).get();
+    }
+
     // 取得所有 DIY 分類資料，並進行分頁
     public Page<DiyCateEntity> getAllDiyCates(PageBean pageBean) {
-
 
         // 建立排序條件
         Sort sort = Sort.by(Sort.Direction.DESC, "diyNo");
@@ -36,8 +39,8 @@ public class DiyCateService {
     }
 
     // 儲存 DIY 分類資料
-    public void saveDiyCate(DiyCateEntity diyCate) {
-        diyCateRepository.save(diyCate);
+    public DiyCateEntity saveDiyCate(DiyCateEntity diyCate) {
+        return diyCateRepository.save(diyCate);
     }
 
     // 刪除指定 ID 的 DIY 分類資料
