@@ -24,23 +24,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 			e.printStackTrace();
 		}
 	}
-
-	// 運用static區塊讓驅動載入僅需一次
-//	static {
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//		} catch (ClassNotFoundException ce) {
-//			ce.printStackTrace();
-//		}
-//	}
-//	public static final String URL = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei";
-//	public static final String USERNAME = "root";
-//	public static final String PASSWORD = "123456";
-
-//	private static final String INSERT_STMT = "INSERT INTO shopping_cart_list (memId,com_no,com_amount) VALUES (?, ?, ?)";
-//	private static final String UPDATE = "UPDATE shopping_cart_list set com_amount = ? where com_no = ?";
-//	private static final String DELETE = "DELETE FROM shopping_cart_list where com_no = ?";
-//	private static final String GET_ALL_STMT = "SELECT com_no,com_amount from shopping_cart)list where memId = ?";
 	@Override
 	public void insert(Integer memId, Integer comNo, Integer amount) {
 

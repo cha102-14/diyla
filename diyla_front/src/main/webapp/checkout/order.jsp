@@ -165,6 +165,18 @@ input[type="text"], input[type="tel"], select {
 	background-color: white;
 	color: black;
 }
+
+.actualPrice {
+	float: right;
+}
+
+#tokenLabel {
+	color: white;
+	background-color: black;
+	border-radius: 3px;
+	padding: 5px 3px;
+	left: 10px;
+}
 </style>
 </head>
 <body>
@@ -196,20 +208,41 @@ input[type="text"], input[type="tel"], select {
 						<%-- 						</c:forEach> --%>
 					</c:forEach>
 				</table>
-				<span class="total">總金額${totalPrice}</span>
+
+				<span class="total">總金額:${totalPrice}元</span>
+				<p>
+				<hr class="hr1">
+				</p>
 			</div>
 
 			<div class="tokenblock">
-				<p>(使用代幣則無法獲得回饋)</p>
 
 
-				<label for="useTokens" style="width: 80px">使用代幣：</label>
-				<span id="amount_value" style="font-size: 18px">0</span>
+				<!-- 				<span -->
+				<!-- 					style="font-size: 18px;">共可折抵</span> <span id="amount_value" -->
+				<!-- 					style="font-size: 18px">0</span> <span style="font-size: 18px;">元</span> -->
+				<!-- 				<div id="actualPrice"> -->
 
-				<div>
-					<input name="tokenUse" type="range" min="0"
-						max="<%=session.getAttribute("maxToken")%>" id="tokenAmount">
-				</div>
+
+				<p style="margin: 0;">(使用代幣則無法獲得回饋)</p>
+				<label for="useTokens" style="width: 80px" id="tokenLabel">使用代幣</label>
+
+				<c:choose>
+					<c:when test="${totalPrice>=maxToken}">
+						<input name="tokenUse" type="number" min="0"
+							max="<%=(Integer)session.getAttribute("maxToken")%>"
+							id="tokenAmount" value="0">
+					</c:when>
+					<c:otherwise>
+						<input name="tokenUse" type="number" min="0"
+							max="<%=(Integer)session.getAttribute("totalPrice")%>"
+							id="tokenAmount" value="0">
+					</c:otherwise>
+				</c:choose>
+				<span class="actualPrice">元</span> <span class="actualPrice"
+					id="actualPriceSpan">${totalPrice}</span> <span class="actualPrice">實付金額:</span>
+				<!-- 				</div> -->
+
 				<!-- 				<span style="margin:30px 0px;">本次預計獲得回饋:</span><input type="hidden" value="1" name="tokenback"> -->
 			</div>
 			<div class="container">
@@ -218,20 +251,20 @@ input[type="text"], input[type="tel"], select {
 					<div class="form-row">
 
 						<label for="recipientName">收件人姓名：</label> <input type="text"
-							id="recipientName" name="recipient" value="${param.recipient}">
+							id="recipientName" name="recipient" value="${memVO.memName}">
 						<p style="display: block; color: red; padding: 0px 3px;">${errMsg["recipient"]}</p>
 
 					</div>
 					<div class="form-row">
 
 						<label for="recipientPhone">收件人電話：</label> <input type="tel"
-							id="recipientPhone" name="phone" value="${param.phone}">
+							id="recipientPhone" name="phone" value="${memVO.memPhone}">
 						<p style="display: block; color: red; padding: 0px 3px">${errMsg["phone"]}</p>
 					</div>
 					<div class="form-row">
 						<label for="recipientAddress">收件人地址：</label> <input type="text"
 							id="recipientAddress" name="recipientAddress"
-							value="${param.recipientAddress}">
+							value="${memVO.memAddress}">
 						<p style="display: block; color: red; padding: 0px 3px">${errMsg["recipientAddress"]}</p>
 
 					</div>
@@ -253,10 +286,10 @@ input[type="text"], input[type="tel"], select {
 		<div id="card">
 			<form action="${ctxPath}/checkout/ecpay" method="post" id="cardForm">
 				<input type="hidden" name="tokenUse" value="" id="tokenAmountCard">
-				<input type="hidden" name="cardrecipient" value=""
+				<input type="hidden" name="cardrecipient" value="${memVO.memName}"
 					id="cardrecipient"> <input type="hidden"
-					name="cardrecipientAddress" value="" id="cardrecipientAddress">
-				<input type="hidden" name="cardphone" value="" id="cardphone">
+					name="cardrecipientAddress" value="${memVO.memAddress}" id="cardrecipientAddress">
+				<input type="hidden" name="cardphone" value="${memVO.memPhone}" id="cardphone">
 				<input type="hidden" name="tradeDesc" value="信用卡付款"> <input
 					type="hidden" name="totalPrice" value="${totalPrice}"> <input
 					type="hidden" name="itemName" value="商品一批"> <input
@@ -409,7 +442,8 @@ input[type="text"], input[type="tel"], select {
 									.getElementById("tokenAmount");
 							const maxTokenValue = tokenAmountInput
 									.getAttribute("max");
-							if (maxTokenValue == null || maxTokenValue == ""||maxTokenValue=="null") {
+							if (maxTokenValue == null || maxTokenValue == ""
+									|| maxTokenValue == "null") {
 								tokenAmountInput.setAttribute("max", "0");
 								tokenAmountInput.value = "0"; // 設置輸入框的值為 0
 								tokenAmountInput.disabled = true; // 禁用輸入框
@@ -417,7 +451,49 @@ input[type="text"], input[type="tel"], select {
 
 						});
 	</script>
+	<script>
+		$(document).ready(function() {
+			const tokenAmountInput = $("#tokenAmount");
+			const maxToken =
+	<%= session.getAttribute("maxToken") %>
+		;
 
+			// 監聽輸入
+			tokenAmountInput.on("input", function() {
+				const currentValue = parseInt(tokenAmountInput.val());
+
+				if (currentValue > maxToken) {
+					tokenAmountInput.val(maxToken); // 超過上限則設為上限值
+				}
+			});
+		});
+	</script>
+	<script>
+		// 抓取相關元素
+		const tokenAmountInput = document.getElementById("tokenAmount");
+		const actualPriceSpan = document.getElementById("actualPriceSpan");
+		const totalPrice = <%= session.getAttribute("totalPrice") %>;
+		const maxToken = <%= session.getAttribute("maxToken") %>;
+		
+
+		//監聽輸入
+		tokenAmountInput.addEventListener("input", function() {
+			// 取得使用量輸入
+			let tokenAmount = parseInt(tokenAmountInput.value);
+
+			// 確保不超過max
+			if (tokenAmount > maxToken) {
+				tokenAmountInput.value = maxToken; // 限制输入框的值
+				tokenAmount = maxToken; // 更新 tokenAmount 的值
+			}
+
+			// 計算 最低為0
+			const discountedPrice = Math.max(0, totalPrice - tokenAmount);
+
+			// 更新金額
+			actualPriceSpan.textContent = discountedPrice;
+		});
+	</script>
 
 </body>
 </html>

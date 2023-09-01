@@ -16,7 +16,7 @@
 <link href="../css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="../css/responsive.css" rel="stylesheet" />
-<link href="../css/giftbox.css" rel="stylesheet" />
+<link href="${ctxPath}/css/giftbox.css" rel="stylesheet" />
 <title>DILLA</title>
 <style>
 body {
@@ -125,8 +125,8 @@ margin: 30px;
 			
 			<c:if test="${tokenFeedBack!=0}">
 			<p class="tokenGet">本次代幣回饋為:<span class="tokenGet">${tokenFeedBack}</span></p>
-			<div class="gift-animation__text" style="font-size: 40px;">感謝您的購買</div>
 			</c:if>
+			<div class="gift-animation__text" style="font-size: 40px;">感謝您的購買</div>
 			
 			
 			

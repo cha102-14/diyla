@@ -27,8 +27,6 @@ body {
 	margin-left: 280px;
 	padding: 0;
 	background-color: #f4f4f4;
-	
-	
 }
 
 table {
@@ -41,7 +39,7 @@ table {
 
 th, td {
 	border: 1px solid #ccc;
-	padding: 8px;
+	padding: 5px;
 	text-align: center;
 	justify-content: center;
 }
@@ -51,7 +49,7 @@ th, td {
 }
 
 #main_content {
-box-sizing:border-box;
+	box-sizing: border-box;
 	float: inherit;
 	height: 800px;
 	margin: 0px auto;
@@ -90,9 +88,11 @@ box-sizing:border-box;
 .status-paid {
 	background-color: #A6FFA6; /*已付款的顏色*/
 }
+
 .status-shipping {
-	background-color: #FF79BC;	/*出貨*/
+	background-color: #FF79BC; /*出貨*/
 }
+
 .status-completed {
 	background-color: #66FF66; /* 已完成的顏色 */
 }
@@ -109,7 +109,6 @@ box-sizing:border-box;
 /* 		transition: all 1s; */
 /* 	} */
 /* } */
-
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -118,7 +117,7 @@ table {
 
 .tr_title {
 	background-color: black;
-	color:white;
+	color: white;
 	font-size: 12px;
 }
 
@@ -154,18 +153,17 @@ form {
 	display: inline;
 }
 
-.cancel_order {
+.edit-order {
 	/* 	color: white; */
 	border: none;
-	padding: 5px 10px;
 	border-radius: 5px;
 	cursor: pointer;
+	justify-content: center;
+	text-align: center;
 }
 
 #main_content {
-	/* 	padding-bottom: 150px; */
-	/* 	padding-left: 300px; */
-	
+	size: 10px;
 }
 
 .dataTables_wrapper no-footer {
@@ -183,7 +181,6 @@ table {
 aside.topPage {
 	height: 100%;
 	width: 25%; /* 或任何您認為合適的寬度百分比 */
-	/* ... 其他樣式 */
 }
 
 .container {
@@ -192,20 +189,23 @@ aside.topPage {
 
 aside.topPage {
 	flex: 1; /* 可以使用其他數值調整彈性佈局比例 */
-	/* ... 其他樣式 */
+	z-index: 1;
 }
 
 table {
 	flex: 3; /* 可以使用其他數值調整彈性佈局比例 */
-	/* ... 其他樣式 */
 }
 
-@media ( max-width : 768px) {
+@media ( max-width : 1266px) {
 	aside.topPage {
-		position: relative; /* 或其他您認為適當的定位屬性 */
+		position: relative; /
 		z-index: 1; /* 將 aside 設定為比表格更高的 z-index 值 */
 	}
+	table#allOrder{
+	
+	}
 }
+
 </style>
 </head>
 <body>
@@ -253,7 +253,7 @@ table {
 								</form>
 							</td>
 
-							<td>
+							<td class="order_content">
 								<form action="${ctxPath}/orderManage/OrderManageController"
 									method="post" id="form${loop.index}">
 									<input name="action" value="editOrder" type="hidden"> <input
@@ -262,7 +262,7 @@ table {
 									<input name="actualPrice" value="${orderVO.actualPrice}"
 										type="hidden"> <input name="orderStatus"
 										value="${orderVO.orderStatus}" type="hidden">
-									<button type="submit" class="cancel_order"
+									<button type="submit" class="edit-order"
 										data-order-status="${orderVO.orderStatus}
 											form="form${loop.index}">
 										<svg width="24px" height="24px" viewBox="0 -0.5 25 25"
@@ -308,19 +308,35 @@ table {
 				if (orderStatus === "0") {
 					$(this).addClass("status-unpaid");
 
-				}else if (orderStatus === "1") {
-		            $(this).addClass("status-paid");
-		        }else if (orderStatus === "2") {
-		            $(this).addClass("status-processing");
-		        }else if (orderStatus === "3") {
-		            $(this).addClass("status-shipping");
-		        }else if (orderStatus === "4") {
-		            $(this).addClass("status-completed");
-		        }else if (orderStatus === "5") {
-		            $(this).addClass("status-canceled");
-		        }
+				} else if (orderStatus === "1") {
+					$(this).addClass("status-paid");
+				} else if (orderStatus === "2") {
+					$(this).addClass("status-processing");
+				} else if (orderStatus === "3") {
+					$(this).addClass("status-shipping");
+				} else if (orderStatus === "4") {
+					$(this).addClass("status-completed");
+				} else if (orderStatus === "5") {
+					$(this).addClass("status-canceled");
+				}
 			});
+			
+			$(".edit-order").on("click", function(e) {
+				  let form = $(this).closest("form"); // 找到最近的父級 form
+				  var orderStatus = parseInt($(this).data('order-status'));
+				  console.log(orderStatus);
+				  if (orderStatus >= 4) {
+						e.preventDefault();
+					  swal({
+						    title: "訂單已結案",
+						    icon:"warning",
+						    buttonsStyling: false,
+						    confirmButtonClass: 'btn btn-primary btn-block'
+						});
+			            return;
+			        }
 
+				});
 		});
 	</script>
 	<script>

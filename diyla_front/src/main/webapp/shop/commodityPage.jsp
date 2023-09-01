@@ -162,6 +162,7 @@
 <script>
     $("#addItem").click(function (e) {
         const button = $(this);
+        console.log("click");
         let memId = <%=session.getAttribute("memId")%>;
         if (memId == null) {
             e.preventDefault();
@@ -186,30 +187,32 @@
     });
 
     function addCartItem(memId, comNo, amount) {
-        $.ajax({
-            url: "ShoppingCartServlet",
-            type: "POST",
-            data: {
-                amount: amount,
-                comNo: comNo,
-                memId: memId,
-                action: "addItem"
+
+        fetch("http://localhost:8081/diyla_front/shop/insert", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    swal("成功新增", "", "success");
-                    // 延遲 1 秒後刷新
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    // 處理刪除失敗的情況
-                }
-            },
-            error: function () {
-                // 處理AJAX錯誤的情況
+            body: JSON.stringify({
+               memId:memId,
+               comNo:comNo,
+               comAmount:amount
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                swal("成功新增", "", "success");
+                // 延遲 1 秒後刷新
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                // 處理刪除失敗的情況
             }
+        })
+        .catch(error => {
+            // 處理錯誤情況
         });
     }
 

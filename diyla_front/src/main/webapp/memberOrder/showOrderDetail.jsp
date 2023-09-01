@@ -31,14 +31,15 @@ body {
 
 /* 頁面容器 */
 .mainContent {
-	float: inherit; box-sizing : border-box;
+	float: inherit;
+	box-sizing: border-box;
 	width: 100%;
 	background-color: #fff;
 	padding: 20px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	box-sizing: border-box;
-	height: 
+	height:
 }
 
 /* 頁面標題 */
@@ -50,12 +51,10 @@ h1 {
 }
 
 /* 表格外觀 */
-
 .detailTable {
 	width: 100%;
 	border-collapse: collapse;
 	margin-bottom: 20px;
-
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
@@ -66,19 +65,16 @@ h1 {
 	background-color: #f2f2f2;
 	text-align: center;
 	border-radius: 5px;
-
 }
 
 .title td {
 	padding: 10px;
 	font-weight: bold;
-
 	border-bottom: 1px solid #ccc;
 	border-radius: 5px;
 }
 
 /* 表格內容行 */
-
 tr {
 	border-bottom: 1px solid #ccc;
 }
@@ -123,16 +119,30 @@ a:hover {
 }
 
 .goshop {
-	display: block;
+	display: inline;
 	width: 150px; /* 設定連結寬度 */
-	margin: 0 auto; /* 水平置中 */
+	margin: 10px 0; /* 水平置中 */
 	padding: 10px 20px;
 	background-color: #337ab7;
 	color: white;
 	border-radius: 5px;
 	text-align: center; /* 文字置中 */
 	transition: background-color 0.3s;
+	justify-content: center;
+	margin-left: 480px;
+}
 
+.commentButton {
+	display: inline;
+	width: 150px; /* 設定連結寬度 */
+	margin: 10px 20px; /* 水平置中 */
+	padding: 7px 7px;
+	background-color: #337ab7;
+	color: white;
+	border-radius: 5px;
+	text-align: center; /* 文字置中 */
+	transition: background-color 0.3s;
+	justify-content: center;
 }
 </style>
 </head>
@@ -164,12 +174,12 @@ a:hover {
 				</tr>
 			</c:forEach>
 		</table>
-		<p>
+		<p class="pblock">
 
 			<a href="${ctxPath}/shop/CommodityController?action=listAll"
 				class="goshop">繼續購物</a>
+			<button type="button" class="commentButton">新增評論</button>
 		</p>
-
 	</div>
 	<jsp:include page="../front_footer.jsp" />
 
