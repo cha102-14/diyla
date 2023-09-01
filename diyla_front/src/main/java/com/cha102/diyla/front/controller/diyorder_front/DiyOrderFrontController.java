@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyOrder.DiyOrderVO;
+import com.cha102.diyla.diycatemodel.DiyCateVO;
 
 @WebServlet("/diyOrder/DiyOrderFrontController")
 public class DiyOrderFrontController extends HttpServlet {
@@ -33,6 +34,7 @@ public class DiyOrderFrontController extends HttpServlet {
 		if ("getAllOrderByMemId_front".equals(action)) { // done
 			DiyOrderService DOser = new DiyOrderService();
 			List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(Integer.valueOf(req.getParameter("memId")));
+//			DiyCateVO diyCateVO = new DiyCateVO();
 			System.out.println(diyOrderList);
 
 			req.setAttribute("diyOrderList", diyOrderList); // 資料庫取出的empVO物件,存入req
@@ -53,25 +55,10 @@ public class DiyOrderFrontController extends HttpServlet {
 			successView.forward(req, res);
 		}
 		
-		
-		
-		
-		// 找單筆訂單準備要update
-		if ("getOne_For_Update_front".equals(action)) { // done
 
-			Integer diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
-			DiyOrderService DOser = new DiyOrderService();
-			DiyOrderVO DiyOrderVO = DOser.getOneDO(diyOrderNo);
-			req.setAttribute("DiyOrderVO", DiyOrderVO);
-
-			String url = "/diyOrder/updateod_front.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
-		}
-		
-
-		// update完導向到首頁
-		if ("update_front".equals(action)) { // done
+		// diyOrder燈箱update 聯絡資訊 完導向到diyOrder(訂單總攬)  done
+		if ("update_contact".equals(action)) {
+			
 
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
 			String contactPerson = req.getParameter("contactPerson");
@@ -85,47 +72,74 @@ public class DiyOrderFrontController extends HttpServlet {
 
 			DOser.upOD(diyOrderVO);
 
-			List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(Integer.valueOf(req.getParameter("memId")));
+			List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(diyOrderVO.getMemId());
 
+			
 			req.setAttribute("diyOrderList", diyOrderList); // 資料庫取出的empVO物件,存入req
+			req.setAttribute("uuu", 1);
 			String url = "/diyOrder/diyOrder.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
 		}
+		
+		
 
-		// 準備要取消訂單
-		if ("cancel_order_front".equals(action)) { // done
+		// 準備要取消訂單(判斷有無三天)
+		if ("cancel_order".equals(action)) { // done
 
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
-			
-			Date currentDate = new Date(System.currentTimeMillis());
+			int refund_qual = Integer.valueOf(req.getParameter("refund_qual"));
+//			Date currentDate = new Date(System.currentTimeMillis());
 			Date diyReserveDate = Date.valueOf(req.getParameter("diyReserveDate"));
+			String diyPeriod1 = req.getParameter("diyPeriod1");
 			DiyOrderService DOser = new DiyOrderService();
+			System.out.println(diyOrderNo);
 			DiyOrderVO diyOrderVO = DOser.getOneDO(diyOrderNo);
+			System.out.println(diyOrderVO);
+			System.out.println(diyReserveDate);
+			
 			
 			// 計算日期差距（以天為單位）
-	        long differenceInMilliseconds = diyReserveDate.getTime() - currentDate.getTime();
-	        long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMilliseconds);
+//	        long differenceInMilliseconds = diyReserveDate.getTime() - currentDate.getTime();
+//	        long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMilliseconds);
 
 	        // 比較差距與 3 天
-	        if (differenceInDays > 3) {
+	        if (refund_qual == 1) {
 	            System.out.println("可正常退款");
 	            
-	            diyOrderVO.setReservationStatus(1);    
+	            diyOrderVO.setReservationStatus(1);
+	            System.out.println(diyOrderVO);
+	            DOser.upOD(diyOrderVO);
 	            
+	            List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(diyOrderVO.getMemId());
+	            req.setAttribute("diyOrderList", diyOrderList);
+	            req.setAttribute("DiyOrderVO", diyOrderVO);
+	            req.setAttribute("refund_check", 1);
+	            req.setAttribute("diyReserveDate", diyReserveDate);
+	            req.setAttribute("diyPeriod", diyPeriod1);
+
+				String url = "/diyOrder/diyOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);  	            
 	        } else {
 	            System.out.println("不能退款");
+		        
+	            diyOrderVO.setReservationStatus(3);
+	            diyOrderVO.setPaymentStatus(2);
+	            System.out.println(diyOrderVO);
+	            DOser.upOD(diyOrderVO);
 	            
-	            diyOrderVO.setReservationStatus(3);   
-	        }
-			
-	        DOser.upOD(diyOrderVO);
-	        
-			req.setAttribute("DiyOrderVO", diyOrderVO);
+	            List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(diyOrderVO.getMemId());
+	            req.setAttribute("diyOrderList", diyOrderList);
+	            req.setAttribute("DiyOrderVO", diyOrderVO);
+	            req.setAttribute("refund_check", 2);
+	            req.setAttribute("diyReserveDate", diyReserveDate);
+	            req.setAttribute("diyPeriod", diyPeriod1);
 
-			String url = "/diyOrder/deleteod_front.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
+				String url = "/diyOrder/diyOrder.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				successView.forward(req, res);  
+	        }
 		}
 
 		// 取消訂單前確認
