@@ -239,14 +239,38 @@ a:focus {
 }
 
 .user_option a {
-  margin-right: 25px;
+  margin-right: 5px;
   color: #FCE5CD;
 }
 
-.user_option a span {
-  margin-left: 5px;
+
+/* 通知 */
+.badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #FCE5CD;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content p {
+  color:#B26021;
+  padding: 10px;
+  margin: 0;
+  border-bottom: 1px solid #B26021;
 }
 /*end header section*/
+
+
 
 .slider_container{
   height: 73vh;
