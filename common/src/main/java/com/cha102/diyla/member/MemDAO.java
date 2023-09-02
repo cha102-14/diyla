@@ -119,8 +119,8 @@ public class MemDAO implements MemDAO_interface {
 //            pre.setInt(11, memVo.getRpmsgCount());
 //            pre.setInt(12, memVo.getMemId());
             pre = con.prepareStatement(
-                    "UPDATE member set mem_password=?,mem_phone=?,mem_address=? where mem_id = ?");
-            pre.setString(1, memVo.getMemPassword());
+                    "UPDATE member set mem_name=?,mem_phone=?,mem_address=? where mem_id = ?");
+            pre.setString(1, memVo.getMemName());
             pre.setString(2, memVo.getMemPhone());
             pre.setString(3, memVo.getMemAddress());
             pre.setInt(4, memVo.getMemId());

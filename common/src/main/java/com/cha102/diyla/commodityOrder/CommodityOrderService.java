@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.cha102.diyla.member.MemDAO;
 import com.cha102.diyla.shoppingcart.ShoppingCartService;
 import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 public class CommodityOrderService {
 	CommodityOrderDaoJNDI dao = new CommodityOrderDaoJNDI();
+
+	public CommodityOrderService(){dao = new CommodityOrderDaoJNDI();}
+
 
 	public void updateStatus(Integer status, Integer orderNO) {
 		dao.updateStatus( status,  orderNO);
