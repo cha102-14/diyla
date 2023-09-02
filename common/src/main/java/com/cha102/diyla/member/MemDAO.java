@@ -457,4 +457,33 @@ public class MemDAO implements MemDAO_interface {
 //
 //
 //    }
+    @Override
+public void reportCount(Integer mem_id) {
+    Connection con = null;
+    PreparedStatement pre = null;
+
+    try {
+        con = ds.getConnection();
+        pre = con.prepareStatement("UPDATE member SET rpmsg_count=(rpmsg_count + 1) WHERE mem_id =?");
+        pre.setInt(1, mem_id);
+        pre.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (pre != null) {
+            try {
+                pre.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+}
 }

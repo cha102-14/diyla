@@ -2,6 +2,7 @@
 <%@ page import="com.cha102.diyla.articleModel.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     ArtService artSvc = new ArtService();
     Integer memId = (Integer)session.getAttribute("memId");
@@ -64,10 +65,6 @@
         button:hover {
             background-color: #333;
         }
-
-        th#th_time {
-            width: 80px;
-        }
     </style>
 
 
@@ -83,14 +80,14 @@
                 <tr>
                     <th>文章標題</th>
                     <th>文章圖片</th>
-                    <th id="th_context">文章內容</th>
-                    <th id="th_time">發表時間</th>
+                    <th>文章內容</th>
+                    <th>發表時間</th>
+                    <th>審核狀態</th>
                     <th>操作</th>
                 </tr>
             </thead>
             <tbody id="content">
                 <c:forEach var="artVO" items="${list}">
-
                     <tr>
                         <td>${artVO.artTitle}</td>
                         <c:choose>
@@ -121,7 +118,18 @@
                                 </c:choose>
                             </div>
                         </td>
-                        <td>${artVO.artTime}</td>
+                        <c:choose>
+                            <c:when test="${(artVO.artStatus) == 1}">
+                                <td>審核通過、已發送代幣</td>
+                            </c:when>
+                            <c:when test="${(artVO.artStatus) == 2}">
+                                <td>審核通過、未發送代幣</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>審核中</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <td><fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                         <td>
                             <form method="post" action="ArtController">
                                 <input type="hidden" name="artNo" value="${artVO.artNo}">

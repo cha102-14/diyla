@@ -115,6 +115,7 @@
                     <td>
                         <form method="post" action="successRpMsg" modelAttribute="ArtRpMsgVO">
                             <input type="hidden" name="msgNo" value="${ArtDTO.msgNo}">
+                            <input type="hidden" name="memId" value="${ArtDTO.memId}">
                             <input type="hidden" name="rpMsgNo" value="${ArtDTO.rpMsgNo}">
                             <button type="submit" class="pass"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="lightgreen" class="w-6 h-6"

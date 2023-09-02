@@ -2,18 +2,17 @@ package com.cha102.diyla.member;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MemberService {
 	private MemDAO_interface dao;
-	
+
 	public MemberService() {
 
 		dao = new MemDAO();
 	}
-	
+
 	public MemVO addMem(List<String> exMsgs,String mem_name,String mem_email,String mem_password,String mem_phone,java.sql.Date mem_birthday,Integer mem_gender,String mem_address) {
 		MemVO mem = new MemVO();
 		mem.setMemName(mem_name);
@@ -76,7 +75,7 @@ public class MemberService {
 
 
 	}
-	
+
 	public MemVO updateMem(Map<String,String> exMsgs, String mem_name, String mem_phone, String mem_address,Integer mem_id) {
 		MemVO mem = new MemVO();
 		mem.setMemName(mem_name);
@@ -110,7 +109,7 @@ public class MemberService {
 		}
 
 		return dao.findByPrimaryKey(mem_id);
-		
+
 	}
 
 	public MemVO updateNewPw(List<String> exMsgs,String mem_password,String mem_email){
@@ -136,15 +135,15 @@ public class MemberService {
 
 		return mem;
 	}
-	
+
 	public void deleteMem(Integer memId) {
 		dao.delete(memId);
 	}
-	
+
 	public MemVO selectMem(Integer memId) {
 		return dao.findByPrimaryKey(memId);
 	}
-	
+
 	public List<MemVO> selectAll(){
 		return dao.getAll();
 	}
@@ -223,5 +222,5 @@ public class MemberService {
 
 	}
 
-
+	public void reportCount(Integer memId){dao.reportCount(memId);}
 }

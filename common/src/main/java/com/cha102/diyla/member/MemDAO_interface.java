@@ -18,6 +18,6 @@ public interface MemDAO_interface {
 	public MemVO selectPw(String memEmail,String memPhone);
 
 	public void updateStatus(String email);
-	
-	
+
+	public void reportCount(Integer mem_id);
 }
