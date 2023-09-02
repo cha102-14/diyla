@@ -28,6 +28,9 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 			e.printStackTrace();
 		}
 	}
+	public static final String URL = "jdbc:mysql://localhost:3306/diyla?";
+	public static final String USER = "root";
+	public static final String PASSWORD = "123456";
 	public static final String INSERT = "INSERT INTO commodity_order (MEM_ID,ORDER_STATUS,ORDER_PRICE,DISCOUNT_PRICE,ACTUAL_PRICE,RECIPIENT,RECIPIENT_ADDRESS,PHONE) VALUES (?,?,?,?,?,?,?,?);";
 	public static final String DLEETE = "SELECT * FROM commodity_order WHERE ORDER_NO = ? ";
 	public static final String UPDATE_STATUS = "UPDATE commodity_order SET ORDER_STATUS = ? where ORDER_NO = ?";
@@ -35,15 +38,18 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 	public static final String GET_ALL_BY_MEMID = "SELECT * FROM commodity_order WHERE MEM_ID = ?";
 	public static final String FIND_BY_ORDER_NO = "SELECT * FROM commodity_order WHERE ORDER_NO = ?";
 	public static final String GET_ALL = "SELECT * FROM commodity_order";
-
-	public int insert(CommodityOrderVO commodityOrderVO) {
+//	public static final String INSERT_DETAIL ="INSERT INTO";
+	
+	public int insertAll(CommodityOrderVO commodityOrderVO, Connection conn) {
 		Integer generatedOrderNo = -1;
+		PreparedStatement pstm = null;
 
-		try (Connection con = ds.getConnection();
-				PreparedStatement pstm = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);) {
-//			ShoppingCartService cartService = new ShoppingCartService();
-//			List<ShoppingCartVO> cartVOs = cartService.getAll(memId);
-//			Integer totalPrice = cartService.getTotalPrice(cartVOs);
+//		try (Connection con = ds.getConnection();
+//				PreparedStatement pstm = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);) {
+		try {
+
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            pstm = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			pstm.setInt(1, commodityOrderVO.getMemId());
 			// 先以未結帳做預設
 			pstm.setInt(2, commodityOrderVO.getOrderStatus());
@@ -59,6 +65,7 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 				try (ResultSet generatedKeys = pstm.getGeneratedKeys()) {
 					if (generatedKeys.next()) {
 						generatedOrderNo = generatedKeys.getInt(1); // 獲取自動生成的訂單編號
+						return generatedOrderNo;
 					}
 				}
 			}
@@ -195,33 +202,44 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 		return null;
 	}
 
-//	public List<CommodityOrderVO> sortBy(String sql) {
-//		List<CommodityOrderVO> commodityOrderlist = new ArrayList<CommodityOrderVO>();
-//		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(sql);) {
-//			CommodityOrderVO commodityOrderVO = null;
-//			try (ResultSet rs = pstm.executeQuery();) {
-//				while (rs.next()) {
-//					commodityOrderVO = new CommodityOrderVO();
-//					commodityOrderVO.setOrderNO(rs.getInt("ORDER_NO"));
-//					commodityOrderVO.setMemId(rs.getInt("MEM_ID"));
-//					commodityOrderVO.setOrderTime(rs.getTimestamp("ORDER_TIME"));
-//					commodityOrderVO.setOrderStatus(rs.getInt("ORDER_STATUS"));
-//					commodityOrderVO.setOrderPrice(rs.getInt("ORDER_PRICE"));
-//					commodityOrderVO.setDiscountPrice(rs.getInt("DISCOUNT_PRICE"));
-//					commodityOrderVO.setActualPrice(rs.getInt("ACTUAL_PRICE"));
-//					commodityOrderVO.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
-//					commodityOrderlist.add(commodityOrderVO);
-//				}
-//				return commodityOrderlist;
-//
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//	}
+	// 產生連線用
+	public Connection getConnectionForTx() throws SQLException {
+		return ds.getConnection();
+	}
+
+
+	public void insertDetail(Integer orderNo, List<ShoppingCartVO> shoppingCartList,Connection conn) {
+		StringBuffer sqlBuffer = new StringBuffer(
+				"INSERT INTO commodity_order_detail (ORDER_NO,COM_NO,COM_QUANTITY,COM_PRICE) VALUES (?,?,?,?)");
+		int size = shoppingCartList.size();
+		for (int i = 0; i < size - 1; i++) {
+			sqlBuffer.append(",(?,?,?,?)");
+		}
+		String sql = sqlBuffer.substring(0, sqlBuffer.length() - 1) + ");";
+		PreparedStatement pstm =null;
+		try {
+			pstm=conn.prepareStatement(sql);
+//		try (Connection con = ds.getConnection(); PreparedStatement pstm = con.prepareStatement(sql);)
+			for (int i = 0; i < size; i++) {
+				ShoppingCartVO shoppingCartVO = shoppingCartList.get(i);
+				int comPri = shoppingCartVO.getComPri();
+				int amount = shoppingCartVO.getComAmount();
+				int parameterIndex = i * 4;
+				pstm.setInt(1 + parameterIndex, orderNo);
+				pstm.setInt(2 + parameterIndex, shoppingCartVO.getComNo());
+				pstm.setInt(3 + parameterIndex, amount);
+				pstm.setInt(4 + parameterIndex, comPri * amount);
+			}
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public int insert(CommodityOrderVO commodityOrderVO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

@@ -332,8 +332,6 @@ CREATE TABLE DIY_CATE
 (
     DIY_NO            INT           NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT 'DIY品項編號',
     DIY_NAME          VARCHAR(20)   NOT NULL COMMENT 'DIY品項名稱',
-    DIY_GRA_PEOCOUNT  INT           NOT NULL COMMENT '評分總人數',
-    DIY_GRA_STARCOUNT INT           NOT NULL COMMENT '評分總星數',
     DIY_STATUS        TINYINT       NOT NULL DEFAULT 0 COMMENT '狀態，(0:上架，1:下架)',
     DIY_CATE_NAME     TINYINT       NOT NULL DEFAULT 0 COMMENT 'DIY類別，(0:小點心，1:蛋糕，2:塔派，3:生乳酪)',
     DIY_PIC           longblob COMMENT 'DIY圖片',

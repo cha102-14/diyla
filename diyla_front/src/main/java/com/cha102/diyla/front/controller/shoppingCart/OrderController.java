@@ -68,7 +68,6 @@ public class OrderController extends HttpServlet {
 				login.forward(req, res);
 			}
 			Integer memId = memVO.getMemId();
-//			=================		}
 			List<CommodityOrderVO> list = commodityOrderService.getAllByMemId(memId);
 			session.setAttribute("memId", memId);
 			session.setAttribute("commodityOrderVOList", list);
@@ -80,12 +79,9 @@ public class OrderController extends HttpServlet {
 		if ("showDetail".equals(action)) {
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
 			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
-//			List<Integer> comNoList = new ArrayList<>();
-//			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
-//				comNoList.add(commodityOrderDetailVO.getComNo());
-//			}
-//			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
-//			session.setAttribute("commodityList", commodityList);
+			CommodityOrderVO commodityOrderVO =commodityOrderService.findByOrderNo(orderNo);
+			session.setAttribute("orderTime", commodityOrderVO.getOrderTime());
+			session.setAttribute("orderNo", orderNo);
 			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/memberOrder/showOrderDetail.jsp");
 			dispatcher.forward(req, res);
@@ -155,13 +151,13 @@ public class OrderController extends HttpServlet {
 			List<ShoppingCartVO> shoppingCartList = shoppingCartService.getCartList(memId);
 			CommodityOrderVO commodityOrderVO = new CommodityOrderVO(memId, 0, totalPrice, tokenUse,
 					totalPrice - tokenUse, recipient, recipientAddress, phone);
-			Integer orderNo = commodityOrderService.insert(commodityOrderVO);
+			Integer orderNo = commodityOrderService.insert(commodityOrderVO,shoppingCartList);
 //			String memMail = memberService.selectMem(memId).getMemEmail();
 			String messageContent = "訂單詳情:\n" + "訂單編號:" + orderNo + "\n" + "收件人:" + recipient + "\n" + "收件地址:"
 					+ recipientAddress + "\n" + "購買日期:" + formattedDate + "\n" + "_____________________\n"
 					+ "DIYLA感謝您的訂購，我們將盡快將商品寄出";
 			mailService.sendMail("t1993626@gmail.com", "訂購成功", messageContent);
-			commodityOrderDetailService.insert(orderNo, shoppingCartList);
+//			commodityOrderDetailService.insert(orderNo, shoppingCartList);
 			// 訂單生成清空購物車
 			shoppingCartService.clear(memId);
 			res.sendRedirect(req.getContextPath() + "/checkout/checkoutSucess.jsp");

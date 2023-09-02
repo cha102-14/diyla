@@ -1,11 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.cha102.diyla.articleModel.*"%>
 <%@ page import="java.util.*"%>
+<%@ page import="java.text.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     ArtService artSvc = new ArtService();
     List<ArtVO> list = artSvc.getAllArt();
     pageContext.setAttribute("list",list);
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,6 +74,12 @@
         div#art_wrapper {
             margin: 6px 0;
         }
+
+        .showall_button a {
+            text-decoration: none;
+            padding: 10px;
+            color: white;
+        }
     </style>
 
 
@@ -109,29 +118,30 @@
                     <td>
                         <div class="art_Content">
                             <c:choose>
-                                <c:when test="${artVO.artContext.length() > 100}">
-                                    <p class="${content_0_100 + artVO.artNo}">${artVO.artContext.substring(0, 100)}
+                                <c:when test="${artVO.artContext.length() > 30}">
+                                    <p class="${content_0_100}">${artVO.artContext.substring(0, 30)}
                                     </p>
-                                    <p class="${allContent + artVO.artNo}" style="display: none;">
-                                        ${artVO.artContext}</p>
-                                    <button type="button" class="showall_button"
-                                        onclick="showMore(${artVO.artNo})">顯示更多</button>
-                                    <button type="button" class="showpart_button" style="display: none;"
-                                        onclick="showless(${artVO.artNo})">顯示較少</button>
                                 </c:when>
                                 <c:otherwise>
                                     <p>${artVO.artContext}</p>
                                 </c:otherwise>
                             </c:choose>
+                            <form action="select" method="post" modelAttribute="ArtMsgVO">
+                            <input type=hidden name="artNo" value="${artVO.artNo}">
+                            <input name="memId" type="hidden" value="${memId}"/>
+                            <input type=hidden name="action" value="selectone">
+                            <button type="submit" class="showall_button">查看完整貼文</button>
+                            </form>
                         </div>
                     </td>
-                    <td>${artVO.artTime}</td>
+                    <td><fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                 </tr>
             </c:forEach>
         <tbody>
     </table>
     <jsp:include page="/front_footer.jsp" />
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script><!-- ●●js  for jquery datatables 用 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- ●●js  for jquery datatables 用 -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <!-- ●●js  for jquery datatables 用 -->
     <script>
@@ -165,19 +175,6 @@
                 }
             });
         });
-        function showMore(artNo) {
-            $('.content_0_100' + artNo).css('display', 'none');
-            $('.allContent' + artNo).css('display', 'block');
-            $('.showall_button' + artNo).css('display', 'none');
-            $('.showpart_button' + artNo).css('display', 'block');
-        }
-
-        function showless(artNo) {
-            $('.content_0_100' + artNo).css('display', 'block');
-            $('.allContent' + artNo).css('display', 'none');
-            $('.showall_button' + artNo).css('display', 'block');
-            $('.showpart_button' + artNo).css('display', 'none');
-        }
 
     </script>
 </body>

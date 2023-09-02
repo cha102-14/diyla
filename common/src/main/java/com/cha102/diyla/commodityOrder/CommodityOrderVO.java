@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,10 +44,13 @@ public class CommodityOrderVO {
 	private Integer actualPrice;
 	@Column(name = "UPDATE_TIME")
 	private Timestamp updateTime;
+	@NotEmpty(message = "收件人不得為空")
 	@Column(name = "RECIPIENT")
 	private String recipient;
+	@NotEmpty(message = "收件地址不得為空")
 	@Column(name = "RECIPIENT_ADDRESS")
 	private String recipientAddress;
+	@Pattern(regexp = "^09\\d{8}$", message = "電話格式有誤")
 	@Column(name = "PHONE")
 	private String phone;
 

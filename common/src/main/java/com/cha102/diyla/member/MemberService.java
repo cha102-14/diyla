@@ -77,19 +77,19 @@ public class MemberService {
 
 	}
 	
-	public MemVO updateMem(Map<String,String> exMsgs, String mem_password, String mem_phone, String mem_address,Integer mem_id) {
+	public MemVO updateMem(Map<String,String> exMsgs, String mem_name, String mem_phone, String mem_address,Integer mem_id) {
 		MemVO mem = new MemVO();
-		mem.setMemPassword(mem_password);
+		mem.setMemName(mem_name);
 		mem.setMemPhone(mem_phone);
 		mem.setMemAddress(mem_address);
 		mem.setMemId(mem_id);
 
-		String pwReg = "^\\w{6,12}$";
-		if (mem_password == null || (mem_password.trim()).length()==0){
-			exMsgs.put("memPassword","請輸入密碼");
-		} else if (!(mem_password.matches(pwReg))){
-			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
-		}
+//		String pwReg = "^\\w{6,12}$";
+//		if (mem_password == null || (mem_password.trim()).length()==0){
+//			exMsgs.put("memPassword","請輸入密碼");
+//		} else if (!(mem_password.matches(pwReg))){
+//			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
+//		}
 
 		String phoneReg ="^\\d{10,}$";
 		if (mem_phone == null || (mem_phone.trim()).length()==0){

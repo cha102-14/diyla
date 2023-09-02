@@ -61,13 +61,13 @@ public class DiyCateEntity {
     public String getDiyCategoryDisplayName() {
         switch (diyCategoryName) {
             case 0:
-                return "其他";
+                return "小點心";
             case 1:
                 return "蛋糕";
             case 2:
-                return "派餅";
+                return "派塔";
             case 3:
-                return "麵包";
+                return "生乳酪";
             default:
                 return "未知";
         }

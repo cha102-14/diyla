@@ -7,6 +7,17 @@
 
 <head>
     <!-- Basic -->
+    <style>
+        .custom-popup {
+            border: 2px solid orange;
+        }
+
+        .custom-popup p {
+
+            font-size: 16px; /* 調整字體大小 */
+
+        }
+    </style>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <!-- Mobile Metas -->
@@ -29,7 +40,7 @@
     <link rel="stylesheet" href="/diyla_front/diy/css/responsive.css">
 
     <title>
-        商店
+        DIY訂位
     </title>
 
     <!-- slider stylesheet -->
@@ -70,7 +81,7 @@
                                 }
                             </style>
                             <div class="tf__reservation_input_single">
-                                <label for="name">Food items</label>
+                                <label for="name">您選擇的diy項目</label>
                                 <!--<input type="text" style="height: 110px;" id="name" placeholder="蛋糕、餅乾...">-->
                                 <textarea rows="4" cols="10" style="height: 110px; text-align: left"
                                           placeholder="蛋糕、餅乾...">
@@ -83,26 +94,26 @@
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label for="name">name</label>
+                                        <label for="name">姓名</label>
                                         <input type="text" id="name" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label for="phone">phone</label>
+                                        <label for="phone">電話</label>
                                         <input type="text" id="phone" placeholder="Phone">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label for="date">select date</label>
+                                        <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
                                         <input type="text" id="ID-laydate-mark" placeholder="yyyy-MM-dd">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label>select time</label>
+                                        <label>選擇時段</label>
                                         <select id="select_time" class="reservation_input select_js">
                                             <option value="" disabled="true">select</option>
                                             <option value="0">09.00 am to 12.00 pm</option>
@@ -113,7 +124,7 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
-                                        <label>select person</label><br>
+                                        <label>選擇人數</label><br>
                                         <select class="reservation_input select_js">
                                             <option value="">select</option>
                                             <option value="1">1 person</option>
@@ -128,8 +139,10 @@
                                     </div>
                                 </div>
                                 <div class="tf__reservation_input_single">
-                                    <label for="name">Total</label>
-                                    <input type="text" id="name" placeholder="品項總金額+人頭費用(100/人)">
+
+                                    <label for="name">總金額</label>
+
+                                    <input type="text" id="amount" placeholder="品項總金額">
                                 </div>
                                 <div class="col-xl-12">
                                     <button type="button" class="common_btn">訂位確認</button>
@@ -170,15 +183,14 @@
             $.ajax({
                 url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
                 data: {
-                    // endDate: selectedDate, // 使用選擇的日期作為結束日期
-                    period: 0 // 替換為所需的時間段
+                    // endDate: selectedDate,
+                    period: 0
                 },
                 success: function (data) {
 
                     let mar = {};
 
                     let mars = [];
-
 
                     for (let x in data) {
                         let itemQuantity = 0;
@@ -196,16 +208,15 @@
                         }
 
                     }
-                    // 在這裡處理接收到的 JSON 資料並更新日期選擇框的內容
-                    // 可以使用 mark: {} 來自定義標記的日期
 
+                    // 處理接收到的 JSON 資料並更新日期選擇框的內容
                     laydate.render({
                         elem: '#ID-laydate-mark',
                         min: 0,
                         max: 60,
                         mark: mar, // 使用接收到的資料來標記日期
                         done: function (value, date) {
-                            // 您的 done 函式邏輯
+
                             for (let key in mar) {
                                 if (key === value) {
                                     layer.msg("無法選擇該日期！", {icon: 2});
@@ -220,10 +231,9 @@
                                 }
                             }
 
-                            // 移除所有選項的 disabled 屬性
                             $("#select_time option").prop("disabled", false);
 
-                            // 設定是否不可選
+
                             $("#select_time option").each(function() {
                                 let value = $(this).val();
 
@@ -235,6 +245,7 @@
                                 }
                             });
 
+
                         }
                     });
                 },
@@ -244,8 +255,72 @@
                 }
             });
         });
-    });
 
+    });
+    $('.common_btn').on('click', function () {
+        const name = $('#name').val();
+        const phone = $('#phone').val();
+        const amount = $('#amount').val();
+        const selectedDate = $('#ID-laydate-mark').val();
+        const selectedPeriod = $('#select_time option:selected').text();
+        const selectedPeople = $('.select_js').last().val();
+
+        // 驗證是否選擇了日期 時段 人數
+        if (!selectedDate || !selectedPeriod || !selectedPeople) {
+            layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
+            return; // 阻止继续操作
+        }
+
+
+
+        const formHtml =
+            '<form method="post" action="http://localhost:8081/diyla_front/checkout/ecpay">' +
+            '<div id="pop">' +
+            '<p>姓名: ' + name + '</p>' +
+            '<p>電話: ' + phone + '</p>' +
+            '<p>訂位日期: ' + selectedDate + '</p>' +
+            '<p>訂位時段: ' + selectedPeriod + '</p>' +
+            '<p>您選擇的diy項目: 黑森林蛋糕</p>' +
+            '<p>人數: ' + selectedPeople + '</p>' +
+            '<input type="hidden" name="tradeDesc" value="黑森林蛋糕" >'+
+            '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
+            '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
+            '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
+            '<input type="hidden" name="cardrecipient" value="luke" >'+
+            '<input type="hidden" name="cardrecipientAddress" value="" >'+
+            '<input type="hidden" name="cardrecipientAddress" value="" >'+
+            '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
+            '<input type="hidden" name="tokenUse" value="1" >'+
+            '</div>' +
+            '<div class="buttons">' +
+            '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
+            '<button id="cancelButton" class="btn btn-secondary">取消</button>' +
+            '</div>'
+        '</form>'
+        ;
+
+        var popup = layer.open({
+            type: 1,
+            title: '訂位確認',
+            content: formHtml,
+            area: ['400px', '350px'],
+            shadeClose: true,
+        });
+
+        // 關閉彈窗
+        $('#cancelButton, .layui-layer-close').on('click', function () {
+            layer.close(popup);
+        });
+
+        // 付款按紐
+        $('#payButton').on('click', function () {
+            // 添加付款邏輯
+            // ...
+
+            // 跳轉到綠界
+            //window.location.href = 'index.jsp';
+        });
+    });
 
 </script>
 

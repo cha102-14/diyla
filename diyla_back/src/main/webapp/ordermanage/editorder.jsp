@@ -19,17 +19,17 @@ body {
 	background-color: #f4f4f4;
 }
 
-.topPage {
-	text-align: center;
-	padding: 10px;
-	background-color: #333;
-	color: white;
-}
+/* .topPage { */
+/* 	text-align: center; */
+/* 	padding: 10px; */
+/* 	background-color: #333; */
+/* 	color: white; */
+/* } */
 
 /* 編輯表單區域 */
 .editform {
 	width: 400px;
-	margin: 0 auto;
+	margin: 50px 500px;
 	padding: 20px;
 	background-color: #f5f5f5;
 	border: 1px solid #ccc;
@@ -53,6 +53,7 @@ body {
 	width: 120px;
 	font-weight: bold;
 }
+
 .info input[type="text"], .info input[type="datetime"], .info select {
 	width: 100%;
 	padding: 8px;
@@ -81,9 +82,22 @@ body {
 
 /* 按鈕樣式 */
 .submit-button {
-	display: block;
-	width: 100%;
+	display: inline-block;
+	width: 48%;
 	background-color: #4caf50;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	transition: background-color 0.3s;
+}
+
+.cancel-button {
+	display: inline-block;
+	width: 48%;
+	background-color: red;
 	color: white;
 	padding: 10px;
 	border: none;
@@ -95,6 +109,17 @@ body {
 
 .submit-button:hover {
 	background-color: #45a049;
+}
+
+span.text {
+	padding: 7px 0px;
+	box-sizing: content-box;
+	width: 90px;
+}
+
+span.error {
+	color: red;
+	white-space: nowrap;
 }
 </style>
 </head>
@@ -108,31 +133,54 @@ body {
 			method="post">
 			<!-- commodityOrderVOList -->
 			<div class="info">
-				<span>訂單編號:</span> <input name="orderNO" value="${order.orderNO}"
-					type="text" readonly="readonly" class="fixed"> <span>會員編號:</span>
-				<input name="memId" value="${order.memId}" type="text"
-					readonly="readonly" class="fixed"> <span>訂單日期:</span>
+				<span class="text">訂單編號:</span> <input name="orderNO"
+					value="${order.orderNO}" type="text" readonly="readonly"
+					class="fixed"> <span class="text">會員編號:</span> <input
+					name="memId" value="${order.memId}" type="text" readonly="readonly"
+					class="fixed"> <span class="text">訂單日期:</span>
 				<p class="orderTime">
 					<fmt:formatDate value="${order.orderTime}" pattern="yyyy-MM-dd" />
 				</p>
-				<span>訂單狀態:</span> <select class="status" name="orderStatus">
+				<span class="text">訂單狀態:</span> <select class="status"
+					name="orderStatus">
 					<option value="0" ${order.orderStatus == 0 ? 'selected' : ''}>訂單成立</option>
 					<option value="1" ${order.orderStatus == 1 ? 'selected' : ''}>已付款</option>
 					<option value="2" ${order.orderStatus == 2 ? 'selected' : ''}>備貨中</option>
 					<option value="3" ${order.orderStatus == 3 ? 'selected' : ''}>已出貨</option>
 					<option value="4" ${order.orderStatus == 4 ? 'selected' : ''}>已完成</option>
 					<option value="5" ${order.orderStatus == 5 ? 'selected' : ''}>已取消</option>
-				</select> <span>金額:</span> <input name="orderPrice"
-					value="${order.actualPrice }" type="text"> <span>收件人:</span>
+				</select> <span class="text">金額:</span> <input name="orderPrice"
+					value="${order.actualPrice }" type="text" readonly="readonly">
+				<span class="text">收件人:</span>
+				<c:if test="${not empty ErrorMap && ErrorMap['recipient'] != null}">
+					<span class="error">${ErrorMap['recipient']}</span>
+				</c:if>
 				<input name="recipient" value="${order.recipient}" type="text">
-				<span>收件地址:</span> <input name="recipientAddress"
-					value="${order.recipientAddress }" type="text"> <span>連絡電話:</span>
-				<input name="phone" value="${order.phone }" type="text"> <input
+				<span class="text">收件地址:</span>
+				<c:if
+					test="${not empty ErrorMap && ErrorMap['recipientAddress'] != null}">
+					<span class="error">${ErrorMap['recipientAddress']}</span>
+				</c:if>
+				<input name="recipientAddress" value="${order.recipientAddress}"
+					type="text"> <span class="text">連絡電話:</span>
+				<c:if test="${not empty ErrorMap && ErrorMap['phone'] != null}">
+					<span class="error">${ErrorMap['phone']}</span>
+				</c:if>
+				<input name="phone" value="${order.phone}" type="text"> <input
 					name="action" value="editcomplete" type="hidden">
 				<button type="submit" class="submit-button">更新訂單</button>
+				<button type="button" class="cancel-button">取消更新</button>
+
 			</div>
 		</form>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		const cancelButton = $(".cancel-button");
 
+		cancelButton.click(function() {
+			window.history.back();
+		});
+	</script>
 </body>
 </html>

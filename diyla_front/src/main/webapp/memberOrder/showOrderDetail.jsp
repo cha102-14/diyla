@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,14 +33,16 @@ body {
 
 /* 頁面容器 */
 .mainContent {
-	float: inherit; box-sizing : border-box;
+	float: inherit;
+	box-sizing: border-box;
 	width: 100%;
 	background-color: #fff;
 	padding: 20px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	box-sizing: border-box;
-	height: 
+	min-height:575px;
+
 }
 
 /* 頁面標題 */
@@ -50,12 +54,10 @@ h1 {
 }
 
 /* 表格外觀 */
-
 .detailTable {
 	width: 100%;
 	border-collapse: collapse;
 	margin-bottom: 20px;
-
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
@@ -66,19 +68,16 @@ h1 {
 	background-color: #f2f2f2;
 	text-align: center;
 	border-radius: 5px;
-
 }
 
 .title td {
 	padding: 10px;
 	font-weight: bold;
-
 	border-bottom: 1px solid #ccc;
 	border-radius: 5px;
 }
 
 /* 表格內容行 */
-
 tr {
 	border-bottom: 1px solid #ccc;
 }
@@ -97,18 +96,15 @@ td {
 
 /* 連結樣式 */
 a {
-	color: #337ab7;
+	color: #272727;
 	text-decoration: none;
 	transition: color 0.3s;
 }
 
-a:hover {
-	color: #2d5aa9;
-	text-decoration: underline;
-}
+
 
 /* 繼續購物連結樣式 */
-.goshop, .backToOrder {
+.goshop {
 	display: inline-block;
 	padding: 10px 20px;
 	background-color: #337ab7;
@@ -123,16 +119,48 @@ a:hover {
 }
 
 .goshop {
-	display: block;
+	display: inline;
 	width: 150px; /* 設定連結寬度 */
-	margin: 0 auto; /* 水平置中 */
+	margin: 10px 0; /* 水平置中 */
 	padding: 10px 20px;
 	background-color: #337ab7;
 	color: white;
 	border-radius: 5px;
 	text-align: center; /* 文字置中 */
 	transition: background-color 0.3s;
+	justify-content: center;
+	margin-left: 500px;
+}
 
+.commentButton {
+	display: inline;
+	width: 150px; /* 設定連結寬度 */
+	margin: 10px 20px; /* 水平置中 */
+	padding: 7px 7px;
+	background-color: #00BB00;
+	color: white;
+	border-radius: 5px;
+	text-align: center; /* 文字置中 */
+	transition: background-color 0.3s;
+	justify-content: center;
+}
+.backToOrder{
+color:black;
+}
+.bar{
+padding:20px 5px;
+margin-top: 5px;
+margin-bottom: 25px;
+}
+.backLink{
+	font-size: 25px;
+}
+a.backLink:hover {
+	color:blue;
+}
+.orderNO{
+font-size: 20px;
+padding: 15px;
 }
 </style>
 </head>
@@ -141,35 +169,43 @@ a:hover {
 		<jsp:include page="../front_header.jsp" />
 	</div>
 	<div class="mainContent">
-		<h1>
-
-			<a href="${ctxPath}/memberOrder/memberOrder.jsp" class="backToOrder">回到我的訂單</a>
-
-		</h1>
+			<div class="bar">
+			<a href="${ctxPath}/index.jsp" class="backLink">首頁</a>
+			>
+			<a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" class="backLink">我的訂單</a>
+			>
+			<span class="backLink">訂單明細</span>
+			</div>
+			<hr>
+		<p class="orderNO">訂單編號:${orderNo}</p>
 		<table class="detailTable">
 			<tr class="title">
-				<td class="subtitle">訂單編號</td>
+				<td class="subtitle">購買日期</td>
 				<td class="subtitle">商品名稱</td>
 				<td class="subtitle">單價</td>
 				<td class="subtitle">數量</td>
 				<td class="subtitle">小計</td>
+				<td class="subtitle" style="width:70px;">評價</td>
 			</tr>
 			<c:forEach var="orderDetail" items="${commodityOrderDetailList}">
 				<tr>
-					<td>${orderDetail.orderNo}</td>
+					<td><fmt:formatDate value="${orderTime}" pattern="yyyy-MM-dd" /></td>
 					<td>${orderDetail.comName}</td>
 					<td>${orderDetail.unitPrice}</td>
 					<td>${orderDetail.comQuantity }</td>
 					<td>${orderDetail.unitPrice*orderDetail.comQuantity}</td>
+					<td><button type="button" class="commentButton">新增評論</button></td>				
 				</tr>
 			</c:forEach>
 		</table>
-		<p>
+		<hr>
+		<br>
+		<p class="pblock">
 
 			<a href="${ctxPath}/shop/CommodityController?action=listAll"
 				class="goshop">繼續購物</a>
+			<button type="button" class="commentButton">新增評論</button>
 		</p>
-
 	</div>
 	<jsp:include page="../front_footer.jsp" />
 

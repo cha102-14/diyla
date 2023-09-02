@@ -106,14 +106,14 @@
                             <div class="art_Content">
                                 <c:choose>
                                     <c:when test="${artVO.artContext.length() > 100}">
-                                        <p class="${content_0_100 + artVO.artNo}">${artVO.artContext.substring(0, 100)}
+                                        <p class="${content_0_100}">${artVO.artContext.substring(0, 100)}
                                         </p>
-                                        <p class="${allContent + artVO.artNo}" style="display: none;">
+                                        <p class="${allContent}" style="display: none;">
                                             ${artVO.artContext}</p>
                                         <button type="button" class="showall_button"
-                                            onclick="showMore(${artVO.artNo})">顯示更多</button>
+                                            onclick="showMore()">顯示更多</button>
                                         <button type="button" class="showpart_button" style="display: none;"
-                                            onclick="showless(${artVO.artNo})">顯示較少</button>
+                                            onclick="showless()">顯示較少</button>
                                     </c:when>
                                     <c:otherwise>
                                         <p>${artVO.artContext}</p>
@@ -178,19 +178,18 @@
                 }
             });
         });
-        function showMore(artNo) {
-            console.log('Show More clicked for artNo:', artNo);
-            $('.content_0_100' + artNo).css('display', 'none');
-            $('.allContent' + artNo).css('display', 'block');
-            $('.showall_button' + artNo).css('display', 'none');
-            $('.showpart_button' + artNo).css('display', 'block');
+        function showMore() {
+            $('.content_0_100').css('display', 'none');
+            $('.allContent').css('display', 'block');
+            $('.showall_button').css('display', 'none');
+            $('.showpart_button').css('display', 'block');
         }
 
-        function showless(artNo) {
-            $('.content_0_100' + artNo).css('display', 'block');
-            $('.allContent' + artNo).css('display', 'none');
-            $('.showall_button' + artNo).css('display', 'block');
-            $('.showpart_button' + artNo).css('display', 'none');
+        function showless() {
+            $('.content_0_100').css('display', 'block');
+            $('.allContent').css('display', 'none');
+            $('.showall_button').css('display', 'block');
+            $('.showpart_button').css('display', 'none');
         }
         function delete_art() {
             swal("確定要刪除貼文?", "請按確定刪除或按取消返回", {

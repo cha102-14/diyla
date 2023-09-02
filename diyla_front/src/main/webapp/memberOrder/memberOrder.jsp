@@ -56,7 +56,7 @@ th, td {
 }
 
 #main_content {
-	height: 800px;
+	min-height: 600px;
 	padding-top: 50px;
 	width: 100%;
 	margin: 20px auto;
@@ -217,6 +217,16 @@ div.goShopping {
 .goTopButton:hover {
 	background-color: #555;
 }
+p.discounted {
+    text-decoration: line-through !important;
+}
+p.hidden-actual-price {
+    display: none !important;
+}
+.orderPrice, .actualPrice{
+margin: 0px;
+padding: 0px;
+}
 </style>
 </head>
 <body>
@@ -248,7 +258,11 @@ div.goShopping {
 								varStatus="loop">
 								<tr class="order_content_title">
 									<td class="order_content">${orderVO.orderNO}</td>
-									<td class="order_content">${orderVO.actualPrice}</td>
+									<td class="order_content">
+<!-- 										<span>$</span> -->
+										<p class="orderPrice">$${orderVO.orderPrice}</p>
+										<p class="actualPrice">$${orderVO.actualPrice}</p>
+									</td>
 									<td class="order_content orderStatus"><span class="status">${orderVO.orderStatus}</span></td>
 									<td class="order_content"><fmt:formatDate
 											value="${orderVO.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -399,14 +413,16 @@ div.goShopping {
 		  $(".discountSymbol").each(function () {
 		        const $cell = $(this);
 		        //獲得discountPrice值
-		        const discountPrice = parseFloat($cell.text());
+		        const discountPrice = parseInt($cell.text());
+		        const $td = $cell.closest("td");
 				//有用代幣就打勾 沒用打x
 		        if (discountPrice == 0) {
-		            $cell.text("✘"); // X
+		            $cell.text("❌"); // X
 		        } else {
-		            $cell.text("✔"); // 打勾
+		            $cell.text("✅"); // 打勾
 		        }
 		    });
+
 
 		    });
 		 
@@ -414,7 +430,7 @@ div.goShopping {
 	<script>
 		$(document).ready(function() {$("#memberOrder").DataTable(
 			{
-				"lengthMenu" : [  3,5, 10 ],
+				"lengthMenu" : [   10 ],
 				"searching" : true, //搜尋功能, 預設是開啟
 				"paging" : true, //分頁功能, 預設是開啟
 				"ordering" : true, //排序功能, 預設是開啟
@@ -438,9 +454,41 @@ div.goShopping {
 						"sortAscending" : ": 升冪排列",
 						"sortDescending" : ": 降冪排列"
 													}
-												}
+												},
+												//讓分頁也渲染
+												 "drawCallback": function (settings) {
+												        handlePrice();
+												        handleOrderPrice();
+												    }
 
 											});
+		function handlePrice() {
+		    const actualPriceElements = document.querySelectorAll('.actualPrice');
+		    const orderPriceElements = document.querySelectorAll('.orderPrice');
+		    actualPriceElements.forEach(function (element) {
+		        const actualPrice = element.textContent;
+		        const orderPriceElement = element.previousElementSibling; 
+		        const orderPrice =orderPriceElement.textContent;
+		        console.log(actualPrice);
+		        console.log(orderPrice);
+		        if (actualPrice == orderPrice) {
+		            element.classList.add('hidden-actual-price');
+		        }
+		    });
+		}
+
+		function handleOrderPrice() {
+		    const orderPriceElements = document.querySelectorAll('.orderPrice');
+		    orderPriceElements.forEach(function (element) {
+		        const orderPrice = element.textContent;
+		        const actualPrice = element.nextElementSibling.textContent;
+		        if (actualPrice != orderPrice) {
+		            element.classList.add('discounted');
+		        }
+		    });
+		}
+		   handlePrice();
+		    handleOrderPrice();
 						});
 </script>
 

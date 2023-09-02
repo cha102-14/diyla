@@ -109,6 +109,8 @@
                     if (value === "gotoForum") {
                         // 使用者選擇前往個人論壇，導向相應頁面
                         window.location.href = "personalart.jsp";
+                    }else{
+                    window. history. back ();
                     }
                 });
             }

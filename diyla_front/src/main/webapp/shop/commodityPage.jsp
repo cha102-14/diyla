@@ -72,9 +72,8 @@
             </div>
         </div>
         <div class="filter-options">
-            <button>有評論</button>
-            <button>由最高到低</button>
-            <button>由最低到高</button>
+            <button onclick="sortComment('desc')">由最高到低</button>
+            <button onclick="sortComment('asc')">由最低到高</button>
         </div>
         <div class="commentArea" id="commentArea">
         </div>
@@ -92,10 +91,10 @@
 <script src="${ctxPath}/js/custom.js"></script>
 
 <script>
-    $(document).ready(function() {
     let commodityComments;
     let sum=0;
     let average=0;
+    $(document).ready(function() {
         axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}").then((res)=>{
             commodityComments=res.data
             for (i = 0; i < commodityComments.length; i++) {
@@ -120,6 +119,32 @@
             $('#averageRating').html("平均評分" + average);
     })
     });
+    function sortComment(sort) {
+        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort="+sort).then((res) => {
+            $('#commentArea').empty();
+            commodityComments = res.data
+            for (i = 0; i < commodityComments.length; i++) {
+
+                $('#commentArea').append(
+                    `  <div className="comment"  id="comment`+commodityComments[i].comCommentNo+`" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                        <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
+                            會員名稱：` + commodityComments[i].memName + `
+                            <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
+                        </div>
+                        <div className="date" style="color: #888;font-size: 0.8em;">` + commodityComments[i].commentTime + `</div>
+                        <div className="comment-content" style="margin-top: 10px;color: #333;">
+                            ` + commodityComments[i].comContent + `
+                        </div>
+                    </div>`
+                )
+            }
+
+            average = (sum / commodityComments.length).toFixed(1);
+            $('#averageRating').html("平均評分" + average);
+
+        })
+
+    }
 
 </script>
 
@@ -137,6 +162,7 @@
 <script>
     $("#addItem").click(function (e) {
         const button = $(this);
+        console.log("click");
         let memId = <%=session.getAttribute("memId")%>;
         if (memId == null) {
             e.preventDefault();
@@ -161,30 +187,32 @@
     });
 
     function addCartItem(memId, comNo, amount) {
-        $.ajax({
-            url: "ShoppingCartServlet",
-            type: "POST",
-            data: {
-                amount: amount,
-                comNo: comNo,
-                memId: memId,
-                action: "addItem"
+
+        fetch("http://localhost:8081/diyla_front/shop/insert", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            dataType: "json",
-            success: function (data) {
-                if (data.success) {
-                    swal("成功新增", "", "success");
-                    // 延遲 1 秒後刷新
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    // 處理刪除失敗的情況
-                }
-            },
-            error: function () {
-                // 處理AJAX錯誤的情況
+            body: JSON.stringify({
+               memId:memId,
+               comNo:comNo,
+               comAmount:amount
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                swal("成功新增", "", "success");
+                // 延遲 1 秒後刷新
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1500);
+            } else {
+                // 處理刪除失敗的情況
             }
+        })
+        .catch(error => {
+            // 處理錯誤情況
         });
     }
 

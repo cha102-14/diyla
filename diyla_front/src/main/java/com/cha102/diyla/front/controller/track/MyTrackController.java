@@ -17,11 +17,8 @@ import java.util.List;
 @Controller
 public class MyTrackController {
 
-
     @Autowired
     private CommodityTrackService service;
-
-
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/track/track")
@@ -31,14 +28,15 @@ public class MyTrackController {
 //        for (CommodityTrackDTO c : trackList) {
 //            System.out.println(c);
 //        }
-        req.setAttribute("trackList", trackList);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("trackList.jsp");
-        try {
-            requestDispatcher.forward(req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "trackList";
+        model.addAttribute("trackList",trackList);
+        return "/track/trackList.jsp";
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST,value="/track/del")
+    public String delTrack(@RequestParam("trackId")Integer trackId){
+        System.out.println(trackId);
+        service.deleteById(trackId);
+        return "/track/trackList.jsp";
     }
 }

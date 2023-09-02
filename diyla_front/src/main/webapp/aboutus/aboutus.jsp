@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page isELIgnored="false" %>
 <%@ page import="java.util.Base64"%>
 <%@ page import="redis.clients.jedis.Jedis"%>
 <%
@@ -9,10 +8,8 @@
     jedis.close();
 %>
 
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,7 +39,7 @@
                               <div class="text">
                                   <h2> About Us </h2>
                                   <span id="editContent" contenteditable="false">
-                                    <%= content %>
+                                     <%= content %>
                                   </span>
                                   <br><br>
                               </div>

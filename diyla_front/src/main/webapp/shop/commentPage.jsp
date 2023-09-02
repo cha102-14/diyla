@@ -12,12 +12,6 @@
             text-align: center;
         }
 
-        .rating {
-            unicode-bidi: bidi-override;
-            direction: rtl;
-            text-align: center;
-        }
-
         .rating > input {
             display: none;
         }

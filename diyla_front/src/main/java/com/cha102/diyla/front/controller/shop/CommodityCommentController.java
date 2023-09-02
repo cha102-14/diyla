@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -54,8 +55,11 @@ public class CommodityCommentController {
 
     @GetMapping("/commodityComment/get/{comNO}")
     @ResponseBody
-    public List<CommodityCommentVO> findAllByComNo(@PathVariable Integer comNO) {
-        return commodityCommentService.getAllByComNo(comNO);
+    public List<CommodityCommentVO> findAllByComNo(@PathVariable Integer comNO, HttpServletRequest request) {
+
+        String sort = request.getParameter("sort");
+        sort = sort == null ? "" : sort;
+        return commodityCommentService.getAllByComNo(comNO,sort);
     }
 
 }
