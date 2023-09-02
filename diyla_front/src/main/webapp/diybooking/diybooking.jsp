@@ -13,7 +13,9 @@
         }
 
         .custom-popup p {
-            font-size: 16px; /* 调整字体大小 */
+
+            font-size: 16px; /* 調整字體大小 */
+
         }
     </style>
     <meta charset="utf-8"/>
@@ -137,7 +139,9 @@
                                     </div>
                                 </div>
                                 <div class="tf__reservation_input_single">
-                                    <label for="name">Total</label>
+
+                                    <label for="name">總金額</label>
+
                                     <input type="text" id="amount" placeholder="品項總金額">
                                 </div>
                                 <div class="col-xl-12">

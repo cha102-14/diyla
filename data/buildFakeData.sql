@@ -153,15 +153,14 @@ values (10, 0, 1),
        (-5, 3, 1),
        (-3, 3, 2);
 
-INSERT INTO diy_cate ( DIY_NAME, DIY_GRA_PEOCOUNT, DIY_GRA_STARCOUNT
-                     , DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS, AMOUNT)
-VALUES ('乳酪蛋糕', 298, 5, 0, 3, '我是乳酪蛋糕', 700),
-       ('超大麵包', 34, 4, 0, 0, '我是大麵包', 450),
-       ('巧克力蛋糕', 150, 5, 0, 1, '巧克力做成的蛋糕', 600),
-       ('芒果蛋糕', 190, 4, 0, 1, '芒果做成的蛋糕', 550),
-       ('巧克力餅乾', 210, 5, 0, 0, '巧克力做成的餅乾', 450),
-       ('草莓蛋糕', 120, 5, 0, 1, '草莓做成的蛋糕', 790),
-       ('芒果泡芙', 100, 5, 1, 0, '芒果做成的泡芙', 660);
+INSERT INTO diy_cate ( DIY_NAME, DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS, AMOUNT)
+VALUES ('乳酪蛋糕', 0, 3, '我是乳酪蛋糕', 700),
+       ('超大麵包', 0, 0, '我是大麵包', 450),
+       ('巧克力蛋糕', 0, 1, '巧克力做成的蛋糕', 600),
+       ('芒果蛋糕', 0, 1, '芒果做成的蛋糕', 550),
+       ('巧克力餅乾', 0, 0, '巧克力做成的餅乾', 450),
+       ('草莓蛋糕', 0, 1, '草莓做成的蛋糕', 790),
+       ('芒果泡芙', 1, 0, '芒果做成的泡芙', 660);
 
 INSERT INTO diy_order (MEM_ID, DIY_NO, CONTACT_PERSON, CONTACT_PHONE, RESERVATION_NUM, DIY_PERIOD, DIY_RESERVE_DATE,
                        CREATE_TIME, RESERVATION_STATUS, PAYMENT_STATUS, DIY_PRICE)
