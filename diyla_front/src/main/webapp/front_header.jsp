@@ -69,6 +69,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav  ">
                     <li class="nav-item ">
+                        <a class="nav-link" href="${ctxPath}/latestnews/lat.jsp">最新消息
+                            <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link" href="${ctxPath}/aboutus/aboutus.jsp">關於我們
                             <span class="sr-only">(current)</span></a>
                     </li>
@@ -106,6 +110,10 @@
                         <a class="nav-link" href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" id="myOrder">
                             我的訂單
                         </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="${ctxPath}/contactus/contactus.jsp">聯絡我們
+                            <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <div class="user_option">

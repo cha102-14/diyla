@@ -20,7 +20,7 @@
     <div class="lathome">
     <ul>
         <li class="li">
-          <a class="a" href='getlistone.jsp'>查詢全部最新公告</a>
+          <a class="a" href='latall.jsp'>查詢全部最新公告</a>
         </li>
 
         <li class="li">
