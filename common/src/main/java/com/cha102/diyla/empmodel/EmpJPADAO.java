@@ -37,4 +37,15 @@ public interface EmpJPADAO extends JpaRepository<EmpVO, Long> {
             value = "SELECT DISTINCT f.TYPE_FUN, a.EMP_ID FROM diyla.backstage_auth a join diyla.backstage_fun f on a.AUTH_ID = f.AUTH_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
     List<Object[]> validEmpLogin(String empAccount, String empPassword);
 
+    @Query(nativeQuery = true,value = "SELECT COUNT(1) FROM employee WHERE EMP_EMAIL = ?1")
+    Integer checkEmail(String empEmail);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true,
+           value = "UPDATE employee set EMP_PASSWORD=?2 WHERE EMP_EMAIL=?1")
+    Integer reserPassword(String userEmail,String newPassword);
+
+
+
 }

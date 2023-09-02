@@ -5,6 +5,9 @@ import com.cha102.diyla.empmodel.EmpJPADAO;
 import com.cha102.diyla.empmodel.EmpSpringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -44,9 +47,27 @@ public class EmpController {
         empSpringService.logout(empId, req, resp);
     }
 
+    @PostMapping("/forgetPassword")
+    public String empResetPassword(@RequestBody String empEmail, HttpServletRequest req, HttpServletResponse resp){
+        return empSpringService.compareEmpEmail(empEmail,req,resp);
+    }
 
-//    @PostMapping("/memLogin")
-//    public void memLogin
+    @PostMapping("/validCode")
+    public void validCodeResetPassword(HttpServletRequest req,HttpServletResponse resp, @RequestParam("valid") String validCode, @RequestParam("resetPassword")String resetPassword, @RequestParam("doubleCheckPassword")String doubleCheckPassword){
+        if (resetPassword.equals(doubleCheckPassword)){
+        empSpringService.queryValidCodeResetPassword(validCode,doubleCheckPassword, req,resp);
+        }else {
+//            密碼不相符,請重新確認密碼
+            req.setAttribute("password",true);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("empResetPassword.jsp");
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 
 //  示範用SpringDataJPA 取得資料
