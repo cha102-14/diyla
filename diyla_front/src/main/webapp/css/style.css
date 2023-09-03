@@ -246,7 +246,7 @@ a:focus {
 
 /* 通知 */
 .badge {
-  background-color: red;
+  background-color: #ffc107;
   color: white;
   border-radius: 50%;
   padding: 5px 10px;
