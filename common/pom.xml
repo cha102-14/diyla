@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-            <version>3.1.0</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- javax.validation -->                             <!-- spring-boot(2.7.0) 已內建依賴，但預設未下載 -->
