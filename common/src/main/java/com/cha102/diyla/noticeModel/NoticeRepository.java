@@ -8,5 +8,7 @@ import java.util.List;
 @Repository
 public interface NoticeRepository extends JpaRepository<NoticeVO,Integer> {
 
-    List<NoticeVO> findAllByMemId(Integer menId);
+    List<NoticeVO> findAllByMemIdOrderByNoticeTimeDesc(Integer menId);
+
+
 }

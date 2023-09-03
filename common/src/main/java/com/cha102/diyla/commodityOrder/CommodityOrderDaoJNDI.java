@@ -1,21 +1,14 @@
 package com.cha102.diyla.commodityOrder;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.cha102.diyla.shoppingcart.ShoppingCartService;
-import com.cha102.diyla.shoppingcart.ShoppingCartVO;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 	public static DataSource ds = null;
@@ -30,7 +23,7 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 	}
 	public static final String URL = "jdbc:mysql://localhost:3306/diyla?";
 	public static final String USER = "root";
-	public static final String PASSWORD = "123456";
+	public static final String PASSWORD = "1234";
 	public static final String INSERT = "INSERT INTO commodity_order (MEM_ID,ORDER_STATUS,ORDER_PRICE,DISCOUNT_PRICE,ACTUAL_PRICE,RECIPIENT,RECIPIENT_ADDRESS,PHONE) VALUES (?,?,?,?,?,?,?,?);";
 	public static final String DLEETE = "SELECT * FROM commodity_order WHERE ORDER_NO = ? ";
 	public static final String UPDATE_STATUS = "UPDATE commodity_order SET ORDER_STATUS = ? where ORDER_NO = ?";

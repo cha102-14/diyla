@@ -3,9 +3,7 @@ package com.cha102.diyla.front.controller.notice;
 import com.cha102.diyla.noticeModel.NoticeService;
 import com.cha102.diyla.noticeModel.NoticeVO;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -24,5 +22,15 @@ public class NoticeController {
     @ResponseBody
     public List<NoticeVO> findAllByMemId(@PathVariable Integer memId) {
         return noticeService.findAllByMemId(memId);
+    }
+
+    @PostMapping("/notice/saveRead")
+    public void noticeRead(@RequestBody List<NoticeVO> noticeVOS) {
+        noticeService.saveNotice(noticeVOS);
+    }
+
+    @PostMapping("/notice/saveNewNotice")
+    public void saveNewNotice(List<NoticeVO> noticeVOS) {
+        noticeService.saveNotice(noticeVOS);
     }
 }

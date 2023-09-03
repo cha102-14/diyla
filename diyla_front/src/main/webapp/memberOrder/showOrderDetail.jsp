@@ -194,7 +194,10 @@ padding: 15px;
 					<td>${orderDetail.unitPrice}</td>
 					<td>${orderDetail.comQuantity }</td>
 					<td>${orderDetail.unitPrice*orderDetail.comQuantity}</td>
-					<td><button type="button" class="commentButton">新增評論</button></td>				
+					<form action="${ctxPath}/shop/commodityComment/goInsertPage" method="post" enctype="application/x-www-form-urlencoded">
+						<input type="text" value="${orderDetail.comNo}" name="comNo">
+					<td><button type="submit" class="commentButton" >新增評論</button></td>
+					</form>
 				</tr>
 			</c:forEach>
 		</table>
@@ -204,7 +207,6 @@ padding: 15px;
 
 			<a href="${ctxPath}/shop/CommodityController?action=listAll"
 				class="goshop">繼續購物</a>
-			<button type="button" class="commentButton">新增評論</button>
 		</p>
 	</div>
 	<jsp:include page="../front_footer.jsp" />
