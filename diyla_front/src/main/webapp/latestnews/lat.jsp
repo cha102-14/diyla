@@ -3,11 +3,10 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.Base64" %>
 <%@ page import="com.cha102.diyla.IatestnewsModel.*"%>
-
 <%
      LatService latSvc = new LatService();
-        List<LatestnewsVO> list = latSvc.getAll();
-        pageContext.setAttribute("list",list);
+     List<LatestnewsVO> list = latSvc.getAll();
+     pageContext.setAttribute("list",list);
 %>
 <!DOCTYPE html>
 <html>
@@ -29,7 +28,7 @@
 <body>
 <jsp:include page="/front_header.jsp"/>
 <div class="lat_container">
-    <h1>最新消息</h1>
+    <h1 id="lat_h1">最新消息</h1>
     <table>
         <tr>
             <th>公告編號</th>

@@ -223,4 +223,7 @@ public class MemberService {
 	}
 
 	public void reportCount(Integer memId){dao.reportCount(memId);}
+	public int selectReportCount(Integer memId){return dao.selectReportCount(memId);}
+
+	public void addArtBlackList(Integer memId){dao.artBlackList(memId);}
 }

@@ -117,9 +117,13 @@
             最新消息
         </h2>
     </div>
-
-    <!-- 你的東西 -->
-
+        <div class="container container-bg">
+            <div class="row client_info">
+                <div>
+                    <jsp:include page="latestnews/latBanner.jsp"/>
+                </div>
+            </div>
+        </div>
 </section>
 
 

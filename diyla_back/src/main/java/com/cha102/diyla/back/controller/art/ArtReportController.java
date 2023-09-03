@@ -38,6 +38,10 @@ public class ArtReportController {
 
         MemberService memSvc = new MemberService();
         memSvc.reportCount(memId);
+        if(memSvc.selectReportCount(memId)%3 == 0){
+            memSvc.addArtBlackList(memId);
+        }
+
 
         List<ArtDTO> list = artMsgRpService.getAllDTO();
         model.addAttribute("list", list);

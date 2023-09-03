@@ -20,4 +20,8 @@ public interface MemDAO_interface {
 	public void updateStatus(String email);
 
 	public void reportCount(Integer mem_id);
+
+	public int selectReportCount(Integer mem_id);
+
+	public void artBlackList(Integer mem_id);
 }

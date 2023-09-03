@@ -486,4 +486,71 @@ public void reportCount(Integer mem_id) {
         }
     }
 }
+
+    @Override
+    public int selectReportCount(Integer mem_id) {
+        Connection con = null;
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        int reportCount = 0;
+
+        try {
+            con = ds.getConnection();
+            pre = con.prepareStatement("SELECT rpmsg_count FROM diyla.member WHERE mem_id=?");
+            pre.setInt(1, mem_id);
+            rs = pre.executeQuery();
+
+            while(rs.next()){
+                reportCount = rs.getInt("rpmsg_count");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return reportCount;
+    }
+
+    public void artBlackList(Integer mem_id) {
+    Connection con = null;
+    PreparedStatement pre = null;
+
+    try {
+        con = ds.getConnection();
+        pre = con.prepareStatement("UPDATE member SET blacklist_art=1 WHERE mem_id = ?");
+        pre.setInt(1, mem_id);
+        pre.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (pre != null) {
+            try {
+                pre.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+}
 }
