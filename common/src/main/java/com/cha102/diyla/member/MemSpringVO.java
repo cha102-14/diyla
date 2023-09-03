@@ -25,7 +25,7 @@ public class MemSpringVO implements java.io.Serializable {
     @Column(name="MEM_PHONE")
     private String memPhone;
     @Column(name="BLACKLIST_ART")
-    private Integer blacklistArt;
+    private Boolean blacklistArt;
 
 
 }

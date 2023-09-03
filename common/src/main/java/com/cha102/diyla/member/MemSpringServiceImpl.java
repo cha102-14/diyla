@@ -20,10 +20,11 @@ public class MemSpringServiceImpl implements MemSpringService {
         int pageIndex = jsonObject.getIntValue("pageIndex");
         int pageSize = jsonObject.getIntValue("pageSize");
         List<Object[]> allMemObjArr = memJPADAO.getAllMem(pageSize * (pageIndex - 1), pageSize);
+        List<MemDTO> memDTOList = allMemObjArr.stream().map(MemDTO::new).collect(Collectors.toList());
         Integer allMemCount = memJPADAO.getMemListCount();
         JSONObject returnJSONObject = new JSONObject();
         returnJSONObject.put("totalSize", allMemCount);
-        returnJSONObject.put("memList", allMemCount);
+        returnJSONObject.put("memList", memDTOList);
         return JSONObject.toJSONString(returnJSONObject);
     }
 

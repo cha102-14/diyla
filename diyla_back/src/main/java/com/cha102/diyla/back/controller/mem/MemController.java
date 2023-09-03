@@ -16,7 +16,7 @@ public class MemController {
     private MemSpringService memSpringService;
 
     @Autowired
-    MemJPADAO memJPADAO;
+    private MemJPADAO memJPADAO;
 
 
 

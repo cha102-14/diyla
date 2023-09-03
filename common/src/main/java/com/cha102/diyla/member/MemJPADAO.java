@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface MemJPADAO extends JpaRepository<MemSpringVO, Integer> {
+public interface MemJPADAO extends JpaRepository<MemSpringVO, Long> {
 
     @Query(nativeQuery = true, value = "SELECT COUNT(1) FROM MEMBER WHERE MEM_ID")
     int getMemListCount();
@@ -20,6 +20,6 @@ public interface MemJPADAO extends JpaRepository<MemSpringVO, Integer> {
     @Transactional
     @Modifying
     @Query(nativeQuery = true,
-            value = "UPDATE diyla.member SET BLACKLIST_ART =:memStatus WHERE MEM_ID =:memId")
-    int changeMemStatus(@Param("memId") Integer memId, @Param("memStatus") Integer memStatus);
+            value = "UPDATE diyla.member SET BLACKLIST_ART =:blacklistArt WHERE MEM_ID =:memId")
+    int changeMemStatus(@Param("memId") Integer memId, @Param("blacklistArt") Integer blacklistArt);
 }
