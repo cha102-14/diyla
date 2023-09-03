@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.Context;
@@ -14,8 +13,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.cha102.diyla.commodityModel.CommodityService;
-import com.cha102.diyla.commodityModel.CommodityVO;
-import com.cha102.diyla.shoppingcart.ShoppingCartService;
 import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 public class CommodityOrderDetailDaoJNDI implements CommodityOrderDetailDao {

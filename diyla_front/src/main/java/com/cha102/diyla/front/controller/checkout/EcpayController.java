@@ -3,6 +3,7 @@ package com.cha102.diyla.front.controller.checkout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,8 @@ import com.cha102.diyla.tokenModel.TokenService;
 import com.cha102.diyla.tokenModel.TokenVO;
 import com.cha102.diyla.util.HashMapMemIdHolder;
 
+import redis.clients.jedis.Jedis;
+
 @Controller
 @RequestMapping("/checkout")
 public class EcpayController {
@@ -32,6 +35,7 @@ public class EcpayController {
 	private HttpServletRequest req;
 	// 因為綠界交易成功導回專案時有時候會把session id換掉，所以離開專案前暫存會員資料進HashMap，交易回來再取出
 	HashMapMemIdHolder memberHolder = new HashMapMemIdHolder();
+	Jedis jedis = new Jedis("localhost", 6379);
 
 	public EcpayController(HttpServletRequest req) {
 		this.req = req;
@@ -42,17 +46,16 @@ public class EcpayController {
 	public String ecpay(Model model, @RequestParam String tradeDesc, @RequestParam String totalPrice,
 			@RequestParam String itemName, @RequestParam String cardrecipient,
 			@RequestParam String cardrecipientAddress, @RequestParam String cardphone, @RequestParam String tokenUse) {
-		// todo 未來串接從session取得會員資料
 		HttpSession session = req.getSession();
 		MemVO memVO = (MemVO) session.getAttribute("memVO");
 		String token = tokenUse;
 		int memNO = memVO.getMemId();
-		//會員編號先另存
+		// 會員編號先另存
 		memberHolder.put("memId" + memNO, memNO);
 		String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone;
 		// 使用取號機
-		if("".equals(token)) {
-			token=0+"";
+		if ("".equals(token)) {
+			token = 0 + "";
 		}
 		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo);
 		// 自訂取號
@@ -76,26 +79,27 @@ public class EcpayController {
 			ShoppingCartService shoppingCartService = new ShoppingCartService();
 			CommodityOrderService commodityOrderService = new CommodityOrderService();
 			CommodityOrderDetailService commodityOrderDetailService = new CommodityOrderDetailService();
-			// todo 執行寫入訂單動作，並導引至訂單明細頁面
 			// 因為綠界交易成功導回專案時有時候會把session id換掉，所以離開專案前暫存會員資料進HashMap，交易回來再取出
 			HttpSession session = req.getSession();
 			Integer memId = memberHolder.get(memKey);
-			System.out.println(memKey + "," + memId);
-			//收件人資訊取出
+			//從redis取cart內容
+			String redisKey = "cart:" + memId;
+			Map<String, String> cartInfo = jedis.hgetAll(redisKey);
+			List<ShoppingCartVO> shoppingCartList = shoppingCartService.getCart(memId, cartInfo);
+			// 收件人資訊取出
 			System.out.println(receiveInfo);
 			String[] info = receiveInfo.split(",");
 			String recipient = info[0];
 			String recipientAddress = info[1];
 			String phone = info[2];
-//			System.out.println(recipient + " " + recipientAddress + " " + phone);
-			List<ShoppingCartVO> shoppingCartList = shoppingCartService.getCartList(memId);
-			//轉化格式準備存入訂單
+			// 轉化格式準備存入訂單
 			Integer tokenUse = Integer.valueOf(token);
 			Integer totalPri = Integer.valueOf(totalPrice);
 			CommodityOrderVO commodityOrderVO = new CommodityOrderVO(memId, 1, totalPri, tokenUse, totalPri - tokenUse,
 					recipient, recipientAddress, phone);
-			Integer orderNo = commodityOrderService.insert(commodityOrderVO,shoppingCartList);
-			//回饋功能
+			//同步寫入訂單與明細
+			Integer orderNo = commodityOrderService.insert(commodityOrderVO, shoppingCartList);
+			// 回饋功能
 			if (tokenUse == 0) {
 				TokenVO tokenVO = tokenService.addToken((totalPri / 10), (byte) 1, memId);
 				Integer tokenFeedBack = tokenVO.getTokenCount();
@@ -113,10 +117,9 @@ public class EcpayController {
 					+ recipientAddress + "\n" + "購買日期:" + formattedDate + "\n" + "_____________________\n"
 					+ "DIYLA感謝您的訂購，我們將盡快將商品寄出";
 			mailService.sendMail("t1993626@gmail.com", "訂購成功", messageContent);
-			commodityOrderDetailService.insert(orderNo, shoppingCartList);
+//			commodityOrderDetailService.insert(orderNo, shoppingCartList);
 			// 訂單生成清空購物車
-			shoppingCartService.clear(memId);
-			// session遺失問題處理方法: 1見參考 2.用js彈窗處理 3.如果判斷是綠界導回來 直接在成功頁面set一個memVO
+			jedis.del(redisKey);
 			return "/checkout/checkoutSucess.jsp";
 		} else {
 			// todo 交易失敗的動作

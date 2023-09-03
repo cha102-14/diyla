@@ -17,7 +17,7 @@
             <ul>
             <c:choose>
 			<c:when test="${empty typeFun}">
-			空
+			
 			</c:when>
 			<c:otherwise>
 					<c:forEach var="typeFun" items="${typeFun}">

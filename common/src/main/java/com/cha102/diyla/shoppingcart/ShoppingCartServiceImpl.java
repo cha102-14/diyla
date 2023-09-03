@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 	@Resource
-	ShoppingCartRepository cartRepository;
+	ShoppingCartRepository shoppingCartRepository;
 
 	@Override
 	public void insert(ShoppingCartVO shoppingCartVO) {
@@ -23,16 +23,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 		Integer comAmount = shoppingCartVO.getComAmount();
 
 		// 查是否存在相同香品
-		Optional<ShoppingCartVO> existingCartItem = cartRepository.findByMemIdAndComNo(memId, comNo);
+		Optional<ShoppingCartVO> existingCartItem = shoppingCartRepository.findByMemIdAndComNo(memId, comNo);
 
 		if (existingCartItem.isPresent()) {
 			// 已存在則加數量
 			ShoppingCartVO existingCart = existingCartItem.get();
 			existingCart.setComAmount(existingCart.getComAmount() + comAmount);
-			cartRepository.save(existingCart);
+			shoppingCartRepository.save(existingCart);
 		} else {
 			// 不存在則直接加新商品
-			cartRepository.save(shoppingCartVO);
+			shoppingCartRepository.save(shoppingCartVO);
 		}
 	}
 
@@ -40,26 +40,26 @@ public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 	@Transactional
 	@Override
 	public void update(ShoppingCartVO shoppingCartVO) {
-		cartRepository.save(shoppingCartVO);
+		shoppingCartRepository.save(shoppingCartVO);
 	}
 
 	@Modifying
 	@Transactional
 	@Override
 	public void delete(Integer memId, Integer comNo) {
-		cartRepository.deleteByMemIdAndComNo(memId, comNo);
+		shoppingCartRepository.deleteByMemIdAndComNo(memId, comNo);
 	}
 
 	@Modifying
 	@Transactional
 	@Override
 	public void deleteByMemId(Integer memId) {
-		cartRepository.deleteByMemId(memId);
+		shoppingCartRepository.deleteByMemId(memId);
 	}
 
 //	@Override
 	public List<ShoppingCartVO> findByMemId(Integer memId) {
-		List<Object[]> result = cartRepository.getCartList(memId);
+		List<Object[]> result = shoppingCartRepository.getCartList(memId);
 		List<ShoppingCartVO> cartList = new ArrayList<>();
 		for (Object[] row : result) {
 			ShoppingCartVO cartVO = new ShoppingCartVO();
@@ -78,7 +78,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 
 	@Override
 	public Optional<ShoppingCartVO> findByMemIdAndComNo(Integer memId, Integer comNo) {
-		return cartRepository.findByMemIdAndComNo(memId, comNo);
+		return shoppingCartRepository.findByMemIdAndComNo(memId, comNo);
 	}
 	@Override
 	public void setShowPic(ShoppingCartVO cartVO) {
@@ -87,11 +87,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 
 	@Override
 	public Integer getTotalPrice(Integer memId) {
-		return cartRepository.getTotalPrice(memId);
+		return shoppingCartRepository.getTotalPrice(memId);
 	}
 	
 	public Integer getTotalAmount(Integer memId) {
-		return cartRepository.getTotalAmount(memId);
+		return shoppingCartRepository.getTotalAmount(memId);
 	}
+
 
 }

@@ -48,12 +48,20 @@ th, td {
 	cursor: pointer;
 }
 
+.o-detail {
+	height: 35px;
+	padding: 8px;
+	text-align: center;
+	justify-content: center;
+	vertical-align: baseline;
+}
+
 #main_content {
 	box-sizing: border-box;
 	float: inherit;
 	height: 800px;
 	margin: 0px auto;
-	background-color: #fff;
+	background-color: #FFF3EE;
 	padding: 5px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	padding: 0px;
@@ -65,12 +73,12 @@ th, td {
 .heading {
 	width: 960px;
 	text-align: center;
-	margin-bottom: 20px;
+	margin: 20px 0px;
 	font-size: 30px;
-	padding: 10px 0px;
-	background-color: #FFEEDD;
+	padding: 30px 0px;
+	background-color: #b45f06;
+	color: #fce5cd;
 	border-radius: 5px;
-	background-color: #FFEEDD;
 }
 
 .status {
@@ -116,7 +124,8 @@ table {
 }
 
 .tr_title {
-	background-color: black;
+	box-sizing: border-box;
+	background-color: #b45f06;
 	color: white;
 	font-size: 12px;
 }
@@ -160,6 +169,7 @@ form {
 	cursor: pointer;
 	justify-content: center;
 	text-align: center;
+	opacity: 1;
 }
 
 #main_content {
@@ -171,7 +181,11 @@ form {
 }
 
 #orderTable {
-	padding: 5px 12px;
+	padding: 25px 12px 60px 12px;;
+	margin: 35px 0px;
+	border: 1px solid rgba(128, 128, 128, 0.5);
+	border-radius: 8px;
+	box-shadow: 12px;
 }
 
 table {
@@ -192,6 +206,10 @@ aside.topPage {
 	z-index: 1;
 }
 
+#allOrder_filter {
+	margin: 10px;
+}
+
 table {
 	flex: 3; /* 可以使用其他數值調整彈性佈局比例 */
 }
@@ -201,11 +219,148 @@ table {
 		position: relative; /
 		z-index: 1; /* 將 aside 設定為比表格更高的 z-index 值 */
 	}
-	table#allOrder{
-	
+	table#allOrder {
+		
 	}
 }
+/* 燈箱外部容器 */
+.lightbox {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.7);
+	z-index: 9999;
+}
 
+/* 燈箱內容區域 */
+.lightbox-content {
+	width: 250px;
+	height: 300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	position: absolute;
+}
+
+/* 關閉按鈕 */
+#close-lightbox {
+	background: #333;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+/* 燈箱容器 */
+/* .lightbox { */
+/*     display: none; */
+/*     position: fixed; */
+/*     top: 0; */
+/*     left: 0; */
+/*     width: 100%; */
+/*     height: 100%; */
+/*     background-color: rgba(0, 0, 0, 0.7); */
+/*     z-index: 1000; */
+/* } */
+
+/* 燈箱內容區域 */
+.lightbox-content {
+	position: relative;
+	width: 425px;
+	height: 400px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/*     max-width: 80%; */
+	/*     max-height: 80%; */
+	overflow-y: auto;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	width: 425px;
+}
+
+p.orderNO {
+	font-size: 18px;
+	padding: 10px 4px;
+}
+
+/* 關閉按鈕 */
+#close-lightbox {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	cursor: pointer;
+	background-color: red;
+	color: white;
+	padding: 15px 20px;
+	border-radius: 3px;
+}
+
+/* 表格樣式 */
+.detailTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.detailTable th, .detailTable td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+.detailTable th {
+	background-color: #f2f2f2;
+}
+
+.priceblock {
+	position: fixed;
+	bottom: 30px;
+	/* display:flex; */
+	/* justify-content:flex; */
+	flex-direction: column;
+}
+
+.Pri {
+	padding: 5px;
+	margin: 5px;
+}
+
+.subtitle {
+	color: white;
+	background-color: black;
+	border-radius: 4px;
+}
+
+.title {
+	font-size: 16px;
+	padding: 30px 0px 30px 3px !important;
+	vertical-align: baseline;
+	text-align: center;
+}
+
+.view-details-link {
+	border: none;
+	background-color: #2894FF;
+	color: white;
+	padding: 4px 5px;
+}
+.view-details-link:hover {
+	cursor: pointer;
+	background-color:#003060;
+}
 </style>
 </head>
 <body>
@@ -213,12 +368,12 @@ table {
 		<jsp:include page="../index.jsp" />
 	</aside>
 	<div id="main_content">
-		<h1 class="heading">訂單一覽</h1>
-
+		<h1 class="heading">訂單管理</h1>
+		<hr>
 		<div id="orderTable">
 			<table id="allOrder">
 				<thead>
-					<tr class="tr_title">
+					<tr class="tr_title" style="height: 75px;">
 						<th class="title" style="width: 9%;">訂單編號</th>
 						<th class="title" style="width: 9%;">會員編號</th>
 						<th class="title" style="width: 10%;">訂單金額</th>
@@ -248,7 +403,8 @@ table {
 									method="post">
 									<input name="action" value="showDetail" type="hidden">
 									<input name="orderNO" value="${orderVO.orderNO}" type="hidden">
-									<button type="submit" id="showDetail">查看明細</button>
+									<button type="button" id="showDetail"
+										data-order-id="${orderVO.orderNO}" class="view-details-link">查看明細</button>
 
 								</form>
 							</td>
@@ -265,14 +421,7 @@ table {
 									<button type="submit" class="edit-order"
 										data-order-status="${orderVO.orderStatus}
 											form="form${loop.index}">
-										<svg width="24px" height="24px" viewBox="0 -0.5 25 25"
-											fill="none" xmlns="http://www.w3.org/2000/svg">
-											<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-											<g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-												stroke-linejoin="round"></g>
-											<g id="SVGRepo_iconCarrier"> <path
-												d="M13.2942 7.95881C13.5533 7.63559 13.5013 7.16358 13.178 6.90453C12.8548 6.64549 12.3828 6.6975 12.1238 7.02072L13.2942 7.95881ZM6.811 14.8488L7.37903 15.3385C7.38489 15.3317 7.39062 15.3248 7.39623 15.3178L6.811 14.8488ZM6.64 15.2668L5.89146 15.2179L5.8908 15.2321L6.64 15.2668ZM6.5 18.2898L5.7508 18.2551C5.74908 18.2923 5.75013 18.3296 5.75396 18.3667L6.5 18.2898ZM7.287 18.9768L7.31152 19.7264C7.36154 19.7247 7.41126 19.7181 7.45996 19.7065L7.287 18.9768ZM10.287 18.2658L10.46 18.9956L10.4716 18.9927L10.287 18.2658ZM10.672 18.0218L11.2506 18.4991L11.2571 18.491L10.672 18.0218ZM17.2971 10.959C17.5562 10.6358 17.5043 10.1638 17.1812 9.90466C16.8581 9.64552 16.386 9.69742 16.1269 10.0206L17.2971 10.959ZM12.1269 7.02052C11.8678 7.34365 11.9196 7.81568 12.2428 8.07484C12.5659 8.33399 13.0379 8.28213 13.2971 7.95901L12.1269 7.02052ZM14.3 5.50976L14.8851 5.97901C14.8949 5.96672 14.9044 5.95412 14.9135 5.94123L14.3 5.50976ZM15.929 5.18976L16.4088 4.61332C16.3849 4.59344 16.3598 4.57507 16.3337 4.5583L15.929 5.18976ZM18.166 7.05176L18.6968 6.52192C18.6805 6.50561 18.6635 6.49007 18.6458 6.47532L18.166 7.05176ZM18.5029 7.87264L19.2529 7.87676V7.87676L18.5029 7.87264ZM18.157 8.68976L17.632 8.15412C17.6108 8.17496 17.5908 8.19704 17.5721 8.22025L18.157 8.68976ZM16.1271 10.0203C15.8678 10.3433 15.9195 10.8153 16.2425 11.0746C16.5655 11.3339 17.0376 11.2823 17.2969 10.9593L16.1271 10.0203ZM13.4537 7.37862C13.3923 6.96898 13.0105 6.68666 12.6009 6.74805C12.1912 6.80943 11.9089 7.19127 11.9703 7.60091L13.4537 7.37862ZM16.813 11.2329C17.2234 11.1772 17.5109 10.7992 17.4552 10.3888C17.3994 9.97834 17.0215 9.69082 16.611 9.74659L16.813 11.2329ZM12.1238 7.02072L6.22577 14.3797L7.39623 15.3178L13.2942 7.95881L12.1238 7.02072ZM6.24297 14.359C6.03561 14.5995 5.91226 14.9011 5.89159 15.218L7.38841 15.3156C7.38786 15.324 7.38457 15.3321 7.37903 15.3385L6.24297 14.359ZM5.8908 15.2321L5.7508 18.2551L7.2492 18.3245L7.3892 15.3015L5.8908 15.2321ZM5.75396 18.3667C5.83563 19.1586 6.51588 19.7524 7.31152 19.7264L7.26248 18.2272C7.25928 18.2273 7.25771 18.2268 7.25669 18.2264C7.25526 18.2259 7.25337 18.2249 7.25144 18.2232C7.2495 18.2215 7.24825 18.2198 7.24754 18.2185C7.24703 18.2175 7.24637 18.216 7.24604 18.2128L5.75396 18.3667ZM7.45996 19.7065L10.46 18.9955L10.114 17.536L7.11404 18.247L7.45996 19.7065ZM10.4716 18.9927C10.7771 18.9151 11.05 18.7422 11.2506 18.499L10.0934 17.5445C10.0958 17.5417 10.0989 17.5397 10.1024 17.5388L10.4716 18.9927ZM11.2571 18.491L17.2971 10.959L16.1269 10.0206L10.0869 17.5526L11.2571 18.491ZM13.2971 7.95901L14.8851 5.97901L13.7149 5.04052L12.1269 7.02052L13.2971 7.95901ZM14.9135 5.94123C15.0521 5.74411 15.3214 5.6912 15.5243 5.82123L16.3337 4.5583C15.4544 3.99484 14.2873 4.2241 13.6865 5.0783L14.9135 5.94123ZM15.4492 5.7662L17.6862 7.6282L18.6458 6.47532L16.4088 4.61332L15.4492 5.7662ZM17.6352 7.58161C17.7111 7.6577 17.7535 7.761 17.7529 7.86852L19.2529 7.87676C19.2557 7.36905 19.0555 6.88127 18.6968 6.52192L17.6352 7.58161ZM17.7529 7.86852C17.7524 7.97604 17.7088 8.07886 17.632 8.15412L18.682 9.22541C19.0446 8.87002 19.2501 8.38447 19.2529 7.87676L17.7529 7.86852ZM17.5721 8.22025L16.1271 10.0203L17.2969 10.9593L18.7419 9.15928L17.5721 8.22025ZM11.9703 7.60091C12.3196 9.93221 14.4771 11.5503 16.813 11.2329L16.611 9.74659C15.0881 9.95352 13.6815 8.89855 13.4537 7.37862L11.9703 7.60091Z"
-												fill="#000000"></path> </g></svg>
+										<svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21.1938 2.80624C22.2687 3.88124 22.2687 5.62415 21.1938 6.69914L20.6982 7.19469C20.5539 7.16345 20.3722 7.11589 20.1651 7.04404C19.6108 6.85172 18.8823 6.48827 18.197 5.803C17.5117 5.11774 17.1483 4.38923 16.956 3.8349C16.8841 3.62781 16.8366 3.44609 16.8053 3.30179L17.3009 2.80624C18.3759 1.73125 20.1188 1.73125 21.1938 2.80624Z" fill="#ce9f73"></path> <path d="M14.5801 13.3128C14.1761 13.7168 13.9741 13.9188 13.7513 14.0926C13.4886 14.2975 13.2043 14.4732 12.9035 14.6166C12.6485 14.7381 12.3775 14.8284 11.8354 15.0091L8.97709 15.9619C8.71035 16.0508 8.41626 15.9814 8.21744 15.7826C8.01862 15.5837 7.9492 15.2897 8.03811 15.0229L8.99089 12.1646C9.17157 11.6225 9.26191 11.3515 9.38344 11.0965C9.52679 10.7957 9.70249 10.5114 9.90743 10.2487C10.0812 10.0259 10.2832 9.82394 10.6872 9.41993L15.6033 4.50385C15.867 5.19804 16.3293 6.05663 17.1363 6.86366C17.9434 7.67069 18.802 8.13296 19.4962 8.39674L14.5801 13.3128Z" fill="#ce9f73"></path> <path d="M20.5355 20.5355C22 19.0711 22 16.714 22 12C22 10.4517 22 9.15774 21.9481 8.0661L15.586 14.4283C15.2347 14.7797 14.9708 15.0437 14.6738 15.2753C14.3252 15.5473 13.948 15.7804 13.5488 15.9706C13.2088 16.1327 12.8546 16.2506 12.3833 16.4076L9.45143 17.3849C8.64568 17.6535 7.75734 17.4438 7.15678 16.8432C6.55621 16.2427 6.34651 15.3543 6.61509 14.5486L7.59235 11.6167C7.74936 11.1454 7.86732 10.7912 8.02935 10.4512C8.21958 10.052 8.45272 9.6748 8.72466 9.32615C8.9563 9.02918 9.22032 8.76528 9.57173 8.41404L15.9339 2.05188C14.8423 2 13.5483 2 12 2C7.28595 2 4.92893 2 3.46447 3.46447C2 4.92893 2 7.28595 2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355Z" fill="#ce9f73"></path> </g></svg>
 									</button>
 								</form>
 							</td>
@@ -282,6 +431,12 @@ table {
 				</tbody>
 
 			</table>
+			<div id="lightbox" class="lightbox">
+				<div class="lightbox-content">
+					<!-- 		內容 -->
+
+				</div>
+			</div>
 		</div>
 
 	</div>
@@ -320,23 +475,23 @@ table {
 					$(this).addClass("status-canceled");
 				}
 			});
-			
-			$(".edit-order").on("click", function(e) {
-				  let form = $(this).closest("form"); // 找到最近的父級 form
-				  var orderStatus = parseInt($(this).data('order-status'));
-				  console.log(orderStatus);
-				  if (orderStatus >= 4) {
-						e.preventDefault();
-					  swal({
-						    title: "訂單已結案",
-						    icon:"warning",
-						    buttonsStyling: false,
-						    confirmButtonClass: 'btn btn-primary btn-block'
-						});
-			            return;
-			        }
 
-				});
+			$(".edit-order").on("click", function(e) {
+				let form = $(this).closest("form"); // 找到最近的父級 form
+				var orderStatus = parseInt($(this).data('order-status'));
+				console.log(orderStatus);
+				if (orderStatus >= 4) {
+					e.preventDefault();
+					swal({
+						title : "訂單已結案",
+						icon : "warning",
+						buttonsStyling : false,
+						confirmButtonClass : 'btn btn-primary btn-block'
+					});
+					return;
+				}
+
+			});
 		});
 	</script>
 	<script>
@@ -375,6 +530,75 @@ table {
 											});
 						});
 	</script>
+	<script>
+	// 獲取元素
+	const lightbox = document.getElementById("lightbox");
+	const closeLightbox = document.getElementById("close-lightbox");
+	const viewDetailsLinks = document.querySelectorAll(".view-details-link");
 
+	viewDetailsLinks.forEach(link => {
+	    link.addEventListener("click", function (event) {
+	    	console.log("嗨");
+	        const orderId = this.getAttribute("data-order-id");
+	    	console.log(orderId);
+	        fetch("http://localhost:8081/diyla_back/orderManage/OrderManageController?action=showDetail&orderNo="+orderId)
+	        .then(response => response.json())
+            .then(data => {
+                // 從json拿到值並填入
+                console.log(data);
+	        const lightboxContent = document.querySelector(".lightbox-content");
+	        const orderNo = data.orderNo;
+	        console.log(lightboxContent)
+	        console.log("Order number:", orderNo);
+	        let htmlContent = '<p class="orderNO">訂單編號: ' + orderNo + '</p>';
+            htmlContent += '<table class="detailTable">';
+            htmlContent += '<tr class="title o-detail">';
+            htmlContent += '<td class="subtitle o-detail">商品名稱</td>';
+            htmlContent += '<td class="subtitle o-detail">單價</td>';
+            htmlContent += '<td class="subtitle o-detail">數量</td>';
+            htmlContent += '<td class="subtitle o-detail">小計</td>';
+            htmlContent += '</tr>';
+
+            // 迭代訂單詳細資料加到HTML裡
+            data.commodityOrderDetailList.forEach(orderDetail => {
+                htmlContent += '<tr>';
+                htmlContent += '<td class="o-detail">' + orderDetail.comName + '</td>';
+                htmlContent += '<td class="o-detail">' + orderDetail.unitPrice + '</td>';
+                htmlContent += '<td class="o-detail">' + orderDetail.comQuantity + '</td>';
+                htmlContent += '<td class="o-detail">' + (orderDetail.unitPrice * orderDetail.comQuantity) + '</td>';
+                htmlContent += '</tr>';
+            });
+            const orderVO = data.commodityOrderVO;
+			
+
+            htmlContent += '</table>';
+            htmlContent += '<div class="priceblock">';
+            htmlContent += '<span class="orderPrice Pri">總金額:$'+data.orderPri+'元</span>';
+            htmlContent += '<span class="orderPrice Pri">折抵金額:$'+data.orderDisActPri+'元</span>';
+            htmlContent += '<span class="actuPrice Pri">實付金額:$'+data.orderActPri+'元</span>';
+            htmlContent += '</div>';
+            
+			htmlContent+='<button id="close-lightbox">關閉</button>'
+            // 設定燈箱內容
+            lightboxContent.innerHTML = htmlContent;
+
+                lightbox.style.display = "block";
+                
+                const closeLightboxButton = document.getElementById("close-lightbox");
+                closeLightboxButton.addEventListener("click", function () {
+                    lightbox.style.display = "none"; // 關閉燈箱
+                });
+            })
+	    });
+	});
+
+	// 關閉燈箱
+	lightbox.addEventListener("click", function (event) {
+    if (event.target === lightbox) {
+        lightbox.style.display = "none"; // 關閉燈箱
+    }
+});
+
+	</script>
 </body>
 </html>
