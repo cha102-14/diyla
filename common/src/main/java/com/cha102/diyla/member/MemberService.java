@@ -163,7 +163,7 @@ public class MemberService {
 			exMsgs.add("無此信箱或密碼錯誤");
 		}
 
-		if(mem.getMemStatus()==0){
+		if(mem!=null&&mem.getMemStatus()==0){
 			exMsgs.add("因您的信箱尚未認證，請至您的信箱確認");
 		}
 

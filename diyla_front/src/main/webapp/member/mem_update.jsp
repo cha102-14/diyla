@@ -180,13 +180,10 @@
                 <input type="tel" name="phone" minlength="10" value="${memVO.memPhone}" ></label><br>
                 <span  id ="memPhone.errors" class="error">${exMsgs.memPhone}<br/></span>
                 <div>聯絡地址</label><br>
-                    <label for="city">縣市</label><br>
-                    <select id="city" name="city">
-                    </select><br>
-                    <label for="district">地區</label><br>
-                    <select id="district" name="district">
-                    <option value=${addMap.district} selected">${addMap.district}</option>
-                    </select><br>
+                    <label for="city">縣市</label>
+                    <select id="city" name="city" ></select><br>
+                    <label for="district">地區</label>
+                    <select id="district" name="district"></select><br>
                 </div>
                 <label for="address">詳細地址</label><br>
                 <input type="text" id="address" name="address" value="${addMap.address}"><br>
@@ -236,13 +233,14 @@
         let city_el = document.getElementById("city");
         let district_el = document.getElementById("district");
 
+
         for ( let city in cityDistrict){
             let option = document.createElement("option");
             option.text = city;
             option.value = city;
             city_el.add(option);
           }
-
+        city_el.value="${addMap.city}";
         city_el.addEventListener("change",function(){
 
             let districts = cityDistrict[city_el.value];
@@ -253,13 +251,17 @@
 
 
             for(let district of districts){
-            let option = document.createElement("option");
-            option.textContent = district;
-            district_el.add(option);
+                let option = document.createElement("option");
+                option.textContent = district;
+                district_el.add(option);
             }
         });
         // 初始化地區選項
         city_el.dispatchEvent(new Event('change'));
+
+        district_el.value="${addMap.district}";
+
+
 
 
 

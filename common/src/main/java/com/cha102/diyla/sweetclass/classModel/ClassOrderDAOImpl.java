@@ -41,12 +41,12 @@ public class ClassOrderDAOImpl implements ClassOrderDAO {
             rs = pre.executeQuery();
             while (rs.next()) {
                 classOrderDTO = new ClassOrderDTO();
-                classOrderDTO.setClassId(rs.getInt("classId"));
-                classOrderDTO.setStatus(rs.getByte("status"));
-                classOrderDTO.setClassPic(rs.getBytes("classPic"));
-                classOrderDTO.setClassName(rs.getString("className"));
-                classOrderDTO.setClassDate(rs.getDate("classDate"));
-                classOrderDTO.setTotalPrice(rs.getInt("totalPrice"));
+                classOrderDTO.setClassId(rs.getInt("CLASS_ID"));
+                classOrderDTO.setStatus(rs.getByte("STATUS"));
+                classOrderDTO.setClassPic(rs.getBytes("CLASS_PIC"));
+                classOrderDTO.setClassName(rs.getString("CLASS_NAME"));
+                classOrderDTO.setClassDate(rs.getDate("CLASS_DATE"));
+                classOrderDTO.setTotalPrice(rs.getInt("TOTAL_PRICE"));
                 classOrderList.add(classOrderDTO);
             }
         } catch (SQLException e) {

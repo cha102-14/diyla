@@ -40,17 +40,20 @@
     <jsp:include page="../front_header.jsp"/>
     <h4>我的訂單</h4>
     <c:forEach var="comList" items="${comList}">
+            <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
              商店：<br>
              訂單狀態：${comList.orderStatus}<br>
              訂單名稱：${comList.orderNO}<br>
              訂單時間：${comList.orderTime}<br>
              訂單金額：${comList.actualPrice}<br>
-
+            </a>
     </c:forEach>
+
     <c:forEach var="diyList" items="${diyList}">
              DIY：<br>
              訂單狀態：${diyList.reservationStatus}<br>
              訂單名稱：${diyList.diyCateName}<br>
+            <img src="data:image/jpeg;base64,${ Base64.getEncoder().encodeToString(diyList.diyPic) }" alt="訂單圖片">
              訂單時間：${diyList.diyReserveDate}<br>
              訂單金額：${diyList.diyPrice}<br>
 

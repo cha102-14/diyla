@@ -24,6 +24,17 @@ public class ClassOrderDTO {
     public void setClassPic(byte[] classPics) {
     }
 
+    public ClassOrderDTO(Integer classId,Byte status,Byte[] classPic,String className,Date classDate,Integer totalPrice,ClassVO classVO,ClassReserveVO classReserveVO){
+        this.classId=classId;
+        this.status=status;
+        this.classPic=classPic;
+        this.className=className;
+        this.classDate=classDate;
+        this.totalPrice=totalPrice;
+        this.classVO=classVO;
+        this.classReserveVO=classReserveVO;
+    }
+
 
 
 }

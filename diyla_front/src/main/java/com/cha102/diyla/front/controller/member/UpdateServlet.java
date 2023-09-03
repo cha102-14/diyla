@@ -42,9 +42,6 @@ public class UpdateServlet extends HttpServlet {
             Map<String,String> addMap = new LinkedHashMap<>();
 
             while(m.find()){
-//                String city = m.group(1);
-//                String distinct = m.group(2);
-//                String address = m .group(3);
                 addMap.put("city",m.group(1));
                 addMap.put("district",m.group(2));
                 addMap.put(("address"),m.group(3));
@@ -62,6 +59,7 @@ public class UpdateServlet extends HttpServlet {
 
         if("update".equals(action)){
             Map<String,String> exMsgs = new LinkedHashMap<String,String>();
+            Map<String,String> addMap = new LinkedHashMap<>();
             req.setAttribute("exMsgs",exMsgs);
 
             Integer memId = Integer.valueOf(req.getParameter("memId"));
@@ -73,14 +71,23 @@ public class UpdateServlet extends HttpServlet {
             String district = req.getParameter("district");
             String address = req.getParameter("address");
             String addressAll = city+district+address;
-
+            String addReg = "^[\u4e00-\u9fa5\\w,]+$";
+            if (!(address.matches(addReg))){
+                exMsgs.put("memAddress","地址格式只能為中、英文字母、數字和,");
+            }
+            addMap.put("city",city);
+            addMap.put("district",district);
+            addMap.put(("address"),address);
 
 //            if (!password.equals(pwcheck)){
 //                exMsgs.put("pwcheck","該密碼與您設定的密碼不一致");
 //            }
+
             MemVO memVO = memSer.updateMem(exMsgs,name,phone,addressAll,memId);
+
             HttpSession session = req.getSession();
             session.setAttribute("memVO", memVO);
+            req.setAttribute("addMap",addMap);
             RequestDispatcher select = req.getRequestDispatcher("/member/mem_update.jsp");
             select.forward(req,res);
 
