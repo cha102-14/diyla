@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 
+
+
 <head>
     <!-- Basic -->
     <style>
@@ -90,25 +92,26 @@
 
 
                             </div>
-
+                            <%-- 获取 HttpSession 中的用户对象 --%>
+                            <c:set var="memVO" value="${sessionScope.memVO}" />
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="name">姓名</label>
-                                        <input type="text" id="name" placeholder="Name">
+                                        <input type="text" id="name" value="${memVO.memName}" placeholder="Name" readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="phone">電話</label>
-                                        <input type="text" id="phone" placeholder="Phone">
+                                        <input type="text" id="phone" value="${memVO.memPhone}" placeholder="Phone" readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
-                                        <input type="text" id="ID-laydate-mark" placeholder="yyyy-MM-dd">
+                                        <input type="text" id="ID-laydate-mark" name="diyReserveDate" placeholder="yyyy-MM-dd">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
@@ -168,159 +171,167 @@
 <script src="/diyla_front/js/custom.js"></script>
 <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
 <script>
-    // 取得專案路徑
-    <%--var projectPath = '<%= request.getContextPath() %>';--%>
-    layui.use(['laydate', 'layer'], function () {
-        var laydate = layui.laydate;
-        var layer = layui.layer;
-
-        // 監聽點擊事件
-        $('#ID-laydate-mark').on('click', function () {
-            var selectedDate = $(this).val(); // 取得選擇的日期
+    $(document).ready(function() {
+        // 取得專案路徑
+        layui.use(['laydate', 'layer'], function () {
+            let laydate = layui.laydate;
+            let layer = layui.layer;
 
 
-            // 發送 AJAX 請求取得資料並渲染日期選框的內容
-            $.ajax({
-                url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
-                data: {
-                    // endDate: selectedDate,
-                    period: 0
-                },
-                success: function (data) {
 
-                    let mar = {};
-
-                    let mars = [];
-
-                    for (let x in data) {
-                        let itemQuantity = 0;
-                        let diyReserveDate = "";
-                        for (let xx in data[x]) {
-                            mars.push(data[x][xx]);
+            // 監聽點擊事件
+            $('#ID-laydate-mark').on('click', function () {
+                // var selectedDate = $(this).val(); // 取得選擇的日期
 
 
-                            itemQuantity += data[x][xx].itemQuantity;
-                            diyReserveDate = data[x][xx].diyReserveDate;
+                // 發送 AJAX 請求取得資料並渲染日期選框的內容
+                $.ajax({
+                    url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
+                    data: {
+                        //endDate: selectedDate,
+                        period: 0
+                    },
+                    success: function (data) {
 
-                        }
-                        if (itemQuantity >= 30) {
-                            mar[diyReserveDate] = '已滿';
-                        }
+                        let mar = {};
 
-                    }
+                        let mars = [];
 
-                    // 處理接收到的 JSON 資料並更新日期選擇框的內容
-                    laydate.render({
-                        elem: '#ID-laydate-mark',
-                        min: 0,
-                        max: 60,
-                        mark: mar, // 使用接收到的資料來標記日期
-                        done: function (value, date) {
+                        for (let x in data) {
+                            let itemQuantity = 0;
+                            let diyReserveDate = "";
+                            for (let xx in data[x]) {
+                                mars.push(data[x][xx]);
 
-                            for (let key in mar) {
-                                if (key === value) {
-                                    layer.msg("無法選擇該日期！", {icon: 2});
-                                    $('#ID-laydate-mark').val("");
-                                }
+
+                                itemQuantity += data[x][xx].itemQuantity;
+                                diyReserveDate = data[x][xx].diyReserveDate;
+
+                            }
+                            if (itemQuantity >= 30) {
+                                mar[diyReserveDate] = '已滿';
                             }
 
-                            let values = [];
-                            for (let i = 0; i < mars.length; i++) {
-                                if (value === mars[i].diyReserveDate) {
-                                    values.push(mars[i].diyPeriod)
-                                }
-                            }
+                        }
 
-                            $("#select_time option").prop("disabled", false);
+                        // 處理接收到的 JSON 資料並更新日期選擇框的內容
+                        laydate.render({
+                            elem: '#ID-laydate-mark',
+                            min: 0,
+                            max: 60,
+                            mark: mar, // 使用接收到的資料來標記日期
+                            done: function (value, date) {
 
-
-                            $("#select_time option").each(function() {
-                                let value = $(this).val();
-
-                                for (let i = 0; i < values.length; i++) {
-
-                                    if (values[i] == value) {
-                                        $(this).prop("disabled", true);
+                                for (let key in mar) {
+                                    if (key === value) {
+                                        layer.msg("無法選擇該日期！", {icon: 2});
+                                        $('#ID-laydate-mark').val("");
                                     }
                                 }
-                            });
+
+                                let values = [];
+                                for (let i = 0; i < mars.length; i++) {
+                                    if (value === mars[i].diyReserveDate) {
+                                        values.push(mars[i].diyPeriod)
+                                    }
+                                }
+
+                                $("#select_time option").prop("disabled", false);
 
 
-                        }
-                    });
-                },
-                error: function (error) {
-                    console.log("取得資料時發生錯誤:", error);
-                    layer.msg("取得資料時發生錯誤：" + error.responseText, {icon: 2});
-                }
+                                $("#select_time option").each(function() {
+                                    let value = $(this).val();
+
+                                    for (let i = 0; i < values.length; i++) {
+
+                                        if (values[i] == value) {
+                                            $(this).prop("disabled", true);
+                                        }
+                                    }
+                                });
+
+
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        console.log("取得資料時發生錯誤:", error);
+                        layer.msg("取得資料時發生錯誤：" + error.responseText, {icon: 2});
+                    }
+                });
+            });
+
+        });
+        $('.common_btn').on('click', function () {
+            const name = $('#name').val();
+            const phone = $('#phone').val();
+            const amount = $('#amount').val();
+            const selectedDate = $('#ID-laydate-mark').val();
+            const selectedPeriod = $('#select_time option:selected').text();
+            const period = $('#select_time option:selected').val();
+            const selectedPeople = $('.select_js').last().val();
+
+            // 驗證是否完整選擇了時段 人數  日期
+            if (!selectedDate || !selectedPeriod || !selectedPeople) {
+                layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
+                return;
+            }
+
+
+
+            const formHtml =
+                //拿取綠界端口
+                '<form method="post" action="http://localhost:8081/diyla_front/diy/checkout/ecpay">' +
+                '<div id="pop">' +
+                '<p>姓名: ' + name + '</p>' +
+                '<p>電話: ' + phone + '</p>' +
+                '<p>訂位日期: ' + selectedDate + '</p>' +
+                '<p>訂位時段: ' + selectedPeriod + '</p>' +
+                '<p>您選擇的diy項目: 黑森林蛋糕</p>' +
+                '<p>人數: ' + selectedPeople + '</p>' +
+                '<input type="hidden" name="tradeDesc" value="黑森林蛋糕" >'+
+                '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
+                '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
+                '<input type="hidden" name="period" value="'+ period +'" >'+
+                '<input type="hidden" name="count" value="'+ selectedPeople +'" >'+
+                '<input type="hidden" name="diyNo" value="'+ 1 +'" >'+
+                '<input type="hidden" name="cardrecipient" value="luke" >'+
+                '<input type="hidden" name="cardrecipientAddress" value="" >'+
+                '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
+                '<input type="hidden" name="tokenUse" value="0" >'+
+                '</div>' +
+                '<div class="buttons">' +
+                '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
+                '<button id="cancelButton" class="btn btn-secondary">取消</button>' +
+                '</div>'
+            '</form>'
+            ;
+
+            var popup = layer.open({
+                type: 1,
+                title: '訂位確認',
+                content: formHtml,
+                area: ['400px', '350px'],
+                shadeClose: true,
+            });
+
+            // 關閉彈窗
+            $('#cancelButton, .layui-layer-close').on('click', function () {
+                layer.close(popup);
+            });
+
+            // 點擊付款按紐
+            $('#payButton').on('click', function () {
+                // 添加付款邏輯
+                // ...
+
+
+
             });
         });
 
     });
-    $('.common_btn').on('click', function () {
-        const name = $('#name').val();
-        const phone = $('#phone').val();
-        const amount = $('#amount').val();
-        const selectedDate = $('#ID-laydate-mark').val();
-        const selectedPeriod = $('#select_time option:selected').text();
-        const selectedPeople = $('.select_js').last().val();
 
-        // 驗證是否選擇了日期 時段 人數
-        if (!selectedDate || !selectedPeriod || !selectedPeople) {
-            layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
-            return; // 阻止继续操作
-        }
-
-
-
-        const formHtml =
-            '<form method="post" action="http://localhost:8081/diyla_front/checkout/ecpay">' +
-            '<div id="pop">' +
-            '<p>姓名: ' + name + '</p>' +
-            '<p>電話: ' + phone + '</p>' +
-            '<p>訂位日期: ' + selectedDate + '</p>' +
-            '<p>訂位時段: ' + selectedPeriod + '</p>' +
-            '<p>您選擇的diy項目: 黑森林蛋糕</p>' +
-            '<p>人數: ' + selectedPeople + '</p>' +
-            '<input type="hidden" name="tradeDesc" value="黑森林蛋糕" >'+
-            '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
-            '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
-            '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
-            '<input type="hidden" name="cardrecipient" value="luke" >'+
-            '<input type="hidden" name="cardrecipientAddress" value="" >'+
-            '<input type="hidden" name="cardrecipientAddress" value="" >'+
-            '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
-            '<input type="hidden" name="tokenUse" value="1" >'+
-            '</div>' +
-            '<div class="buttons">' +
-            '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
-            '<button id="cancelButton" class="btn btn-secondary">取消</button>' +
-            '</div>'
-        '</form>'
-        ;
-
-        var popup = layer.open({
-            type: 1,
-            title: '訂位確認',
-            content: formHtml,
-            area: ['400px', '350px'],
-            shadeClose: true,
-        });
-
-        // 關閉彈窗
-        $('#cancelButton, .layui-layer-close').on('click', function () {
-            layer.close(popup);
-        });
-
-        // 付款按紐
-        $('#payButton').on('click', function () {
-            // 添加付款邏輯
-            // ...
-
-            // 跳轉到綠界
-            //window.location.href = 'index.jsp';
-        });
-    });
 
 </script>
 
