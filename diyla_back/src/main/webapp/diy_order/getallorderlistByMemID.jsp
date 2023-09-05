@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.diyOrder.*"%>
 <%@ page import="com.cha102.diyla.member.*"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page isELIgnored="false"%>
 
 
@@ -144,23 +144,13 @@ div.inline {
 					<td>${DiyOrderVO.diyOrderNo}</td>
 					<td>${DiyOrderVO.memId}</td>
 
-					<c:choose>
-						<c:when test="${DiyOrderVO.diyNo == 0}">
-							<td>點心</td>
-						</c:when>
-						<c:when test="${DiyOrderVO.diyNo == 1}">
-							<td>蛋糕</td>
-						</c:when>
-						<c:when test="${DiyOrderVO.diyNo == 2}">
-							<td>塔派</td>
-						</c:when>
-						<c:when test="${DiyOrderVO.diyNo == 3}">
-							<td>生乳酪</td>
-						</c:when>
-						<c:otherwise>
-							<td>其他</td>
-						</c:otherwise>
-					</c:choose>
+					<c:forEach var="DiyCateEntity" items="${diyCateList}">
+						<c:choose>
+								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+									<td id="diyNo">${DiyCateEntity.diyName}</td>
+								</c:when>
+						</c:choose>			
+					</c:forEach>
 
 					<td>${DiyOrderVO.contactPerson}</td>
 					<td>${DiyOrderVO.contactPhone}</td>
@@ -179,7 +169,7 @@ div.inline {
 					</c:choose>
 
 					<td>${DiyOrderVO.diyReserveDate}</td>
-					<td>${DiyOrderVO.createTime}</td>
+					<td id="createTime11"><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 					<c:choose>
 						<c:when test="${DiyOrderVO.reservationStatus == 0}">
@@ -211,7 +201,13 @@ div.inline {
 						</c:when>
 					</c:choose>
 
-					<td>${DiyOrderVO.diyPrice}</td>
+					<c:forEach var="DiyCateEntity" items="${diyCateList}">
+						<c:choose>
+								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+									<td id="diyPrice">${DiyCateEntity.amount}</td>
+								</c:when>
+						</c:choose>			
+					</c:forEach>
 
 
 					<!-- 				<td id="inn"> -->
