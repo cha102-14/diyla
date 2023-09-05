@@ -291,7 +291,8 @@ CREATE TABLE TOKEN
       `SERVING_SIZE` INT NOT NULL DEFAULT 1,
       PRIMARY KEY (`ING_ID`));
 
-    CREATE TABLE `class_ing` (
+
+    CREATE TABLE `class_ing`` (
       `CLASS_ID` INT NOT NULL,
       `ING_ID` INT NOT NULL,
       `ING_NUMS` INT NOT NULL,
