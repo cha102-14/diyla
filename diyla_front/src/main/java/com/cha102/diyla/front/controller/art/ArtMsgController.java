@@ -4,6 +4,9 @@ import com.cha102.diyla.articleModel.ArtService;
 import com.cha102.diyla.articleModel.ArtVO;
 import com.cha102.diyla.articlemsgmodel.ArtMsgService;
 import com.cha102.diyla.articlemsgmodel.ArtMsgVO;
+import com.cha102.diyla.noticeModel.NoticeService;
+import com.cha102.diyla.noticeModel.NoticeVO;
+import com.cha102.diyla.util.JedisNotice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,8 +29,8 @@ import java.util.stream.Collectors;
 public class ArtMsgController {
     @Autowired
     ArtMsgService artMsgSvc;
-
-
+    @Autowired
+    NoticeService noticeService;
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/art/insert")
@@ -54,6 +57,13 @@ public class ArtMsgController {
         artMsgVO.setMsgStatus((byte) 1); //預設顯示留言
         artMsgSvc.addArtMsg(artMsgVO);
         List<ArtMsgVO> list = artMsgSvc.getAllByArtNo(artNo);
+        //新增個人通知
+        NoticeVO noticeVO = new NoticeVO();
+        noticeVO.setNoticeTitle("您的文章有一個新留言，快來看看吧～");
+        noticeVO.setMemId(memId);
+        noticeService.addNotice(noticeVO);
+        //存入redis
+        JedisNotice.setJedisNotice(memId,"addArtMsg");
 
         model.addAttribute("artVO", artVO);
         model.addAttribute("list",list);

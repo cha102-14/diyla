@@ -31,21 +31,30 @@
     <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
     <script src="${ctxPath}/js/axios/axios.min.js"></script>
     <style>
-        .cartQuantity {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            right: -9px;
-            top: -8px;
-        }
+    .cartQuantity{
+  position:absolute;
+  width: 20px;
+  height: 20px;
+  border-radius:50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right:-9px;
+  top:-8px;
+}
+
+.position{
+  &-relative{
+    position:relative;
+  }
+  &-absolute{
+    position:absolute;
+  }
+}
     </style>
 </head>
 
-<body>
+<body onload="connect()" onload="disconnect()">
 <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -118,7 +127,7 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <div onload="connect();">
+                            <div>
                                 <a href="${ctxPath}/member/update?action=select&memId=${memId}">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <span>${memVO.memName}你好</span>
@@ -187,99 +196,121 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
 <script>
 
-    $("#shoppingcart").click(function (e) {
-        let memVO = <%=session.getAttribute("memVO")%>;
-        if (memVO == null) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'warning',
-                title: '請登入',
-                text: '您需要登入才能使用購物車。',
-                confirmButtonText: '前往登入',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = './member/mem_login.jsp';
-                }
-            });
-        }
+$("#shoppingcart").click(function(e){
+	let memVO = <%=session.getAttribute("memVO")%>;
+	  if (memVO == null) {
+		  e.preventDefault();
+	    Swal.fire({
+	      icon: 'warning',
+	      title: '請登入',
+	      text: '您需要登入才能使用購物車。',
+	      confirmButtonText: '前往登入',
+	      allowOutsideClick: false  
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        window.location.href = './member/mem_login.jsp';
+	      }
+	    });
+	  }
 
-    });
+});
 
-    $("#myOrder").click(function (e) {
-        let memVO = <%=session.getAttribute("memVO")%>;
-        if (memVO == null) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'warning',
-                title: '請登入',
-                text: '您需要登入才能查看訂單。',
-                confirmButtonText: '前往登入',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = './member/mem_login.jsp';
-                }
-            });
-        }
-    });
+$("#myOrder").click(function(e){
+	let memVO = <%=session.getAttribute("memVO")%>;
+	  if (memVO == null) {
+		  e.preventDefault();
+	    Swal.fire({
+	      icon: 'warning',
+	      title: '請登入',
+	      text: '您需要登入才能查看訂單。',
+	      confirmButtonText: '前往登入',
+	      allowOutsideClick: false  
+	    }).then((result) => {
+	      if (result.isConfirmed) {
+	        window.location.href = './member/mem_login.jsp';
+	      }
+	    });
+	  } 
+});  
 </script>
 <script>
-    $(document).ready(function () {
-        updateCartQuantity();
-    });
+$(document).ready(function() {
+    updateCartQuantity();
+});
+function updateCartQuantity() {
 
-    function updateCartQuantity() {
-
-        let cartQuantitySpan = $("#cartQuantity");
-        let memId = cartQuantitySpan.data("memid");
-        console.log(cartQuantitySpan);
-        console.log(memId);
+let cartQuantitySpan = $("#cartQuantity");
+let memId = cartQuantitySpan.data("memid");
+	console.log(cartQuantitySpan);
+	console.log(memId);
 
 // if (memId !== undefined && memId !== null) {
-        $.ajax({
-            url: "http://localhost:8081/diyla_front/shopR/getCartQuantity",
-            type: "POST",
-            data: JSON.stringify({memId: memId}),
-            contentType: "application/json",
-            dataType: "json",
-            success: function (data) {
-                console.log("Total Quantity:", data.totalQuantity);
-                if (data.totalQuantity == 0 || data.totalQuantity == null) {
+    $.ajax({
+        url: "http://localhost:8081/diyla_front/shop/getCartQuantity",
+        type: "POST",
+        data: JSON.stringify({ memId: memId }),
+        contentType: "application/json",
+        dataType: "json",
+        success: function(data) {
+            console.log("Total Quantity:", data.totalQuantity);
+        	if (data.totalQuantity == 0||data.totalQuantity ==null) {
 //                 cartQuantitySpan.text(""); //為0或null就隱藏
-                    cartQuantitySpan.hide();
-                } else {
-                    cartQuantitySpan.text(data.totalQuantity); // 有則設定數量
-                    cartQuantitySpan.show();
-                }
-            },
-            error: function (error) {
+                cartQuantitySpan.hide();
+            } else {
+                cartQuantitySpan.text(data.totalQuantity); // 有則設定數量
+                cartQuantitySpan.show();
             }
-        });
+        },
+        error: function(error) {
+            console.error("Error fetching cart quantity:", error);
+        }
+    });
 // }
-    }
+}
 
 </script>
 
 <script>
     let host = window.location.host;
     let path = window.location.pathname;
-    let webCtx = path.substring(0, path.indexOf('/', 1));
-    let endPointURL = "ws://" + window.location.host + webCtx + "/NoticeWS/{memId}";
+    let webCtx = path.substring(0,path.indexOf('/',1));
+    let endPointURL = "ws://"+host+webCtx+"/NoticeWS/${memId}";
     let webSocket;
 
-    function connect() {
-        webSocket = new webSocket(endPointURL);
 
-        webSocket.onopen = function (event) {
+    function connect(){
+        webSocket = new WebSocket(endPointURL);
+
+        webSocket.onopen = function(event){
             console.log("Connect Success");
         }
+
+        webSocket.onmessage=function(event){
+            let jsonObj = JSON.parse(event.data);
+            console.log(jsonObj);
+            getNotices();
+            addNotification();
+            addListener();
+
+        }
+        function addListener(){
+            let jsonObj = {
+                        "message" : "get"
+            }
+            webSocket.send(JSON.stringify(jsonObj));
+        }
+
+    };
+
+    function disconnect(){
+        console.log("disconnect");
+        webSocket.close();
     }
 
 
     let notificationCount = 0;
     let notices = null;
-    getNotices()
+    //getNotices()
 
     // 添加通知
     function addNotification() {
@@ -295,10 +326,10 @@
     }
 
     // 切换通知下拉框的顯示和隱藏
-    function toggleNotifications() {
-        const dropdown = document.getElementById('notification-dropdown');
-        dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
-    }
+   // function toggleNotifications() {
+   //   const dropdown = document.getElementById('notification-dropdown');
+   // dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+   //}
 
     function toggleNotifications() {
         const dropdown = document.getElementById('notification-dropdown');
@@ -307,34 +338,32 @@
             notificationCount = 0; // 重置通知
             document.getElementById('notification-count').textContent = notificationCount;
             for (let i = 0; i < notices.length; i++) {
-                notices[i].noticeStatus = 1
+                notices[i].noticeStatus=1
             }
             let noticeJson = JSON.stringify(notices);
-            axios.post("${ctxPath}/notice/saveRead", noticeJson, {
-                headers: {
+            axios.post("${ctxPath}/notice/saveRead", noticeJson,{headers: {
                     'Content-Type': 'application/json'
-                }
-            })
+                }})
         } else {
             dropdown.style.display = 'block';
         }
     }
 
     function getNotices() {
-        axios.get("${ctxPath}/notice/get/${memId}").then((res) => {
+        axios.get("${ctxPath}/notice/get/${memId}").then((res)=>{
 
-            notices = res.data;
-            console.log(notices)
-            let noticeLength = 0;
-            $('#notification-count').html(notices.length);
-            for (let i = 0; i < notices.length; i++) {
-                let htmlParagraphElement = document.createElement('p');
-                htmlParagraphElement.textContent = notices[i].noticeTitle;
-                $('#notification-dropdown').append(htmlParagraphElement);
-                if (notices[i].noticeStatus === 0) {
-                    noticeLength += 1;
+                notices=res.data;
+                console.log(notices)
+                let noticeLength = 0;
+                $('#notification-count').html(notices.length);
+                for (let i = 0; i < notices.length; i++) {
+                    let htmlParagraphElement = document.createElement('p');
+                    htmlParagraphElement.textContent=notices[i].noticeTitle;
+                    $('#notification-dropdown').append(htmlParagraphElement);
+                    if (notices[i].noticeStatus === 0) {
+                        noticeLength += 1;
+                    }
                 }
-            }
             if (noticeLength === 0) {
                 $('#notification-count').hide();
             } else {
