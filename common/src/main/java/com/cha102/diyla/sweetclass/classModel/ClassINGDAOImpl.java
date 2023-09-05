@@ -31,6 +31,8 @@ public class ClassINGDAOImpl implements ClassINGDAO {
             "SELECT class_id,ing_id,ing_nums FROM class_ing where class_id = ?, ing_id=?";
     private static final String DELETE =
             "DELETE FROM class_ing where class_id = ?, ing_id=?";
+    private static final String DELETE_ONE_COURSE_ING =
+            "DELETE FROM class_ing where class_id = ?";
     private static final String UPDATE =
             "UPDATE class_id set ing_id=?,ing_nums=? where class_id = ?";
     private static final String GET_ING_ID_NUMS_STMT =
@@ -54,8 +56,8 @@ public class ClassINGDAOImpl implements ClassINGDAO {
 
             // Handle any SQL errors
         } catch (SQLException se) {
-            throw new RuntimeException("A database error occured. "
-                    + se.getMessage());
+            se.printStackTrace();
+            throw new RuntimeException("新增食材時發生錯誤。");
             // Clean up JDBC resources
         } finally {
             if (pstmt != null) {
@@ -151,6 +153,19 @@ public class ClassINGDAOImpl implements ClassINGDAO {
             }
         }
 
+    }
+    public void deleteOneCourseIng(Integer claID) {
+        try (
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(DELETE_ONE_COURSE_ING);
+                ) {
+            pstmt.setInt(1, claID);
+            pstmt.executeUpdate();
+
+
+        } catch(SQLException se) {
+            throw new RuntimeException("刪除課程食材時發生錯誤。");
+        }
     }
 
     @Override

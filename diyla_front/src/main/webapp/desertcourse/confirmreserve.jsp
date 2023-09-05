@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <title>訂單確認</title>
+    <title>甜點課程預約單確認</title>
     <%
     String courseId = request.getParameter("courseId");
     String headcount = request.getParameter("headcount");
@@ -21,7 +21,13 @@
     session.setAttribute("userSession", true);
     %>
 </head>
+
+
 <body>
+<jsp:include page="/front_header.jsp" />
+<section id="navibar">
+<jsp:include page="/desertcourse/navibar.jsp" />
+</section>
          <c:if test="${userSession}">
         <!-- 如果已登入，顯示課程及報名人數資訊 -->
         <div id="courseInfoContainer">
@@ -37,6 +43,7 @@
                 }, 5000);
             </script>
         </c:if>
+        <jsp:include page="/front_footer.jsp" />
 </body>
 <script>
 $(document).ready(function () {
@@ -45,7 +52,7 @@ $(document).ready(function () {
     if(${userSession}){
         let formUrlData = new URLSearchParams();
         formUrlData.append("courseId", '<%= courseId %>')
-        fetch('/diyla_front/getOneClassServlet',{
+        fetch('${ctxPath}/getOneClassServlet',{
             method: "post",
             body: formUrlData
         })
@@ -72,7 +79,7 @@ $(document).ready(function () {
             headcount: headcount
         };
         console.log(reserveInfo);
-        fetch('/diyla_front/createReserveServlet', {
+        fetch('${ctxPath}/createReserveServlet', {
             method: "post",
             header: {
                 "content-type" : "application/json"

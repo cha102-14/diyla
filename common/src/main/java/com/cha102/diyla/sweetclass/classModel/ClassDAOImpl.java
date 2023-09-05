@@ -28,7 +28,7 @@ public class ClassDAOImpl implements ClassDAO{
     private static final String DELETE =
             "DELETE FROM class where class_id = ?";
     private static final String UPDATE =
-            "UPDATE class_id set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,class_limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
+            "UPDATE class set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,class_limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
     private static final String GET_DATE_STMT =
             "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class where class_date = ?";
     private static final String GET_BY_TEAID =
@@ -131,13 +131,14 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.setString(10, classVO.getClassName());
             pstmt.setInt(11, classVO.getHeadcount());
             pstmt.setInt(12, classVO.getClassStatus());
+            pstmt.setInt(13, classVO.getClassId());
 
             pstmt.executeUpdate();
 
             // Handle any driver errors
         } catch (SQLException se) {
             se.printStackTrace();
-            throw new RuntimeException("修改課程資料失敗。");
+            throw new RuntimeException("修改甜點課程失敗。");
             // Clean up JDBC resources
         } finally {
             if (pstmt != null) {

@@ -58,7 +58,7 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="index.jsp">
+                        <a class="nav-link" href="${ctxPath}/desertcourse/findclasslist.jsp">
                             甜點課程
                         </a>
                     </li>
@@ -111,10 +111,9 @@
             </div>
         </nav>
     </header>
-
     <!-- end header section -->
 </div>
-<script src="${ctxPath}/js/jquery-3.4.1.min.js"></script>
+
 <%--<script src="js/bootstrap.js"></script>--%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
@@ -124,6 +123,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.all.min.js"></script>
 	<script>
+
 $("#shoppingcart").click(function(e){
 	let memVO = <%=session.getAttribute("memVO")%>;
 	  if (memVO == null) {

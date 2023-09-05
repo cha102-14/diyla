@@ -32,15 +32,14 @@
         Integer empId = 1;
         session.setAttribute("empId", empId);
         Integer teacherId = 1;
-
-
+        ClassVO courseVO = (ClassVO) request.getAttribute("courseVO");
     %>
 
 </head>
 
 <body>
     <a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">前往課程日曆表</a>
-    <form action="/${ctxPath}/modifyCourse" method="post" enctype="multipart/form-data">
+    <form action="${ctxPath}/modifyCourse" method="post" enctype="multipart/form-data">
     <input type="hidden" id="modifyCourseId" name="modifyCourseId" value="${courseVO.classId}">
     <c:choose>
     <c:when test="${typeFun == 'ADMIN'}">
@@ -116,15 +115,15 @@
     <label for="ingredientQuantity1">食材數量: </label><input id="ingredientQuantity1" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required><button type="button" id="ingIncreaseButton">追加食材</button>
     <span class="ingNumsError" style="display: none">食材數量請輸入數字</span><br>
     </div>
-    <c:forEach var="reqIngVO" items="${reqCourseIngVOList}" varStatus="loop">
-        <c:if test="${loop.index > 0}">
+    <c:forEach var="reqIngVO" items="${reqCourseIngVOList}" varStatus="loop1">
+        <c:if test="${loop1.index > 0}">
         <div class="ingredient-row">
-        <label for="ingredient" class="typeLabel"> 食材${loop.index + 1}: </label><select id="ingredientType${loop.index + 1}" name="ingredientType[]" >
+        <label for="ingredient" class="typeLabel"> 食材${loop1.index + 1}: </label><select id="ingredientType${loop1.index + 1}" name="ingredientType[]" >
         <c:forEach var="ingredient" items="${ingList}" varStatus="loop">
         <option class="${ingredient.ingId}" value="${ingredient.ingId}">${ingredient.ingName}</option>
         </c:forEach>
         </select>
-        <label for="ingredientQuantity${loop.index}">食材數量: </label><input id="ingredientQuantity${loop.index}" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required><button type="button" class="removeButton"id="ingDecreaseButton${loop.index}">移除食材</button>
+        <label for="ingredientQuantity${loop1.index + 1}">食材數量: </label><input id="ingredientQuantity${loop1.index + 1}" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required><button type="button" class="removeButton"id="ingDecreaseButton${loop1.index + 1}">移除食材</button>
         <span class="ingNumsError" style="display: none">食材數量請輸入數字</span><br>
         </div>
         </c:if>
@@ -153,7 +152,7 @@
 
     <div id="picBlock">
     <label for="coursePic">上傳圖片：</label>
-    <% if (courseVO != null && courseVO.getTeaPic() != null) { %>
+    <% if (courseVO != null && courseVO.getClassPic() != null) { %>
         <input type="file" id="coursePic" name="coursePic" accept="image/*" ><br>
         <img id="picPreview" src="data:image/jpeg;base64, <%= Base64Converter.byteArrayToBase64(courseVO.getClassPic()) %>" alt="圖片預覽" style="max-width: 300px; max-height: 300px;">
         <input type="hidden" id="defaultCoursePic" name="defaultCoursePic" value="<%= Base64Converter.byteArrayToBase64(courseVO.getClassPic()) %>">
@@ -255,18 +254,19 @@
         ingredientIndex = $(".ingredient-row").length + 1; // 重新計算index
         updateIngredientLabels(); // 更新所有食材欄位的標籤
     });
-    //處理傳進來的courseId對應的預設食材
+    //處理傳進來的courseId對應的預設食材及數量
     var courseIngIdList = ${reqCourseIngIdList};
     var courseIngAmountList = ${reqCourseIngAmountList};
+    courseIngIdList.forEach(function(ingId, index) {
+        var selectElement = $("#ingredientType" + (index + 1));
+        selectElement.val(ingId); // 選擇某特定值的選項
+    });
+    courseIngAmountList.forEach(function(ingAmount, index) {
+    var selectAmountInput = $("#ingredientQuantity" + (index + 1));
+    selectAmountInput.val(ingAmount);
+});
 
-    courseIngIdList.forEach((ingId, index) => {
-        let ingAmoung = courseIngAmountList[index];
-        ${"#ingredientType"+ (index+1)}.find("")
-        });
 
-        // $(".ingredient-row").each(function(index) {
-        //     $(this).find("#ingredientType"+index).find("."+ingId);
-        // });
 
 
     //送出表單的事件處理
@@ -319,19 +319,16 @@
             var form = $("form")[0];
             var formData = new FormData(form);
             console.log(formData);
-            for (var pair of formData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
-    }
             event.preventDefault();
-        fetch("${ctxPath}"+"/addNewCourse", {
+        fetch("${ctxPath}"+"/modifyCourse", {
             method: "post",
             body: formData
         })
         .then(response => response.json())
-        .then(data => {
-            if(data.errorMessage != null) {
+        .then(errorMessage => {
+            if(errorMessage.length !== 0) {
                 Swal.fire({
-                    title: data.errorMessage,
+                    title: errorMessage,
                     icon: "error",
                     confirmButtonText: "確定"
                 });

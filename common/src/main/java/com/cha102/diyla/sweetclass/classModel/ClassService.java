@@ -107,7 +107,7 @@ public class ClassService {
         int limit = classVO.getClassLimit();
         Date courseEndDate = classVO.getRegEndTime();
         int dateCompareResult = courseEndDate.compareTo(reserveDate);
-        if(result == 0 || result == 2 || result == 3){
+        if(result == 1 || result == 2){
             resultArray[0] = "false";
             resultArray[1] = "非常抱歉該課程無法報名,請報名其他課程";
         } else if (headcount > (limit - currentHeadcount)){
@@ -252,13 +252,15 @@ public class ClassService {
         ingDAO.insert(classINGVO);
         return classINGVO;
     }
-    public ClassINGVO updateClassING(Integer classID, Integer ingId, Integer ingNums){
-        ClassINGVO classINGVO =new ClassINGVO();
-        classINGVO.setClassId(classID);
-        classINGVO.setIngId(ingId);
-        classINGVO.setIngNums(ingNums);
-        ingDAO.update(classINGVO);
-        return classINGVO;
+    public void updateClassING(Integer classID, Integer[] ingId, Integer[] ingNums) throws RuntimeException{
+        ingDAO.deleteOneCourseIng(classID);
+        for(int i = 0; i < ingId.length; i++) {
+            ClassINGVO classINGVO = new ClassINGVO();
+            classINGVO.setClassId(classID);
+            classINGVO.setIngId(ingId[i]);
+            classINGVO.setIngNums(ingNums[i]);
+            ingDAO.insert(classINGVO);
+        }
     }
     public void deleteClassIng(Integer classID, Integer ingID){
         ingDAO.delete(classID,ingID);

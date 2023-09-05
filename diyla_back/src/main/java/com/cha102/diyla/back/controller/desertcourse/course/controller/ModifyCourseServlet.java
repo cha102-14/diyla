@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 10,  // 10 KB
@@ -50,7 +49,7 @@ public class ModifyCourseServlet extends HttpServlet {
 //        String typeFun = (String) session.getAttribute("typeFun");
 //        Integer empId = (Integer) session.getAttribute("empId");
         //前端參數接收
-        Integer modifyCourseId = Integer.valueOf(req.getParameter("reqCourseId").trim());
+        Integer modifyCourseId = Integer.valueOf(req.getParameter("modifyCourseId").trim());
         String courseName = req.getParameter("courseName").trim();
         java.sql.Date courseDate = Date.valueOf(req.getParameter("courseDate").trim());
         Integer courseSeq = Integer.parseInt(req.getParameter("courseSeq").trim());
@@ -59,29 +58,70 @@ public class ModifyCourseServlet extends HttpServlet {
         String intro = req.getParameter("courseIntro").trim();
         Integer limit = Integer.parseInt(req.getParameter("courseLimit").trim());
         Integer price = Integer.parseInt(req.getParameter("price").trim());
-        Integer classStatus = Integer.parseInt(req.getParameter("courseStatus"));
+        // 確認報名時間不能早於報名截止時間
+        if (courseDate.before(regEndDate)) {
+            errorMessage.add("報名截止日期不可晚於課程日期。");
+        }
+        // 確認修改後的limit不可小於目前的headcount!
+        classVO = classService.getOneClass(modifyCourseId);
+        if (limit < classVO.getHeadcount()) {
+            errorMessage.add("不可將人數上限調低於目前報名人數!");
+        }
 
         //圖片處理
-        InputStream in = null;
-        try {
-            in = req.getPart("coursePic").getInputStream();
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        }
         byte[] coursePic = null;
-        if(in.available() != 0) {
-            coursePic = new byte[in.available()];
-            in.read(coursePic);
-            in.close();
+        InputStream in = null;
+        String defaultCoursePic = req.getParameter("defaultCoursePic");
+        if (!defaultCoursePic.isEmpty()) {
+            String Base64CoursePic = req.getParameter("defaultCoursePic");
+            coursePic = Base64.getDecoder().decode(Base64CoursePic);
+        } else {
+            try {
+                in = req.getPart("coursePic").getInputStream();
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+            if (in.available() != 0) {
+                coursePic = new byte[in.available()];
+                in.read(coursePic);
+                in.close();
+            }
         }
         // 取得表單傳遞的食材資料陣列
         String[] ingredientTypes = req.getParameterValues("ingredientType[]");
         String[] ingredientQuantities = req.getParameterValues("ingredientQuantity[]");
-        try{
-            classService.updateClass(modifyCourseId,category, modifyTeacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName);
-        } catch(RuntimeException re) {
-            throw new RuntimeException("修改甜點課程資料失敗");
+        Integer[] courseIngIdList = new Integer[ingredientTypes.length];
+        Integer[] courseIngQuantitiesList = new Integer[ingredientQuantities.length];
+        for(int i = 0; i < courseIngIdList.length; i++) {
+            courseIngIdList[i] = Integer.parseInt(ingredientTypes[i]);
+            courseIngQuantitiesList[i] = Integer.parseInt(ingredientQuantities[i]);
         }
+        // 需要比較idList內是否有一樣類型的材料
+
+        //  Set 儲存遇到的數字
+        Set<Integer> seen = new HashSet<>();
+        for (Integer courseId : courseIngIdList) {
+            // courseId已存在seen的話,以下判斷就會為true
+            if (seen.contains(courseId)) {
+                errorMessage.add("食材項目不可重複!");
+                break;
+            } else {
+                seen.add(courseId);
+            }
+        }
+        if (errorMessage.isEmpty()) {
+            try {
+                //更新課程資料
+                classService.updateClass(modifyCourseId, category, modifyTeacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName);
+                //更新資料庫內的食材
+                classService.updateClassING(modifyCourseId, courseIngIdList, courseIngQuantitiesList);
+            } catch (RuntimeException re) {
+                errorMessage.add(re.getMessage());
+            }
+        }
+        String errorMessageJson = gson.toJson(errorMessage);
+        out.print(errorMessageJson);
+        out.flush();
     }
 
 }

@@ -8,6 +8,7 @@ public interface ClassINGDAO {
     void update(ClassINGVO classINGVO);
 
     void delete(Integer claID, Integer ingID);
+    void deleteOneCourseIng(Integer claID);
 
     ClassINGVO findByPrimaryKey(Integer claID, Integer ingID);
 
