@@ -24,7 +24,7 @@
     <div id="one_art">
         <div class="post-container">
             <div class="post-image">
-                    <c:choose>
+                        <c:choose>
                             <c:when test="${not empty artVO.artPic}">
                                 <td><img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
                                         alt="Image"></td>
@@ -32,7 +32,7 @@
                             <c:otherwise>
                                 <td><img src="" alt="無圖片"></td>
                             </c:otherwise>
-                    </c:choose>
+                        </c:choose>
             </div>
             <div class="post-details">
                 <div class="profile-section">

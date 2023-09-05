@@ -103,9 +103,9 @@
                             <div class="art_Content">
                                 <c:choose>
                                     <c:when test="${artVO.artContext.length() > 100}">
-                                        <p class="${content_0_100}">${artVO.artContext.substring(0, 100)}
+                                        <p class="content_0_100">${artVO.artContext.substring(0, 100)}
                                         </p>
-                                        <p class="${allContent}" style="display: none;">
+                                        <p class="allContent" style="display: none;">
                                             ${artVO.artContext}</p>
                                         <button type="button" class="showall_button"
                                             onclick="showMore()">顯示更多</button>
