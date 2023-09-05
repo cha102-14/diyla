@@ -1,13 +1,17 @@
 package com.cha102.diyla.noticeModel;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class NoticeService {
-
+    @Autowired
     private NoticeRepository noticeRepository;
+
+    public NoticeService(){}
 
     public NoticeService(NoticeRepository noticeRepository) {
         this.noticeRepository = noticeRepository;
@@ -22,5 +26,7 @@ public class NoticeService {
         noticeRepository.saveAll(noticeVOS);
     }
 
-
+    public void addNotice(NoticeVO noticeVO){
+        noticeRepository.save(noticeVO);
+    }
 }

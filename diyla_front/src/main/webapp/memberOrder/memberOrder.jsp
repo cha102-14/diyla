@@ -227,7 +227,6 @@ div.goShopping {
 .goTopButton:hover {
 	background-color: #555;
 }
-<<<<<<< HEAD
 
 p.discounted {
 	text-decoration: line-through !important;
@@ -246,18 +245,7 @@ p.hidden-actual-price {
 	box-shadow: 5px;
 	padding: 30px 15px;
 	border-radius: 5px;
-=======
-p.discounted {
-    text-decoration: line-through !important;
-}
-p.hidden-actual-price {
-    display: none !important;
-}
-.orderPrice, .actualPrice{
-margin: 0px;
-padding: 0px;
->>>>>>> main
-}
+	}
 </style>
 </head>
 <body>

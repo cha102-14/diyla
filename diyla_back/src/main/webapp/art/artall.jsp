@@ -147,7 +147,7 @@
                     <td>${artVO.memId}</td>
                 </tr>
             </c:forEach>
-        <tbody>
+        </tbody>
     </table>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script><!-- ●●js  for jquery datatables 用 -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>

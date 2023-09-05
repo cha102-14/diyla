@@ -7,11 +7,15 @@
 <html>
 <head>
     <title>修改商品</title>
-    <link rel="stylesheet" type="text/css" href="../css/commodityPage.css">
+    <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body style="margin-left: 280px">
+<aside class="topPage">
+    <jsp:include page="../index.jsp" />
+</aside>
 <h1>修改商品</h1>
 <div id="CONTENT">
     <!--商品欄開始-->

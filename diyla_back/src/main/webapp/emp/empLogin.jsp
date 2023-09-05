@@ -155,8 +155,25 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        window.onload(checkIsLogin());
+        function checkIsLogin(){
+            if("${empId}" !== ""){
+                location.href = "/diyla_back";
+            }else{
+                checkNewPassword();
+            }
+        }
 
 
+        function checkNewPassword(){
+        if("${newPassword}" !== ""){
+            Swal.fire('更新成功！');
+        }        
+    }
 
+
+    </script>
 </body>
 </html>

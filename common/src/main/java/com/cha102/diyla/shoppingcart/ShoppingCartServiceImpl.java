@@ -63,6 +63,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartServiceSpring {
 		List<ShoppingCartVO> cartList = new ArrayList<>();
 		for (Object[] row : result) {
 			ShoppingCartVO cartVO = new ShoppingCartVO();
+			//順序要對上sql查詢語句順序
 			cartVO.setMemId((Integer) row[0]);
 			cartVO.setComNo((Integer) row[1]);
 			cartVO.setComAmount((Integer) row[2]);

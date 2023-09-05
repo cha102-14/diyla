@@ -17,5 +17,9 @@ public interface EmpSpringService {
 
         void logout(String empId, HttpServletRequest req, HttpServletResponse resp);
 
+        String compareEmpEmail(String empEmail,HttpServletRequest req, HttpServletResponse resp);
+
+        void queryValidCodeResetPassword(String validCode,String doubleCheckPassword, HttpServletRequest req,HttpServletResponse resp);
+
 
 }

@@ -68,7 +68,7 @@ public class EmpDAOImpl implements EmpDAO {
             pstmt.setString(4, empVO.getEmpPassword());
             pstmt.setString(5, empVO.getEmpEmail());
             pstmt.setBoolean(6, empVO.getEmpStatus());
-//            TODO 取得AutoIncrement的值並把取得的empId做return
+//             取得AutoIncrement的值並把取得的empId做return
             int insertRow = pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
             // 新增比數 > 0 代表新增成功,再去做getAutoEmpId查詢
@@ -251,7 +251,6 @@ public class EmpDAOImpl implements EmpDAO {
         try {
             con = ds.getConnection();
 //            pstmt = con.prepareStatement(GET_ALL_STMT);
-//          TODO 8/20 完成查詢員工列表功能
             pstmt = con.prepareStatement(GET_ALL_EMP_LIST);
             rs = pstmt.executeQuery();
 //            con = DriverManager.getConnection(URL,USER,PASSWORD);

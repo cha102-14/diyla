@@ -5,14 +5,19 @@
 <html>
 <head>
     <title>商品詳情</title>
+    <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
     <link rel="stylesheet" type="text/css" href="../css/commodityPage.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
-<h1>商品詳情</h1>
-<div id="CONTENT">
-    <!--商品欄開始-->
+<body style="margin-left: 280px">
+
+<aside class="topPage">
+    <jsp:include page="../index.jsp"/>
+</aside>
+<div class="container">
+    <div class="header" style="margin-bottom: 20px;">商品詳情</div>
     <div class="prod">
         <div class="img">
             <img src="${commodity.showPic}" class="commodityPhoto" style="width: 100%">
@@ -79,7 +84,7 @@
                 sum += commodityComments[i].rating;
 
                 $('#commentArea').append(
-                    `  <div className="comment"  id="comment`+commodityComments[i].comCommentNo+`" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                    `  <div className="comment"  id="comment` + commodityComments[i].comCommentNo + `" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
                         <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
                             會員名稱：` + commodityComments[i].memName + `
                             <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
@@ -88,7 +93,7 @@
                         <div className="comment-content" style="margin-top: 10px;color: #333;">
                             ` + commodityComments[i].comContent + `
                         </div>
-						<button class="delete-button" style="color: red; font-size: 0.8em; margin-top: 10px;" onclick="deleteByComCommentNo(` + i + `)">
+						<button class="delete-button" style="background-color: #F2E8DA;color: red; font-size: 0.8em; margin-top: 10px;" onclick="deleteByComCommentNo(` + i + `)">
 							刪除
 						</button>
                     </div>`
@@ -104,13 +109,13 @@
     });
 
     function sortComment(sort) {
-        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort="+sort).then((res) => {
+        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort=" + sort).then((res) => {
             $('#commentArea').empty();
             commodityComments = res.data
             for (i = 0; i < commodityComments.length; i++) {
 
                 $('#commentArea').append(
-                    `  <div className="comment"  id="comment`+commodityComments[i].comCommentNo+`" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                    `  <div className="comment"  id="comment` + commodityComments[i].comCommentNo + `" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
                         <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
                             會員名稱：` + commodityComments[i].memName + `
                             <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
@@ -132,6 +137,7 @@
         })
 
     }
+
     function deleteByComCommentNo(commentIndex) {
         comCommentNo = commodityComments[commentIndex].comCommentNo;
 

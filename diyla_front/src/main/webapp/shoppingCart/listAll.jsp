@@ -162,7 +162,7 @@
 	//刪除
 	 function deleteCartItem(comNo,memId){
 		 $.ajax({
-	            url: "http://localhost:8081/diyla_front/shopR/delete",
+	            url: "/diyla_front/shopR/delete",
 	            type: "POST",
 	            data: {
 	                comNo: comNo,
@@ -216,7 +216,7 @@
 	        }
 	    });
 	 function updateCartItem(comNo,memId,amount) {
-		fetch("http://localhost:8081/diyla_front/shopR/update",{
+		fetch("/diyla_front/shopR/update",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -263,7 +263,7 @@
 		    //清空購物車用
 		 function clearCartItem(memId){
 			 $.ajax({
-		            url: "http://localhost:8081/diyla_front/shopR/clear/"+${memId},
+		            url: "/diyla_front/shopR/clear/"+${memId},
 		            type: "DELETE",
 		            data: {
 		                memId: memId

@@ -22,12 +22,12 @@ public class NoticeVO {
     @Column(name = "NOTICE_TITLE")
     private String noticeTitle;
 
-    @Column(name = "NOTICE_CONTEXT")
-    private String noticeContext;
+//    @Column(name = "NOTICE_CONTEXT")
+//    private String noticeContext;
 
-    @Column(name = "NOTICE_TIME")
+    @Column(name = "NOTICE_TIME",insertable = false)
     private Timestamp noticeTime = Timestamp.valueOf(LocalDateTime.now());
 
-    @Column(name = "NOTICE_STATUS")
+    @Column(name = "NOTICE_STATUS",insertable = false)
     private Integer noticeStatus;
 }
