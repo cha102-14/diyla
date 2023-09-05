@@ -217,7 +217,7 @@ let memId = cartQuantitySpan.data("memid");
 
 // if (memId !== undefined && memId !== null) {
     $.ajax({
-        url: "http://localhost:8081/diyla_front/shop/getCartQuantity",
+        url: "http://localhost:8081/diyla_front/shopR/getCartQuantity",
         type: "POST",
         data: JSON.stringify({ memId: memId }),
         contentType: "application/json",
