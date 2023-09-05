@@ -11,6 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <title>甜點課程預約單確認</title>
     <%
     String courseId = request.getParameter("courseId");
@@ -73,6 +75,17 @@ $(document).ready(function () {
             console.error("Error", error);
         });
     }
+    $("courseInfoContainer").on("click", "#cancel", function(){
+        Swal.fire({
+            title: "確定取消報名嗎?",
+            icon:"warning",
+            confirmButtonText: "確定"
+        }).then(function(result) {
+            if(result.isConfirmed) {
+                window.history.back();
+            }
+        });
+    });
     $("#courseInfoContainer").on("click", "#confirmreserve", function(){
         var reserveInfo = {
             courseId: courseId,
@@ -90,10 +103,32 @@ $(document).ready(function () {
             return response.json();
         })
         .then(function(result){
-            if(result.isSuccessful){
-                alert("訂單建立成功!");
+            if("true" === result.isSuccessful){
+                Swal.fire({
+                    title: "訂單建立成功!",
+                    icon: "success",
+                    confirmButtonText: "確定"
+                }).then(function(check){
+                    setTimeout(function() {
+                    window.location.href = "${ctxPath}"+"/desertcourse/memclassreserve.jsp";
+                    }, 3000);
+                    if(check.isConfirmed) {
+                        window.location.href = "${ctxPath}"+"/desertcourse/memclassreserve.jsp";
+                    }
+                });
             } else {
-                alert("訂單建立失敗! " + result.message);
+                Swal.fire({
+                    title: "訂單建立失敗! " + result.message,
+                    icon: "warning",
+                    confirmButtonText: "確定"
+                }).then(function(check){
+                    setTimeout(function(){
+                        window.location.href = "${ctxPath}"+"/desertcourse/findclasslist.jsp";
+                    }, 3000);
+                    if(check.isConfirmed) {
+                        window.location.href = "${ctxPath}"+"/desertcourse/findclasslist.jsp";
+                    }
+                });
             }
         })
         .catch(function(error){

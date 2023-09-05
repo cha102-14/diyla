@@ -17,6 +17,7 @@ public class modifyReserveServlet extends HttpServlet {
         PrintWriter out = res.getWriter();
         String path = req.getContextPath();
         Integer reserveId = Integer.valueOf(req.getParameter("reserveId"));
+        System.out.println(reserveId);
         String action = req.getParameter("action");
         ClassService classService = new ClassService();
 //        if ("刪除及退款".equals(action)){
@@ -30,6 +31,7 @@ public class modifyReserveServlet extends HttpServlet {
         //(0:預約單成立，1:預約單取消，2:預約單完成)
         if ("delete".equals(action)) {
             classService.updateReserveStatus(reserveId, 1);
+
         } else if ("complete".equals(action)) {
             classService.updateReserveStatus(reserveId, 2);
         }

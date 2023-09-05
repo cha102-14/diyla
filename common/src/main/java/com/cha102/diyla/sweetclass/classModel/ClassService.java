@@ -101,13 +101,13 @@ public class ClassService {
         //抓取該member是否有預約課程的權利
         int blacklistStatus = classReserveDAO.findMemBlackListStatus(memID);
         //宣告需要比較的參數以及回傳的array
-        int result = classVO.getClassStatus();
+        int status = classVO.getClassStatus();
         String[] resultArray = new String[2];
         int currentHeadcount = classVO.getHeadcount();
         int limit = classVO.getClassLimit();
         Date courseEndDate = classVO.getRegEndTime();
         int dateCompareResult = courseEndDate.compareTo(reserveDate);
-        if(result == 1 || result == 2){
+        if(status == 1 || status == 2){
             resultArray[0] = "false";
             resultArray[1] = "非常抱歉該課程無法報名,請報名其他課程";
         } else if (headcount > (limit - currentHeadcount)){
@@ -171,7 +171,6 @@ public class ClassService {
                 jsonCourse.put("courseId", reserves.getClassId());
                 jsonCourse.put("courseName", course.getClassName());
                 jsonCourse.put("courseDateSeq", courseDateSeq);
-                System.out.println(reserves.getCreateTime());
                 jsonCourse.put("createTime", dateFormat.format(reserves.getCreateTime()));
                 jsonCourse.put("totalPrice", reserves.getTotalPrice());
                 jsonArray.put(jsonCourse);
@@ -188,9 +187,9 @@ public class ClassService {
         }
     }
     public enum ReserveStatus {
-        CREATED(0, "預約單建立"),
-        PAID(1, "付款完成"),
-        CANCELED_UNREFUNDED(2, "預約單取消(未退款)"),
+        CREATED(0, "預約單成立"),
+        PAID(1, "預約單取消"),
+        CANCELED_UNREFUNDED(2, "預約單完成"),
         CANCELED_REFUNDED(3, "預約單取消(已退款)"),
         COMPLETED(4, "預約單完成");
 
