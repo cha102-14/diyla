@@ -38,6 +38,11 @@
                     <thead>
 
                         <br>
+                         <td></td>請輸入會員信箱</td>
+                          <input type="TEXT" id ="memEmail" placeholder="請輸入要查詢的會員信箱" value="" >
+                         <input type="HIDDEN" name="action" value="getEmail">
+                         <button type="button" class="btn btn-primary" onclick="getAllMemList()">送出</button>
+
                         <tr style="background-color:#FFB7B7">
                             <th>筆數</th>
                             <th>會員編號</th>
@@ -162,11 +167,15 @@
                     let pageIndexElement = document.getElementById("pageIndex");
                     // 獲取選中的值
                     let pageIndexValue = pageIndexElement.value;
+
+                    let inputmemEmail = document.getElementById("memEmail");
+                    let memEmailValue = inputmemEmail.value;
                     let memData = {
                         "pageIndex": pageIndexValue,
-                        "pageSize": selectedValue
+                        "pageSize": selectedValue,
+                        "memEmail": memEmailValue
                     }
-                    return memData; // 此時data裡面有pageIndex及pageSize 2個參數
+                    return memData; // 此時data裡面有pageIndex及pageSize、memEmail 3個參數
 
                 }
                 //新增提交 click按鈕送出呼叫以下funcation
@@ -174,8 +183,9 @@
                     let memData = addMemList();
                     // fetch 可以接受第二個可選參數，一個可以控制不同配置的init物件
                     let tt = getMemList('getAllMemList', memData)
-
                 }
+
+                
                 //  此處的url代表送出請求後端url的位置,要和controller的postMapping相同
                 function getMemList(url, memData) {
                     return fetch(url, {//此括號開始為option
@@ -193,8 +203,8 @@
                         // referrer: 'no-referrer' // *client, no-referrer
                     })
                         .then(res => res.json()) // 把回傳的JSON字串取回，放在promise物件中回傳
-
-
+                        
+                        
                         .then(function (res) { //一樣有then
                             let mems = res.memList;
                             mem_totalSize = res.totalSize
@@ -204,17 +214,20 @@
                             // var r = JSON.stringify(res);
                             // console.log(res.data.userName)
                             // $(".result").val(res.data.userName)
-
-
+                            
+                            
                         })
                         // .then(response => response.json())
                         // .then(respdata)
                         .catch(function (error) {
                             console.log(error)
                         })
-                }
+                    }
 
-                function showMems(mems) {
+                    // function getMemInformation(){
+                    // }
+
+                    function showMems(mems) {
                     let html = "";
                     if (mems.length === 0) {
                         html = "<tr><td colspan='4' align='center'>尚無更多會員資料</td></tr>";
@@ -236,8 +249,6 @@
                     // console.log(mems);
                     document.getElementById("memcolumns").innerHTML = html;
                     changeStatus();
-
-
                 }
 
                 function changeStatus() {

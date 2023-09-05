@@ -26,7 +26,7 @@ public class MemDTO implements java.io.Serializable {
         this.memName = (String) objects[1];
         this.memEmail = (String) objects[2];
         this.memPhone = (String) objects[3];
-        this.blacklistArt = String.valueOf((Byte) objects[5]).equalsIgnoreCase("1");
+        this.blacklistArt = String.valueOf((Byte) objects[4]).equalsIgnoreCase("1");
 
     }
 

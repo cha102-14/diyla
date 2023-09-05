@@ -34,8 +34,9 @@ public class EmpSpringServiceImpl implements EmpSpringService {
     public String getAllEmp(JSONObject jsonObject) {
         int pageIndex = jsonObject.getIntValue("pageIndex");
         int pageSize = jsonObject.getIntValue("pageSize");
+        String chooseTypeFun = jsonObject.getString("chooseTypeFun");
 //      前端傳入值 pageIndex 1 , pageSize 10 第一頁取10筆, 第二頁為 10 * (2-1),10...
-        List<Object[]> allEmpObjArr = empJPADAO.getAllEmp(pageSize * (pageIndex - 1), pageSize);
+        List<Object[]> allEmpObjArr = empJPADAO.getAllEmp(pageSize * (pageIndex - 1), pageSize,chooseTypeFun);
 //      將ObjectArr 透過stream流轉換成 stream<ObjectArr> 透過map方法做轉換-> stream<EmpDTO>,
         List<EmpDTO> empDTOList = allEmpObjArr.stream().map(EmpDTO::new)
 //      stream<EmpDTO>在此處代名詞為 o (隨便取都行),o先拿著自己的TypeFun英文傳入參數去調用AuthFunEnum方法
@@ -47,7 +48,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                         }
                 )
                 .collect(Collectors.toList());
-        Integer allEmpCount = empJPADAO.getAllEmpCount();
+        Integer allEmpCount = empJPADAO.getAllEmpCount(chooseTypeFun);
 //      JSONObject 也是用put放入資料
 //    TODO優化   正確做法為寫一個VO裝取資料,報錯時才知道是哪一欄位出問題,若使用JSONObject Key就是字串不好除錯
         JSONObject returnJSONObject = new JSONObject();
@@ -171,7 +172,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         String redisValidCode = jedis.get(empEmail);
         RequestDispatcher requestDispatcher = null;
         if (validCode.equals(redisValidCode)) {
-            empJPADAO.reserPassword(empEmail, doubleCheckPassword);
+            empJPADAO.resertPassword(empEmail, doubleCheckPassword);
             req.setAttribute("newPassword",true);
             requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
 //             更新成功

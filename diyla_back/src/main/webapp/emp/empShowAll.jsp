@@ -40,9 +40,16 @@
                         <br>
 
                         <div>
-                            <!-- 請輸入管理員編號 -->
-                            <!-- <input class="GoodsAddModal" type="text" name="id" size=5> -->
-                            <!-- <button type="button" class="btn btn-primary" onclick="getAllEmpList()">提交</button> -->
+                            <td>請選擇權限類別</td>
+                            <td><select id="chooseTypeFun" ><option select="selected" value="" >請選擇權限類別</option>
+                                <option value="SHOP">商店管理員</option>
+                                <option value="CLASS">課程管理員</option>
+                                <option value="MEMADMIN">會員權限管理人員</option>
+                                <option value="MASTER">師傅</option>
+                                <option value="STORADMIN">倉儲管理人員</option>
+                                <option value="CUSTORSERVICE">客服人員</option>
+                           </select>
+                           <button type="button" class="btn btn-primary" onclick="getAllEmpList()">查詢</button>
                         </div>
                         <br>
                         <tr style="background-color:#b45f06">
@@ -53,7 +60,6 @@
                             <th>信箱</th>
                             <th>權限</th>
                             <th>狀態</th>
-                            <!-- <th>修改</th> -->
                         </tr>
                     </thead>
                     <tbody id="empcolumns" class="bgc_empshowlist">
@@ -92,6 +98,17 @@
                 function resetCurrentPageIndex() {
                     document.getElementById("pageIndex").value = 1;
                     getAllEmpList();
+                }
+
+                
+                let chooseTypeFun = document.getElementById('chooseTypeFun');
+                chooseTypeFun.onchange = resetCurrentPage;
+                
+                function resetCurrentPage(){
+                    // 當使用者按下 (click) 按鈕時，執行 triggerAlert 函數
+                    console.log('resetCurrentPage');
+                    document.getElementById("pageIndex").value =1;
+
                 }
 
                 function getCurrentPage() {
@@ -170,9 +187,16 @@
                     let pageIndexElement = document.getElementById("pageIndex");
                     // 獲取選中的值
                     let pageIndexValue = pageIndexElement.value;
+                    // 抓取權限類別元素
+                    let typeFunElement = document.getElementById("chooseTypeFun");
+                    // 抓取選中的值
+                    let typeFunValue = typeFunElement.value;
+
+                    console.log(typeFunValue);
                     let empData = {
                         "pageIndex": pageIndexValue,
-                        "pageSize": selectedValue
+                        "pageSize": selectedValue,
+                        "chooseTypeFun":typeFunValue
                     }
                     return empData; // 此時data裡面有pageIndex及pageSize 2個參數
 
@@ -184,9 +208,6 @@
                     let tt = getFunc('getAllEmpList', data)
 
                 }
-                //   var data = {
-                //     id: $(".GoodsAddModal").val()
-                //   };
                 //  此處的url代表送出請求後端url的位置,要和controller的postMapping相同
                 function getFunc(url, data) {
                     return fetch(url, {//此括號開始為option
@@ -239,12 +260,12 @@
                             html += `<td>` + (i + 1) + `</td>`;
                             html += `<td>` + emp.empId + `</td>`;
                             html += `<td>` + emp.empName + `</td>`;
-                            if(emp.empPic == ""){
+                            console.log(emp);  
+                            if(emp.empPic == "" || emp.empPic == undefined){
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
                             } else {
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="data: image/jpeg;base64,` + emp.empPic + `"></td>`;
                             }
-                            
                             html += `<td>` + emp.empEmail + `</td>`;
                             html += `<td>` + emp.typeFun + `</td>`;
                             html += `<td><button type="button" id="` + emp.empId + `" class="empStatus">` + (emp.empStatus ? "開啟" : "停用") + `</button></td>`;
