@@ -136,6 +136,7 @@
                             <div onclick="toggleNotifications()">
                                 <i class="fa fa-bell" aria-hidden="true" style="color:#FCE5CD;"></i>
                                 <span class="badge" id="notification-count">0</span>
+                            </div>
                                 <div class="dropdown-content" id="notification-dropdown">
 
                                 </div>
