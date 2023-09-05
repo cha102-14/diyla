@@ -41,16 +41,9 @@ public class CommodityTrackService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
+    public void deleteById(Integer id){
+        commodityTrackRepository.deleteById(id);
+    }
 
 
 }

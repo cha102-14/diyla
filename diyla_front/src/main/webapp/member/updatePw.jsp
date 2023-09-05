@@ -17,7 +17,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <link rel="shortcut icon" href="images/DIYLA_cakeLOGO.png" type="image/x-icon">
-<title>信箱驗證</title>
+<title>修改密碼</title>
 
     <!-- slider stylesheet -->
     <link rel="stylesheet" type="text/css"

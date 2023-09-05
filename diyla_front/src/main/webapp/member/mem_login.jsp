@@ -49,7 +49,7 @@
             letter-spacing: 3px;
             margin:50px 0;
         }
-        h4{
+        h4.member{
             margin-top:30px;
             margin-bottom:20px
         }
@@ -59,7 +59,7 @@
             background-color: #FCE5CD;
         }
 
-        div.login {
+        div.member {
             padding: 10px;
             font-size: 1rem;
             width: 400px;
@@ -112,7 +112,7 @@
 
         }
 
-        button {
+        button.member {
             border-radius: 0.5rem;
             background-color: #B26021;
             color: #FCE5CD;
@@ -123,7 +123,7 @@
             margin-top: 40px;
             font-size: 1rem;
         }
-        button:hover {
+        button.member:hover {
             background-color: #FCE5CD;
             color:  #B26021;
             transition: all 0.3s;
@@ -153,7 +153,7 @@
 	<jsp:include page="../front_header.jsp"/>
 
     <div class="title">
-        <h4>會員登入</h4>
+        <h4 class="member">會員登入</h4>
         <c:if test="${not empty exMsgs}">
             <div style="color:red" class="error">
                 <c:forEach var="message" items="${exMsgs}">
@@ -161,7 +161,7 @@
                 </c:forEach>
             </div>
         </c:if>
-        <div class="login">
+        <div class="member">
             <form method="post" action="login">
                 <label class="user">帳號</label><br>
                 <input type="email" name="user" placeholder="請輸入信箱" class="inputform"><br>
@@ -173,7 +173,7 @@
                     <span style="vertical-align:middle;">記住我</span><br>
                 </label>
                 <input type="hidden" name="action" value="login">
-                <button type="submit" value="login">登入</button><br>
+                <button type="submit" value="login" class="member">登入</button><br>
                 <br>
                 <p>or</p>
                 <a href="${ctxPath}/member/forgetPw.jsp" class="forget">忘記密碼</a>

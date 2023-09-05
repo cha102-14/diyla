@@ -1,12 +1,18 @@
 package com.cha102.diyla.commodityOrder;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
+import com.cha102.diyla.member.MemDAO;
 import com.cha102.diyla.shoppingcart.ShoppingCartService;
 import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 
 public class CommodityOrderService {
 	CommodityOrderDaoJNDI dao = new CommodityOrderDaoJNDI();
+
+	public CommodityOrderService(){dao = new CommodityOrderDaoJNDI();}
+
 
 	public void updateStatus(Integer status, Integer orderNO) {
 		dao.updateStatus( status,  orderNO);
@@ -15,8 +21,35 @@ public class CommodityOrderService {
 		dao.update(status, orderNo,recipient,recipientAddress,phone);
 	}
 
-	public Integer insert(CommodityOrderVO commodityOrderVO) {
-		return dao.insert(commodityOrderVO);
+	public Integer insert(CommodityOrderVO commodityOrderVO,List<ShoppingCartVO>list) {
+		Connection connection=null;
+		Integer orderNo=null;
+			try {
+				connection = dao.getConnectionForTx();
+				connection.setAutoCommit(false);
+				orderNo=dao.insertAll(commodityOrderVO, connection);
+				System.out.println("orderNo:"+orderNo);
+				dao.insertDetail(orderNo, list, connection);
+	            connection.commit();
+
+			}catch (Exception e) {
+				 try {
+		                connection.rollback();
+		            } catch (SQLException ex) {
+		                throw new RuntimeException(ex);
+		            }
+			}
+			finally {
+	            if (connection != null) {
+	                try {
+	                    connection.setAutoCommit(true);
+	                    connection.close();
+	                } catch (SQLException se) {
+	                    se.printStackTrace();
+	                }
+	            }
+			}
+		return orderNo;
 	}
 
 	public List<CommodityOrderVO> getAllByMemId(Integer memId) {

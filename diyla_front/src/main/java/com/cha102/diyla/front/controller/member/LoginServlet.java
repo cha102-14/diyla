@@ -43,7 +43,6 @@ public class LoginServlet extends HttpServlet {
                 failure.forward(req,res);
             } else {
                 String url = "/";
-
                 Integer memId =memVO.getMemId();
                 session.setAttribute("memVO", memVO);
                 session.setAttribute("memId", memId);
@@ -56,7 +55,6 @@ public class LoginServlet extends HttpServlet {
                         return;
                     }
                 } catch (Exception ignored) {
-//>>>>>>> main
                 }
                 res.sendRedirect(req.getContextPath()+"/index.jsp");
 
@@ -68,15 +66,6 @@ public class LoginServlet extends HttpServlet {
         if ("logout".equals(action)){
             session.removeAttribute("memVO");
             res.sendRedirect(req.getContextPath()+"/index.jsp");
-
-
         }
-
-
-
-
     }
-
-
-//    登入後會有等待畫面或是登入成功畫面後再跳轉？
 }

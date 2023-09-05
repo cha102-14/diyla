@@ -4,9 +4,16 @@ body {
     margin: 0;
     padding: 0;
 }
-
-.lat_container {
+h1#lat_h1 {
+    text-align: center;
+    background-color: #D2691E;
+    border-radius: 10px;
+    color: white;
     max-width: 100%;
+    margin: 0 auto;
+}
+.lat_container {
+    max-width: 80%;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -43,7 +50,7 @@ td {
 #show_img > img {
     width: 100%;
     max-width: 100%;
-    height: auto;
+    height: auto;z
     border-radius: 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
@@ -51,4 +58,9 @@ td {
 hr {
     border-color: #fce5cd;
     margin: 10px 0;
+}
+
+.right-scroll {
+    overflow-y: scroll;
+    max-height: 280px;
 }

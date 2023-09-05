@@ -27,7 +27,8 @@
 <link href="${ctxPath}/css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="../css/shoppingcart.css">
+<link rel="stylesheet" type="text/css"
+	href="${ctxPath}/css/shoppingcart.css">
 <style>
 </style>
 </HEAD>
@@ -39,7 +40,7 @@
 
 	<div class="mainContent">
 		<h1 class="heading">我的購物車</h1>
-
+		
 		<c:choose>
 			<c:when test="${not empty shoppingCartList}">
 
@@ -54,34 +55,30 @@
 						<td class="subtitle">刪除商品</td>
 					</tr>
 					<c:forEach var="cartItem" items="${shoppingCartList}">
-<%-- 						<c:forEach var="comVO" items="${commodityList}"> --%>
-<%-- 							<c:if test="${cartItem.comNo == comVO.comNO}"> --%>
-								<tr class="itemrow${cartItem.comNo} itemrow">
-									<td class="itemInfo compic"><a
-										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
-										class="commodityPage"> <img src="${cartItem.showPic}"
-											class="comPic"></a></td>
-									<td class="itemInfo"><a
-										href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
-										class="commodityPage">${cartItem.comName}</a></td>
-									<td class="itemInfo">${cartItem.comPri}</td>
-									<td class="itemInfo"><input type="hidden" name="comNo"
-										value="${cartItem.comNo}" class="ucomNo"> <input
-										type="hidden" name="memId" value="${cartItem.memId}"
-										class="umemId"> <input class="quantity-input"
-										type="number" name="amount" min="0"
-										value="${cartItem.comAmount}"
-										data-original-amount="${cartItem.comAmount}" />
-										<button type="button" class="updateButton">更新</button></td>
-									<td class="itemInfo">${cartItem.comPri*cartItem.comAmount}</td>
-									<td class="itemInfo"><input type="hidden" name="comNo"
-										value="${cartItem.comNo}" class="dcomNo"> <input
-										type="hidden" name="memId" value="${cartItem.memId}"
-										class="dmemId">
-										<button type="button" class="deleteButton">刪除</button></td>
-								</tr>
-<%-- 							</c:if> --%>
-<%-- 						</c:forEach> --%>
+						<tr class="itemrow${cartItem.comNo} itemrow">
+							<td class="itemInfo compic"><a
+								href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
+								class="commodityPage"> <img src="${cartItem.showPic}"
+									class="comPic"></a></td>
+							<td class="itemInfo"><a
+								href="${ctxPath}/shop/CommodityController?action=findByID&comNO=${cartItem.comNo}"
+								class="commodityPage">${cartItem.comName}</a></td>
+							<td class="itemInfo">${cartItem.comPri}</td>
+							<td class="itemInfo"><input type="hidden" name="comNo"
+								value="${cartItem.comNo}" class="ucomNo"> <input
+								type="hidden" name="memId" value="${cartItem.memId}"
+								class="umemId"> <input class="quantity-input"
+								type="number" name="amount" min="0"
+								value="${cartItem.comAmount}"
+								data-original-amount="${cartItem.comAmount}" />
+								<button type="button" class="updateButton">更新</button></td>
+							<td class="itemInfo">${cartItem.comPri*cartItem.comAmount}</td>
+							<td class="itemInfo"><input type="hidden" name="comNo"
+								value="${cartItem.comNo}" class="dcomNo"> <input
+								type="hidden" name="memId" value="${cartItem.memId}"
+								class="dmemId">
+								<button type="button" class="deleteButton">刪除</button></td>
+						</tr>
 					</c:forEach>
 				</table>
 				<div class="handle">
@@ -89,13 +86,7 @@
 					<input type="hidden" name="action" value="clear"> <a
 						href="${ctxPath}/shop/CommodityController?action=listAll"
 						class="shopPage">繼續購物</a> <span class="total-price">總金額:${totalPrice}元</span>
-
-					<form action="${ctxPath}/memberOrder/OrderController" method="post">
-
-						<input type="hidden" name="action" value="checkout"> <input
-							type="hidden" name="" value="">
-						<button class="checkout-btn" type="submit">結帳</button>
-					</form>
+						<a href="http://localhost:8081/diyla_front/shopR/checkout/${memId}" class="checkout-btn" type="button" id="checkout">結帳</a>
 				</div>
 			</c:when>
 
@@ -151,7 +142,9 @@
 		$(".deleteButton").click(function() {
 			const button =$(this);
 			const comNo = button.closest('tr').find(".dcomNo").val();
-			const memId =button.closest('tr').find(".dmemId").val();
+// 			const memId =button.closest('tr').find(".dmemId").val();
+			const memId = <%=session.getAttribute("memId")%>;
+
 			console.log(comNo);
 			console.log(memId);
 			 swal({
@@ -160,6 +153,7 @@
 		            buttons: true
 			 }).then((removeItem) => {
 	            if (removeItem) {
+	            	console.log("del");
 	                deleteCartItem(comNo,memId);
 	            }
 	        });
@@ -168,12 +162,11 @@
 	//刪除
 	 function deleteCartItem(comNo,memId){
 		 $.ajax({
-	            url: "ShoppingCartServlet",
+	            url: "http://localhost:8081/diyla_front/shopR/delete",
 	            type: "POST",
 	            data: {
 	                comNo: comNo,
-	                memId: memId,
-	                action: "delete"
+	                memId: memId
 	            },
 	            dataType: "json",
 	            success: function(data) {
@@ -200,11 +193,11 @@
 	        const originalAmount = parseInt(inputField.data('original-amount'));
 	        const amount =  inputField.val(); 
 	        const comNo = button.closest('tr').find(".ucomNo").val();
-			const memId =button.closest('tr').find(".umemId").val();
+// 			const memId =button.closest('tr').find(".umemId").val();
+			const memId = <%=session.getAttribute("memId")%>;
 			console.log(amount);
 			console.log(inputField);
 			console.log(comNo);
-			console.log(memId);
 	        if (amount === "0") {
 	            swal({
 	                title: "數量為 0，確定要從購物車移除嗎？",
@@ -222,34 +215,35 @@
 	        	updateCartItem(comNo,memId,amount);
 	        }
 	    });
-	//修改的方法
-	 function updateCartItem(comNo,memId,amount){
-		 $.ajax({
-	            url: "ShoppingCartServlet",
-	            type: "POST",
-	            data: {
-	                comNo: comNo,
-	                memId: memId,
-	                amount:amount,
-	                action: "changeAmount"
-	            },
-	            dataType: "json",
-	            success: function(data) {
-	                if (data.success) {
-	                	 swal("成功修改", "", "success");
-	                     // 延遲 1 秒後刷新
-	                     setTimeout(function() {
-	                         window.location.reload("#mainContent");
-	                     }, 1500);
-	                } else {
-	                    // 處理刪除失敗的情況
-	                }
-	            },
-	            error: function() {
-	                // 處理AJAX錯誤的情況
-	            }
-	        });
-	    };
+	 function updateCartItem(comNo,memId,amount) {
+		fetch("http://localhost:8081/diyla_front/shopR/update",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+               memId:memId,
+               comNo:comNo,
+               comAmount:amount
+            })
+        }).then(response => response.json())
+          .then(data => {
+            if (data.success) {
+                swal("成功修改", "", "success");
+                // 延遲 1 秒後刷新
+                setTimeout(function () {
+                	window.location.reload("#mainContent");
+                }, 1500);
+            } else {
+                // 處理刪除失敗的情況
+            }
+        })
+        .catch(error => {
+            // 處理錯誤情況
+        });
+	}
+	 
+
 	    
 	    //清空購物車用
 		 $('#clearCart').on('click',function(e){
@@ -269,11 +263,11 @@
 		    //清空購物車用
 		 function clearCartItem(memId){
 			 $.ajax({
-		            url: "ShoppingCartServlet",
-		            type: "POST",
+		            url: "http://localhost:8081/diyla_front/shopR/clear/"+${memId},
+		            type: "DELETE",
 		            data: {
-		                memId: memId,
-		                action: "clear"
+		                memId: memId
+// 		                action: "clear"
 		            },
 		            dataType: "json",
 		            success: function(data) {

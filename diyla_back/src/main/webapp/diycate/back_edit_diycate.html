@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Add Product | Dason - Admin & Dashboard Template</title>
+    <title>編輯diy項目</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -302,7 +302,7 @@
                                             <div class="mb-3">
                                                 <label class="control-label">DIY類別</label>
 
-                                                <select id="diyCategoryName"
+                                                <select id="diyCategoryName" name="diyCategoryName"
                                                         class="select2 form-control select2-multiple">
                                                     <option value="0">小點心</option>
                                                     <option value="1">蛋糕</option>
@@ -337,7 +337,7 @@
 
                                     <div class="d-flex flex-wrap gap-2">
                                         <button id="submitBtn" type="submit"
-                                                class="btn btn-primary waves-effect waves-light">確定新增</button>
+                                                class="btn btn-primary waves-effect waves-light">確定修改</button>
                                         <button id="cancelBtn" type="button"
                                                 class="btn btn-secondary waves-effect waves-light">取消</button>
                                     </div>
@@ -454,7 +454,6 @@
                     $('#ID-upload-demo-img').attr('src', result); // 圖片連結（base64）
                     console.log(result)
                     console.log(file); // 獲得文件對象
-
                     imageData = file;
                 });
             }
@@ -484,9 +483,11 @@
                 $('#diyCateName').val(data.diyCateName);
                 $('#diyStatus').val(data.diyStatus);
                 $('#itemDetails').val(data.itemDetails);
+                $('#diyCategoryName').val(data.diyCategoryName)
 
 
                 $('#ID-upload-demo-img').attr('src', "data:image/jpeg;base64," + data.diyPicture); // 圖片連結（base64）
+
 
             },
             error: function (error) {
@@ -513,14 +514,17 @@
                 diyCateName: $('#diyCateName').val(),
                 diyStatus: $('#diyStatus').val(),
                 itemDetails: $('#itemDetails').val(),
-                diyNo: $('#diyNo').val()
+                diyNo: $('#diyNo').val(),
+                diyCategoryName: $('#diyCategoryName').val()
 
                 // JSON 數據的屬性
             };
             formData.append("diyCate", JSON.stringify(jsonData));
             // 添加圖片文件
-            formData.append("image", imageData)
 
+            if (imageData !== undefined) {
+                formData.append("image", imageData)
+            }
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8081/diyla_back/api/diy-cates",
@@ -530,7 +534,8 @@
                 success: function (data) {
                     console.log("請求成功:", data);
                     // 跳轉回上一頁
-                    history.back();
+                    // 跳转到带参数的 URL
+                    location.href = 'http://localhost:8081/diyla_back/diycate/back_diycate.html';
                 },
                 error: function (error) {
                     console.log("請求失敗:", error);
@@ -541,7 +546,8 @@
         $("#cancelBtn").click(function (event) {
             event.preventDefault(); // 阻止默認事件
             // 跳轉回上一頁
-            history.back();
+            // 跳转到带参数的 URL
+            location.href = 'http://localhost:8081/diyla_back/diycate/back_diycate.html';
         });
     });
 </script>

@@ -2,9 +2,6 @@ package com.cha102.diyla.track;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import java.util.Arrays;
-
 @Getter
 public class CommodityTrackDTO {
     private Integer trackId;

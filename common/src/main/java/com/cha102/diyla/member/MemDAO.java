@@ -119,8 +119,8 @@ public class MemDAO implements MemDAO_interface {
 //            pre.setInt(11, memVo.getRpmsgCount());
 //            pre.setInt(12, memVo.getMemId());
             pre = con.prepareStatement(
-                    "UPDATE member set mem_password=?,mem_phone=?,mem_address=? where mem_id = ?");
-            pre.setString(1, memVo.getMemPassword());
+                    "UPDATE member set mem_name=?,mem_phone=?,mem_address=? where mem_id = ?");
+            pre.setString(1, memVo.getMemName());
             pre.setString(2, memVo.getMemPhone());
             pre.setString(3, memVo.getMemAddress());
             pre.setInt(4, memVo.getMemId());
@@ -457,4 +457,100 @@ public class MemDAO implements MemDAO_interface {
 //
 //
 //    }
+    @Override
+public void reportCount(Integer mem_id) {
+    Connection con = null;
+    PreparedStatement pre = null;
+
+    try {
+        con = ds.getConnection();
+        pre = con.prepareStatement("UPDATE member SET rpmsg_count=(rpmsg_count + 1) WHERE mem_id =?");
+        pre.setInt(1, mem_id);
+        pre.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (pre != null) {
+            try {
+                pre.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+}
+
+    @Override
+    public int selectReportCount(Integer mem_id) {
+        Connection con = null;
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        int reportCount = 0;
+
+        try {
+            con = ds.getConnection();
+            pre = con.prepareStatement("SELECT rpmsg_count FROM diyla.member WHERE mem_id=?");
+            pre.setInt(1, mem_id);
+            rs = pre.executeQuery();
+
+            while(rs.next()){
+                reportCount = rs.getInt("rpmsg_count");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return reportCount;
+    }
+
+    public void artBlackList(Integer mem_id) {
+    Connection con = null;
+    PreparedStatement pre = null;
+
+    try {
+        con = ds.getConnection();
+        pre = con.prepareStatement("UPDATE member SET blacklist_art=1 WHERE mem_id = ?");
+        pre.setInt(1, mem_id);
+        pre.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (pre != null) {
+            try {
+                pre.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+}
 }

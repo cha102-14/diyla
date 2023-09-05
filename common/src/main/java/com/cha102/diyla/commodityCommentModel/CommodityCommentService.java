@@ -2,7 +2,9 @@ package com.cha102.diyla.commodityCommentModel;
 
 import com.cha102.diyla.member.MemberService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -17,8 +19,23 @@ public class CommodityCommentService {
         this.commodityCommentRepository = commodityCommentRepository;
     }
 
-    public List<CommodityCommentVO> getAllByComNo(Integer comNo) {
-        List<CommodityCommentVO> commodityCommentVOS = commodityCommentRepository.findAllByComNo(comNo);
+    public List<CommodityCommentVO> getAllByComNo(Integer comNo,String sort) {
+        List<CommodityCommentVO> commodityCommentVOS=null;
+
+        switch (sort) {
+            case "" :
+                commodityCommentVOS = commodityCommentRepository.findAllByComNo(comNo);
+                break;
+
+            case "asc" :
+                commodityCommentVOS = commodityCommentRepository.findAllByComNoOrderByRatingAsc(comNo);
+                break;
+
+            case "desc" :
+                commodityCommentVOS = commodityCommentRepository.findAllByComNoOrderByRatingDesc(comNo);
+                break;
+        }
+
         commodityCommentVOS.forEach(commodityCommentVO -> {
             commodityCommentVO.setMemName(memberService.selectMem(commodityCommentVO.getMemId()).getMemName());
             commodityCommentVO.setCommentTime(getDate(commodityCommentVO.getComTime()));
@@ -28,6 +45,7 @@ public class CommodityCommentService {
 
     }
 
+    @Transactional(rollbackFor = SQLException.class)
     public void deleteByComCommentNo(Integer comCommentNo) {
         commodityCommentRepository.deleteByComCommentNo(comCommentNo);
     }

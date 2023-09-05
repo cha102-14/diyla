@@ -4,7 +4,6 @@
     display: flex;
     z-index: 1;
 }
-
 #aside {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     box-sizing: border-box;
@@ -123,16 +122,19 @@
   }
 
   .logo-image {
-    width: 50%;
+    width: 70%;
 }
 
 img {
     vertical-align: middle;
     border-style: none;
 }
-/* #selction{
-    color: #b45f06;
-    font-size: 100px; 
-    font-family:sans-serif; 
-    padding: 150px;
-} */
+@media ( max-width : 1266px) {
+	div.wrapper {
+		position: relative; 
+		z-index: 1; /* 將 aside 設定為比表格更高的 z-index 值 */
+	}
+}
+
+
+

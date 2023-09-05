@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../css/art_header.css">
     <style>
         body{
-    margin-left:300px;
+    margin-left:280px;
     }
 
     </style>
@@ -27,7 +27,7 @@
         <div>
             <span><a href="art.jsp">查看論壇</a></span>
             <span><a href="artnocheckall.jsp">審核文章</a></span>
-            <span><a href="">審核留言檢舉</a> </span>
+            <span><a href="${ctxPath}/art/artReport">審核留言檢舉</a> </span>
         </div>
     </div>
 
