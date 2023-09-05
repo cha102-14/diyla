@@ -37,7 +37,10 @@ public interface EmpJPADAO extends JpaRepository<EmpVO, Long> {
 
 
     @Query(nativeQuery = true,
-            value = "SELECT DISTINCT f.TYPE_FUN, a.EMP_ID FROM diyla.backstage_auth a join diyla.backstage_fun f on a.AUTH_ID = f.AUTH_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
+            value = "select DISTINCT f.TYPE_FUN, a.EMP_ID, e.EMP_PIC, e.EMP_NAME from employee e " +
+                    "join backstage_auth a on e.EMP_ID = a.EMP_ID " +
+                    "join backstage_fun f on a.AUTH_ID = f.AUTH_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
+//            value = "SELECT DISTINCT f.TYPE_FUN, a.EMP_ID, e.EMP_PIC FROM diyla.backstage_auth a join diyla.backstage_fun f on a.AUTH_ID = f.AUTH_ID join diyla.employee.e on e.EMP_ID = a.EMP_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
     List<Object[]> validEmpLogin(String empAccount, String empPassword);
 
     @Query(nativeQuery = true,value = "SELECT COUNT(1) FROM employee WHERE EMP_EMAIL = ?1")
@@ -50,5 +53,11 @@ public interface EmpJPADAO extends JpaRepository<EmpVO, Long> {
     Integer resertPassword(String userEmail,String newPassword);
 
 
+
+    @Query(nativeQuery = true,
+            value = "select EMP_ID, EMP_PIC, EMP_NAME from employee " +
+                    " WHERE EMP_ID = ?1")
+//            value = "SELECT DISTINCT f.TYPE_FUN, a.EMP_ID, e.EMP_PIC FROM diyla.backstage_auth a join diyla.backstage_fun f on a.AUTH_ID = f.AUTH_ID join diyla.employee.e on e.EMP_ID = a.EMP_ID WHERE a.EMP_ID = (SELECT EMP_ID FROM diyla.employee WHERE EMP_ACCOUNT = ?1 AND EMP_PASSWORD = ?2)")
+    JSONObject getChatPic(Integer empId);
 
 }

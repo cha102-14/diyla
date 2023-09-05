@@ -124,5 +124,6 @@
     <script >
     
     </script>
+    <jsp:include page="chatPage.jsp"/>
 </body>
 </html>

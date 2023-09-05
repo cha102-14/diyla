@@ -71,6 +71,11 @@ public class EmpController {
         }
     }
 
+    @PostMapping("/getChatPic")
+    public String getChatPic(@RequestBody String empId) {
+        return empSpringService.getChatPic(JSONObject.parseObject(empId));
+    }
+
 
 
 //  示範用SpringDataJPA 取得資料
