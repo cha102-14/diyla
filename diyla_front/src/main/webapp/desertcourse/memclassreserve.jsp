@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>訂單列表</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
@@ -12,13 +15,20 @@
 </head>
 
 <body>
+<jsp:include page="/front_header.jsp" />
+<section id="navibar">
+<jsp:include page="/desertcourse/navibar.jsp" />
+</section>
 <table id="reserveTable">
     <thead>
     <tr>
         <th data-field="reserveId">訂單編號</th>
         <th data-field="courseId">課程編號</th>
-        <th data-field="memId">會員編號</th>
-        <th data-field="headcount">人數</th>
+        <th data-field="courseName">課程名稱</th>
+        <th data-field="courseDate">課程日期</th>
+        <th data-field="courseSeq">課程場次</th>
+        <th data-field="memName">姓名</th>
+        <th data-field="headcount">報名人數</th>
         <th data-field="status">訂單狀態</th>
         <th data-field="createTime">訂單創建日期</th>
         <th data-field="totalPrice">總金額</th>
@@ -27,13 +37,14 @@
     </thead>
 </table>
 
+
 <script>
         $(document).ready(function () {
             var getMemId = 1;
 
             function loadReserve(getMemId) {
                 $.ajax({
-                    url: '/diyla_front/getReserve', // 替換成實際的後端 servlet URL
+                    url: "${ctxPath}/getReserve",
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     data: { memberId: getMemId },
                     dataType: 'json',
@@ -43,28 +54,30 @@
                             data: data,
                             columns: [
                                 { data: 'reserveId' },
-                                { data: 'courseId' },
-                                { data: 'memId' },
+                                { data: 'courseId', visible: false },
+                                { data: 'courseName' },
+                                { data: 'courseDate' },
+                                { data: 'courseSeq' },
+                                { data: 'memName' },
                                 { data: 'headcount' },
                                 { data: 'status' },
                                 { data: 'createTime' },
                                 { data: 'totalPrice' }
                             ],
                             columnDefs: [{
-                                targets: 7,
+                                targets: 10,
                                 render: function (data, type, row, meta) {
-                                    if (row.status === 0) {
-                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">刪除</button>'
-                                            + '<button class="pay-btn" data-reserveId="' + row.reserveId + '">付款</button>';
+                                    if (row.status === "預約單成立") {
+                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">取消預約單</button>';
                                     }
-                                    else if (row.status === 1) {
-                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">刪除</button>';
-                                    } else {
+                                    else {
                                         return '';
                                     }
                                 }
                             }
-                            ]
+                            ],
+                            lengthMenu: [5, 10, 25, 50, 100],
+                            pageLength: 5
                         });
                     },
                     error: function () {
@@ -75,9 +88,10 @@
             loadReserve(getMemId);
             function deleteReserve(resId) {
                 $.ajax({
-                    url: '/diyla_front/modifyReserve',
+                    url: '${ctxPath}/modifyReserve',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                    data: { reserveId: resId },
+                    data: { reserveId: resId,
+                    action: "delete"},
                     success: location.reload()
                 });
             }
@@ -100,7 +114,7 @@
 
         });
     </script>
-
+    <jsp:include page="/front_footer.jsp" />
 </body>
 
 </html>

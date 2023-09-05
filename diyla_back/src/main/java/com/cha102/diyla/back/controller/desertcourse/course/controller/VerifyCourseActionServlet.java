@@ -1,7 +1,10 @@
 package com.cha102.diyla.back.controller.desertcourse.course.controller;
 
+import com.cha102.diyla.sweetclass.classModel.ClassINGVO;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
 import com.cha102.diyla.sweetclass.classModel.ClassVO;
+import com.cha102.diyla.sweetclass.ingModel.IngStorageService;
+import com.cha102.diyla.sweetclass.ingModel.IngStorageVO;
 import com.cha102.diyla.sweetclass.teaModel.TeacherService;
 import com.cha102.diyla.sweetclass.teaModel.TeacherVO;
 import org.json.JSONObject;
@@ -37,7 +40,6 @@ public class VerifyCourseActionServlet extends HttpServlet {
         typeFun = "ADMIN";
         boolean adminAuthCode = false;
         ClassVO reqCourse = classService.getOneClass(courseId);
-        List<Integer> reqCourseIngId = new ArrayList<>();
         //確認是否有管理員權限
         if ("ADMIN".equals(typeFun)) {
             adminAuthCode = true;
@@ -50,8 +52,7 @@ public class VerifyCourseActionServlet extends HttpServlet {
         Integer thisEmpId = 1;
         //取得使用者打算做甚麼action
         String action = req.getParameter("action");
-        //取得課程食材的Id
-        reqCourseIngId = classService.getOneClassIngID(courseId);
+
         //分成modify和delete的個別驗證
         if("delete".equals(action)) {
             //若使用者是admin,就不用比對session內的empId以及當前課程的teacher對應的empId
@@ -70,12 +71,29 @@ public class VerifyCourseActionServlet extends HttpServlet {
             out.print(resJson);
             out.flush();
         } else if("modify".equals(action)){
+            //取得目前倉庫內有何種材料
+            IngStorageService ingStorageService = new IngStorageService();
+            List<IngStorageVO> ingList = ingStorageService.getAll();
+            //處理該課程應該要有的食材以及食材數量
+            List<ClassINGVO> reqCourseIngIdAmountList = classService.getOneClassIngID(courseId);
+            List<Integer> reqCourseIngId = new ArrayList<>();
+            List<Integer> reqCourseIngAmount = new ArrayList<>();
+            for(int i = 0; i < reqCourseIngIdAmountList.size(); i++) {
+                System.out.println(reqCourseIngIdAmountList.get(i).getIngNums());
+                reqCourseIngId.add(reqCourseIngIdAmountList.get(i).getIngId());
+                reqCourseIngAmount.add(reqCourseIngIdAmountList.get(i).getIngNums());
+                System.out.println(reqCourseIngId.get(i));
+            }
+
 
             if(adminAuthCode) {
                 String url = "/desertcourse/modifydesertcourse.jsp";
                 RequestDispatcher allowModify = req.getRequestDispatcher(url);
+                req.setAttribute("ingList", ingList);
                 req.setAttribute("courseVO", reqCourse);
-                req.setAttribute("courseIngVO", reqCourseIngId);
+                req.setAttribute("reqCourseIngVOList", reqCourseIngIdAmountList);
+                req.setAttribute("reqCourseIngIdList", reqCourseIngId);
+                req.setAttribute("reqCourseIngAmountList", reqCourseIngAmount);
                 allowModify.forward(req,res);
             } else {
                 String url = req.getContextPath()+"/desertcourse/notallowed.jsp";

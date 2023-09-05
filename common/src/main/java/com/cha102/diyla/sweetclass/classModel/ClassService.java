@@ -36,15 +36,22 @@ public class ClassService {
         classVO.setClassName(className);
         classVO.setHeadcount(headcount);
         classVO.setClassStatus(classStatus);
-        claDAO.insert(classVO);
-
+        int pk = claDAO.insert(classVO);
+        if (pk != -1) {
+            classVO.setClassId(pk);
+        } else {
+            throw new RuntimeException("產生課程失敗");
+        }
         return classVO;
     }
-    public ClassVO updateClass(Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
-                               byte[] classPic, Integer classLimit, Integer price, String intro, String className,
-                               Integer headcount, Integer classStatus){
+    public ClassVO updateClass(Integer claID, Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
+                               byte[] classPic, Integer classLimit, Integer price, String intro, String className
+                               ) throws RuntimeException{
 
         ClassVO classVO = new ClassVO();
+        Integer headcount = getOneClass(claID).getHeadcount();
+        Integer classStatus = getOneClass(claID).getClassStatus();
+        classVO.setClassId(claID);
         classVO.setCategory(category);
         classVO.setTeaId(teaID);
         classVO.setRegEndTime(regEndTime);
@@ -94,13 +101,13 @@ public class ClassService {
         //抓取該member是否有預約課程的權利
         int blacklistStatus = classReserveDAO.findMemBlackListStatus(memID);
         //宣告需要比較的參數以及回傳的array
-        int result = classVO.getClassStatus();
+        int status = classVO.getClassStatus();
         String[] resultArray = new String[2];
         int currentHeadcount = classVO.getHeadcount();
         int limit = classVO.getClassLimit();
         Date courseEndDate = classVO.getRegEndTime();
         int dateCompareResult = courseEndDate.compareTo(reserveDate);
-        if(result == 0 || result == 2 || result == 3){
+        if(status == 1 || status == 2){
             resultArray[0] = "false";
             resultArray[1] = "非常抱歉該課程無法報名,請報名其他課程";
         } else if (headcount > (limit - currentHeadcount)){
@@ -164,7 +171,6 @@ public class ClassService {
                 jsonCourse.put("courseId", reserves.getClassId());
                 jsonCourse.put("courseName", course.getClassName());
                 jsonCourse.put("courseDateSeq", courseDateSeq);
-                System.out.println(reserves.getCreateTime());
                 jsonCourse.put("createTime", dateFormat.format(reserves.getCreateTime()));
                 jsonCourse.put("totalPrice", reserves.getTotalPrice());
                 jsonArray.put(jsonCourse);
@@ -181,9 +187,9 @@ public class ClassService {
         }
     }
     public enum ReserveStatus {
-        CREATED(0, "預約單建立"),
-        PAID(1, "付款完成"),
-        CANCELED_UNREFUNDED(2, "預約單取消(未退款)"),
+        CREATED(0, "預約單成立"),
+        PAID(1, "預約單取消"),
+        CANCELED_UNREFUNDED(2, "預約單完成"),
         CANCELED_REFUNDED(3, "預約單取消(已退款)"),
         COMPLETED(4, "預約單完成");
 
@@ -238,20 +244,22 @@ public class ClassService {
         return resDAO.getAll();
     }
     public ClassINGVO addClassING(Integer classID, Integer ingId, Integer ingNums){
-        ClassINGVO classINGVO =new ClassINGVO();
+        ClassINGVO classINGVO = new ClassINGVO();
         classINGVO.setClassId(classID);
         classINGVO.setIngId(ingId);
         classINGVO.setIngNums(ingNums);
         ingDAO.insert(classINGVO);
         return classINGVO;
     }
-    public ClassINGVO updateClassING(Integer classID, Integer ingId, Integer ingNums){
-        ClassINGVO classINGVO =new ClassINGVO();
-        classINGVO.setClassId(classID);
-        classINGVO.setIngId(ingId);
-        classINGVO.setIngNums(ingNums);
-        ingDAO.update(classINGVO);
-        return classINGVO;
+    public void updateClassING(Integer classID, Integer[] ingId, Integer[] ingNums) throws RuntimeException{
+        ingDAO.deleteOneCourseIng(classID);
+        for(int i = 0; i < ingId.length; i++) {
+            ClassINGVO classINGVO = new ClassINGVO();
+            classINGVO.setClassId(classID);
+            classINGVO.setIngId(ingId[i]);
+            classINGVO.setIngNums(ingNums[i]);
+            ingDAO.insert(classINGVO);
+        }
     }
     public void deleteClassIng(Integer classID, Integer ingID){
         ingDAO.delete(classID,ingID);
@@ -259,8 +267,8 @@ public class ClassService {
     public ClassINGVO getOneClassIng(Integer classID, Integer ingID){
         return ingDAO.findByPrimaryKey(classID,ingID);
     }
-    public List<Integer> getOneClassIngID(Integer classID) {
-        return ingDAO.findIngIdByClaId(classID);
+    public List<ClassINGVO> getOneClassIngID(Integer classID) {
+        return ingDAO.findIngIdAmountByClaId(classID);
     }
     public List<ClassINGVO> findAllClassIng(){
         return ingDAO.getAll();
