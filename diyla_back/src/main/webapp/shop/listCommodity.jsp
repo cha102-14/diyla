@@ -3,10 +3,15 @@
 <%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>商品列表</title>
+    <title>商店管理</title>
     <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body style="margin-left: 280px">
+<aside class="topPage">
+    <jsp:include page="../index.jsp" />
+</aside>
+
 <div class="container">
     <div class="header">商品列表</div>
     <a href="${ctxPath}/shop/commodityClassManage.jsp">
@@ -14,6 +19,9 @@
     </a>
     <a href="${ctxPath}/shop/CommodityController?action=insertPage">
         <button class="add-button">新增商品</button>
+    </a>
+    <a href="${ctxPath}/orderManage/OrderManageController?action=listAllOrder">
+        <button class="add-button">訂單管理</button>
     </a>
     <div class="search-bar">
     </div>
