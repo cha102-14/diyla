@@ -2,11 +2,11 @@ package com.cha102.diyla.tokenModel;
 
 import java.util.List;
 
-public class TokenService implements TokenService_interface{
+public class TokenService implements TokenService_interface {
 
     private TokenDAO_interface dao;
 
-    public TokenService(){
+    public TokenService() {
         dao = new TokenDAO();
     }
     @Override

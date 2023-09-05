@@ -3,6 +3,8 @@ package com.cha102.diyla.shoppingcart;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -79,5 +81,28 @@ public class ShoppingCartService {
 			totalPrice += (cartItem.getComAmount() * cartItem.getComPri());
 		}
 		return totalPrice;
+	}
+	public List<ShoppingCartVO> getCart(Integer memId,Map<String,String> memCart){
+		CommodityService commodityService = new CommodityService();
+		//取得所有key
+		List<Integer> intKeysList = memCart.keySet()
+			    .stream()
+			    .map(Integer::parseInt)
+			    .collect(Collectors.toList());
+		List<CommodityVO>commList =commodityService.getAllByComNo(intKeysList);
+		List<ShoppingCartVO> cartVOs = new ArrayList<>();
+		for (CommodityVO comm : commList) {
+	        String cartValue = memCart.get(String.valueOf(comm.getComNO()));
+	        if (cartValue != null) {
+	            ShoppingCartVO cartVO = new ShoppingCartVO();
+	            cartVO.setMemId(memId);
+	            cartVO.setComNo(comm.getComNO());
+	            cartVO.setComPri(comm.getComPri());
+	            cartVO.setComName(comm.getComName());
+	            cartVO.setComAmount(Integer.parseInt(cartValue));
+	            cartVOs.add(cartVO);
+	        }
+	    }
+		return cartVOs;
 	}
 }

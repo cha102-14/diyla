@@ -54,7 +54,7 @@ public class EmpInsertController extends HttpServlet {
             status = Boolean.valueOf(statusStr);
         }
 
-// TODO 2.功能類別資料傳到insertController
+//  2.功能類別資料傳到insertController
 //      3.Controller至Service 調用查詢功能類別對應各功能細項
         // 建一個List集合放入錯誤訊息
 

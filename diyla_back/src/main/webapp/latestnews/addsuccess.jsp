@@ -15,44 +15,54 @@
     <title>Add Success</title>
     <link rel="stylesheet" href="../css/style.css">
    <style>
-           body {
-               font-family: Arial, sans-serif;
-               background-color: #f0f0f0;
-               margin: 0;
-               padding: 0;
-           }
-           .container {
-               max-width: 800px;
-               margin: 0 auto;
-               padding: 20px;
-               background-color: #ffffff;
-               box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-           }
-           h1 {
-               color: #333;
-           }
-           ul {
-               list-style: none;
-               padding-left: 0;
-           }
-           li {
-               margin-bottom: 10px;
-           }
-           img {
-               max-width: 100%;
-               height: auto;
-           }
-           a {
-               color: #007bff;
-               text-decoration: none;
-           }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.addokcontainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1#addok {
+    color: #333;
+    font-size: 32px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+    font-size: 26px;
+    padding: 20px;
+}
+
+li {
+    margin-bottom: 20px;
+}
+
+img {
+   max-height: 600px;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    padding 10px;
+}
+
        </style>
 </head>
 <body>
-    <div class="container">
-        <h1>新增成功！</h1>
-        <p><%= message %></p>
-
+<jsp:include page="/index.jsp" />
+<jsp:include page="/latestnews/lat_header.jsp" />
+    <div class="addokcontainer">
+        <h1 id="addok">新增成功！</h1>
        <% if (addedLat != null) { %>
                <ul>
                    <li>公告狀態：<%= addedLat.getAnnStatus() %></li>
@@ -63,7 +73,7 @@
            <% } %>
 
         <a href="addlat.jsp">返回</a>
-        <a href="getlistone.jsp">返回全部常見問題</a>
+        <a href="latall.jsp">返回全部最新消息</a>
     </div>
 </body>
 </html>

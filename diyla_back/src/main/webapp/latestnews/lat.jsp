@@ -11,16 +11,14 @@
     <title>Document</title>
      <link rel="stylesheet" href="../css/style.css">
      <link rel="stylesheet" href="../css/lat.css">
-
 </head>
-
 <body>
     <h1 class="h1">最新公告</h1>
 
     <div class="lathome">
     <ul>
         <li class="li">
-          <a class="a" href='getlistone.jsp'>查詢全部最新公告</a>
+          <a class="a" href='latall.jsp'>查詢全部最新公告</a>
         </li>
 
         <li class="li">

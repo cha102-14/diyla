@@ -10,8 +10,12 @@
     <link rel="stylesheet" type="text/css" href="../css/commodityClass.css">
     <script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="${ctxPath}/vendors/axios/axios.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body style="margin-left: 280px">
+<aside class="topPage">
+    <jsp:include page="../index.jsp" />
+</aside>
 <div class="header">商品類別管理</div>
 <div class="container">
     <div class="category-list">
@@ -27,7 +31,7 @@
     </div>
     <div id="commodityClasses">
     </div>
-    <a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" >返回商品清單</button></a>
+    <a href="${ctxPath}/shop/CommodityController?action=listAll"><button class="button" style="margin-top: 10px">返回商品清單</button></a>
 </div>
 <script>
     let commodityClasses;

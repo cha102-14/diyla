@@ -65,10 +65,10 @@
 }
 
 .total {
-	display: block;
-	padding: 8px;
+/* 	display: block; */
+	padding: 0px;
 	background-color: #FFFFDF;
-	margin-top: 5px;
+	margin-top: 30px;
 	text-align: right;
 	font-weight: bold;
 	text-align: right;
@@ -104,8 +104,11 @@ input[type="text"], input[type="tel"], select {
 	background-color: #0056b3;
 }
 
-.total {
+.totalblock {
 	float: right;
+		background-color: #FFFFDF;
+	margin-top: 10px;
+	padding: 10px;
 }
 
 .container {
@@ -196,46 +199,37 @@ input[type="text"], input[type="tel"], select {
 						<td class="subtitle">小計</td>
 					</tr>
 					<c:forEach var="cartItem" items="${shoppingCartList}">
-						<%-- 						<c:forEach var="comVO" items="${commodityList}"> --%>
-						<%-- 							<c:if test="${cartItem.comNo == comVO.comNO}"> --%>
 						<tr class="itemrow">
 							<td class="itemInfo comName">${cartItem.comName}</td>
 							<td class="itemInfo comPri">${cartItem.comPri}</td>
 							<td class="itemInfo comAmount">${cartItem.comAmount}</td>
 							<td class="itemInfo">${cartItem.comPri*cartItem.comAmount}</td>
 						</tr>
-						<%-- 							</c:if> --%>
-						<%-- 						</c:forEach> --%>
 					</c:forEach>
 				</table>
-
-				<span class="total">總金額:${totalPrice}元</span>
+				<div class="totalblock">
+				<span class="total">總金額:</span>
+				<span class="total" id="totalPrice1">${totalPrice}</span>
+				<span class="total">元</span>
+				</div>
 				<p>
 				<hr class="hr1">
 				</p>
 			</div>
 
 			<div class="tokenblock">
-
-
-				<!-- 				<span -->
-				<!-- 					style="font-size: 18px;">共可折抵</span> <span id="amount_value" -->
-				<!-- 					style="font-size: 18px">0</span> <span style="font-size: 18px;">元</span> -->
-				<!-- 				<div id="actualPrice"> -->
-
-
-				<p style="margin: 0;">(使用代幣則無法獲得回饋)</p>
+				<p style="margin: 0;">目前擁有代幣:<span id ="userToken">${maxToken}</span></p>
 				<label for="useTokens" style="width: 80px" id="tokenLabel">使用代幣</label>
 
 				<c:choose>
 					<c:when test="${totalPrice>=maxToken}">
 						<input name="tokenUse" type="number" min="0"
-							max="<%=(Integer)session.getAttribute("maxToken")%>"
+							max="${maxToken}"
 							id="tokenAmount" value="0">
 					</c:when>
 					<c:otherwise>
 						<input name="tokenUse" type="number" min="0"
-							max="<%=(Integer)session.getAttribute("totalPrice")%>"
+							max="${totalPrice}"
 							id="tokenAmount" value="0">
 					</c:otherwise>
 				</c:choose>
@@ -428,22 +422,12 @@ input[type="text"], input[type="tel"], select {
 								}
 								return true;
 							}
-							$('#tokenAmount').mousemove(
-									function() {
-										$('#amount_value').html(
-												$('#tokenAmount').val());
-									});
-							$('#tokenAmount').change(
-									function() {
-										$('#amount_value').html(
-												$('#tokenAmount').val());
-									});
 							const tokenAmountInput = document
 									.getElementById("tokenAmount");
 							const maxTokenValue = tokenAmountInput
 									.getAttribute("max");
 							if (maxTokenValue == null || maxTokenValue == ""
-									|| maxTokenValue == "null") {
+									|| maxTokenValue == "null"||maxTokenValue=="0") {
 								tokenAmountInput.setAttribute("max", "0");
 								tokenAmountInput.value = "0"; // 設置輸入框的值為 0
 								tokenAmountInput.disabled = true; // 禁用輸入框
@@ -452,43 +436,43 @@ input[type="text"], input[type="tel"], select {
 						});
 	</script>
 	<script>
-		$(document).ready(function() {
-			const tokenAmountInput = $("#tokenAmount");
-			const maxToken =
-	<%= session.getAttribute("maxToken") %>
-		;
+// 		$(document).ready(function() {
+// 			const tokenAmountInput = $("#tokenAmount");
+// 			const maxToken = $("#userToken");
+			
+// 			// 監聽輸入
+// 			tokenAmountInput.on("input", function() {
+// 				const currentValue = parseInt(tokenAmountInput.val());
 
-			// 監聽輸入
-			tokenAmountInput.on("input", function() {
-				const currentValue = parseInt(tokenAmountInput.val());
-
-				if (currentValue > maxToken) {
-					tokenAmountInput.val(maxToken); // 超過上限則設為上限值
-				}
-			});
-		});
+// 				if (currentValue > maxToken) {
+// 					tokenAmountInput.val(maxToken); // 超過上限則設為上限值
+// 				}
+// 			});
+// 		});
 	</script>
 	<script>
 		// 抓取相關元素
 		const tokenAmountInput = document.getElementById("tokenAmount");
 		const actualPriceSpan = document.getElementById("actualPriceSpan");
-		const totalPrice = <%= session.getAttribute("totalPrice") %>;
-		const maxToken = <%= session.getAttribute("maxToken") %>;
+		const totalPrice = document.getElementById("totalPrice1");
+		const maxToken = document.getElementById("userToken");
 		
 
 		//監聽輸入
 		tokenAmountInput.addEventListener("input", function() {
 			// 取得使用量輸入
 			let tokenAmount = parseInt(tokenAmountInput.value);
-
+			let maxTokens =parseInt(maxToken.textContent);
+			console.log(tokenAmount);
+			console.log(maxTokens);
 			// 確保不超過max
-			if (tokenAmount > maxToken) {
-				tokenAmountInput.value = maxToken; // 限制输入框的值
-				tokenAmount = maxToken; // 更新 tokenAmount 的值
+			if (tokenAmount >= maxTokens) {
+				tokenAmountInput.value = maxTokens; // 限制输入框的值
+				tokenAmount = maxTokens; // 更新 tokenAmount 的值
 			}
-
+			const total = parseInt(totalPrice.textContent);
 			// 計算 最低為0
-			const discountedPrice = Math.max(0, totalPrice - tokenAmount);
+			const discountedPrice = Math.max(0, total - tokenAmount);
 
 			// 更新金額
 			actualPriceSpan.textContent = discountedPrice;

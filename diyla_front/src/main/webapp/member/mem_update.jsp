@@ -2,15 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="javax.servlet.*"%>
 <%@ page import="com.cha102.diyla.member.*"%>
-
-
-<%
-    MemVO memVO = (MemVO)session.getAttribute("memVO");
-    Integer memId = (Integer)session.getAttribute("memId");
-    String addressAll = memVO.getMemAddress();
-%>
 
 
 <!DOCTYPE html>
@@ -36,29 +28,149 @@
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
 
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family:"jf open 粉圓 1.1";
+
+        }
+
+        body {
+            margin: 0;
+        }
+
+        div.title {
+            border: 1px solid #B26021;
+            text-align: center;
+            width: 400px;
+            height: 1000px;
+            color: #B26021;
+            position: relative;
+            top:50%;
+            left:50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            letter-spacing: 3px;
+            margin:50px 0;
+        }
+        h4.member{
+            margin-top:30px;
+            margin-bottom:20px
+        }
+
+        div.error {
+            padding: 10px;
+            background-color: #FCE5CD;
+        }
+
+        div.member {
+            padding: 10px;
+            font-size: 1rem;
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        label.user {
+            position: absolute;
+            top: 22px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+        label.pw {
+            position: absolute;
+            top: 110px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+
+        input.inputform {
+            border: 1px solid #B26021;
+            margin: 15px;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: #B26021;
+            height: 35px;
+            letter-spacing: 1px;
+        }
+        input.inputform:focus {
+              outline: 1.5px solid #B26021;
+              box-shadow: 2px;
+        }
+
+        /* 移除瀏覽器預設藍色背景 */
+        input.inputform:-webkit-autofill,
+        input.inputform:-webkit-autofill:focus {
+               -webkit-box-shadow: 0 0 0 30px white inset;
+               -webkit-text-fill-color:#B26021;
+        }
+
+
+        label.remember {
+               font-size: 0.85rem;
+               text-align: center;
+               position: absolute;
+               top: 190px;
+               left: 103px;
+               letter-spacing: 1px;
+
+        }
+
+        button.member {
+            border-radius: 0.5rem;
+            background-color: #B26021;
+            color: #FCE5CD;
+            border: 1px #B26021;
+            width: 199.33px;
+            height: 35px;
+            letter-spacing: 3px;
+            margin-top: 40px;
+            font-size: 1rem;
+        }
+        button.member:hover {
+            background-color: #FCE5CD;
+            color:  #B26021;
+            transition: all 0.3s;
+        }
+
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            font-size: 1rem;
+            color: #B26021;
+        }
+
+        </style>
+
 
 </head>
 <body>
 
     <jsp:include page="../front_header.jsp"/>
-    <a href="${ctxPath}/member/mem_update.jsp">會員資訊管理</a>
+    <a href="${ctxPath}/member/update?action=select&memId=${memId}">會員資訊管理</a>
     <a href="${ctxPath}/member/updatePw.jsp">修改密碼</a>
+    <a href="${ctxPath}/allOrder/allOrder?memId=${memId}">我的訂單</a>
     <a href="${ctxPath}/track/track?memId=${memId}">我的商品追蹤</a>
     <a href="${ctxPath}/token/MyToken.jsp">我的代幣</a>
     <a href="${ctxPath}/member/login?action=logout">登出</a>
-    <h4>會員資訊管理</h4>
-
+    <div class="title">
+    <h4 class="member">會員資訊管理</h4>
+        <div class="member">
             <form method="post" action="update">
                 <label>姓名<br>
-                <input type="text" name="memName" value="${memVO.memName}" disabled></label><br>
+                <input type="text" name="memName" value="${memVO.memName}"></label><br>
                 <label>帳號<br>
                 <input type="email" name="user" value="${memVO.memEmail}" disabled></label><br>
-                <label>修改密碼<br>
-                <input type="password" name="password" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" ></label><br>
-                <span  id ="memPassword.errors" class="error">${exMsgs.memPassword}<br/></span>
-                <label>確認密碼<br>
-                <input type="password" name="pwcheck" placeholder="再次輸入密碼" ></label><br>
-                <span  id ="pwcheck.errors" class="error">${exMsgs.pwcheck}<br/></span>
                 <label for="gender" >性別
                 <input type="radio" name="gender" value="0" disabled ${(0==memVO.memGender)? 'checked':'' }>男
                 <input type="radio" name="gender" value="1" disabled ${(1==memVO.memGender)? 'checked':'' }>女</label><br>
@@ -68,16 +180,24 @@
                 <input type="tel" name="phone" minlength="10" value="${memVO.memPhone}" ></label><br>
                 <span  id ="memPhone.errors" class="error">${exMsgs.memPhone}<br/></span>
                 <div>聯絡地址</label><br>
-                <label for="city">縣市</label><br>
-                <select id="city" name="city"></select><br>
-                <label for="district">地區</label><br>
-                <select id="district" name="district"></select><br>
+                    <label for="city">縣市</label>
+                    <select id="city" name="city" ></select><br>
+                    <label for="district">地區</label>
+                    <select id="district" name="district"></select><br>
+                </div>
                 <label for="address">詳細地址</label><br>
-                <input type="text" id="address" name="address" value="${memVO.memAddress}"><br>
+                <input type="text" id="address" name="address" value="${addMap.address}"><br>
                 <span  id ="memAddress.errors" class="error">${exMsgs.memAddress}<br/></span>
-                <input type="hidden" name="memId" value="${memVO.memId}"><br>
-                <button type="submit" value="update">送出修改</button>
+                <input type="hidden" name="memId" value="${memId}"><br>
+                <input type="hidden" name="action" value="update">
+                <button type="submit" value="update"  class="member" >送出修改</button>
+            </form>
+            </div>
+        </div>
+    </div>
 
+
+    <jsp:include page="../front_footer.jsp"/>
     <script>
 
         window.addEventListener("load",function(){
@@ -113,13 +233,14 @@
         let city_el = document.getElementById("city");
         let district_el = document.getElementById("district");
 
+
         for ( let city in cityDistrict){
             let option = document.createElement("option");
             option.text = city;
             option.value = city;
             city_el.add(option);
           }
-
+        city_el.value="${addMap.city}";
         city_el.addEventListener("change",function(){
 
             let districts = cityDistrict[city_el.value];
@@ -130,17 +251,23 @@
 
 
             for(let district of districts){
-            let option = document.createElement("option");
-            option.textContent = district;
-            district_el.add(option);
+                let option = document.createElement("option");
+                option.textContent = district;
+                district_el.add(option);
             }
         });
         // 初始化地區選項
         city_el.dispatchEvent(new Event('change'));
 
+        district_el.value="${addMap.district}";
+
+
+
+
+
 
     </script>
-	<jsp:include page="../front_footer.jsp"/>
+
 </body>
 
 

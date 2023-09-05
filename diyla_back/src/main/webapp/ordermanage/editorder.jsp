@@ -29,7 +29,7 @@ body {
 /* 編輯表單區域 */
 .editform {
 	width: 400px;
-	margin: 50px 500px;
+	margin: 5px 500px;
 	padding: 20px;
 	background-color: #f5f5f5;
 	border: 1px solid #ccc;
@@ -121,6 +121,12 @@ span.error {
 	color: red;
 	white-space: nowrap;
 }
+.heading{
+padding:20px 0px;
+background-color:#9999CC;
+/* border: 1px solid black; */
+border-radius: 5px;
+}
 </style>
 </head>
 <body>
@@ -174,12 +180,39 @@ span.error {
 			</div>
 		</form>
 	</div>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
+	document.querySelector(".submit-button").addEventListener("click", function(e) {
+	    e.preventDefault(); // 防止提交表單
+
+	    Swal.fire({
+	        title: '確認更新訂單？',
+	        icon: 'warning',
+	        showCancelButton: true,
+	        confirmButtonText: '確認',
+	        cancelButtonText: '取消'
+	    }).then((result) => {
+	    	   if (result.isConfirmed) {
+	               Swal.fire({
+	                   title: '更新成功',
+	                   icon: 'success',
+	                   timer: 1000, // 顯示成功提示 1 秒
+	                   showConfirmButton: false
+	               }).then(() => {
+	                   setTimeout(() => {
+	                       // 延遲 1 秒提交表單
+	                       document.querySelector("form").submit();
+	                   }, 1000);
+	               });
+	           }
+	       });
+	});	
+	
 		const cancelButton = $(".cancel-button");
 
 		cancelButton.click(function() {
-			window.history.back();
+		    window.location.href = "http://localhost:8081/diyla_back/orderManage/OrderManageController?action=listAllOrder";
 		});
 	</script>
 </body>

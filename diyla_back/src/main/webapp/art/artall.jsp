@@ -22,14 +22,18 @@
             background-color: #f5f5f5;
             margin: 0;
             padding: 0;
-            margin-left: 300px;
+            margin-left: 280px;
         }
 
         table {
             width: calc(100% - 300px);
             margin-top: 20px;
+            padding:  0 5px;
         }
-
+        label,div.dataTables_info{
+            padding: 10px;
+            height: 20px;
+        }
         th,
         td {
             padding: 10px;
@@ -143,7 +147,7 @@
                     <td>${artVO.memId}</td>
                 </tr>
             </c:forEach>
-        <tbody>
+        </tbody>
     </table>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script><!-- ●●js  for jquery datatables 用 -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>

@@ -27,9 +27,9 @@ public class CommodityCommentController {
     }
 
     @RequestMapping("/commodityComment/goInsertPage")
-    public String goInsertPage(Model model, @RequestParam("comNO") Integer comNO) {
+    public String goInsertPage(Model model, @RequestParam("comNo") Integer comNO) {
         MemVO memVO = (MemVO) session.getAttribute("memVO");
-        CommodityVO commodityVO = commodityService.findByID(comNO);
+         CommodityVO commodityVO = commodityService.findByID(comNO);
         model.addAttribute("commodityVO", commodityVO);
         return "/shop/commentPage.jsp";
     }

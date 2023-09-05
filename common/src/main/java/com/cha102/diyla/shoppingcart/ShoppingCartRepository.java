@@ -27,5 +27,6 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCartVO, In
     Integer getTotalAmount(Integer memId);
     
     
+    
 
 }

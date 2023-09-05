@@ -2,18 +2,17 @@ package com.cha102.diyla.member;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MemberService {
 	private MemDAO_interface dao;
-	
+
 	public MemberService() {
 
 		dao = new MemDAO();
 	}
-	
+
 	public MemVO addMem(List<String> exMsgs,String mem_name,String mem_email,String mem_password,String mem_phone,java.sql.Date mem_birthday,Integer mem_gender,String mem_address) {
 		MemVO mem = new MemVO();
 		mem.setMemName(mem_name);
@@ -76,20 +75,20 @@ public class MemberService {
 
 
 	}
-	
-	public MemVO updateMem(Map<String,String> exMsgs, String mem_password, String mem_phone, String mem_address,Integer mem_id) {
+
+	public MemVO updateMem(Map<String,String> exMsgs, String mem_name, String mem_phone, String mem_address,Integer mem_id) {
 		MemVO mem = new MemVO();
-		mem.setMemPassword(mem_password);
+		mem.setMemName(mem_name);
 		mem.setMemPhone(mem_phone);
 		mem.setMemAddress(mem_address);
 		mem.setMemId(mem_id);
 
-		String pwReg = "^\\w{6,12}$";
-		if (mem_password == null || (mem_password.trim()).length()==0){
-			exMsgs.put("memPassword","請輸入密碼");
-		} else if (!(mem_password.matches(pwReg))){
-			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
-		}
+//		String pwReg = "^\\w{6,12}$";
+//		if (mem_password == null || (mem_password.trim()).length()==0){
+//			exMsgs.put("memPassword","請輸入密碼");
+//		} else if (!(mem_password.matches(pwReg))){
+//			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
+//		}
 
 		String phoneReg ="^\\d{10,}$";
 		if (mem_phone == null || (mem_phone.trim()).length()==0){
@@ -110,7 +109,7 @@ public class MemberService {
 		}
 
 		return dao.findByPrimaryKey(mem_id);
-		
+
 	}
 
 	public MemVO updateNewPw(List<String> exMsgs,String mem_password,String mem_email){
@@ -136,15 +135,15 @@ public class MemberService {
 
 		return mem;
 	}
-	
+
 	public void deleteMem(Integer memId) {
 		dao.delete(memId);
 	}
-	
+
 	public MemVO selectMem(Integer memId) {
 		return dao.findByPrimaryKey(memId);
 	}
-	
+
 	public List<MemVO> selectAll(){
 		return dao.getAll();
 	}
@@ -164,7 +163,7 @@ public class MemberService {
 			exMsgs.add("無此信箱或密碼錯誤");
 		}
 
-		if(mem.getMemStatus()==0){
+		if(mem!=null&&mem.getMemStatus()==0){
 			exMsgs.add("因您的信箱尚未認證，請至您的信箱確認");
 		}
 
@@ -223,5 +222,8 @@ public class MemberService {
 
 	}
 
+	public void reportCount(Integer memId){dao.reportCount(memId);}
+	public int selectReportCount(Integer memId){return dao.selectReportCount(memId);}
 
+	public void addArtBlackList(Integer memId){dao.artBlackList(memId);}
 }

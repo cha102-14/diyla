@@ -23,14 +23,18 @@
             background-color: #f5f5f5;
             margin: 0;
             padding: 0;
-            margin-left: 300px;
+            margin-left: 280px;
         }
 
         table {
             width: calc(100% - 300px);
             margin-top: 20px;
+            padding:  0 5px;
         }
-
+        label,div.dataTables_info{
+            padding: 10px;
+            height: 20px;
+        }
         th,
         td {
             padding: 10px;
@@ -80,7 +84,7 @@
         <div>
             <span><a href="art.jsp">查看論壇</a></span>
             <span><a href="artnocheckall.jsp">審核文章</a></span>
-            <span><a href="">審核留言檢舉</a> </span>
+            <span><a href="${ctxPath}/art/artReport">審核留言檢舉</a> </span>
         </div>
     </div>
     <table id="art" class="display" style="width: 100%">

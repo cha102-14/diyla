@@ -17,7 +17,7 @@
             <ul>
             <c:choose>
 			<c:when test="${empty typeFun}">
-			空
+			
 			</c:when>
 			<c:otherwise>
 					<c:forEach var="typeFun" items="${typeFun}">
@@ -63,7 +63,7 @@
 <%-- 					<c:forEach var="typeFun" items="${typeFun}"> --%>
                 <c:if test="${typeFun eq 'SHOP'}">
                 <li class="func">
-                    <a href="shop/insertNewCommodity.jsp" class="func_link">
+                    <a href="${ctxPath}/shop/CommodityController?action=listAll" class="func_link">
                         <svg fill="#b45f06" version="1.1" id="Capa_5" width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 963.139 963.139" xml:space="preserve" stroke="#b45f06"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M174.839,11.069c-33.1,0-60,26.9-60,60v118h534.1v-118c0-33.1-26.9-60-60-60H174.839z"></path> <path d="M781.74,662.869c0,0,30.699-340,40.898-453.1c1.4-15.5,14.4-27.3,29.9-27.3h62.4c26.301,0,48.199-21.9,48.199-48.2 s-21.898-48.2-48.199-48.2H787.639c-13.898,0-26.699,6.8-36.299,16.5c-10.801,11-15.201,22.7-17.1,37.6l-10.4,82.7 c-1.9,15-14.6,26.2-29.801,26.2h-45.1h-534.1h-57c-33.5,0-60,28.4-57.7,61.8l28,350c2.2,31.5,28.3,55.9,59.9,55.9h636 C754.34,716.67,779.639,693.17,781.74,662.869z"></path> <path d="M230.239,861.869c0-39.399-25.3-72.899-60.5-85.199c-9.3-3.2-19.3-5-29.7-5c-10.4,0-20.4,1.8-29.7,5 c-35.2,12.3-60.5,45.8-60.5,85.199c0,49.801,40.4,90.2,90.2,90.2C189.839,952.069,230.239,911.67,230.239,861.869z"></path> <path d="M760.139,861.869c0-39.399-25.299-72.899-60.5-85.199c-9.299-3.2-19.299-5-29.699-5s-20.4,1.8-29.699,5 c-35.201,12.3-60.5,45.8-60.5,85.199c0,49.801,40.398,90.2,90.199,90.2C719.84,952.069,760.139,911.67,760.139,861.869z"></path> </g> </g></svg>
                         商店管理
                     </a>
@@ -103,7 +103,7 @@
             <div>
             <c:choose>
             <c:when test="${not empty typeFun}">
-                <a href="#" onclick="logout('${empId}')">
+                <a href="emp/logout?empId='${empId}'">
                     <svg fill="#b45f06" viewBox="0 0 32 32" version="1.1" id="logout" width="20" height="20" xmlns="http://www.w3.org/2000/svg" stroke="#b45f06"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3.651 16.989h17.326c0.553 0 1-0.448 1-1s-0.447-1-1-1h-17.264l3.617-3.617c0.391-0.39 0.391-1.024 0-1.414s-1.024-0.39-1.414 0l-5.907 6.062 5.907 6.063c0.196 0.195 0.451 0.293 0.707 0.293s0.511-0.098 0.707-0.293c0.391-0.39 0.391-1.023 0-1.414zM29.989 0h-17c-1.105 0-2 0.895-2 2v9h2.013v-7.78c0-0.668 0.542-1.21 1.21-1.21h14.523c0.669 0 1.21 0.542 1.21 1.21l0.032 25.572c0 0.668-0.541 1.21-1.21 1.21h-14.553c-0.668 0-1.21-0.542-1.21-1.21v-7.824l-2.013 0.003v9.030c0 1.105 0.895 2 2 2h16.999c1.105 0 2.001-0.895 2.001-2v-28c-0-1.105-0.896-2-2-2z"></path> </g></svg>
                     登出
                 </a>

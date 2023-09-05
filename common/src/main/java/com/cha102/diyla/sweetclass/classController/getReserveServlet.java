@@ -1,5 +1,6 @@
 package com.cha102.diyla.sweetclass.classController;
 
+import com.cha102.diyla.member.MemberService;
 import com.cha102.diyla.sweetclass.classModel.ClassReserveVO;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
 import org.json.JSONArray;
@@ -29,6 +30,7 @@ public class getReserveServlet extends HttpServlet {
 //        }
         PrintWriter out = res.getWriter();
         ClassService classService = new ClassService();
+        MemberService memberService = new MemberService();
         List<ClassReserveVO> courseList = classService.getAllReserve();
         JSONArray jsonArray = new JSONArray();
         String pattern = "yyyy-MM-dd HH:mm:ss";
@@ -40,8 +42,25 @@ public class getReserveServlet extends HttpServlet {
                 JSONObject jsonCourse = new JSONObject();
                 jsonCourse.put("reserveId", reserves.getReserveId());
                 jsonCourse.put("memId", reserves.getMemId());
+                jsonCourse.put("memName", memberService.selectMem(reserves.getMemId()).getMemName());
                 jsonCourse.put("headcount", reserves.getHeadcount());
-                jsonCourse.put("status", reserves.getStatus());
+                if(reserves.getStatus() == 0) {
+                    jsonCourse.put("status", "預約單成立");
+                } else if(reserves.getStatus() == 1) {
+                    jsonCourse.put("status", "預約單取消");
+                } else if (reserves.getStatus() == 2) {
+                    jsonCourse.put("status", "預約單完成");
+                }
+                jsonCourse.put("courseDate", classService.getOneClass(reserves.getClassId()).getClassDate());
+                //場次處理
+                if (classService.getOneClass(reserves.getClassId()).getClassSeq() == 0) {
+                    jsonCourse.put("courseSeq", "早上");
+                } else if (classService.getOneClass(reserves.getClassId()).getClassSeq() == 1) {
+                    jsonCourse.put("courseSeq", "下午");
+                } else if (classService.getOneClass(reserves.getClassId()).getClassSeq() == 2) {
+                    jsonCourse.put("courseSeq", "晚上");
+                }
+                jsonCourse.put("courseName", classService.getOneClass(reserves.getClassId()).getClassName());
                 jsonCourse.put("courseId", reserves.getClassId());
                 jsonCourse.put("createTime", dateFormat.format(reserves.getCreateTime()));
                 jsonCourse.put("totalPrice", reserves.getTotalPrice());
