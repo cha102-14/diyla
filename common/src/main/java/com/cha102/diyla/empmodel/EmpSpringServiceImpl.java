@@ -1,14 +1,12 @@
 package com.cha102.diyla.empmodel;
 
+
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.enums.AuthFunEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.InternalResourceView;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +23,9 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Autowired
     private EmpJPADAO empJPADAO;
+
+    @Autowired
+    private MailService mailService;
 
 //    @Autowired
 //    private MainDataBaseMapper mainDataBaseMapper;
@@ -71,25 +72,33 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
+//        if(!ObjectUtils.isEmpty(req.getSession().getAttribute("empId"))){
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
+//            try {
+//                requestDispatcher.forward(req, resp);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
         List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
 
         ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
         Integer empId = null;
         List<EmpDTO> empDTOList = new ArrayList<>();
         List<String> empTypeFunList = new ArrayList<>();
-        if(ObjectUtils.isEmpty(empDataList)){
+        if (ObjectUtils.isEmpty(empDataList)) {
             errorMsgMap.put("errorMsg", "請輸入員工帳號及密碼");
         } else {
             empDTOList = empDataList.stream().map(o -> {
                 EmpDTO empDTO = new EmpDTO();
-                empDTO.setTypeFun((String)o[0]);
+                empDTO.setTypeFun((String) o[0]);
                 empDTO.setEmpId((Integer) o[1]);
                 return empDTO;
             }).collect(Collectors.toList());
-            empId = empDTOList.stream().map(EmpDTO::getEmpId).collect(Collectors.toList()).get(0);
+            empId = empDTOList.stream().map(EmpDTO::getEmpId).findFirst().get();
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
-        empTypeFunList.stream().forEach(t ->System.out.println(t));
+        empTypeFunList.stream().forEach(t -> System.out.println(t));
         req.getSession().setAttribute("typeFun", empTypeFunList);
         req.getSession().setAttribute("empId", empId);
         req.setAttribute("loginErrorMsgMap", errorMsgMap);
@@ -109,6 +118,75 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         //清空Session
         req.getSession().removeAttribute("empId");
         req.getSession().removeAttribute("typeFun");
+
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String compareEmpEmail(String empEmail, HttpServletRequest req, HttpServletResponse resp) {
+        JSONObject jsonObject = JSONObject.parseObject(empEmail);
+        String userEmail = jsonObject.getString("empEmail");
+        Integer number = empJPADAO.checkEmail(userEmail);
+        JSONObject resultObj = new JSONObject();
+        if (number > 0) {
+            String s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            String code = "";
+            for (int i = 1; i <= 4; i++) {
+                code += String.valueOf(s.charAt((int) (Math.random() * 61)));
+            }
+            String title = "重設您的 DIYLA 密碼";
+            String context = "您的驗證碼為" + code + "請點選以下連結輸入驗證碼，重設密碼後重新登入。\n" +
+                    req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + req.getContextPath() + "/emp/empResetPassword.jsp";
+
+            Jedis jedis = new Jedis("localhost", 6379);
+
+            boolean result = mailService.sendMail(userEmail, title, context);
+//            RequestDispatcher success = req.getRequestDispatcher("empResetPassword.jsp");
+            //          將JSON 格式的Key "empEmail" getString 取出字串格式
+            if (result) {
+                jedis.setex(userEmail, 600, code);
+                jedis.close();
+                resultObj.put("result", "success");
+                req.getSession().setAttribute("empEmail", userEmail);
+            }
+//            try {
+//                success.forward(req, resp);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+        }
+        resultObj.put("result", "fail");
+        return resultObj.toJSONString();
+    }
+
+    public void queryValidCodeResetPassword(String validCode, String doubleCheckPassword, HttpServletRequest req, HttpServletResponse resp) {
+        // 建立一個Jedis連接
+        String empEmail = (String) req.getSession().getAttribute("empEmail");
+        Jedis jedis = new Jedis("", 6379);
+        String redisValidCode = jedis.get(empEmail);
+        RequestDispatcher requestDispatcher = null;
+        if (validCode.equals(redisValidCode)) {
+            empJPADAO.reserPassword(empEmail, doubleCheckPassword);
+            req.setAttribute("newPassword",true);
+            requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
+//             更新成功
+            req.getSession().removeAttribute("empEmail");
+        } else {
+//            資料錯誤,請重新驗證
+            req.setAttribute("validcode",true);
+            requestDispatcher = req.getRequestDispatcher("empResetPassword.jsp");
+
+        }
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

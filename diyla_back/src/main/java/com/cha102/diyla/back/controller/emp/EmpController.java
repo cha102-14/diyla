@@ -3,21 +3,14 @@ package com.cha102.diyla.back.controller.emp;
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.empmodel.EmpJPADAO;
 import com.cha102.diyla.empmodel.EmpSpringService;
-import com.cha102.diyla.empmodel.EmpSpringServiceImpl;
-import com.cha102.diyla.empmodel.EmpVO;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController //可以直接返回JSON格式 也是component的一種
 @RequestMapping("/emp")
@@ -49,9 +42,30 @@ public class EmpController {
         empSpringService.validEmpLogin(empAccount,empPassword, req, resp);
     }
 
-    @PostMapping("/logOut")
+    @GetMapping("/logout")
     public void logout(@RequestParam("empId") String empId, HttpServletRequest req, HttpServletResponse resp){
+        empSpringService.logout(empId, req, resp);
+    }
 
+    @PostMapping("/forgetPassword")
+    public String empResetPassword(@RequestBody String empEmail, HttpServletRequest req, HttpServletResponse resp){
+        return empSpringService.compareEmpEmail(empEmail,req,resp);
+    }
+
+    @PostMapping("/validCode")
+    public void validCodeResetPassword(HttpServletRequest req,HttpServletResponse resp, @RequestParam("valid") String validCode, @RequestParam("resetPassword")String resetPassword, @RequestParam("doubleCheckPassword")String doubleCheckPassword){
+        if (resetPassword.equals(doubleCheckPassword)){
+        empSpringService.queryValidCodeResetPassword(validCode,doubleCheckPassword, req,resp);
+        }else {
+//            密碼不相符,請重新確認密碼
+            req.setAttribute("password",true);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("empResetPassword.jsp");
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

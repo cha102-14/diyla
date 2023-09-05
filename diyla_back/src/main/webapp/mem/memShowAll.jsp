@@ -9,12 +9,12 @@
             <title>Document</title>
             <style>
 
-                .bgc_empshowlist {
-                    background-color: rgb(197, 218, 236);
+                .bgc_memshowlist {
+                    background-color: #FFE5E5(197, 218, 236);
                 }
 
 
-                .showAllEmpPage {
+                .showAllMemPage {
                     width: 100%;
                     text-align: center;
                     margin-left: 45%;
@@ -33,30 +33,22 @@
         </head>
 
         <body>
-            <div class="showAllEmpPage">
+            <div class="showAllMemPage">
                 <table class="display" style="width:100%">
                     <thead>
 
                         <br>
-
-                        <div>
-                            <!-- 請輸入管理員編號 -->
-                            <!-- <input class="GoodsAddModal" type="text" name="id" size=5> -->
-                            <!-- <button type="button" class="btn btn-primary" onclick="getAllEmpList()">提交</button> -->
-                        </div>
-                        <br>
-                        <tr style="background-color:#b45f06">
+                        <tr style="background-color:#FFB7B7">
                             <th>筆數</th>
-                            <th>編號</th>
+                            <th>會員編號</th>
                             <th>姓名</th>
-                            <th>照片</th>
                             <th>信箱</th>
-                            <th>權限</th>
-                            <th>狀態</th>
+                            <th>電話</th>
+                            <th>討論區狀態</th>
                             <!-- <th>修改</th> -->
                         </tr>
                     </thead>
-                    <tbody id="empcolumns" class="bgc_empshowlist">
+                    <tbody id="memcolumns" class="bgc_memshowlist">
 
                     </tbody>
                 </table>
@@ -79,19 +71,19 @@
                     <input id="pageIndex" type="text" size="1" value="1">
                     <button type="button" class="nextPage" onclick="nextPageSizeAndSubmit()">下一頁</button>
                     <button type="button" class="lastPage" onclick="lastPageAndSubmit()">最末頁</button>
-                    <button type="button" class="btn btn-primary" onclick="getAllEmpList()">送出</button>
+                    <button type="button" class="btn btn-primary" onclick="getAllMemList()">送出</button>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                     <p>當前頁碼：<span id="currentPage"></span> / 總頁數：<span id="totalPages"></span></p>
                 </div>
 
             </div>
             <jsp:include page="/index.jsp" />
-            <!--   優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
+            <!-- TODO  優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
             <script>
-                let emp_totalSize = 0;
+                let mem_totalSize = 0;
                 function resetCurrentPageIndex() {
                     document.getElementById("pageIndex").value = 1;
-                    getAllEmpList();
+                    getAllMemList();
                 }
 
                 function getCurrentPage() {
@@ -102,10 +94,10 @@
                 function getTotalPageSize() {
                     let selectSizeElement = document.getElementById("select_size");
                     let totalPege = 0;
-                    if (emp_totalSize % selectSizeElement.value === 0) {
-                        totalPege = parseInt(emp_totalSize / selectSizeElement.value);
+                    if (mem_totalSize % selectSizeElement.value === 0) {
+                        totalPege = parseInt(mem_totalSize / selectSizeElement.value);
                     } else {
-                        totalPege = parseInt(emp_totalSize / selectSizeElement.value) + 1;
+                        totalPege = parseInt(mem_totalSize / selectSizeElement.value) + 1;
                     }
 
                     return totalPege;
@@ -120,7 +112,7 @@
                         return;
                     }
                     document.getElementById("pageIndex").value = currentPege + 1;
-                    getAllEmpList();
+                    getAllMemList();
                 }
 
                 //   第一頁提醒
@@ -132,7 +124,7 @@
                     } else {
                         // 如當前頁面非第一頁 帶至第一頁資料顯示
                         $("#pageIndex").val(1);
-                        getAllEmpList();
+                        getAllMemList();
                     }
                 }
 
@@ -146,7 +138,7 @@
                     } else {
                         //如目前非為最末頁,將跳至最末頁資料
                         $("#pageIndex").val(totalPages);
-                        getAllEmpList();
+                        getAllMemList();
                     }
                 }
 
@@ -158,10 +150,10 @@
                         return;
                     }
                     document.getElementById("pageIndex").value = currentPege - 1;
-                    getAllEmpList();
+                    getAllMemList();
                 }
 
-                function addEmpList() {
+                function addMemList() {
                     // 獲取下拉選單元素數量
                     let selectElement = document.getElementById("select_size");
                     // 獲取選中的值
@@ -170,27 +162,24 @@
                     let pageIndexElement = document.getElementById("pageIndex");
                     // 獲取選中的值
                     let pageIndexValue = pageIndexElement.value;
-                    let empData = {
+                    let memData = {
                         "pageIndex": pageIndexValue,
                         "pageSize": selectedValue
                     }
-                    return empData; // 此時data裡面有pageIndex及pageSize 2個參數
+                    return memData; // 此時data裡面有pageIndex及pageSize 2個參數
 
                 }
                 //新增提交 click按鈕送出呼叫以下funcation
-                function getAllEmpList() {
-                    let data = addEmpList();
+                function getAllMemList() {
+                    let memData = addMemList();
                     // fetch 可以接受第二個可選參數，一個可以控制不同配置的init物件
-                    let tt = getFunc('getAllEmpList', data)
+                    let tt = getMemList('getAllMemList', memData)
 
                 }
-                //   var data = {
-                //     id: $(".GoodsAddModal").val()
-                //   };
                 //  此處的url代表送出請求後端url的位置,要和controller的postMapping相同
-                function getFunc(url, data) {
+                function getMemList(url, memData) {
                     return fetch(url, {//此括號開始為option
-                        body: JSON.stringify(data),
+                        body: JSON.stringify(memData),
                         // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                         // credentials: 'same-origin', // include, same-origin, *omit
                         //          此處的headers 為Key 裡面有另外2個Key及value
@@ -207,12 +196,11 @@
 
 
                         .then(function (res) { //一樣有then
-                            console.log(res);
-                            let emps = res.empList;
-                            emp_totalSize = res.totalSize
+                            let mems = res.memList;
+                            mem_totalSize = res.totalSize
                             document.getElementById("currentPage").textContent = getCurrentPage();
                             document.getElementById("totalPages").textContent = getTotalPageSize();
-                            showEmps(emps);
+                            showMems(mems);
                             // var r = JSON.stringify(res);
                             // console.log(res.data.userName)
                             // $(".result").val(res.data.userName)
@@ -226,35 +214,27 @@
                         })
                 }
 
-                function showEmps(emps) {
-                    // console.log(emps);
+                function showMems(mems) {
                     let html = "";
-                    if (emps.length === 0) {
-                        html = "<tr><td colspan='4' align='center'>尚無管理員資料</td></tr>";
+                    if (mems.length === 0) {
+                        html = "<tr><td colspan='4' align='center'>尚無更多會員資料</td></tr>";
                     } else {
-                        for (let i = 0; i < emps.length; i++) {
-                            let emp = emps[i];
-                            // console.log(emp.empId);
+                        for (let i = 0; i < mems.length; i++) {
+                            let mem = mems[i];
                             html += "<tr>";
                             html += `<td>` + (i + 1) + `</td>`;
-                            html += `<td>` + emp.empId + `</td>`;
-                            html += `<td>` + emp.empName + `</td>`;
-                            if(emp.empPic == ""){
-                                html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
-                            } else {
-                                html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="data: image/jpeg;base64,` + emp.empPic + `"></td>`;
-                            }
-                            
-                            html += `<td>` + emp.empEmail + `</td>`;
-                            html += `<td>` + emp.typeFun + `</td>`;
-                            html += `<td><button type="button" id="` + emp.empId + `" class="empStatus">` + (emp.empStatus ? "開啟" : "停用") + `</button></td>`;
+                            html += `<td>` + mem.memId + `</td>`;
+                            html += `<td>` + mem.memName + `</td>`;
+                            html += `<td>` + mem.memEmail + `</td>`;
+                            html += `<td>` + mem.memPhone + `</td>`;
+                            html += `<td><button type="button" id="` + mem.memId + `" class="memStatus">` + (mem.memStatus ? "停用" : "正常") + `</button></td>`;
                             // html += `<td><input type="SUBMIT" value="修改"></td>`;
                             html += `</tr>`;
                         }
-                        //將emps資料放入頁面中
+                        //將mems資料放入頁面中
                     }
-                    // console.log(emps);
-                    document.getElementById("empcolumns").innerHTML = html;
+                    // console.log(mems);
+                    document.getElementById("memcolumns").innerHTML = html;
                     changeStatus();
 
 
@@ -262,8 +242,8 @@
 
                 function changeStatus() {
                     // 為所有具有 "status" 類別的 <input> 元素添加點擊事件
-                    // 取出所有class="empStatus"的資料
-                    const statusButtons = document.querySelectorAll('.empStatus');
+                    // 取出所有class="memStatus"的資料
+                    const statusButtons = document.querySelectorAll('.memStatus');
                     statusButtons.forEach(button => {
                         button.addEventListener('click', function () {
 
@@ -271,37 +251,35 @@
 
                             let isFetchSuccess = sendStatusChange(statusData);
                             // if (isFetchSuccess != "") {
-                            //     console.log(isFetchSuccess.empStatus);
-                            //     document.getElementById(empId).innerHTML = isFetchSuccess.empStatus ? '開啟' : '停用';
+                            //     console.log(isFetchSuccess.memStatus);
+                            //     document.getElementById(empId).innerHTML = isFetchSuccess.memStatus ? '開啟' : '停用';
                             // } else {
                             //     console.log("請求失敗");
                             // }
                         })
                         // return;
-                        // console.log(statusData.empId);
-                        // console.log(statusData.empStatus);
+                        // console.log(statusData.memId);
+                        // console.log(statusData.memStatus);
                     });
                 };
 
 
                 function returnStatusData(button) {
                     //  取得該標籤屬性為id的值
-                    const empId = button.getAttribute('id');
-                    //   (emp.empStatus ? "開啟" : "停用") 為取得innerHTML動態生成的值
-                    const empStatus = button.innerHTML;
+                    const memId = button.getAttribute('id');
+                    //   (mem.memStatus ? "開啟" : "停用") 為取得innerHTML動態生成的值
+                    const memStatus = button.innerHTML;
                     let statusData = {
-                        "empId": empId,
-                        "empStatus": (empStatus === "停用") ? 1 : 0
+                        "memId": memId,
+                        "memStatus": (memStatus === "正常") ? 1 : 0
                     }
                     return statusData;
                 }
                 
                 function sendStatusChange(statusData) {
-                    // console.log(statusData.empId);
-                    // console.log(statusData.empStatus);
                     
                     // 這邊option為傳給後端的值
-                    return fetch("changeEmpStatus", {
+                    return fetch("changeMemStatus", {
                         body: JSON.stringify(statusData),
                         headers: {
                             'content-type': 'application/json'
@@ -311,7 +289,7 @@
                         .then(res => res.json())
                         .then(function (res) {
                             console.log(res);
-                            document.getElementById(statusData.empId).innerHTML = res.empStatus ? '開啟' : '停用';
+                            document.getElementById(statusData.memId).innerHTML = res.memStatus ? '停用' : '正常';
                         })
                         .catch(function (error) {
                             console.log(error)
@@ -320,7 +298,7 @@
                 }
 
                 //  一進入網頁即呼叫該函式,抓取資料
-                window.onload(getAllEmpList());
+                window.onload(getAllMemList());
             </script>
 
         </body>

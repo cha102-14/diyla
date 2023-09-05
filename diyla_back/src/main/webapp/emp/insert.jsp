@@ -110,7 +110,7 @@
                                              <!--  < value="<%= (empVO==null)? "" : empVO.getEmpStatus()%>" placeholder ="請輸入管理員狀態" size="30"/></td> -->
 
                                              <tr>
-                                                  <!--TODO 1.先在insert.jsp 做下拉式選單  (功能類別)-->
+                                                  <!-- 1.先在insert.jsp 做下拉式選單  (功能類別)-->
                                                   <td><label for="funccategory_id">權限類別&nbsp &nbsp :&nbsp </label></td>
                                                   <td><select id="funccategory_id" name="funcClass">
                                                             <option select="selected" value="SHOP">商店管理員</option>
