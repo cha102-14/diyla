@@ -11,6 +11,8 @@
 
     StringBuilder eventsJson = new StringBuilder();
     for (ClassVO course : courses) {
+    //只將上架課程和已結束課程放入日曆
+    if (course.getClassStatus() == 0 || course.getClassStatus() == 2){
         int classSeq = course.getClassSeq();
         Date classDate = course.getClassDate();
 
@@ -31,10 +33,6 @@
         // 合併日期和時間，並格式化為 ISO 8601 格式
         String isoStartTime = classDate + "T" + startTime;
         String isoEndTime = classDate + "T" + endTime;
-        System.out.println(course.getClassName());
-        System.out.println(classDate);
-        System.out.println(isoStartTime);
-        System.out.println(isoEndTime);
         eventsJson.append("{");
         eventsJson.append("\"title\": \"" + course.getClassName() + "\",");
         eventsJson.append("\"start\": \"" + isoStartTime + "\",");
@@ -42,6 +40,7 @@
         eventsJson.append("\"id\": \"" + course.getClassId() + "\"");
         eventsJson.append("}");
         eventsJson.append(",");
+        }
     }
     // 移除最後一個逗號
     if (eventsJson.length() > 0) {

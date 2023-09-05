@@ -93,7 +93,7 @@
 <!-- end info section -->
 
 
-<script src="${ctxPath}/js/jquery-3.4.1.min.js"></script>
+
 <script src="${ctxPath}/js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>

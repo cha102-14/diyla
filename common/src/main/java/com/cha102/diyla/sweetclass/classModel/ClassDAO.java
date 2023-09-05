@@ -1,9 +1,10 @@
 package com.cha102.diyla.sweetclass.classModel;
 
 import java.util.List;
+
 public interface ClassDAO {
 
-    void insert(ClassVO classVO);
+    Integer insert(ClassVO classVO);
 
     void update(ClassVO classVO);
 
