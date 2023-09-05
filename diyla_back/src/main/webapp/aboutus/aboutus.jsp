@@ -21,7 +21,7 @@
 
     <style>
         body {
-            margin-left: 300px;
+            margin-left: 280px;
             height: 1vw;
         }
 

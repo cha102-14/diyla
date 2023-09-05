@@ -35,7 +35,6 @@ public class latServlet extends HttpServlet {
         //單筆查詢
         if ("getOne_For_Display".equals(action)) {
 
-            //***************************2.開始查詢資料*****************************************/
             LatService latSvc = new LatService();
             LatestnewsVO latVO = latSvc.getOneLat(Integer.valueOf(req.getParameter("newsNO")));
 

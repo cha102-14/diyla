@@ -26,8 +26,7 @@ import com.cha102.diyla.tokenModel.TokenService;
 public class CartRedisController {
 	@Autowired
 	CartService cartService;
-	@Autowired
-	ShoppingCartServiceSpring shoppingCartService;
+
 
 	@PostMapping("/shopR/insert")
 	public ResponseEntity<String> insert(@RequestBody CartListDTO dto) {
@@ -121,8 +120,6 @@ public class CartRedisController {
 		System.out.println("hi");
 		TokenService tokenService = new TokenService();
 		List<ShoppingCartVO> shoppingCartVOList= cartService.cartToVOList(memId);
-//		shoppingCartService.redisToSQL(shoppingCartVOList);
-//		cartService.clear(memId);
 		Integer totalPrice =cartService.getTotalPrice(memId);
 		Integer maxToken = tokenService.getTokenTotalByMemId(memId);
 		System.out.println("token:"+maxToken);

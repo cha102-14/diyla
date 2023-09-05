@@ -1,7 +1,11 @@
 package com.cha102.diyla.back.controller.art;
 
 import com.cha102.diyla.articleModel.ArtService;
+import com.cha102.diyla.member.MemVO;
+import com.cha102.diyla.noticeModel.NoticeService;
+import com.cha102.diyla.noticeModel.NoticeVO;
 import com.cha102.diyla.tokenModel.TokenService;
+import com.cha102.diyla.util.JedisNotice;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,7 +41,6 @@ public class ArtController extends HttpServlet {
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }
-
         if ("sendToken".equals((action))) {
             TokenService tokenSvc = new TokenService();
             ArtService artSvc = new ArtService();
@@ -48,6 +51,14 @@ public class ArtController extends HttpServlet {
             Byte getToken = Byte.valueOf(req.getParameter("getToken"));
 
             tokenSvc.addToken(tokenCount, getToken, memid);
+//            //新增個人通知
+//            NoticeService noticeService = new NoticeService();
+//            NoticeVO noticeVO = new NoticeVO();
+//            noticeVO.setNoticeTitle("因您發表的文章文情並茂妙筆生花百看不厭，獲得了代幣！恭喜恭喜！！！");
+//            noticeVO.setMemId(memid);
+//            noticeService.addNotice(noticeVO);
+//            //存入redis
+//            JedisNotice.setJedisNotice(memid,"addToken");
             artSvc.updateArtStatus(SENDCOIN, artNo);
 
             String url = "/art/artnocheckall.jsp";

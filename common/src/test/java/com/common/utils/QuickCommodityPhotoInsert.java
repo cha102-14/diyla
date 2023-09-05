@@ -14,7 +14,7 @@ public class QuickCommodityPhotoInsert {
     public static void main(String[] args) throws IOException {
         String URL = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei&useSSL=false";
         String USER = "root";
-        String PASSWORD = "1234";
+        String PASSWORD = "T2012w1221";
         String INSERT_PHOTO = "UPDATE COMMODITY SET COM_PIC = ? WHERE COM_NO = ? ;";
         for (int i = 1; i <= 12; i++) {
             File file = new File("C:/commodity/" + i + ".jpg");

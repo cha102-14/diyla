@@ -6,6 +6,8 @@
   	Integer empId =(Integer)session.getAttribute("empId");
   	EmpVO empVO = dao.getOne(empId);
   	
+  %>    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
