@@ -90,7 +90,12 @@
                 <td>
                     <hr>
                     <div id="show_img">
-                        <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(a.annPic)}" alt="公告圖片">
+                        <c:catch var="imgException">
+                            <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(a.annPic)}" >
+                        </c:catch>
+                        <c:if test="${imgException != null}">
+                            <p>無法顯示圖片: ${imgException.message}</p>
+                        </c:if>
                     </div>
                 </td>
             </tr>

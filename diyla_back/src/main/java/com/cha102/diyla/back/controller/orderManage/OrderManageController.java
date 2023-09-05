@@ -18,8 +18,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import org.json.JSONObject;
+
 import com.cha102.diyla.commodityModel.CommodityService;
-import com.cha102.diyla.commodityModel.CommodityVO;
 import com.cha102.diyla.commodityOrder.CommodityOrderService;
 import com.cha102.diyla.commodityOrder.CommodityOrderVO;
 import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
@@ -51,17 +52,36 @@ public class OrderManageController extends HttpServlet {
 		}
 
 		if ("showDetail".equals(action)) {
-			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
+//			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
+//			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
+//			List<Integer> comNoList = new ArrayList<>();
+//			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
+//				comNoList.add(commodityOrderDetailVO.getComNo());
+//			}
+//			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
+//			session.setAttribute("orderTime", commodityOrderVO.getOrderTime());
+//			session.setAttribute("commodityList", commodityList);
+//			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
+//			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/ordermanage.jsp");
+//			dispatcher.forward(req, res);
+			Integer orderNo =Integer.valueOf(req.getParameter("orderNo"));
+			CommodityOrderVO commodityOrderVO =commodityOrderService.findByOrderNo(orderNo);
 			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
-			List<Integer> comNoList = new ArrayList<>();
-			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
-				comNoList.add(commodityOrderDetailVO.getComNo());
-			}
-			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
-			session.setAttribute("commodityList", commodityList);
-			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/showOrderDetail.jsp");
-			dispatcher.forward(req, res);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("orderPri", commodityOrderVO.getOrderPrice());
+			jsonObject.put("orderDisActPri", commodityOrderVO.getDiscountPrice());
+			jsonObject.put("orderActPri", commodityOrderVO.getActualPrice());
+			jsonObject.put("orderNo", orderNo);
+			jsonObject.put("commodityOrderDetailList", commodityOrderDetailList);
+			// 將JSON物件轉String
+			String jsonString = jsonObject.toString();
+			System.out.println(orderNo);
+			// 設置HTTP回應的內容類型
+			res.setContentType("application/json");
+			res.setCharacterEncoding("UTF-8");
+
+			// 寫入JSON字符串到HTTP回應
+			res.getWriter().write(jsonString);
 		}
 		if ("editOrder".equals(action)) {
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));

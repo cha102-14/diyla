@@ -23,10 +23,12 @@ public class CommodityOrderService {
 
 	public Integer insert(CommodityOrderVO commodityOrderVO,List<ShoppingCartVO>list) {
 		Connection connection=null;
+		Integer orderNo=null;
 			try {
 				connection = dao.getConnectionForTx();
 				connection.setAutoCommit(false);
-				Integer orderNo=dao.insertAll(commodityOrderVO, connection);
+				orderNo=dao.insertAll(commodityOrderVO, connection);
+				System.out.println("orderNo:"+orderNo);
 				dao.insertDetail(orderNo, list, connection);
 	            connection.commit();
 
@@ -47,7 +49,7 @@ public class CommodityOrderService {
 	                }
 	            }
 			}
-		return dao.insert(commodityOrderVO);
+		return orderNo;
 	}
 
 	public List<CommodityOrderVO> getAllByMemId(Integer memId) {

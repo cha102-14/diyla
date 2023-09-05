@@ -95,8 +95,10 @@
         }
 
 
+
     </style>
     <link href="//unpkg.com/layui@2.8.15/dist/css/layui.css" rel="stylesheet">
+
 
 
 </head>
@@ -270,10 +272,34 @@
     </div>
 </div>
 
+
 <!-- 自定義 JavaScript -->
+
+
 <script>
 
     $(document).ready(function () {
+        new DataTable('#dataTable1', {
+            "ajax": {
+                url: "http://localhost:8081/diyla_back/api/diy-cates",
+                type: "GET",
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                dataSrc: 'content',
+            },
+            "columns": [
+                { data: "diyNo" },
+                { data: "diyName"},
+                { data: "diyCategoryDisplayName"},
+                { data: "diyStatusName"},
+                { data: "amount"},
+                { data: "diyPicture", "render": function (data, type, row, meta) { return `<img src="data:image/jpeg;base64,${data}" alt="商品圖片" style="width: 100px;height: 100px" class="product-image">` } },
+                { data: "diyNo", "render": function (data, type, row, meta) { return `<button class="btn btn-outline-info"><a href="back_edit_diycate.html?${data}" style="color: inherit; text-decoration: none;">編輯</a></button>` } },
+                { data: "diyNo", "render": function (data, type, row, meta) { return `<button class="btn btn-outline-danger" onclick="deleteRow(this,${data})">刪除</button>` } },
+            ]
+        });
+
+
         layui.use(function(){
             let laypage = layui.laypage;
 
@@ -329,6 +355,9 @@
                             '<td><button class="btn btn-outline-danger" onClick="deleteRow(this,' + item.diyNo +')">刪除</button></td>';
                         html += '</tr>'
                     }
+
+                    // 添加分頁
+
                     // 自定義主題
                     laypage.render({
                         elem: 'demo-laypage-theme-3',
@@ -373,4 +402,3 @@
 
 </body>
 </html>
-

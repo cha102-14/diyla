@@ -188,7 +188,7 @@
 
     function addCartItem(memId, comNo, amount) {
 
-        fetch("http://localhost:8081/diyla_front/shop/insert", {
+        fetch("http://localhost:8081/diyla_front/shopR/insert", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

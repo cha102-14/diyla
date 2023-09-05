@@ -6,6 +6,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.cha102.diyla.shoppingcart.ShoppingCartVO;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class CommodityOrderDaoJNDI implements CommodityOrderDao {
 	}
 	public static final String URL = "jdbc:mysql://localhost:3306/diyla?";
 	public static final String USER = "root";
-	public static final String PASSWORD = "1234";
+	public static final String PASSWORD = "123456";
 	public static final String INSERT = "INSERT INTO commodity_order (MEM_ID,ORDER_STATUS,ORDER_PRICE,DISCOUNT_PRICE,ACTUAL_PRICE,RECIPIENT,RECIPIENT_ADDRESS,PHONE) VALUES (?,?,?,?,?,?,?,?);";
 	public static final String DLEETE = "SELECT * FROM commodity_order WHERE ORDER_NO = ? ";
 	public static final String UPDATE_STATUS = "UPDATE commodity_order SET ORDER_STATUS = ? where ORDER_NO = ?";

@@ -11,6 +11,7 @@ public interface ShoppingCartServiceSpring {
 	void delete(Integer memId, Integer comNo);
 
 	void deleteByMemId(Integer memId);
+	
 
 	Optional<ShoppingCartVO> findByMemIdAndComNo(Integer memId, Integer comNo);
 

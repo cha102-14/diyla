@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,9 +125,10 @@ a:hover {
 		<h1>
 			<a href="${ctxPath}/ordermanage/ordermanage.jsp" class="backToOrder">回到訂單一覽</a>
 		</h1>
+		<p class="orderNO">訂單編號:${orderNo}</p>
 		<table class="detailTable">
 			<tr class="title">
-				<td class="subtitle">訂單編號</td>
+				<td class="subtitle">購買日期</td>
 				<td class="subtitle">商品名稱</td>
 				<td class="subtitle">單價</td>
 				<td class="subtitle">數量</td>
@@ -133,7 +136,7 @@ a:hover {
 			</tr>
 			<c:forEach var="orderDetail" items="${commodityOrderDetailList}">
 				<tr>
-					<td>${orderDetail.orderNo}</td>
+					<td><fmt:formatDate value="${orderTime}" pattern="yyyy-MM-dd" /></td>
 					<td>${orderDetail.comName}</td>
 					<td>${orderDetail.unitPrice}</td>
 					<td>${orderDetail.comQuantity }</td>
