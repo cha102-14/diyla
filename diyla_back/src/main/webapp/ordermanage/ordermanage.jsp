@@ -58,14 +58,14 @@ th, td {
 
 #main_content {
 	box-sizing: border-box;
-	float: inherit;
+/* 	float: inherit; */
 	height: 800px;
 	margin: 0px auto;
 	background-color: #FFF3EE;
 	padding: 5px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	padding: 0px;
-	float: right;
+/* 	float: right; */
 	width: 980px;
 	overflow: scoll;
 }
