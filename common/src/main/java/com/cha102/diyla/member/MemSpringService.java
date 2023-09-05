@@ -8,5 +8,7 @@ public interface MemSpringService {
 
     String changeMemStatus(JSONObject jsonObject);
 
+//    String returnMemInformation(JSONObject jsonObject);
+
 }
 

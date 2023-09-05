@@ -31,6 +31,9 @@ public class EmpController {
         JSONObject jsonObject = JSONObject.parseObject(data);
        return empSpringService.getAllEmp(jsonObject);
     }
+
+
+
     @PostMapping("/changeEmpStatus")
     public String updateEmpStatus(@RequestBody String statusData){
         JSONObject jsonObject = JSONObject.parseObject(statusData);
