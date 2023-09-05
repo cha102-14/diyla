@@ -7,13 +7,12 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class ClassDAOImpl implements ClassDAO{
     private static DataSource ds = null;
     static {
         try {
             Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -28,23 +27,22 @@ public class ClassDAOImpl implements ClassDAO{
     private static final String DELETE =
             "DELETE FROM class where class_id = ?";
     private static final String UPDATE =
-            "UPDATE class set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,class_limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
+            "UPDATE class_id set category=?,tea_id=?,reg_end_time=?,class_date=?,class_seq=?,class_pic=?,class_limit=?,price=?,intro=?,class_name=?,headcount=?,class_status=? where class_id = ?";
     private static final String GET_DATE_STMT =
             "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class where class_date = ?";
     private static final String GET_BY_TEAID =
             "SELECT class_id FROM class where tea_id = ?";
 
     @Override
-    public Integer insert(ClassVO classVO){
+    public void insert(ClassVO classVO){
 
         Connection con = null;
         PreparedStatement pstmt = null;
-        ResultSet generatedKeys = null;
-        Integer generatedId = null;
+
         try {
 
             con = ds.getConnection();
-            pstmt = con.prepareStatement(INSERT_STMT, Statement.RETURN_GENERATED_KEYS);
+            pstmt = con.prepareStatement(INSERT_STMT);
 
             pstmt.setInt(1, classVO.getCategory());
             pstmt.setInt(2, classVO.getTeaId());
@@ -60,15 +58,7 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.setInt(12, classVO.getClassStatus());
 
             pstmt.executeUpdate();
-            // Acquire the primary key
-            generatedKeys = pstmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                generatedId = generatedKeys.getInt(1);
-            }
-            if (generatedId == null) {
-                generatedId = -1;
-            }
-            return generatedId;
+
             // Handle any SQL errors
         }
         catch (SQLIntegrityConstraintViolationException sice) {
@@ -79,20 +69,12 @@ public class ClassDAOImpl implements ClassDAO{
                 throw new RuntimeException("查無該師傅編號。");
             }
         } catch (SQLException se) {
-            se.printStackTrace();
-            throw new RuntimeException("系統發生錯誤。");
+            throw new RuntimeException("A database error occured. " + se.getMessage());
         }
         finally {
             if (pstmt != null) {
                 try {
                     pstmt.close();
-                } catch (SQLException se) {
-                    se.printStackTrace(System.err);
-                }
-            }
-            if (generatedKeys != null) {
-                try {
-                    generatedKeys.close();
                 } catch (SQLException se) {
                     se.printStackTrace(System.err);
                 }
@@ -131,14 +113,13 @@ public class ClassDAOImpl implements ClassDAO{
             pstmt.setString(10, classVO.getClassName());
             pstmt.setInt(11, classVO.getHeadcount());
             pstmt.setInt(12, classVO.getClassStatus());
-            pstmt.setInt(13, classVO.getClassId());
 
             pstmt.executeUpdate();
 
             // Handle any driver errors
         } catch (SQLException se) {
-            se.printStackTrace();
-            throw new RuntimeException("修改甜點課程失敗。");
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
             // Clean up JDBC resources
         } finally {
             if (pstmt != null) {

@@ -8,10 +8,9 @@ public interface ClassINGDAO {
     void update(ClassINGVO classINGVO);
 
     void delete(Integer claID, Integer ingID);
-    void deleteOneCourseIng(Integer claID);
 
     ClassINGVO findByPrimaryKey(Integer claID, Integer ingID);
 
     List<ClassINGVO> getAll();
-    List<ClassINGVO> findIngIdAmountByClaId(Integer claID);
+    List<Integer> findIngIdByClaId(Integer claID);
 }

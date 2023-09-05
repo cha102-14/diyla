@@ -11,9 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <title>甜點課程預約單確認</title>
+    <title>訂單確認</title>
     <%
     String courseId = request.getParameter("courseId");
     String headcount = request.getParameter("headcount");
@@ -23,13 +21,7 @@
     session.setAttribute("userSession", true);
     %>
 </head>
-
-
 <body>
-<jsp:include page="/front_header.jsp" />
-<section id="navibar">
-<jsp:include page="/desertcourse/navibar.jsp" />
-</section>
          <c:if test="${userSession}">
         <!-- 如果已登入，顯示課程及報名人數資訊 -->
         <div id="courseInfoContainer">
@@ -45,7 +37,6 @@
                 }, 5000);
             </script>
         </c:if>
-        <jsp:include page="/front_footer.jsp" />
 </body>
 <script>
 $(document).ready(function () {
@@ -54,7 +45,7 @@ $(document).ready(function () {
     if(${userSession}){
         let formUrlData = new URLSearchParams();
         formUrlData.append("courseId", '<%= courseId %>')
-        fetch('${ctxPath}/getOneClassServlet',{
+        fetch('/diyla_front/getOneClassServlet',{
             method: "post",
             body: formUrlData
         })
@@ -75,24 +66,13 @@ $(document).ready(function () {
             console.error("Error", error);
         });
     }
-    $("courseInfoContainer").on("click", "#cancel", function(){
-        Swal.fire({
-            title: "確定取消報名嗎?",
-            icon:"warning",
-            confirmButtonText: "確定"
-        }).then(function(result) {
-            if(result.isConfirmed) {
-                window.history.back();
-            }
-        });
-    });
     $("#courseInfoContainer").on("click", "#confirmreserve", function(){
         var reserveInfo = {
             courseId: courseId,
             headcount: headcount
         };
         console.log(reserveInfo);
-        fetch('${ctxPath}/createReserveServlet', {
+        fetch('/diyla_front/createReserveServlet', {
             method: "post",
             header: {
                 "content-type" : "application/json"
@@ -103,32 +83,10 @@ $(document).ready(function () {
             return response.json();
         })
         .then(function(result){
-            if("true" === result.isSuccessful){
-                Swal.fire({
-                    title: "訂單建立成功!",
-                    icon: "success",
-                    confirmButtonText: "確定"
-                }).then(function(check){
-                    setTimeout(function() {
-                    window.location.href = "${ctxPath}"+"/desertcourse/memclassreserve.jsp";
-                    }, 3000);
-                    if(check.isConfirmed) {
-                        window.location.href = "${ctxPath}"+"/desertcourse/memclassreserve.jsp";
-                    }
-                });
+            if(result.isSuccessful){
+                alert("訂單建立成功!");
             } else {
-                Swal.fire({
-                    title: "訂單建立失敗! " + result.message,
-                    icon: "warning",
-                    confirmButtonText: "確定"
-                }).then(function(check){
-                    setTimeout(function(){
-                        window.location.href = "${ctxPath}"+"/desertcourse/findclasslist.jsp";
-                    }, 3000);
-                    if(check.isConfirmed) {
-                        window.location.href = "${ctxPath}"+"/desertcourse/findclasslist.jsp";
-                    }
-                });
+                alert("訂單建立失敗! " + result.message);
             }
         })
         .catch(function(error){

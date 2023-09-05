@@ -48,6 +48,10 @@ public class GetAllCourseServlet extends HttpServlet {
             // 合併日期和時間，並格式化為 ISO 8601 格式
             String isoStartTime = classDate + "T" + startTime;
             String isoEndTime = classDate + "T" + endTime;
+            System.out.println(course.getClassName());
+            System.out.println(classDate);
+            System.out.println(isoStartTime);
+            System.out.println(isoEndTime);
             eventsJson.append("{");
             eventsJson.append("\"title\": \"" + course.getClassName() + "\",");
             eventsJson.append("\"start\": \"" + isoStartTime + "\",");

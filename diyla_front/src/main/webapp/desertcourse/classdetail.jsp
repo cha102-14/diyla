@@ -8,146 +8,224 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Base64" %>
-<%
-    int courseId=Integer.parseInt(request.getParameter("id"));
-    ClassService classService=new ClassService();
-    ClassVO course=classService.getOneClass(courseId);
-    TeacherService teacherService=new TeacherService();
-    TeacherVO teacher=teacherService.getOneTeacher(course.getTeaId());
-    SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String teacherPic = Base64.getEncoder().encodeToString(teacher.getTeaPic());
-    String coursePic = Base64.getEncoder().encodeToString(course.getClassPic());
-    if (course !=null) { %>
-    <!DOCTYPE html>
-    <html lang="en">
+                        <%
+                        int courseId=Integer.parseInt(request.getParameter("id"));
+                            ClassService classService=new ClassService();
+                            ClassVO course=classService.getOneClass(courseId);
+                            TeacherService teacherService=new TeacherService();
+                            TeacherVO teacher=teacherService.getOneTeacher(course.getTeaId());
+                            SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            String teacherPic = Base64.getEncoder().encodeToString(teacher.getTeaPic());
+                            String coursePic = Base64.getEncoder().encodeToString(course.getClassPic());
+                            if (course !=null) { %>
+                            <!DOCTYPE html>
+                            <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>課程詳情</title>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <title>Course Detail</title>
+                                <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+                                <meta name="keywords" content="" />
+                                <meta name="description" content="" />
+                                <meta name="author" content="" />
+                                <link rel="shortcut icon" href="/diyal_front/images/DIYLA_cakeLOGO.png"
+                                    type="image/x-icon">
+                                <title>
+                                    DIYLA
+                                </title>
+                                <!-- slider stylesheet -->
+                                <link rel="stylesheet" type="text/css"
+                                    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 
-    </head>
+                                <!-- bootstrap core css -->
+                                <link rel="stylesheet" type="text/css" href="/diyla_front/css/bootstrap.css" />
 
-    <body>
-        <jsp:include page="/front_header.jsp" />
-        <section id="navibar">
-        <jsp:include page="/desertcourse/navibar.jsp" />
-        </section>
-        <div id="coursecontainer">
-                <h1><%= course.getClassName() %></h1>
-                <p>
-                    <img src="data:image/jpeg;base64,<%= coursePic %>">
-                </p>
-            <div id="courseCategoryBlock"><strong>課程分類: </strong>
-            <%
-            String categoryStr = "";
-            int category = course.getCategory();
-            if (category == 0) {
-                categoryStr = "糖果";
-            } else if (category == 1) {
-                categoryStr = "蛋糕";
-            } else if (category == 2) {
-                categoryStr = "餅乾";
-            } else if (category == 3) {
-                categoryStr = "麵包";
-            } else if (category == 4) {
-                categoryStr = "法式甜點";
-            } else if (category == 5) {
-                categoryStr = "中式甜點";
-            } else if (category == 6) {
-                categoryStr = "其他";
-            }
-            out.println(categoryStr);
-            %>
-            </div>
+                                <!-- Custom styles for this template -->
+                                <link href="/diyla_front/css/style.css" rel="stylesheet" />
+                                <!-- responsive style -->
+                                <link href="/diyla_front/css/responsive.css" rel="stylesheet" />
+                            </head>
 
-            <div id="courseDateBlock"><strong>課程日期: </strong>
-            <%= course.getClassDate() %>
-            </div>
+                            <body>
+                                <div class="hero_area">
+                                    <!-- header section strats -->
+                                    <header class="header_section">
+                                        <nav class="navbar navbar-expand-lg custom_nav-container ">
+                                            <a class="navbar-brand" href="${ctxPath}/index.jsp">
+                                                <img src="${ctxPath}/images/DIYLA_LOGO.png" alt="DIYLA!"
+                                                    class="logo-image">
+                                            </a>
+                                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                                data-target="#navbarSupportedContent"
+                                                aria-controls="navbarSupportedContent" aria-expanded="false"
+                                                aria-label="Toggle navigation">
+                                                <span class=""></span>
+                                            </button>
 
-            <div id="courseSeqBlock"><strong>課程場次: </strong>
-            <%
-            String classSeqStr = "";
-            int classSeq = course.getClassSeq();
-            if (classSeq == 0) {
-                classSeqStr = "早上";
-            } else if (classSeq == 1) {
-                classSeqStr = "下午";
-            } else if (classSeq == 2) {
-                classSeqStr = "晚上";
-            }
-            out.println(classSeqStr);
-            %>
-            </div>
-            <div id="courseLimitBlock">
-            <strong>課程人數上限: </strong>
-            <%= course.getClassLimit() %>
-            </div>
-            <div id="headcountBlock">
-            <strong>目前報名人數: </strong>
-            <%= course.getHeadcount() %>
-            </div>
-            <div id="courseStatusBlock">
-            <strong>課程狀態: </strong>
-            <%
-            String courseStatusStr = "";
-            int courseStatus = course.getClassStatus();
-            if (courseStatus == 0) {
-                courseStatusStr = "上架";
-            } else if (courseStatus == 1) {
-                courseStatusStr = "下架";
-            } else if (courseStatus == 2) {
-                courseStatusStr = "已結束報名";
-            }
-            out.println(courseStatusStr);
-            %>
-            </div>
-            <div id="coursePriceBlock">
-            <strong>課程價格: </strong>
-            <div id="priceText" class="text"><%= course.getPrice() %></div>
-            </div>
-            <div id="courseIntroBlock">
-            <strong>課程簡介: </strong>
-            <div id="introText" class="text"><%= course.getIntro() %></div>
-            </div>
-        </div>
+                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                                <ul class="navbar-nav  ">
+                                                    <li class="nav-item ">
+                                                        <a class="nav-link" href="about_us.html">關於我們
+                                                            <span class="sr-only">(current)</span></a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <%--可自行更改href連結--%>
+                                                            <a class="nav-link" href="index.jsp">
+                                                                DIY體驗
+                                                            </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <%--可自行更改href連結--%>
+                                                            <a class="nav-link" href="index.jsp">
+                                                                甜點課程
+                                                            </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="shop/shop.jsp">
+                                                            商店
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <%--可自行更改href連結--%>
+                                                            <a class="nav-link" href="index.jsp">
+                                                                社群分享
+                                                            </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <%--可自行更改href連結--%>
+                                                            <a class="nav-link" href="index.jsp">
+                                                                常見問題
+                                                            </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="user_option">
+                                                    <%--可自行更改href連結--%>
+                                                        <a href="">
+                                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                                            <span>登入</span>
+                                                        </a>
+                                                        <form class="form-inline ">
+                                                        </form>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </header>
 
-                <!-- Add more fields as needed -->
-                <div id="teacherContainer">
-                    <img src="data:image/jpeg;base64,<%= teacherPic%>">
-                <div id="teacherNameBlock"><strong>教師: </strong>
-                    <%= teacher.getTeaName() %>
-                </div>
-                <div id="teacherIntroBlock"><strong>教師簡介: </strong>
-                    <%= teacher.getTeaIntro() %>
-                </div>
-                </div>
+                                    <!-- end header section -->
+                                </div>
+                                <div id="coursecontainer">
+                                <h1>Course Detail</h1>
+                                <p>
+                                    <img src="data:image/jpeg;base64,<%= coursePic %>">
+                                </p>
+                                <p><strong>Course Name:</strong>
+                                    <%= course.getClassName() %>
+                                </p>
+                                <p><strong>Category:</strong>
+                                    <%= course.getCategory() %>
+                                </p>
+                                <p><strong>Course Date:</strong>
+                                    <%= course.getClassDate() %>
+                                </p>
+                                <p><strong>Course Sequence:</strong>
+                                    <%= course.getClassSeq() %>
+                                </p>
+                                </div>
+                                <!-- Add more fields as needed -->
+                                <div id="teacontainer">
+                                    <img src="data:image/jpeg;base64,<%= teacherPic%>">
+                                <p><strong>Teacher Name:</strong>
+                                    <%= teacher.getTeaName() %>
+                                </p>
+                                <p><strong>Teacher Intro:</strong>
+                                    <%= teacher.getTeaIntro() %>
+                                </p>
+                                </div>
 
-            欲報名人數: <input id="registerheadcount"><br>
-            <button type="button" id="registerButton">報名課程</button>
+                                    欲報名人數: <input id="registerheadcount"><br>
+                                    <button type="button" id="registerButton">報名課程</button>
 
-        <a href="findclass.jsp">Back to Course List</a>
-        <jsp:include page="/front_footer.jsp" />
-    </body>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var registerButton = document.getElementById('registerButton');
-            var urlParams = new URLSearchParams(window.location.search);
-            var courseId = urlParams.get('id');
-            function isUserLoggedIn() {
-                return true;
-            }
-            registerButton.addEventListener('click', function () {
+                                <a href="findclass.jsp">Back to Course List</a>
+                                <%--<script src="/diyla_front/js/bootstrap.js"></script>--%>
+                                    <script
+                                        src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+                                        </script>
+                                    <script src="/diyla_front/js/custom.js"></script>
+                                    <section class="info_section  layout_padding2-top">
 
-                if (isUserLoggedIn()) {
-                    window.location.href = 'confirmreserve.jsp?courseId=' + courseId + '&headcount=' +$('#registerheadcount').val();
-                } else {
-                    window.location.href = 'register.jsp?courseId=' + courseId;
-                }
-            });
-        });
-    </script>
+                                        <div class="info_container ">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <h6>
+                                                            營業時間
+                                                        </h6>
+                                                        <p>
+                                                            08：00 ～ 12：00
+                                                            <br>
+                                                            13：00 ～ 20：00
+                                                        </p>
+                                                    </div>
 
-    </html>
-    <% } else { out.println("Course not found."); } %>
+                                                    <div class="col-md-6 col-lg-3">
+                                                        <h6>
+                                                            聯絡我們
+                                                        </h6>
+                                                        <div class="info_link-box">
+                                                            <div id="address">
+                                                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                                <span>320 桃園市中壢區復興路46號8樓</span>
+                                                            </div>
+                                                            <div>
+                                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                                                <span>03 425 1108</span>
+                                                            </div>
+                                                            <div>
+                                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                                <span> service@tibame.com</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- footer section -->
+                                        <footer class=" footer_section">
+                                            <div class="container">
+                                                <p>
+                                                    Copyright © 2023 DIYLA. All rights reserved.
+                                                    <br>
+                                                    本網站為緯育TibaMe_java雲端服務開發技術養成班學員專題成果作品，本平台僅供學習、展示之用。
+                                                    <br>
+                                                    若有侵權疑慮，您可以私訊<a
+                                                        href="https://www.facebook.com/TibaMe/?locale=zh_TW">「緯育TibaMe」</a>，後續會由專人協助處理。
+                                                </p>
+                                            </div>
+                                        </footer>
+                                        <!-- footer section -->
+
+                                    </section>
+                            </body>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var registerButton = document.getElementById('registerButton');
+                                    var urlParams = new URLSearchParams(window.location.search);
+                                    var courseId = urlParams.get('id');
+                                    function isUserLoggedIn() {
+                                        return true;
+                                    }
+                                    registerButton.addEventListener('click', function () {
+
+                                        if (isUserLoggedIn()) {
+                                            window.location.href = 'confirmreserve.jsp?courseId=' + courseId + '&headcount=' +$('#registerheadcount').val();
+                                        } else {
+                                            window.location.href = 'register.jsp?courseId=' + courseId;
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            </html>
+                            <% } else { out.println("Course not found."); } %>

@@ -13,7 +13,7 @@ public class SpecialityDAOImpl implements SpecialityDAO {
     static {
         try {
             Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
         } catch (NamingException e) {
             e.printStackTrace();
         }

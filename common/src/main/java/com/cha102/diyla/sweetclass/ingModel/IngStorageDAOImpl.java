@@ -1,22 +1,18 @@
 package com.cha102.diyla.sweetclass.ingModel;
 
+import java.util.*;
+import java.sql.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class IngStorageDAOImpl implements IngStorageDAO{
     private static DataSource ds = null;
     static {
         try {
             Context ctx = new InitialContext();
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/diyla");
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
         } catch (NamingException e) {
             e.printStackTrace();
         }
