@@ -111,7 +111,9 @@
                                     <div class="tf__reservation_input_single">
                                         <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
+
                                         <input type="text" id="ID-laydate-mark" name="diyReserveDate" placeholder="yyyy-MM-dd">
+
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
