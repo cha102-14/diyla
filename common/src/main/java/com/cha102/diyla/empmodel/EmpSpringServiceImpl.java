@@ -93,7 +93,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                 return empDTO;
             }).collect(Collectors.toList());
             empId = empDTOList.stream().map(EmpDTO::getEmpId).findFirst().get();
-            empPic = empDTOList.stream().map(EmpDTO::getEmpPic).findFirst().get();
+            empPic = empDTOList.stream().map(EmpDTO::getEmpPic).collect(Collectors.toList()).get(0);
             empName = empDTOList.stream().map(EmpDTO::getEmpName).findFirst().get();
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
@@ -158,11 +158,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                 resultObj.put("result", "success");
                 req.getSession().setAttribute("empEmail", userEmail);
             }
-//            try {
-//                success.forward(req, resp);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            return resultObj.toJSONString();
         }
         resultObj.put("result", "fail");
         return resultObj.toJSONString();

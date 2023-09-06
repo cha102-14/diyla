@@ -15,17 +15,11 @@
 
 
                 .showAllMemPage {
-                    width: 100%;
                     text-align: center;
-                    margin-left: 45%;
-                    padding-left: 70%;
-                    margin-bottom: 20px;
+                    padding-left: 280px;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
                     font-size: 18px;
-                    padding: 10px 300px;
-                    background-color: #FFEEDD;
-                    border-radius: 5px;
                     background-color: #FFEEDD;
                 }
             </style>
@@ -33,6 +27,7 @@
         </head>
 
         <body>
+            <jsp:include page="/index.jsp" />
             <div class="showAllMemPage">
                 <table class="display" style="width:100%">
                     <thead>
@@ -82,7 +77,7 @@
                 </div>
 
             </div>
-            <jsp:include page="/index.jsp" />
+           
             <!-- TODO  優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
             <script>
                 let mem_totalSize = 0;

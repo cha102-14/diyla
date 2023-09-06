@@ -21,7 +21,7 @@
 			</c:when>
 			<c:otherwise>
 					<c:forEach var="typeFun" items="${typeFun}">
-				<c:if test="${typeFun eq 'BACKSTAGEADMIN'}">
+				<c:if test="${typeFun eq 'BACKADMIN'}">
                 <li class="func">
                     <a href="#" class="func_link">
                         <svg fill="#b45f06" version="1.1" id="Capa_1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 124 124" xml:space="preserve" stroke="#b45f06"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <circle cx="62" cy="66.7" r="12"></circle> <path d="M110,117V34c0-5.5-2.6-10.8-6.6-14.8L89.6,5.9C85.7,1.9,80.2,0,74.6,0H21c-3.8,0-7,3.1-7,7v110c0,3.8,3.2,7,7,7h29.6h22.7 H103C106.8,124,110,120.8,110,117z M99,100.7c0,2.6-1.9,4.3-4.5,4.3h-11C83.1,93.4,73.6,84.2,62,84.2c-11.6,0-21.1,9.2-21.5,20.8 h-11c-2.6,0-4.5-1.7-4.5-4.3V43.9c0-2.6,1.9-4.9,4.5-4.9h65.1c2.601,0,4.5,2.4,4.5,4.9v56.8H99z"></path> </g> </g></svg>
