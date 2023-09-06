@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	<h1>取消DIY訂單確認</h1>
+	<h1>已達退款標準</h1>
 	
 	<div>
 	您將取消於${DiyOrderVO.createTime}創建的訂位，如日後需重新建立訂位，請至DIY訂位專區新增一筆DIY訂單。	
@@ -29,6 +29,7 @@
 			<c:when test="${DiyOrderVO.diyNo == 0}">
 				<div name="diyNo" value="0">點心</div>
 			</c:when>
+			
 			<c:when test="${DiyOrderVO.diyNo == 1}">
 				<div name="diyNo" value="1">蛋糕</div>
 			</c:when>
@@ -141,7 +142,7 @@
 	<input type="hidden" name="diyPrice" value="${DiyOrderVO.diyPrice}">	
 	
 	<input type="hidden" name="action" value="cancel_order_comfirm">
-	<input type="submit" value="確定取消訂單">
+	<input type="submit" value="確定取消訂單並退款">
 	
 	</form>
 	

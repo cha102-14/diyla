@@ -14,7 +14,7 @@ List<CommodityOrderVO> commodityOrderVOList = service.getAll();
 <!DOCTYPE html>
 <html>
 <head>
-<title>訂單查詢</title>
+<title>訂單管理</title>
 
 <link rel="shortcut icon" href="${ctxPath}/ima/DIYLA_LOGO.png"
 	type="image/x-icon">
@@ -61,7 +61,7 @@ th, td {
 /* 	float: inherit; */
 	height: 800px;
 	margin: 0px auto;
-	background-color: #FFF3EE;
+	background-color: white;
 	padding: 5px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	padding: 0px;
@@ -125,7 +125,7 @@ table {
 
 .tr_title {
 	box-sizing: border-box;
-	background-color: #b45f06;
+	background-color: #8080C0;
 	color: white;
 	font-size: 12px;
 }
@@ -326,16 +326,17 @@ p.orderNO {
 }
 
 .priceblock {
-	position: fixed;
+	position: static;
 	bottom: 30px;
 	/* display:flex; */
 	/* justify-content:flex; */
 	flex-direction: column;
+	white-space: normal;
 }
 
 .Pri {
-	padding: 5px;
-	margin: 5px;
+	padding: 3px;
+	margin: 3px;
 }
 
 .subtitle {
@@ -361,6 +362,25 @@ p.orderNO {
 	cursor: pointer;
 	background-color:#003060;
 }
+
+.header {
+    background-color: #B26021;
+    color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+.add-button {
+    background-color: #B26021;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    margin: 15px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -368,7 +388,16 @@ p.orderNO {
 		<jsp:include page="../index.jsp" />
 	</aside>
 	<div id="main_content">
-		<h1 class="heading">訂單管理</h1>
+	<div class="header">商品列表</div>
+    <a href="${ctxPath}/shop/commodityClassManage.jsp">
+        <button class="add-button">商品類別管理</button>
+    </a>
+    <a href="${ctxPath}/shop/CommodityController?action=insertPage">
+        <button class="add-button">新增商品</button>
+    </a>
+    <a href="${ctxPath}/orderManage/OrderManageController?action=listAllOrder">
+        <button class="add-button">訂單管理</button>
+    </a>
 		<hr>
 		<div id="orderTable">
 			<table id="allOrder">

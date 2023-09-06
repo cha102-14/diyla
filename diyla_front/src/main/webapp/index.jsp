@@ -130,18 +130,17 @@
 
 
 <!-- contact section -->
-
 <section class="contact_section ">
-    <div class="container">
-        <div class="heading_container heading_center " style="margin-top: 60px;">
+    <div class="container px-0">
+        <div class="heading_container heading_center" style="margin-top: 60px;">
             <h2 class="">
-                我們的位置
+                聯絡我們
             </h2>
         </div>
     </div>
     <div class="container container-bg">
         <div class="row">
-            <div class="col-lg-12 col-md-12">
+            <div class="col-lg-7 col-md-6 px-0">
                 <div class="map_container">
                     <div class="map-responsive">
                         <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0s1a7phLN0iaD6-UE7m4qP-z21pH0eSc&q=tibame+中壢"
@@ -149,6 +148,9 @@
                                 allowfullscreen></iframe>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6 col-lg-5 px-0">
+                <jsp:include page="contactus/contactus.jsp"/>
             </div>
         </div>
     </div>

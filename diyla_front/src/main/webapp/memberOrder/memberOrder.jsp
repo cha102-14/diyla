@@ -77,8 +77,8 @@ th, td {
 	width: 100%;
 	text-align: center;
 	margin-bottom: 20px;
-	font-size: 30px;
-	padding: 30px 10px;
+	font-size: 25px;
+	padding: 25px 10px;
 	background-color: #FFEEDD;
 	border-radius: 5px;
 }
@@ -118,7 +118,7 @@ table {
 }
 
 .tr_title {
-	background-color: #b45f06;
+	background-color: #8080C0;
 	color: white;
 }
 
@@ -131,6 +131,7 @@ table {
 .order_content_title td {
 	padding: 10px;
 	text-align: center;
+	font-size: 16px;
 }
 
 .order_content {
@@ -240,12 +241,35 @@ p.hidden-actual-price {
 	margin: 0px;
 	padding: 0px;
 }
-#memberOrder_wrapper{
+
+#memberOrder_wrapper {
 	border: 1px solid rgba(128, 128, 128, 0.5);
 	box-shadow: 5px;
 	padding: 30px 15px;
 	border-radius: 5px;
-	}
+	box-shadow: 3px 2px rgb(107,107,107,0.6);
+}
+
+.subbar {
+	width: 100px;
+	
+}
+
+.barblcok {
+	margin-bottom: 5px;
+	background-color: #ECECFF;
+	padding: 20px 5px;
+	border-radius: 8px;
+	width: 300px;
+	white-space: nowrap;
+}
+a.subbarlink{
+color: black;
+font-size: 18px;
+}
+a.subbarlink:hover {
+	color:blue;
+}
 </style>
 </head>
 <body>
@@ -253,7 +277,15 @@ p.hidden-actual-price {
 		<jsp:include page="../front_header.jsp" />
 	</div>
 	<div id="main_content">
-		<h1 class="heading">我的訂單</h1>
+		<div class="barblcok">
+			<span id="memberInfo" class="subbar"><a href="#" class="subbarlink">會員資訊管理</a></span>> <span
+				id="orderitem" class="subbar"><a  href="#" class="subbarlink">我的訂單</a></span>> <span
+				id="shoporder" class="subbar"><a  href="" class="subbarlink">商店訂單</a></span>
+		</div>
+		<p class="heading">
+		<svg fill="#000000" xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M39.3,26.9c0,1-0.9,1.9-1.9,1.9H14.6c-1,0-1.9-0.9-1.9-1.9V25c0-1,0.9-1.9,1.9-1.9h22.9c1,0,1.9,0.9,1.9,1.9 v1.9H39.3z M35.5,38.3c0,1-0.9,1.9-1.9,1.9h-19c-1,0-1.9-0.9-1.9-1.9v-1.9c0-1,0.9-1.9,1.9-1.9h19.1c1,0,1.9,0.9,1.9,1.9v1.9H35.5z M12.7,13.5c0-1,0.9-1.9,1.9-1.9h19.1c1,0,1.9,0.9,1.9,1.9v1.9c0,1-0.9,1.9-1.9,1.9H14.6c-1,0-1.9-0.9-1.9-1.9 C12.7,15.4,12.7,13.5,12.7,13.5z M41.2,4H10.8C7.6,4,5,6.6,5,9.7v32.4c0,3.1,2.6,5.7,5.7,5.7h30.5c3.1,0,5.7-2.6,5.7-5.7V9.7 C47,6.6,44.4,4,41.2,4z"></path> </g></svg>
+			商店訂單一覽
+			</h1>
 		<c:choose>
 			<c:when test="${not empty commodityOrderVOList}">
 				<div id="orderTable">
@@ -306,8 +338,8 @@ p.hidden-actual-price {
 												type="hidden">
 											<button type="submit" class="cancel_order"
 												data-order-status="${orderVO.orderStatus}
-											form="form${loop.index}">取消訂單</button>
-										</form>
+											form="form${loop.index}">
+										取消訂單</button></form>
 									</td>
 									<td class="discountSymbol">${orderVO.discountPrice}</td>
 								</tr>

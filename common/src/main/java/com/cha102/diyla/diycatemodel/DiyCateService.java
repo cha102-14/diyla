@@ -52,4 +52,5 @@ public class DiyCateService {
     public List<DiyCateEntity> getAllDiyCates() {
         return diyCateRepository.findAll();
     }
+    
 }

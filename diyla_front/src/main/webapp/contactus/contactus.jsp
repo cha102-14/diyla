@@ -100,7 +100,6 @@ input.input[type="submit"]:hover {
 </head>
 
 <body>
-    <jsp:include page="/front_header.jsp" />
     <div class="us_container" >
     <FORM METHOD="post" ACTION="ContactUsController" class="form">
         <label  class="label">會員名字:</label><input class="input" type="text" name="memName" value="${memVO.memName}"><br>
@@ -122,7 +121,6 @@ input.input[type="submit"]:hover {
         <input id="submit" type="submit" value="送出新增" style="display: none">
     </form>
     </div>
-    <jsp:include page="/front_footer.jsp" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
      <script>
          var submit = document.getElementById('submit');
