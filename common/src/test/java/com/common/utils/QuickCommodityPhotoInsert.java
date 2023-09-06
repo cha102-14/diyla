@@ -12,9 +12,9 @@ import java.sql.SQLException;
 public class QuickCommodityPhotoInsert {
 
     public static void main(String[] args) throws IOException {
-        String URL = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei&useSSL=false";
+        String URL = "jdbc:mysql://localhost:3306/diyla?serverTimezone=Asia/Taipei&useSSL=false&allowPublicKeyRetrieval=true";
         String USER = "root";
-        String PASSWORD = "T2012w1221";
+        String PASSWORD = "1234";
         String INSERT_PHOTO = "UPDATE COMMODITY SET COM_PIC = ? WHERE COM_NO = ? ;";
         for (int i = 1; i <= 12; i++) {
             File file = new File("C:/commodity/" + i + ".jpg");

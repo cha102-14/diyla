@@ -460,7 +460,7 @@ a:focus {
 
 .contact_section .container-bg {
   -webkit-box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
-          box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.1);
 }
 
 .contact_section .heading_container {
@@ -469,57 +469,8 @@ a:focus {
 
 .contact_section .row {
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-}
-
-
-.contact_section input {
-  width: 100%;
-  border: 1px solid #919191;
-  height: 50px;
-  margin-bottom: 25px;
-  padding-left: 25px;
-  background-color: transparent;
-  outline: none;
-  color: #101010;
-}
-
-.contact_section input::-webkit-input-placeholder {
-  color: #131313;
-}
-
-.contact_section input:-ms-input-placeholder {
-  color: #131313;
-}
-
-.contact_section input::-ms-input-placeholder {
-  color: #131313;
-}
-
-.contact_section input::placeholder {
-  color: #131313;
-}
-
-.contact_section input.message-box {
-  height: 120px;
-}
-
-.contact_section button {
-  padding: 12px 45px;
-  background-color: #B26021;
-  border: 1px solid #B26021;
-  border-radius: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-  display: block;
-  color: #fff;
-  margin: 35px auto 0 auto;
-}
-
-.contact_section button:hover {
-  background-color: transparent;
-  color: #B26021;
+  -ms-flex-align: stretch;
+  align-items: stretch;
 }
 
 .contact_section .map_container {
