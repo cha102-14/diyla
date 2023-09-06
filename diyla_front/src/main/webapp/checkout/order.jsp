@@ -42,7 +42,9 @@
 	width: 70%;
 	margin: 20px auto;
 	padding: 20px;
-	border: 1px solid gray;
+	border: 1px solid rgba(107, 107, 107, .6);;
+	border-radius: 10px;
+	box-shadow: 2px 8px 4px 1px rgba(0, 0, 0, 0.1);
 }
 
 .orderDetail {
@@ -65,7 +67,7 @@
 }
 
 .total {
-/* 	display: block; */
+	/* 	display: block; */
 	padding: 0px;
 	background-color: #FFFFDF;
 	margin-top: 30px;
@@ -100,25 +102,33 @@ input[type="text"], input[type="tel"], select {
 	cursor: pointer;
 }
 
-.confirmButton:hover {
+.confirmButton:hover, #paidByCard:hover {
 	background-color: #0056b3;
 }
 
 .totalblock {
 	float: right;
-		background-color: #FFFFDF;
-	margin-top: 10px;
-	padding: 10px;
+	background-color: #FFFFDF;
+	margin-top: 17px;
+	padding: 9px 5px;
+	border-radius: 5px;
+}
+
+.actualPrice {
+	background-color: #ECF5FF;
+	padding: 7px 1px;
 }
 
 .container {
 	border: 1px solid #ccc;
 	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 20px;
 }
 
 .title {
 	cursor: pointer;
-	padding: 5px;
+	padding: 15px 10px;
 	background-color: #FFE4CA;
 	font-weight: bold;
 	border-bottom: 1px solid #ccc;
@@ -138,7 +148,7 @@ input[type="text"], input[type="tel"], select {
 	border-bottom: 1px solid #ccc;
 }
 
-.canceled {
+a.canceled {
 	display: inline-block;
 	/* 	float: right; */
 	padding: 10px 20px;
@@ -150,8 +160,8 @@ input[type="text"], input[type="tel"], select {
 	border: 1px solid black;
 }
 
-.canceled::hover {
-	color: red;
+a.canceled::hover {
+	color: green;
 	background-color: #red;
 }
 
@@ -165,8 +175,9 @@ input[type="text"], input[type="tel"], select {
 	padding: 10px 20px;
 	width: 120px;
 	border-radius: 5px;
-	background-color: white;
-	color: black;
+	background-color: #007bff;
+	color: white;
+	border: none;
 }
 
 .actualPrice {
@@ -180,6 +191,13 @@ input[type="text"], input[type="tel"], select {
 	padding: 5px 3px;
 	left: 10px;
 }
+
+.heading {
+	text-align: center;
+	padding: 20px;
+	background-color: #C7C7E2	;
+	border-radius: 15px;
+}
 </style>
 </head>
 <body>
@@ -187,7 +205,7 @@ input[type="text"], input[type="tel"], select {
 		<jsp:include page="../front_header.jsp" />
 	</div>
 	<div class="mainContent">
-		<h1 style="text-align: center; padding: 20px;">訂購明細</h1>
+		<h1  class="heading">訂購明細</h1>
 
 		<form action="${ctxPath}/memberOrder/OrderController" method="post">
 			<div class="orderDetail">
@@ -208,28 +226,26 @@ input[type="text"], input[type="tel"], select {
 					</c:forEach>
 				</table>
 				<div class="totalblock">
-				<span class="total">總金額:</span>
-				<span class="total" id="totalPrice1">${totalPrice}</span>
-				<span class="total">元</span>
+					<span class="total">總金額:</span> <span class="total"
+						id="totalPrice1">${totalPrice}</span> <span class="total">元</span>
 				</div>
-				<p>
-				<hr class="hr1">
+				<p><hr class="hr1">
 				</p>
 			</div>
 
 			<div class="tokenblock">
-				<p style="margin: 0;">目前擁有代幣:<span id ="userToken">${maxToken}</span></p>
+				<p style="margin: 0;">
+					目前擁有代幣:<span id="userToken">${maxToken}</span>
+				</p>
 				<label for="useTokens" style="width: 80px" id="tokenLabel">使用代幣</label>
 
 				<c:choose>
 					<c:when test="${totalPrice>=maxToken}">
-						<input name="tokenUse" type="number" min="0"
-							max="${maxToken}"
+						<input name="tokenUse" type="number" min="0" max="${maxToken}"
 							id="tokenAmount" value="0">
 					</c:when>
 					<c:otherwise>
-						<input name="tokenUse" type="number" min="0"
-							max="${totalPrice}"
+						<input name="tokenUse" type="number" min="0" max="${totalPrice}"
 							id="tokenAmount" value="0">
 					</c:otherwise>
 				</c:choose>
@@ -246,10 +262,8 @@ input[type="text"], input[type="tel"], select {
 
 						<label for="recipientName">收件人姓名：</label> <input type="text"
 							id="recipientName" name="recipient" value="${memVO.memName}">
-						<p style="display: block; color: red; padding: 0px 3px;">${errMsg["recipient"]}</p>
-
-					</div>
-					<div class="form-row">
+						<p style="display: block; color: red; padding: 0px 3px;">${errMsg["recipient"]}</div>
+					<div c lass="form-row">
 
 						<label for="recipientPhone">收件人電話：</label> <input type="tel"
 							id="recipientPhone" name="phone" value="${memVO.memPhone}">
@@ -273,8 +287,9 @@ input[type="text"], input[type="tel"], select {
 			</div>
 			<input type="hidden" name="action" value="orderConfirm"
 				id="actionInput"> <input type="submit" class="confirmButton"
-				value="確認" id="orderconfirm"> <a
-				href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}"
+				value="確認" id="orderconfirm"> 
+				<button type="button" id="paidByCard">前往付款</button>
+				<a href="${ctxPath}/shop/ShoppingCartServlet?action=getAll&memId=${memId}"
 				class="canceled">返回購物車</a>
 		</form>
 		<div id="card">
@@ -282,13 +297,14 @@ input[type="text"], input[type="tel"], select {
 				<input type="hidden" name="tokenUse" value="" id="tokenAmountCard">
 				<input type="hidden" name="cardrecipient" value="${memVO.memName}"
 					id="cardrecipient"> <input type="hidden"
-					name="cardrecipientAddress" value="${memVO.memAddress}" id="cardrecipientAddress">
-				<input type="hidden" name="cardphone" value="${memVO.memPhone}" id="cardphone">
+					name="cardrecipientAddress" value="${memVO.memAddress}"
+					id="cardrecipientAddress">
+				<input type="hidden" name="cardphone" value="${memVO.memPhone}"
+					id="cardphone">
 				<input type="hidden" name="tradeDesc" value="信用卡付款"> <input
 					type="hidden" name="totalPrice" value="${totalPrice}"> <input
 					type="hidden" name="itemName" value="商品一批"> <input
 					type="hidden" name="memId" value="${memId}">
-				<button type="button" id="paidByCard">前往付款</button>
 			</form>
 		</div>
 	</div>
@@ -322,7 +338,7 @@ input[type="text"], input[type="tel"], select {
 												}
 											});
 							// 預設隱藏信用卡付款表單
-							$("#card").hide();
+							$("#paidByCard").hide();
 
 							// 監聽付款方式選擇變化
 							$("#paymentMethod").change(function() {
@@ -330,10 +346,10 @@ input[type="text"], input[type="tel"], select {
 
 								// 如果選擇的是信用卡，顯示信用卡付款表單；否則隱藏
 								if (selectedPaymentMethod === "creditCard") {
-									$("#card").show();
+									$("#paidByCard").show();
 									$(".confirmButton").hide();
 								} else {
-									$("#card").hide();
+									$("#paidByCard").hide();
 									$(".confirmButton").show();
 								}
 							});
@@ -427,7 +443,8 @@ input[type="text"], input[type="tel"], select {
 							const maxTokenValue = tokenAmountInput
 									.getAttribute("max");
 							if (maxTokenValue == null || maxTokenValue == ""
-									|| maxTokenValue == "null"||maxTokenValue=="0") {
+									|| maxTokenValue == "null"
+									|| maxTokenValue == "0") {
 								tokenAmountInput.setAttribute("max", "0");
 								tokenAmountInput.value = "0"; // 設置輸入框的值為 0
 								tokenAmountInput.disabled = true; // 禁用輸入框
@@ -436,19 +453,19 @@ input[type="text"], input[type="tel"], select {
 						});
 	</script>
 	<script>
-// 		$(document).ready(function() {
-// 			const tokenAmountInput = $("#tokenAmount");
-// 			const maxToken = $("#userToken");
-			
-// 			// 監聽輸入
-// 			tokenAmountInput.on("input", function() {
-// 				const currentValue = parseInt(tokenAmountInput.val());
+		// 		$(document).ready(function() {
+		// 			const tokenAmountInput = $("#tokenAmount");
+		// 			const maxToken = $("#userToken");
 
-// 				if (currentValue > maxToken) {
-// 					tokenAmountInput.val(maxToken); // 超過上限則設為上限值
-// 				}
-// 			});
-// 		});
+		// 			// 監聽輸入
+		// 			tokenAmountInput.on("input", function() {
+		// 				const currentValue = parseInt(tokenAmountInput.val());
+
+		// 				if (currentValue > maxToken) {
+		// 					tokenAmountInput.val(maxToken); // 超過上限則設為上限值
+		// 				}
+		// 			});
+		// 		});
 	</script>
 	<script>
 		// 抓取相關元素
@@ -456,13 +473,12 @@ input[type="text"], input[type="tel"], select {
 		const actualPriceSpan = document.getElementById("actualPriceSpan");
 		const totalPrice = document.getElementById("totalPrice1");
 		const maxToken = document.getElementById("userToken");
-		
 
 		//監聽輸入
 		tokenAmountInput.addEventListener("input", function() {
 			// 取得使用量輸入
 			let tokenAmount = parseInt(tokenAmountInput.value);
-			let maxTokens =parseInt(maxToken.textContent);
+			let maxTokens = parseInt(maxToken.textContent);
 			console.log(tokenAmount);
 			console.log(maxTokens);
 			// 確保不超過max

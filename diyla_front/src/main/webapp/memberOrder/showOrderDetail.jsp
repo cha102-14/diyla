@@ -41,8 +41,7 @@ body {
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
 	box-sizing: border-box;
-	min-height:575px;
-
+	min-height: 575px;
 }
 
 /* 頁面標題 */
@@ -61,13 +60,16 @@ h1 {
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+	border: none;
 }
 
 /* 表格標題行 */
 .title {
-	background-color: #f2f2f2;
+	margin-top: 15px;
+	background-color: #C7C7E2;
 	text-align: center;
-	border-radius: 5px;
+/* 	border-radius: 5px; */
+	
 }
 
 .title td {
@@ -101,8 +103,6 @@ a {
 	transition: color 0.3s;
 }
 
-
-
 /* 繼續購物連結樣式 */
 .goshop {
 	display: inline-block;
@@ -129,7 +129,10 @@ a {
 	text-align: center; /* 文字置中 */
 	transition: background-color 0.3s;
 	justify-content: center;
-	margin-left: 500px;
+/* 	margin-left: 500px; */
+	float: right;
+	margin-right: 30px;
+
 }
 
 .commentButton {
@@ -144,23 +147,37 @@ a {
 	transition: background-color 0.3s;
 	justify-content: center;
 }
-.backToOrder{
-color:black;
+
+.backToOrder {
+	color: black;
 }
-.bar{
-padding:20px 5px;
-margin-top: 5px;
-margin-bottom: 25px;
+
+.bar {
+	padding: 20px 5px;
+	margin-top: 5px;
+	margin-bottom: 25px;
+	background-color: #ECECFF;
+	border-radius: 5px;
+	width: 400px;
+	white-space: nowrap;
 }
-.backLink{
-	font-size: 25px;
+
+.backLink {
+	font-size: 16px;
+	color: black;
 }
+
 a.backLink:hover {
-	color:blue;
+	color: blue;
 }
-.orderNO{
-font-size: 20px;
-padding: 15px;
+
+.orderNO {
+	font-size: 20px;
+	padding: 15px;
+	border: 1px solid rgb(107,107,107,.5);
+	border-radius: 15px;
+	width: 175px;
+	box-shadow: 1px 4px 3px ;
 }
 </style>
 </head>
@@ -169,14 +186,13 @@ padding: 15px;
 		<jsp:include page="../front_header.jsp" />
 	</div>
 	<div class="mainContent">
-			<div class="bar">
-			<a href="${ctxPath}/index.jsp" class="backLink">首頁</a>
-			>
-			<a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" class="backLink">我的訂單</a>
-			>
-			<span class="backLink">訂單明細</span>
-			</div>
-			<hr>
+		<div class="bar">
+			<a href="#" class="backLink">會員資訊管理</a> > 
+			<a href="#" class="backLink">我的訂單</a> > 
+			<a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}"
+				class="backLink">商店訂單</a> > <span class="backLink">訂單明細</span>
+		</div>
+		<hr>
 		<p class="orderNO">訂單編號:${orderNo}</p>
 		<table class="detailTable">
 			<tr class="title">
@@ -185,7 +201,7 @@ padding: 15px;
 				<td class="subtitle">單價</td>
 				<td class="subtitle">數量</td>
 				<td class="subtitle">小計</td>
-				<td class="subtitle" style="width:70px;">評價</td>
+				<td class="subtitle" style="width: 70px;">評價</td>
 			</tr>
 			<c:forEach var="orderDetail" items="${commodityOrderDetailList}">
 				<tr>
@@ -194,9 +210,10 @@ padding: 15px;
 					<td>${orderDetail.unitPrice}</td>
 					<td>${orderDetail.comQuantity }</td>
 					<td>${orderDetail.unitPrice*orderDetail.comQuantity}</td>
-					<form action="${ctxPath}/shop/commodityComment/goInsertPage" method="post" enctype="application/x-www-form-urlencoded">
-						<input type="text" value="${orderDetail.comNo}" name="comNo">
-					<td><button type="submit" class="commentButton" >新增評論</button></td>
+					<form action="${ctxPath}/shop/commodityComment/goInsertPage"
+						method="post" enctype="application/x-www-form-urlencoded">
+						<input type="hidden" value="${orderDetail.comNo}" name="comNo">
+						<td><button type="submit" class="commentButton">新增評論</button></td>
 					</form>
 				</tr>
 			</c:forEach>
