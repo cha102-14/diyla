@@ -26,9 +26,7 @@ pageContext.setAttribute("memVO", memVO);
 <
 link href ="https: //cdn.jsdelivr.net /npm /bootstrap @5.1.1 /dist /css
 	/bootstrap.min.css " rel ="stylesheet " integrity ="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU
-	" crossorigin ="anonymous ">
-	
-	header {
+	" crossorigin ="anonymous ">header {
 	background-color: rgb(243, 151, 5);; /* 背景顏色 */
 	color: white; /* 文字顏色 */
 	padding: 10px 0; /* 上下內邊距 10px，左右內邊距 0 */
@@ -168,17 +166,31 @@ div#body {
 	<input type="hidden" name="memId" value="${memId}">
 	<br> --您好，${memVO.memName}--
 	<input type="hidden" class="uuu" value="${uuu}">
+	
+	
 	<input type="hidden" class="refund_check" value="${refund_check}">
 	<input type="hidden" class=diyCateList value="${diyCateList}">
-	<input type="hidden" class=diyPeriod value="500">
+	<input type="hidden" class="diyReserveDate" value="${diyReserveDate}">
+	<input type="hidden" class=diyPeriod value="${diyPeriod1}">
+	
 	<div id="body">
 
 		<header>
 			<span>
-				<h1 class="header-title">所有訂單列表</h1>
+<%-- 				<c:choose> --%>
+<%-- 						<c:when test="${diyPeriod == 0}"> --%>
+<%-- 							<h1 class="header-title">${diyReserveDate} 上午 訂單列表</h1> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:when test="${diyPeriod == 1}"> --%>
+							<h1 class="header-title">${diyReserveDate} ${diyPeriod} 訂單列表</h1>
+<%-- 						</c:when> --%>
+<%-- 						<c:when test="${diyPeriod == 2}"> --%>
+<%-- 							<h1 class="header-title">${diyReserveDate} 晚上 訂單列表</h1> --%>
+<%-- 						</c:when> --%>
+<%-- 					</c:choose>	 --%>
 			</span>
 		</header>
-
+					
 
 		<table>
 			<tr>
@@ -361,6 +373,7 @@ div#body {
 							<input type="text" name="contactPhone" id="contactPhone1" value="1">
 							<input type="hidden" name="diyOrderNo" id="diyOrderNo" value="0">
 							<input type="hidden" name="action" value="update_contact">
+							<input type="hidden" class="period" name="period" value="200">
 							<br>
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消修改</button>
 							<button type="submit" class="btn btn-primary" id="btn btn-primary">確定修改</button>
@@ -440,6 +453,7 @@ div#body {
 							<input type="hidden" name="diyReserveDate" id="diyReserveDate" value="0">
 							<input type="hidden" name="diyPeriod1" id="diyPeriod1" value="0">
 							<input type="hidden" name="action" value="cancel_order">
+							<input type="hidden" class="period" name="period" value="200">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">保留訂單</button>
 							<button type="submit" class="btn btn-primary" id="btn btn-primary">取消訂單</button>
 						</FORM>
@@ -513,6 +527,8 @@ for(let el of getOne_For_Update_front_js){
 
 <!--====================================================監聽有無更改、取消訂單、錯誤驗證錯訊====================================================== -->
  window.onload=function(){
+	 const period = document.querySelector('.period');
+	 console.log(period.value);
 	 const uuu = document.querySelector('.uuu');
 	 const refund_check = document.querySelector('.refund_check');
 	 if(uuu.value === '1'){
