@@ -70,13 +70,13 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="index.jsp">
+                        <a class="nav-link" href="${ctxPath}/diyOrder/diyOrder_front.jsp">
                             DIY體驗
                         </a>
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="index.jsp">
+                        <a class="nav-link" href="${ctxPath}/desertcourse/findclasslist.jsp">
                             甜點課程
                         </a>
                     </li>
@@ -86,19 +86,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <%--可自行更改href連結--%>
                         <a class="nav-link" href="${ctxPath}/art/art.jsp">
                             社群分享
                         </a>
                     </li>
                     <li class="nav-item">
-                        <%--可自行更改href連結--%>
                         <a class="nav-link" href="${ctxPath}/pbm/pbm.jsp">
                             常見問題
                         </a>
                     </li>
                     <li class="nav-item">
-                        <%--可自行更改href連結--%>
                         <a class="nav-link"
                            href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" id="myOrder">
                             我的訂單
