@@ -29,7 +29,7 @@ public class Commodity {
 	private byte[] comPic;
 	@Transient
 	private String showPic;
-	@Column(name = "COM_DEC")
+	@Column(name = "COM_DES")
 	private String comDes;
 	@Column(name = "COM_PRI")
 	private Integer comPri;
