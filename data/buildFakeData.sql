@@ -391,12 +391,6 @@ INSERT INTO diyla.ing_storage( `BRAND`, `ING_NUMS`, `ING_NAME`, `STATUS`, `SERVI
 ( '石安牧場', '6000', '雞蛋', '0', '60'),
 ( '得福', '1000', '吉利丁片','0', '50'),
 ( '菲力', '5000', '鮮奶油乳酪', '0', '250');
-INSERT INTO diyla.class_ingredient(`CLASS_ID`, `ING_ID`, `ING_COUNT`) VALUES
-('1','11', '250'),
-('1','8', '125'),
-('1','9', '180'),
-('1','2', '60'),
-('1','7', '10');
 
 
 
