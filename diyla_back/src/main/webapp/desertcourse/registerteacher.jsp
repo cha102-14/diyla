@@ -10,6 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+    <!-- Custom styles for this template -->
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
     <%
@@ -22,6 +28,11 @@
 </head>
 
 <body>
+<div id="pageContent">
+    <div id="indexBlock">
+        <jsp:include page="/index.jsp" />
+    </div>
+    <div id="contentBlock">
     <form action="/${ctxPath}/registerTeacher" method="post" enctype="multipart/form-data">
 
     <div id="teacherNameField" >
@@ -70,8 +81,8 @@
     <input type="submit" value="註冊" id="submitButton" disabled>
     <button type="button" id="clearbutton" >清除所有欄位</button>
 </form>
-
-
+</div>
+</div>
     <script>
         $(document).ready(function () {
                  //先做是否已是師傅的驗證

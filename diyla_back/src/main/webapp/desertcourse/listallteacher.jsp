@@ -18,6 +18,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+    <!-- Custom styles for this template -->
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <%
         int empAuthCode = 0;
         int adminAuthCode = 1;
@@ -29,6 +35,11 @@
 </head>
 
 <body>
+<div id="pageContent">
+        <div id="indexBlock">
+            <jsp:include page="/index.jsp" />
+        </div>
+        <div id="contentBlock">
 <table id="teacherTable">
     <thead>
     <tr>
@@ -45,6 +56,8 @@
     </tr>
     </thead>
 </table>
+</div>
+</div>
 <script>
         $(document).ready(function () {
             // if(${request.empVO} === null) {

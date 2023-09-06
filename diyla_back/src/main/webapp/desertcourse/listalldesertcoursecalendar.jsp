@@ -23,6 +23,12 @@
         <link rel="stylesheet" type="text/css"
                     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
         </script>
+            <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+            <!-- Custom styles for this template -->
+            <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+            <!-- responsive style -->
+            <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+            <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
         <script>
 
             document.addEventListener('DOMContentLoaded', function () {
@@ -42,7 +48,13 @@
     </head>
 
     <body>
-        <div id='calendar'></div>
+
+            <div id="indexBlock">
+                <jsp:include page="/index.jsp" />
+            </div>
+        <div id="contentBlock">
+            <div id='calendar'></div>
+        </div>
 
     </body>
 

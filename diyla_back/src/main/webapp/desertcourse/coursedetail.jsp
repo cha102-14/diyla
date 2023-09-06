@@ -30,11 +30,20 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+        <!-- Custom styles for this template -->
+        <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+        <!-- responsive style -->
+        <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     </head>
 
     <body>
-
+    <div id="pageContent">
+            <div id="indexBlock">
+                <jsp:include page="/index.jsp" />
+            </div>
+            <div id="contentBlock">
 <div id="coursecontainer">
         <h1><%= course.getClassName() %></h1>
         <p>
@@ -127,6 +136,8 @@
         <a href="${ctxPath}"+"/desertcourse/listalldesertcoursecalendar.jsp">回到甜點課程日曆表</a>
 
             </section>
+            </div>
+            </div>
     </body>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

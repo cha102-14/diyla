@@ -1,0 +1,8 @@
+#pageContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#contentBlock{
+    margin-left: 280px;
+}

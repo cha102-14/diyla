@@ -22,6 +22,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+        <!-- Custom styles for this template -->
+        <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+        <!-- responsive style -->
+        <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
     <%  //若authCode=0/1/>2 分別代表無權限後台人員/admin/以及師傅>
         //Integer empId = (Integer) session.getAttribute("empId");
@@ -38,6 +45,11 @@
 </head>
 
 <body>
+    <div id="pageContent">
+        <div id="indexBlock">
+            <jsp:include page="/index.jsp" />
+        </div>
+        <div id="contentBlock">
     <a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">前往課程日曆表</a>
     <form action="${ctxPath}/modifyCourse" method="post" enctype="multipart/form-data">
     <input type="hidden" id="modifyCourseId" name="modifyCourseId" value="${courseVO.classId}">
@@ -163,8 +175,9 @@
     <% } %>
 </div>
     <input type="submit" value="修改甜點課程資料" id="submitButton">
-
 </form>
+</div>
+</div>
     <script>
         $(document).ready(function() {
             //取得食材列表

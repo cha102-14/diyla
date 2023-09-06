@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+    <!-- Custom styles for this template -->
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <!-- 取得送進來的teacherVO-->
     <%
         TeacherVO teacherVO = (TeacherVO)request.getAttribute("teacherVO");
@@ -33,6 +39,11 @@
 </head>
 
 <body>
+    <div id="pageContent">
+        <div id="indexBlock">
+            <jsp:include page="/index.jsp" />
+        </div>
+        <div id="contentBlock">
     <a href="${ctxPath}/desertcourse/listallteacher.jsp">前往教師列表頁面</a>
     <form action="${ctxPath}/modifyTeacher" method="post" enctype="multipart/form-data">
     <c:choose>
@@ -148,7 +159,8 @@
     <input type="submit" value="修改" id="submitButton">
     <button type="button" id="clearbutton" >清除所有欄位</button>
 </form>
-
+</div>
+</div>
 
     <script>
         $(document).ready(function () {

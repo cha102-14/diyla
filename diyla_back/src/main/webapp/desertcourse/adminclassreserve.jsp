@@ -14,10 +14,10 @@
     <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="${ctxPath}/js/back.js"></script>
-    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/adminclassreserve.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     <div id="indexBlock">
         <jsp:include page="/index.jsp" />
     </div>
-<div id="tableBlock">
+<div id="contentBlock">
 <table id="reserveTable">
     <thead>
     <tr>
