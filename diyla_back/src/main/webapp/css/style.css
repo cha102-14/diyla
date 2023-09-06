@@ -1,9 +1,14 @@
 @import "./reset.css";
 
+* {
+    box-sizing: border-box;
+}
+
 .wrapper {
     display: flex;
     z-index: 1;
 }
+
 #aside {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     box-sizing: border-box;
@@ -70,7 +75,7 @@
 
 }
 
-#main>div {
+#main > div {
     margin: 0 auto;
     padding: 30px;
 }
@@ -84,7 +89,7 @@
     background-color: #b45f06;
 }
 
-#aside ul li:hover>a::after {
+#aside ul li:hover > a::after {
     animation: lineAnimation 0.6s ease forwards;
 }
 
@@ -99,29 +104,30 @@
 }
 
 .chose {
-    background-color:rgb(229, 170, 170);
+    background-color: rgb(229, 170, 170);
 }
 
 .toDOing {
     width: 100%;
-  } 
-  .wrapper {
-    display: flex;
-  }
-  
-  #main {
-    flex: 1;
-  }
+}
 
-  #content{
+.wrapper {
+    display: flex;
+}
+
+#main {
+    flex: 1;
+}
+
+#content {
     overflow: hidden;
-    width:calc(100vw - 380px) ;
+    width: calc(100vw - 380px);
     /* text-overflow: clip; */
     word-wrap: break-word;
-    
-  }
 
-  .logo-image {
+}
+
+.logo-image {
     width: 70%;
 }
 
@@ -129,11 +135,12 @@ img {
     vertical-align: middle;
     border-style: none;
 }
-@media ( max-width : 1266px) {
-	div.wrapper {
-		position: relative; 
-		z-index: 1; /* 將 aside 設定為比表格更高的 z-index 值 */
-	}
+
+@media ( max-width: 1266px) {
+    div.wrapper {
+        position: relative;
+        z-index: 1; /* 將 aside 設定為比表格更高的 z-index 值 */
+    }
 }
 
 
