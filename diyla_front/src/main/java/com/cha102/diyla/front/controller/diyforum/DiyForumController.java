@@ -1,17 +1,9 @@
-package com.cha102.diyla.back.controller.diyforum;
+package com.cha102.diyla.front.controller.diyforum;
 
-import com.cha102.diyla.diyforummodel.DiyForumEntity;
-import com.cha102.diyla.diyforummodel.DiyForumService;
-import com.cha102.diyla.diyforummodel.DiyForumVO;
-import com.cha102.diyla.diyforummodel.MemberEntity;
-import com.cha102.diyla.diyforummodel.MemberRepository;
+import com.cha102.diyla.diyforummodel.*;
 import com.cha102.diyla.util.PageBean;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;

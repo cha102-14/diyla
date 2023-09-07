@@ -2,6 +2,7 @@ package com.cha102.diyla.diyOrder;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public class DiyOrderService {
 
@@ -67,9 +68,9 @@ public class DiyOrderService {
 		return dao.getRollCall(diyReserveDate, diyPeriod);
 	}
 
-//	public List<DiyCateEntity> getAllDiyCates(){
-//		return diyCateRepository.findAll();
+	public List<DiyOrderDTO> getPeoCount(){
+		return dao.getPeopleCountByAllPeriod();
 
-//	}
+	}
 
 }

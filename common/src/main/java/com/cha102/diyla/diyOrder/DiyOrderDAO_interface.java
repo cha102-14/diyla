@@ -2,6 +2,7 @@ package com.cha102.diyla.diyOrder;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface DiyOrderDAO_interface {
     public void insert(DiyOrderVO diyOrderVO);
@@ -26,7 +27,8 @@ public interface DiyOrderDAO_interface {
     // 該會員所有取消訂單 
     public List<DiyOrderVO> getDeleteByID(Integer memId);
     
-  
+  //查時段的所有訂單//訂位人數\\
+    public List<DiyOrderDTO> getPeopleCountByAllPeriod();
     
     
     // 查詢所有退款審核訂單

@@ -20,12 +20,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.text.ParseException;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -70,11 +72,11 @@ public class diyEcpayController {
         Date date = new Date();
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(date.getTime());
 
-        DiyReserveResultEntity resultEntity = diyReserveResultService.insert(new DiyReserveResultEntity(null, new Date(), period, count, 1, sqlTimestamp, 1,10));
+     //   DiyReserveResultEntity resultEntity = diyReserveResultService.insert(new DiyReserveResultEntity(null, new Date(), period, count, 1, sqlTimestamp, 1,10));
 
-        String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,resultEntity.getDiyReserveNo());
+     //   String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,resultEntity.getDiyReserveNo());
 
-
+        String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo, 0);
         // 自訂取號
         model.addAttribute("toEcpay", toEcpay);
         return "/checkout/checkoutPage.jsp";
@@ -108,22 +110,28 @@ public class diyEcpayController {
             String diyNo = info[3];
             String count = info[4];
             String period = info[5];
-
-            // 轉化格式準備存入訂單
+            java.util.Date utilDate = new java.util.Date(); // 这里用您的日期对象替代
+            java.sql.Date sqlDate1 = new java.sql.Date(utilDate.getTime());
 
             Integer totalPri = Integer.valueOf(totalPrice);
             int diyReserveId = Integer.parseInt(token);
 
-            DiyReserveResultEntity diyReserveResult = diyReserveResultService.findById(diyReserveId);
+// 假设 selectedDate 是用户选择的日期，它应该是一个字符串或日期对象
+            String selectedDate = "2023-09-07"; // 这里假设日期格式是 "yyyy-MM-dd"，请根据实际格式修改
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date sqlDate2 = null;
+            try {
+                sqlDate2 = new Date(dateFormat.parse(selectedDate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            java.util.Date utilDate = diyReserveResult.getDiyReserveDate();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-
-            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate
-                    , Timestamp.valueOf(LocalDateTime.now()), diyReserveResult.getReserveStatus(), 1, totalPri);
+            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate1
+                    , Timestamp.valueOf(LocalDateTime.now()), 0, 0, totalPri);
 
             DiyOrderService DOser = new DiyOrderService();
             DiyOrderVO diyOrderVO1 = DOser.addOD(diyOrderVO);
+
 
             MemVO memVO = memberService.selectMem(memId);
             session.setAttribute("memId", memId);

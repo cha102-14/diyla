@@ -1,4 +1,5 @@
 package com.cha102.diyla.back.controller.diycate;
+
 import com.cha102.diyla.diycatemodel.DiyCateEntity;
 import com.cha102.diyla.diycatemodel.DiyCateService;
 import com.cha102.diyla.util.PageBean;
@@ -14,60 +15,55 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/diy-cates") //前端串featch api後面的網址(url)
+@RequestMapping("/api/diy-cates") // 前端串featch api後面的網址(url)
 public class DiyCateController {
-    private final DiyCateService diyCateService;
+	private final DiyCateService diyCateService;
 
-    @Autowired
-    public DiyCateController(DiyCateService diyCateService) {
-        this.diyCateService = diyCateService;
-    }
+	@Autowired
+	public DiyCateController(DiyCateService diyCateService) {
+		this.diyCateService = diyCateService;
+	}
 
-    @GetMapping
-    public Page<DiyCateEntity> getAllDiyCates(@RequestParam(defaultValue = "1") Integer page,
-                                              @RequestParam(defaultValue = "10") Integer pageSize) {
+	@GetMapping
+	public Page<DiyCateEntity> getAllDiyCates(@RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "10") Integer pageSize) {
 
-        PageBean pageBean = new PageBean(page,pageSize);
+		PageBean pageBean = new PageBean(page, pageSize);
 
-        return diyCateService.getAllDiyCates(pageBean);
-    }
+		return diyCateService.getAllDiyCates(pageBean);
+	}
 
-    @GetMapping("/{id}")
-    public DiyCateEntity getDiyCateById(@PathVariable int id) {
-        return diyCateService.getDiyCateById(id);
-    }
+	@GetMapping("/{id}")
+	public DiyCateEntity getDiyCateById(@PathVariable int id) {
+		return diyCateService.getDiyCateById(id);
+	}
 
-    @PostMapping
-    public DiyCateEntity saveDiyCate(@RequestParam("diyCate") String diyCate,
-                                     @RequestParam(value = "image",required = false) MultipartFile imageFile) throws IOException {
+	@PostMapping
+	public DiyCateEntity saveDiyCate(@RequestParam("diyCate") String diyCate,
+			@RequestParam(value = "image", required = false) MultipartFile imageFile) throws IOException {
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        DiyCateEntity diyCateEntity = objectMapper.readValue(diyCate, DiyCateEntity.class);
+		ObjectMapper objectMapper = new ObjectMapper();
+		DiyCateEntity diyCateEntity = objectMapper.readValue(diyCate, DiyCateEntity.class);
 
+		if (diyCateEntity.getDiyNo() != 0 && imageFile == null) {
+			DiyCateEntity diyCate1 = diyCateService.findById(diyCateEntity.getDiyNo());
+			diyCateEntity.setDiyPicture(diyCate1.getDiyPicture());
+		} else if (imageFile != null) {
+			diyCateEntity.setDiyPicture(imageFile.getBytes());
+		}
+		return diyCateService.saveDiyCate(diyCateEntity);
+	}
 
-        if (diyCateEntity.getDiyNo() != 0 && imageFile == null) {
-            DiyCateEntity diyCate1 = diyCateService.findById(diyCateEntity.getDiyNo());
-            diyCateEntity.setDiyPicture(diyCate1.getDiyPicture());
-        }else if (imageFile != null){
-            diyCateEntity.setDiyPicture(imageFile.getBytes());
-        }
-        return diyCateService.saveDiyCate(diyCateEntity);
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity deleteDiyCate(@PathVariable int id) {
+		diyCateService.deleteDiyCate(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteDiyCate(@PathVariable int id) {
-        diyCateService.deleteDiyCate(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-
-    // 瀏覽DIY列表
-    @GetMapping("/list")
-    public List<DiyCateEntity> getAllDiyCates() {
-        return diyCateService.getAllDiyCates();
-    }
-
+	// 瀏覽DIY列表
+	@GetMapping("/list")
+	public List<DiyCateEntity> getAllDiyCates() {
+		return diyCateService.getAllDiyCates();
+	}
 
 }

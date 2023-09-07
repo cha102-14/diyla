@@ -101,7 +101,7 @@
     </div>
 </div>
 
-
+<jsp:include page="../diy_forum/diyForum.jsp"/>
 <jsp:include page="../front_footer.jsp"/>
 
 

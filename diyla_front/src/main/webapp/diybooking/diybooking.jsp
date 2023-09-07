@@ -188,7 +188,7 @@
 
                 // 發送 AJAX 請求取得資料並渲染日期選框的內容
                 $.ajax({
-                    url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
+                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoItemQuantityReport",
                     data: {
                         //endDate: selectedDate,
                         period: 0
