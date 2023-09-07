@@ -7,7 +7,6 @@ display:none;
 .art_header {
     display: flex;
     height: 80px;
-    text-align: justify;
     padding: 15px 10px;
     background-color: #b45f06;
     color: aliceblue;

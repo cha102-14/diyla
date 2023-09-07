@@ -22,18 +22,6 @@ body {
     align-items: center;
 }
 
-h3 {
-    font-size: 24px;
-    color: #e74c3c;
-    margin-bottom: 10px;
-}
-
-h4 {
-    font-size: 18px;
-    color: #e67e22;
-    margin-top: 0;
-}
-
 table#table1 {
     border-collapse: collapse;
     width: 85%;
