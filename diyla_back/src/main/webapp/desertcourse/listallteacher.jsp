@@ -18,6 +18,14 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <!-- Custom styles for this template -->
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/back_datatable_style.css" />
     <%
         int empAuthCode = 0;
         int adminAuthCode = 1;
@@ -29,7 +37,20 @@
 </head>
 
 <body>
-<table id="teacherTable">
+<div id="pageContent">
+        <div id="indexBlock">
+            <jsp:include page="/index.jsp" />
+        </div>
+        <div id="naviContentBlock">
+            <div id="naviBlock">
+                <jsp:include page="/desertcourse/navibar.jsp" />
+            </div>
+                <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                    <h2 id="title" class="title-tag" >教師列表</h2>
+                </div>
+        <div id="contentBlock">
+        <div id="tableBlock">
+<table id="teacherTable" class="hover display">
     <thead>
     <tr>
         <th data-field="teacherId">師傅編號</th>
@@ -45,6 +66,10 @@
     </tr>
     </thead>
 </table>
+</div>
+</div>
+</div>
+</div>
 <script>
         $(document).ready(function () {
             // if(${request.empVO} === null) {
@@ -69,6 +94,7 @@
                             data: data,
                             searching: true,
                             searchDelay: 500,
+                            lengthMenu: [5,10,25,50],
                             //追加預設值搜尋的功能
                             search: searchOptions,
                             columns: [
@@ -82,7 +108,12 @@
                                 { data: 'teacherPic' },
                                 { data: 'teacherIntro'}
                             ],
-                            columnDefs: [{
+                            columnDefs: [
+                                    {
+                                        targets: [0], // 目标列的索引（从0开始），这里以第一列为例
+                                        className: "custom-header-class" // 自定义的CSS类名
+                                    },
+                            {
                                 targets: 7, // 對應 'teacherPic' 的索引（從 0 開始）
                                 render: function (data, type, row, meta) {
                                     if (type === 'display') {
@@ -94,13 +125,13 @@
                                 targets: 9, // 對應操作按鈕的索引（從 0 開始）
                                 render: function (data, type, row, meta) {
                                     if (teacherId === -1 && row.teacherStatus == "在職") {
-                                        return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>'
-                                            + '<button class="delete-btn" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">刪除師傅</button>';
+                                        return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>'
+                                            + '<button type="button" class="delete-btn btn btn-danger" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">刪除師傅</button></div>';
                                     } else if (teacherId === -1 && row.teacherStatus == "離職") {
-                                        return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>'
-                                            + '<button class="back-btn" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">覆職師傅</button>';
+                                        return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>'
+                                            + '<button type="button" class="back-btn btn btn-warning" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">覆職師傅</button></div>';
                                     } else if (teacherId > 0 && row.teacherId === teacherId) {
-                                        return '<button class="modify-btn" data-teacherId="' + row.teacherId + '">修改師傅資訊</button>';
+                                        return '<button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>';
                                     }
                                     return '';
                                 }
@@ -113,17 +144,7 @@
                 });
             }
             loadTeacher(teacherId);
-            // function modifyTeacher(teaId) {
-            //     $.ajax({
-            //         url: '/${ctxPath}'+'/modifyTeacher',
-            //         method: 'post',
-            //         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            //         data: { teacherId: teaId },
-            //         success: function(response){
-            //                 window.location.href='${ctxPath}'+'/verifyTeacherAction?action=modify&teacherId=' + teaId;
-            //         }
-            //     });
-            // }
+
             $(document).on('click', '.modify-btn', function(modifyAction){
                 //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
                 let rowTeacherId = $(this).data('teacherid');

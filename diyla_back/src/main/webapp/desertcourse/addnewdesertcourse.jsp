@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
+<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassService" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,67 +17,120 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+        <!-- Custom styles for this template -->
+        <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+        <!-- responsive style -->
+        <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${ctxPath}/js/back.js"></script>
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
     <%  //若authCode=0/1/>2 分別代表無權限後台人員/admin/以及師傅>
-        Integer authCode = 1;
-        Integer teacherId = 1;
-        Integer empId = 1;
+        //假資料區
+        String fakeTypeFun = "ADMIN";
+        session.setAttribute("typeFun", fakeTypeFun);
+        Integer fakeEmpId = 1;
+        session.setAttribute("empId", fakeEmpId);
+        //抓取權限以及empId對應的teacherVO
+        String typeFun = (String) session.getAttribute("typeFun");
+        Integer empId = (Integer) (session.getAttribute("empId"));
+        TeacherService teacherService = new TeacherService();
+        Integer teacherId = null;
         String empName = "無詠致";
-        session.setAttribute("authCode", authCode);
+        TeacherVO teacher = null;
+        if("ADMIN".equals(typeFun)) {
+            List<TeacherVO> teacherList = teacherService.getAllTeacher();
+            pageContext.setAttribute("teacherList", teacherList);
+        } else if ("MASTER".equals(typeFun)) {
+            teacher = teacherService.getOneTeacherByEmpId(empId);
+            teacherId = teacher.getTeaId();
+        }
         session.setAttribute("teacherId", teacherId);
         session.setAttribute("teacherName", empName);
-        session.setAttribute("empId", empId);
-
     %>
 
 </head>
 
 <body>
+<div id="pageContent">
+    <div id="indexBlock">
+        <jsp:include page="/index.jsp" />
+    </div>
+<div id="naviContentBlock">
+    <div id="naviBlock">
+        <jsp:include page="/desertcourse/navibar.jsp" />
+    </div>
+            <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                <h2 id="title" class="title-tag" >新增課程</h2>
+            </div>
+    <div id="contentBlock">
+        <div id="formBlock">
     <form action="/${ctxPath}/addNewCourse" method="post" enctype="multipart/form-data">
-    <c:choose>
-    <c:when test="${authCode == 1}">
-    <div id="teacherIdField" >
-        <label for="teacherId">師傅編號: </label>
-        <input type="text" id="teacherId" name="teacherId" ><br>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="teacherIdField" class="form-group">
+                    <c:choose>
+                    <c:when test="${typeFun == 'ADMIN'}">
+                        <label for="teacherSelect">師傅編號</label><br>
+                        <select id="teacherSelect" class="teacherSelect form-control">
+                        <c:forEach var="tea" items="${teacherList}" varStatus="loop">
+                            <option id="teacher${loop.index}" value="${tea.teaId}">${tea.teaName}</option>
+                        </c:forEach>
+                        </select>
+                    </c:when>
+                    <c:otherwise>
+                        <label for="teacherId">師傅編號</label>
+                        <input type="text" id="teacherId" name="teacherId" class="form-control" value= ${teacherId} readonly style="background-color: #f2f2f2;"><br>
+                    </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <div id="courseNameField" class="col-md-6">
+                <div class="form-group">
+                    <label for="courseName">課程名稱</label><br>
+                    <input type="text" id="courseName" class="form-control" name="courseName" placeholder="請輸入中文20字內的名稱" required>
+                    <span class="error-stringlimit" style="display: none">課程名字不可超過20個字。</span>
+                    <span class="error-invalidsymbol" style="display: none">課程名字只允許中文字。</span>
+                </div>
+            </div>
+        </div>
+<div class="row">
+    <div id="courseDateBlock" class="col-md-3" style="">
+        <div class="form-group" style="">
+        <label for="courseDate">課程日期</label>
+        <input type="date" id="courseDate" class="form-control" name="courseDate" required>
+        </div>
     </div>
-    </c:when>
-    <c:otherwise>
-    <div id="teacherIdField" >
-        <label for="teacherId">師傅編號: </label>
-        <input type="text" id="teacherId" name="teacherId" value= ${teacherId} readonly style="background-color: #f2f2f2;"><br>
-    </div>
-    </c:otherwise>
-    </c:choose>
-    <div id="courseNameField" >
-        <label for="courseName">課程名稱: </label>
-        <input type="text" id="courseName" name="courseName" required><br>
-        <span class="error-stringlimit" style="display: none">課程名字不可超過20個字。</span>
-        <span class="error-invalidsymbol" style="display: none">課程名字只允許中文字。</span>
+    <div id="courseSeqBlock" class="col-md-3" style="">
+        <div class="form-group" style="">
+            <label for="courseSeq">課程場次</label><br>
+            <select id="courseSeq" class="form-control" name="courseSeq" style="">
+                <option value="0">早上</option>
+                <option value="1">中午</option>
+                <option value="2">晚上</option>
+            </select>
+        </div>
     </div>
 
-    <div id="courseDateBlock">
-    <label for="courseDate">課程日期：</label>
-    <input type="date" id="courseDate" name="courseDate" required>
-    <label for="courseSeq">課程場次：</label>
-    <select id="courseSeq" name="courseSeq">
-        <option value="0">早上</option>
-        <option value="1">中午</option>
-        <option value="2">晚上</option>
-    </select><br>
+    <div id="registerEndDateBlock" class="col-md-6">
+        <div class="form-group">
+            <label for="registerEndDate">註冊截止日期</label>
+            <input type="datetime-local" class="form-control" id="regEndDate" name="regEndDate" required>
+            <span class="error" style="display: none">請輸入有效的日期(yyyy-mm-dd : hh:mm:ss)。</span>
+        </div>
     </div>
-
-    <div id="registerEndDateBlock">
-    <label for="registerEndDate">註冊截止日期：</label>
-    <input type="date" id="regEndDate" name="regEndDate" required>
-    <span class="error" style="display: none">請輸入有效的日期(yyyy-mm-dd : hh:mm:ss)。</span><br>
-    </div>
+</div>
 
     <div id="categoryBlock">
     <label for="category">甜點課程類別：</label>
-    <select id="category" name="category">
+    <select id="category" class="form-control" name="category">
         <option value="0">糖果</option>
         <option value="1">蛋糕</option>
         <option value="2">餅乾</option>
@@ -81,45 +141,60 @@
     </select>
     </div>
 
-    <div id="ingredientBlock">
-    <label for="ingredient"> 食材1: </label>
-    <select id="ingredientType1" name="ingredientType[]" class="ingredient-row">
-    </select>
-    <input id="ingredientQuantity1" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required>
-    <button type="button" id="ingIncreaseButton">追加食材</button>
-    <span class="error" style="display: none">食材數量請輸入數字</span><br>
+    <div id="ingredientBlock" class="column">
+        <div class="row">
+            <div class="col-md-6 ing-type-block form-group">
+                <label for="ingredient"> 食材1 </label>
+                <select id="ingredientType1" name="ingredientType[]" class="ingredient-row form-control">
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="ingredientQuantity1"> 食材數量</label>
+                <input id="ingredientQuantity1" class="form-control" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required>
+                <span class="error" style="display: none">食材數量請輸入數字</span><br>
+            </div>
+            <div class="col-md-3 form-group">
+                <label class>食材控制</label><br>
+                <button type="button" class="btn btn-secondary form-control" id="ingIncreaseButton" style="width: 5vw;">追加食材</button>
+            </div>
+        </div>
     </div>
 
     <div id="intorBlock">
-    <label for="intro">簡介：</label>
-    <textarea id="intro" name="courseIntro" rows="4" maxlength="500" required></textarea>
+    <label for="intro">課程簡介</label>
+    <textarea id="intro" name="courseIntro" class="form-control" rows="4" maxlength="500" required></textarea>
     <span class="error" style="display: none">簡介不可超過500字。</span><br>
     </div>
-
-    <div id="courseLimitBlock">
-    <label for="courseLimit">人數上限：</label>
-    <input type="number" id="courseLimit" name="courseLimit" required>
-    <span class="error" style="display: none">請勿輸入數字以外的字元。</span><br>
+    <div class="row">
+        <div id="courseLimitBlock" class="col-md-6 form-group">
+            <label for="courseLimit">人數上限</label>
+            <input type="number" class="form-control" id="courseLimit" name="courseLimit" required>
+            <span class="error" style="display: none">請勿輸入數字以外的字元。</span><br>
+        </div>
+        <div id="priceBlock" class="col-md-6 form-group">
+            <label for="price">課程價格</label>
+            <input type= "number" class="form-control" id="price" name="price" required>
+            <span class="error" style="display: none">請勿輸入數字以外的字元。</span><br>
+        </div>
     </div>
-
-    <div id="priceBlock">
-    <label for="price">課程價格：</label>
-    <input type= "number" id="price" name="price" required>
-    <span class="error" style="display: none">請勿輸入數字以外的字元。</span><br>
-    </div>
-
     <div id="picBlock">
-    <label for="coursePic">上傳圖片：</label>
-    <input type="file" id="coursePic" name="coursePic" accept="image/*"><br>
+    <label for="coursePic">上傳圖片</label>
+    <input type="file" class="form-control" id="coursePic" name="coursePic" accept="image/*"><br>
     </div>
     <div id="picPreviewBlock" style="display: none;">
         <img id="picPreview" src="#" alt="圖片預覽" style="max-width: 300px; max-height: 300px;">
     </div>
-    <input type="submit" value="新增" id="submitButton" disabled>
-    <button type="button" id="clearbutton" >清除所有欄位</button>
+    <div id="buttonBlock" class="col-md-6 form-group" style:>
+        <button type="button" class="btn btn-secondary form-control" id="submitButton" style="width: 5vw;"disabled>新增課程</button>
+    </div>
 </form>
+</div>
+</div>
+</div>
+</div>
     <script>
         $(document).ready(function() {
+            var typeFun = "${typeFun}";
             //取得食材列表
             var ingOptionString = "";
             fetch("${ctxPath}"+"/getIngredientList")
@@ -132,7 +207,7 @@
             });
 
             //阻擋無權限人員新增課程
-           if(${authCode == 0}) {
+           if(typeFun !== "ADMIN" && typeFun !== "MASTER") {
             Swal.fire({
                 title: "您沒有權限拜訪此頁面!",
                 icon: "error",
@@ -167,17 +242,27 @@
         var ingredientIndex = 2;
         //新增食材欄位的按鈕事件
     $("#ingIncreaseButton").click(function() {
-        var newIngredientBlock = $("<div>").addClass("ingredient-row");
+        var newIngredientTypeGroup = $("<div>").addClass("col-md-6 ing-type-block form-group");
+        var newIngredientQuantityGroup = $("<div>").addClass("col-md-3 form-group");
+        var newIngredientButtonGroup = $("<div>").addClass("col-md-3 form-group");
+        var newIngredientBlock = $("<div>").addClass("row").append(newIngredientTypeGroup).append(newIngredientQuantityGroup).append(newIngredientButtonGroup);
+        $("<label>").text("食材" + ingredientIndex).addClass("ingredient-label").appendTo(newIngredientTypeGroup);
+        var selectElement = $("<select>").addClass("ingredient-row form-control").attr("name", "ingredientType[]").appendTo(newIngredientTypeGroup);
 
-        $("<label>").text("食材" + ingredientIndex + ": ").appendTo(newIngredientBlock);
-        var selectElement = $("<select>").addClass("ingredientType").attr("name", "ingredientType[]").appendTo(newIngredientBlock);
-        $("<input>").addClass("ingredientQuantity").attr({
-          "name": "ingredientQuantity[]",
+        $("<label>").text("食材數量").appendTo(newIngredientQuantityGroup);
+        $("<input>").addClass("ingredientQuantity form-control").attr({
+            "name": "ingredientQuantity[]",
           "data-field": "ingredientQuantity",
           "required": true
-        }).appendTo(newIngredientBlock);
-        $("<button>").addClass("removeButton").attr("type", "button").text("移除食材").appendTo(newIngredientBlock);
-        $("<span>").addClass("error").css("display", "none").text("食材數量請輸入數字").appendTo(newIngredientBlock);
+        }).appendTo(newIngredientQuantityGroup);
+        $("<span>").addClass("error").css("display", "none").text("食材數量請輸入數字").appendTo(newIngredientQuantityGroup);
+        $("<label>").text("食材控制").appendTo(newIngredientButtonGroup);
+        $("<br>").appendTo(newIngredientButtonGroup);
+        $("<button>").addClass("removeButton btn btn-secondary form-control")
+                     .attr("type", "button")
+                     .text("移除食材")
+                     .css("width", "5vw")
+                     .appendTo(newIngredientButtonGroup);
 
         // 將食材列表新增至選擇框內
         selectElement.html(ingOptionString);
@@ -191,14 +276,14 @@
 
     // 更新所有食材編號的處理
     function updateIngredientLabels() {
-        $(".ingredient-row").each(function(index) {
-            $(this).find("label").text("食材" + (index + 1) + ": ");
+        $(".ing-type-block").each(function(index) {
+            $(this).find(".ingredient-label").text("食材" + (index + 1) + ": ");
         });
     }
 
     // 移除食材欄位的事件處理
     $("#ingredientBlock").on("click", ".removeButton", function() {
-        $(this).closest(".ingredient-row").remove();
+        $(this).closest(".row").remove();
         ingredientIndex = $(".ingredient-row").length + 1; // 重新計算index
         updateIngredientLabels(); // 更新所有食材欄位的標籤
     });

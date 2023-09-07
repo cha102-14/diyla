@@ -30,11 +30,31 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<<<<<<< HEAD
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
+        <!-- Custom styles for this template -->
+        <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
+        <!-- responsive style -->
+        <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
+    </head>
+
+    <body>
+    <div id="pageContent">
+            <div id="indexBlock">
+                <jsp:include page="/index.jsp" />
+            </div>
+                    <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                        <h2 id="title" class="title-tag" >課程細節</h2>
+                    </div>
+            <div id="contentBlock">
+=======
 
     </head>
 
     <body>
 
+>>>>>>> 804a8dec9b150a3453203e6a2784e3f322398ad0
 <div id="coursecontainer">
         <h1><%= course.getClassName() %></h1>
         <p>
@@ -124,9 +144,11 @@
             <button type="button" id="modifyButton">修改課程</button>
             <button type="button" id="deleteButton">刪除課程</button>
 
-        <a href="${ctxPath}"+"/desertcourse/listalldesertcoursecalendar.jsp">回到甜點課程日曆表</a>
+        <a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">回到甜點課程日曆表</a>
 
             </section>
+            </div>
+            </div>
     </body>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -134,7 +156,11 @@
             var deleteButton = document.getElementById('deleteButton');
             var urlParams = new URLSearchParams(window.location.search);
             var courseId = urlParams.get('courseid');
+<<<<<<< HEAD
+            var typeFun = "${typeFun}";
+=======
             var typeFun = ${typeFun};
+>>>>>>> 804a8dec9b150a3453203e6a2784e3f322398ad0
             //判斷是否有權限
             function isUserHaveAuth() {
                 if (typeFun === "ADMIN" || typeFun === "MASTER"){
