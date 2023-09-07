@@ -203,7 +203,7 @@
         <div>
             <c:choose>
                 <c:when test="${not empty typeFun}">
-                    <a href="emp/logout?empId='${empId}'">
+                    <a href="/diyla_back/emp/logout?empId='${empId}'">
                         <svg fill="#b45f06" viewBox="0 0 32 32" version="1.1" id="logout" width="20" height="20"
                              xmlns="http://www.w3.org/2000/svg" stroke="#b45f06">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -236,7 +236,7 @@
 <script src="./vendors/jquery/jquery-3.7.0.min.js"></script>
 <script src="./js/back.js"></script>
 <script>
-
 </script>
+    <jsp:include page="chatPage.jsp"/>
 </body>
 </html>

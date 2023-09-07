@@ -338,13 +338,13 @@ INSERT INTO DIY_ING(DIY_NO, ING_ID, ING_COUNT)
     ('7', '4', '300');
 
 INSERT INTO EMPLOYEE (EMP_NAME, EMP_ACCOUNT, EMP_PASSWORD, EMP_EMAIL, EMP_STATUS)
-VALUES ('女王', 'Root', 'tibame515', 'while8@gmail.com', '1'),
-       ('襪襪是廚師', 'D100002', 'seefood', 'seefood@yahoo.tw', '1'),
-       ('襪襪是隻貓', 'D100003', 'meowmeow', 'meowmeow@gmail.com', '1'),
-       ('襪襪吃肉泥', 'D100004', 'eatmeat', 'eatmeat@gmail.com', '1'),
-       ('襪襪睡覺覺', 'D100005', 'sleep666', 'sleep666@gmail.com', '1'),
-       ('襪襪出去玩', 'D100006', 'outdoor', 'outdoor@msn.com', '1'),
-       ('襪襪裝起來', 'D100007', 'bagmeow', 'bagmeow@yahoo.com', '1');
+VALUES ('女王', 'Root', 'c592f84b4cffa1d360e87ff7651fa6f564a0d119ec67ada1c6098fae3a511cc14af61826ae5a09965c49b80904219bcb95d53b6017cde9ce12b44e2f5fd25259', 'while8@gmail.com', '1'), #tibame515
+       ('襪襪是廚師', 'D100002', '781e4215a7c4418c4292aae18839fe8ab7b5f73a39faee31fe9f0bc4692d47537ada39ad23e626058da0bd14010c6db83c605609ba9ee2d7b9e6cc6651eeb55e', 'seefood@yahoo.tw', '1'),    # 師傅 seefood
+       ('襪襪是隻貓', 'D100003', '74ffdd13ba4c7570117f5898d0ac5bfca3c0324d70fb93884aa02db074503995de1c4cfa81bdcbfcda65e43e13b9c18642c59429f56f4afadb1b86a1a30132a6', 'meowmeow@gmail.com', '1'), # 商店 meowmeow
+       ('襪襪吃肉泥', 'D100004', '21b9ba16cfee150f2355e7517f246ab121dbc148b7d3962d09c26857f5bf882db34092a4b7cfa7a00f3aa3905549aa06e86f1b8fced0ca7bbe3599bde0f99a13', 'eatmeat@gmail.com', '1'),   # 課程 eatmeat
+       ('襪襪睡覺覺', 'D100005', '6def5c17d9e6a7417d49ac1048854b8f9b253fd1345d7e8596c676a6f34f766ab95fb0064a2290caa5de07a9bbdf1b2682641b1b4cfe641b50f2dd84435a6976', 'sleep666@gmail.com', '1'), # 會員 sleep666
+--       ('襪襪出去玩', 'D100006', '4f776de7b3e3f7f0cf6ab532baaaa54942b0650d25a7996b0a18f29248149c78cfc7734a49b9c95f8a3ee8bd14f087529a4a394d288525bb38c93dcd9d28d84c', 'outdoor@msn.com', '1'),     # 倉儲 outdoor
+       ('襪襪裝起來', 'D100007', 'dcd7c479b9f7cc79a11098314b1004ef9ae43ded190d6fbd0799d7a7303472233a8e9631c8f2a4ba198107a9bac924c49539a6bc662bbf8dfb03bbcdd1f9277e', 'bagmeow@yahoo.com', '1');   # 客服 bagmeow
 
 
 INSERT INTO BACKSTAGE_FUN (AUTH_ID, AUTH_FUN, TYPE_FUN)

@@ -2,6 +2,7 @@ package com.cha102.diyla.back.controller.mem;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.member.*;
+import com.cha102.diyla.noticeModel.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,6 @@ public class MemController {
 
     @Autowired
     private MemJPADAO memJPADAO;
-
 
     @PostMapping("/getAllMemList")
     public String getAllMemList(@RequestBody String memData) {
