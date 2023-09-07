@@ -18,7 +18,7 @@
     <div class="art_container">
         <div class="form-container">
             <h1 class="addarth1">修改論壇文章</h1>
-            <form method="post" action="ArtController" onsubmit="return send()" id="addart"
+            <form method="post" action="ArtController"  id="addart"
                 enctype="multipart/form-data">
                 <c:if test="${not empty ErrorMessage}">
                     <ul class="error">

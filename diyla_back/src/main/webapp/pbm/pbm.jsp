@@ -18,13 +18,6 @@
 </head>
 <body>
     <h1>常見問題</h1>
-    <select name="" id="">
-        <option value="127" selected >請選擇</option>
-        <option value="0">課程</option>
-        <option value="1">DIY</option>
-        <option value="2">商店</option>
-        <option value="3">其他</option>
-    </select>
 <ul>
      <li class="li">
          <a class="a" href='pbmall.jsp'>查詢全部常見問題</a>

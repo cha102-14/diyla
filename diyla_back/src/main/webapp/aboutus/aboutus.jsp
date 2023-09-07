@@ -50,7 +50,7 @@
             height: calc(100% - 90px);
         }
 
-        img {
+        img#imagePre {
             width: 50%;
         }
 
@@ -82,7 +82,7 @@
     <h1 id="aboutus">關於我們</h1>
     <div class="container">
         <div class="column">
-            <img id="imagePre" src="<%= image_src %>" alt="圖片1"><br>
+            <img id="imagePre" src="data:image/jpeg;base64,<%= image_src %>" alt="圖片1"><br>
 
             <div class="text">
                 <h2> About Us </h2>

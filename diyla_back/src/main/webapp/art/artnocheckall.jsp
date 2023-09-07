@@ -2,6 +2,7 @@
 <%@ page import="com.cha102.diyla.articleModel.*"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%
     ArtService artSvc = new ArtService();
@@ -116,7 +117,7 @@
                         </c:otherwise>
                     </c:choose>
                     <td>${artVO.artContext}</td>
-                    <td>${artVO.artTime}</td>
+                    <td><fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                     <c:choose>
                         <c:when test="${artVO.artStatus == 1}">
                             <td><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

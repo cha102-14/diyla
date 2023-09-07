@@ -7,8 +7,10 @@
 <%
     Integer memId=(Integer)session.getAttribute("memId");
     MemberService memSvc = new MemberService();
+    if(memId != null){
     MemVO memVO = memSvc.selectMem(memId);
     pageContext.setAttribute("memVO",memVO);
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">

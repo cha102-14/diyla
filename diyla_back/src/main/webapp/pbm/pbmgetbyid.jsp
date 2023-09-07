@@ -9,16 +9,50 @@
 <title>常見問題單筆</title>
 <link rel="stylesheet" href="../css/style.css">
 <style>
-    body{
-    margin-left:300px;
-    }
+body {
+    background-color: #f7f3e9;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+}
+
+table#table1 {
+    border-collapse: collapse;
+    width: 85%;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #dcdcdc;
+}
+
+table th {
+    background-color: #f39c12;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+table td {
+    font-size: 16px;
+    color: #333;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 </style>
 
 
 
 </head>
 <body bgcolor='white'>
-
+<jsp:include page="/pbm/pbm_header.jsp" />
 <table id="table-1">
 	<tr><td>
 		 <h3></h3>

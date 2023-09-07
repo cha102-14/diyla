@@ -11,15 +11,15 @@
 <html>
 
 <head>
-    <title>員工資料 - listOneEmp.jsp</title>
+    <title>全部公告</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/latall.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    <link rel="stylesheet" href="../css/latall.css">
     <style>
     </style>
 </head>
 
-<body bgcolor='white'>
+<body id="lat_all">
     <jsp:include page="/index.jsp" />
     <jsp:include page="/latestnews/lat_header.jsp" />
     <table id="lat" class="display">
@@ -27,7 +27,7 @@
             <tr>
                 <th>公告編號</th>
                 <th>公告內容</th>
-                <th>公告圖片</th>
+                <th id="lat_pic">公告圖片</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -42,7 +42,7 @@
                             <td>
                                 <%= a.getNewsContext() %>
                             </td>
-                            <td><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(a.getAnnPic()) %>"
+                            <td><img id="lat_img" src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(a.getAnnPic()) %>"
                                     alt="公告圖片"></td>
                             <td>
                                 <form method="post" action="latServlet">

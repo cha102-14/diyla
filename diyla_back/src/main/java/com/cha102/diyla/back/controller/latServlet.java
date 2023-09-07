@@ -17,8 +17,8 @@ import java.io.InputStream;
 
 @WebServlet("/latestnews/latServlet")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
-        maxFileSize = 1024 * 1024 * 5,
-        maxRequestSize = 1024 * 1024 * 5 * 5)
+        maxFileSize = 1024 * 1024 * 25,
+        maxRequestSize = 1024 * 1024 * 25 * 25)
 public class latServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -98,11 +98,6 @@ public class latServlet extends HttpServlet {
         if ("lat_insert".equals(action)) {
 
             String newsContext = req.getParameter("newsContext");
-            if (newsContext == null || newsContext.trim().length() == 0) {
-
-            } else {
-
-            }
             Byte annStatus = Byte.valueOf(req.getParameter("annStatus"));
             try {
                 Part annPicPart = req.getPart("annPic");

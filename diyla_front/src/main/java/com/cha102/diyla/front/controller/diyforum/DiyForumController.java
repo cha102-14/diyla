@@ -1,8 +1,10 @@
 package com.cha102.diyla.front.controller.diyforum;
 
 import com.cha102.diyla.diyforummodel.*;
+import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.util.PageBean;
 import org.springframework.data.domain.Page;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/diy/diy-forum")
@@ -39,14 +42,15 @@ public class DiyForumController {
 
 	@RequestMapping("/add")
 	public DiyForumVO add(DiyForumEntity diyForum, HttpSession httpSession) {
-		//TODO 使用登錄後獲取的會員資訊，之後使用預設的
-		// MemberEntity memberEntity = (MemberEntity)httpSession.getAttribute("member");
+		MemVO memVO = (MemVO) httpSession.getAttribute("memVO");
+		DiyForumVO diyForumVO = null;
+		if (!ObjectUtils.isEmpty(memVO)){
+			MemberEntity memberEntity = memberRepository.findById(memVO.getMemId()).get();
+			diyForum.setCreateTime(new Timestamp(new Date().getTime()));
+			diyForum.setMemberEntity(memberEntity);
+			diyForumVO = service.addDF(diyForum);
+		}
 
-		// 這是預設的
-		MemberEntity memberEntity = memberRepository.findById(4).get();
-		diyForum.setCreateTime(new Timestamp(new Date().getTime()));
-		diyForum.setMemberEntity(memberEntity);
-		DiyForumVO diyForumVO = service.addDF(diyForum);
 		return diyForumVO;
 	}
 
