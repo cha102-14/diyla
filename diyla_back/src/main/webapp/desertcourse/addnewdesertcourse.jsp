@@ -67,6 +67,9 @@
     <div id="naviBlock">
         <jsp:include page="/desertcourse/navibar.jsp" />
     </div>
+            <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                <h2 id="title" class="title-tag" >新增課程</h2>
+            </div>
     <div id="contentBlock">
         <div id="formBlock">
     <form action="/${ctxPath}/addNewCourse" method="post" enctype="multipart/form-data">

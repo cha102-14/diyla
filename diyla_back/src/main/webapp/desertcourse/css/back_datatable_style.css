@@ -2,6 +2,7 @@ table tr th{
   background:#ffb84d;
   color:black;
   text-align:left;
+  white-space: nowrap;
   border: 1px solid gray;
   vertical-align:center;
   justify-content: space-around;

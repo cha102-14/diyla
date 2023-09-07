@@ -45,6 +45,9 @@
             <div id="naviBlock">
                 <jsp:include page="/desertcourse/navibar.jsp" />
             </div>
+                <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                    <h2 id="title" class="title-tag" >教師列表</h2>
+                </div>
         <div id="contentBlock">
         <div id="tableBlock">
 <table id="teacherTable" class="hover display">
@@ -141,17 +144,7 @@
                 });
             }
             loadTeacher(teacherId);
-            // function modifyTeacher(teaId) {
-            //     $.ajax({
-            //         url: '/${ctxPath}'+'/modifyTeacher',
-            //         method: 'post',
-            //         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            //         data: { teacherId: teaId },
-            //         success: function(response){
-            //                 window.location.href='${ctxPath}'+'/verifyTeacherAction?action=modify&teacherId=' + teaId;
-            //         }
-            //     });
-            // }
+
             $(document).on('click', '.modify-btn', function(modifyAction){
                 //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
                 let rowTeacherId = $(this).data('teacherid');

@@ -43,6 +43,9 @@
             <div id="indexBlock">
                 <jsp:include page="/index.jsp" />
             </div>
+                    <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+                        <h2 id="title" class="title-tag" >課程細節</h2>
+                    </div>
             <div id="contentBlock">
 <div id="coursecontainer">
         <h1><%= course.getClassName() %></h1>
@@ -133,7 +136,7 @@
             <button type="button" id="modifyButton">修改課程</button>
             <button type="button" id="deleteButton">刪除課程</button>
 
-        <a href="${ctxPath}"+"/desertcourse/listalldesertcoursecalendar.jsp">回到甜點課程日曆表</a>
+        <a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">回到甜點課程日曆表</a>
 
             </section>
             </div>
@@ -145,7 +148,7 @@
             var deleteButton = document.getElementById('deleteButton');
             var urlParams = new URLSearchParams(window.location.search);
             var courseId = urlParams.get('courseid');
-            var typeFun = ${typeFun};
+            var typeFun = "${typeFun}";
             //判斷是否有權限
             function isUserHaveAuth() {
                 if (typeFun === "ADMIN" || typeFun === "MASTER"){

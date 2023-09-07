@@ -108,10 +108,11 @@
 
 <body>
   <ul class="nav-nav" id="customNavBar">
-    <li class="one"><a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">課程總覽及管理</a></li>
-    <li class="two"><a href="${ctxPath}/desertcourse/registerteacher.jsp">註冊為師傅</a></li>
-    <li class="two"><a href="${ctxPath}/desertcourse/listallteacher.jsp">師傅管理</a></li>
-    <li class="three"><a href="${ctxPath}/desertcourse/adminclassreserve.jsp">預約單管理</a></li>
+    <li class="one"><a href="${ctxPath}/desertcourse/registerteacher.jsp">註冊為師傅</a></li>
+    <li class="two"><a href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">課程總覽及管理</a></li>
+    <li class="three"><a href="${ctxPath}/desertcourse/addnewdesertcourse.jsp">新增甜點課程</a></li>
+    <li class="four"><a href="${ctxPath}/desertcourse/listallteacher.jsp">師傅管理</a></li>
+    <li class="five"><a href="${ctxPath}/desertcourse/adminclassreserve.jsp">預約單管理</a></li>
   </ul>
 </body>
 
