@@ -4,8 +4,6 @@ import com.cha102.diyla.empmodel.EmpDAO;
 import com.cha102.diyla.empmodel.EmpDAOImpl;
 import com.cha102.diyla.empmodel.EmpService;
 import com.cha102.diyla.empmodel.EmpVO;
-import org.apache.catalina.core.ApplicationPart;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItem;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,10 +31,10 @@ public class EmpInsertController extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-
         String name = req.getParameter("name");
         String account = req.getParameter("account");
-        String password = req.getParameter("password");
+        // 修改前端為 password ->empPassword
+        String password = (String) req.getAttribute("empPassword");
         String email = req.getParameter("email");
         String statusStr = req.getParameter("status");
         String authfun = req.getParameter("funcClass");
@@ -58,7 +54,7 @@ public class EmpInsertController extends HttpServlet {
 //      3.Controller至Service 調用查詢功能類別對應各功能細項
         // 建一個List集合放入錯誤訊息
 
-        Map<String, String> errorMsgMap = new ConcurrentHashMap<>();
+        Map<String, String> errorMsgMap = (ConcurrentHashMap)req.getAttribute("errorMsgMap");
         // Store this set in the request scope, in case we need to
         // send the ErrorPage view.
         EmpService empService = new EmpService();
@@ -67,7 +63,8 @@ public class EmpInsertController extends HttpServlet {
 
 
         if (!ObjectUtils.isEmpty(errorMsgMap)) {
-            req.setAttribute("empVO", empVO);
+            empVO.setEmpPassword("");
+            req.setAttribute("empVO",empVO);
             req.setAttribute("errorMsgMap", errorMsgMap);
             RequestDispatcher failureView = req.getRequestDispatcher("/emp/insert.jsp");
             // RequestDispatcher為物件,裡面的failureView方法可設定將資料打包帶往專案的相對路徑

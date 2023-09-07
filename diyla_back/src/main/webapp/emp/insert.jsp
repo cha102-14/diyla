@@ -77,7 +77,7 @@
 
                                              <tr>
                                                   <td>管理員密碼:</td>
-                                                  <td><input type="TEXT" name="password"
+                                                  <td><input type="TEXT" name="empPassword"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpPassword()%>"
                                                             placeholder="請輸入管理員密碼" size="30" />
                                                             <span  id ="upFiles.errors" class="error">${errorMsgMap.empPassword}</span>
