@@ -3,6 +3,9 @@ package com.cha102.diyla.member;
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.empmodel.EmpDTO;
 import com.cha102.diyla.enums.AuthFunEnum;
+import com.cha102.diyla.noticeModel.NoticeService;
+import com.cha102.diyla.noticeModel.NoticeVO;
+import com.cha102.diyla.util.JedisNotice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -42,7 +45,11 @@ public class MemSpringServiceImpl implements MemSpringService {
         JSONObject returnJSONObject = new JSONObject();
         returnJSONObject.put("memStatus", memStatus);
         if (changeMemArtStatus > 0) {
-
+//            討論區滿三次會寫入黑名單通知進Redis
+//            同時key: memId Value: Black 寫入 Redis
+//
+//            修改Redis
+            JedisNotice.setJedisNotice(memId,"您的討論區功能已能正常使用，請謹守討論區使用規範");
             return JSONObject.toJSONString(returnJSONObject);
         } else {
             return "";
