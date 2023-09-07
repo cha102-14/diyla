@@ -70,12 +70,12 @@
                                 // console.log('第一個then');
                                 // return response.text();
                               .then(function (data) {
-                                if (data.result) {
+                                if (data.result == 'success') {
                                     Swal.fire('信件已發送！');
                                     setTimeout(function(){ window.location.href = "empResetPassword.jsp"; }, 1500);
                                     
                                 } else {
-                                    Swal.fire('請重新輸入！')
+                                    Swal.fire('信箱不正確，請重新輸入！')
                                 }
                             })
 

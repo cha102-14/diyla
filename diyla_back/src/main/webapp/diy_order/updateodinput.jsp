@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ page isELIgnored="false"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:include page="/index.jsp" />
 <%@ page import="com.cha102.diyla.diyOrder.*"%>
 <%
 DiyOrderVO diyOrderVO = (DiyOrderVO) request.getAttribute("diyOrderVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
@@ -9,7 +11,8 @@ DiyOrderVO diyOrderVO = (DiyOrderVO) request.getAttribute("diyOrderVO"); //EmpSe
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<title>修改 還不知道要不要留</title>
 </head>
 <body>
 

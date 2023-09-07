@@ -26,13 +26,15 @@
             color: white;
             border-radius: 5px;
             padding: 10px;
+            text-align: center;
+            margin:  0;
+            font-size: 32px;
         }
 
         table#addlatTable {
             height: 600px;
             background-color: #fff8dc;
             border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
             margin: 0;
         }
@@ -126,10 +128,10 @@
                     <div id="imagePreview"></div>
                 </td>
             </tr>
-            <input type="hidden" name="action" value="lat_insert">
         </table>
+        <input type="hidden" name="action" value="lat_insert">
         <input id="submit" type="submit" value="送出新增">
-    </form>
+    </FORM>
 
     <script>
         function preImg() {

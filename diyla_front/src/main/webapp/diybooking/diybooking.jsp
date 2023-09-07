@@ -111,7 +111,9 @@
                                     <div class="tf__reservation_input_single">
                                         <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
+
                                         <input type="text" id="ID-laydate-mark" name="diyReserveDate" placeholder="yyyy-MM-dd">
+
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
@@ -186,7 +188,7 @@
 
                 // 發送 AJAX 請求取得資料並渲染日期選框的內容
                 $.ajax({
-                    url: "http://localhost:8081/diyla_back/api/diy-reserve/peoItemQuantityReport",
+                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoItemQuantityReport",
                     data: {
                         //endDate: selectedDate,
                         period: 0

@@ -2,12 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/index.jsp" />
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
-<title>退款審核</title>
+<title>退款狀態查詢</title>
 
 <style type="text/css">
 body {
@@ -125,33 +126,21 @@ margin-top: 20px;
 			<th>付款狀態</th>
 			<th>DIY訂單金額</th>
 
-			<th id="inn">退款審核操作</th>
 		</tr>
-		<jsp:useBean id="doser" scope="page" class="com.cha102.diyla.diyOrder.DiyOrderService" />
-		<c:forEach var="DiyOrderVO" items="${doser.allRefundod}">
+		<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 			<tr>
 
 				<td>${DiyOrderVO.diyOrderNo}</td>
 				<td>${DiyOrderVO.memId}</td>
 
-				<c:choose>
-					<c:when test="${DiyOrderVO.diyNo == 0}">
-						<td>點心</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 1}">
-						<td>蛋糕</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 2}">
-						<td>塔派</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 3}">
-						<td>生乳酪</td>
-					</c:when>
-					<c:otherwise>
-						<td>其他</td>
-					</c:otherwise>
-				</c:choose>
+				<c:forEach var="DiyCateEntity" items="${diyCateList}">
+					<c:choose>
+							<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+								<td id="diyNo">${DiyCateEntity.diyName}</td>
+							</c:when>
+					</c:choose>			
+			</c:forEach>
 
 				<td>${DiyOrderVO.contactPerson}</td>
 				<td>${DiyOrderVO.contactPhone}</td>
@@ -170,7 +159,7 @@ margin-top: 20px;
 				</c:choose>
 
 				<td>${DiyOrderVO.diyReserveDate}</td>
-				<td>${DiyOrderVO.createTime}</td>
+				<td id="createTime11"><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 				<c:choose>
 					<c:when test="${DiyOrderVO.reservationStatus == 0}">
@@ -202,35 +191,14 @@ margin-top: 20px;
 					</c:when>
 				</c:choose>
 
-				<td>${DiyOrderVO.diyPrice}</td>
+				<c:forEach var="DiyCateEntity" items="${diyCateList}">
+						<c:choose>
+								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+									<td id="diyPrice">${DiyCateEntity.amount}</td>
+								</c:when>
+						</c:choose>			
+					</c:forEach>
 
-
-				<td id="inn">
-					<div class="inline">
-						<FORM METHOD="post" ACTION="DiyOrderController"
-							style="margin-bottom: 0px;">
-<!-- 							<input type="submit" value="修改">  -->
-							<input type="submit" value="審核通過"> 
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
-							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="reservationStatus" value="${DiyOrderVO.reservationStatus}">
-							<input type="hidden" name="paymentStatus" value="${DiyOrderVO.paymentStatus}">
-							<input type="hidden" name="result" value="0">
-							<input type="hidden" name="action" value="refund_okORnot">
-						</FORM>
-						<FORM METHOD="post" ACTION="DiyOrderController"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="審查不通過"> 
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">
-							<input type="hidden" name="memId" value="${DiyOrderVO.memId}">
-							<input type="hidden" name="reservationStatus" value="${DiyOrderVO.reservationStatus}">
-							<input type="hidden" name="paymentStatus" value="${DiyOrderVO.paymentStatus}">
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
-							<input type="hidden" name="result" value="1">
-							<input type="hidden" name="action" value="refund_okORnot">
-						</FORM>
-					</div>
-				</td>
 
 
 

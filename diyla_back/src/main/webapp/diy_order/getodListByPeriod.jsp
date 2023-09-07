@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/index.jsp" />
 <%@ page isELIgnored="false"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -106,20 +106,20 @@ margin-top: 20px;
 	<header>
 		<span>
 			<h1 class="header-title">
-			以下為 ${diyOrderVO1.diyReserveDate}
+			以下為 ${diyReserveDate}
 			
-			<c:choose>
-					<c:when test="${diyOrderVO1.diyPeriod == 0}">
-						<span> 上午</span>
-					</c:when>
-					<c:when test="${diyOrderVO1.diyPeriod == 1}">
-						<span> 下午</span>
-					</c:when>
-					<c:when test="${diyOrderVO1.diyPeriod == 2}">
-						<span> 晚上</span>
-					</c:when>
-			</c:choose>
-			
+<%-- 			<c:choose> --%>
+<%-- 					<c:when test="${diyOrderVO.diyPeriod == 0}"> --%>
+<!-- 						<span> 上午</span> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:when test="${diyOrderVO.diyPeriod == 1}"> --%>
+<!-- 						<span> 下午</span> -->
+<%-- 					</c:when> --%>
+<%-- 					<c:when test="${diyOrderVO.diyPeriod == 2}"> --%>
+<%-- 					<span> ${diyPeriod}</span> --%>
+<%-- 					</c:when>	 --%>
+<%-- 			</c:choose> --%>
+			<span> ${diyPeriod}</span>
 			的訂單列表(By Period)
 			</h1>
 		</span>
@@ -130,7 +130,7 @@ margin-top: 20px;
 	--${diyOrderVO1.diyPeriod}--
 
 
-	
+	<input type="hidden" class="uuu" value="${uuu}">
 <div id="padding">
 
 	<table>
@@ -147,9 +147,9 @@ margin-top: 20px;
 			<th>預約狀態</th>
 			<th>付款狀態</th>
 			<th>DIY訂單金額</th>
-
 			<th id="inn">操作</th>
 		</tr>
+		
 		<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 			<tr>
@@ -157,23 +157,13 @@ margin-top: 20px;
 				<td>${DiyOrderVO.diyOrderNo}</td>
 				<td>${DiyOrderVO.memId}</td>
 
-				<c:choose>
-					<c:when test="${DiyOrderVO.diyNo == 0}">
-						<td>點心</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 1}">
-						<td>蛋糕</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 2}">
-						<td>塔派</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 3}">
-						<td>生乳酪</td>
-					</c:when>
-					<c:otherwise>
-						<td>其他</td>
-					</c:otherwise>
-				</c:choose>
+				<c:forEach var="DiyCateEntity" items="${diyCateList}">
+					<c:choose>
+							<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+								<td id="diyNo">${DiyCateEntity.diyName}</td>
+							</c:when>
+					</c:choose>			
+			</c:forEach>
 
 				<td>${DiyOrderVO.contactPerson}</td>
 				<td>${DiyOrderVO.contactPhone}</td>
@@ -192,7 +182,7 @@ margin-top: 20px;
 				</c:choose>
 
 				<td>${DiyOrderVO.diyReserveDate}</td>
-				<td>${DiyOrderVO.createTime}</td>
+				<td id="createTime11"><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 
 				<c:choose>
 					<c:when test="${DiyOrderVO.reservationStatus == 0}">
@@ -224,7 +214,13 @@ margin-top: 20px;
 					</c:when>
 				</c:choose>
 
-				<td>${DiyOrderVO.diyPrice}</td>
+				<c:forEach var="DiyCateEntity" items="${diyCateList}">
+						<c:choose>
+								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+									<td id="diyPrice">${DiyCateEntity.amount}</td>
+								</c:when>
+						</c:choose>			
+					</c:forEach>
 
 
 				<td id="inn">
@@ -277,6 +273,9 @@ margin-top: 20px;
 							<input type="hidden" name="result" value="1">
 							<input type="hidden" name="action" value="comeORnot">
 						</FORM>
+						
+						<p style="color:red;font-weight: bold;font-size:2rem;"></p>
+						
 					</div>
 				</td>
 
@@ -289,14 +288,30 @@ margin-top: 20px;
 	</table>
 
 	<div class="pennyrequest1">
-		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li>
+		<li><a href='getodByPeriod_front.jsp'>返回點名系統首頁</a></li>
 	</div>
 
-
+	<div class="pennyrequest1">
+		<li><a href='diyorderfront.jsp'>返回DIY後台管理首頁</a></li>
+	</div> 
 
 </div>	
 
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
 
+
+window.onload=function(){
+	 const uuu = document.querySelector('.uuu');
+	 console.log(uuu);
+	 if(uuu.value === '404'){
+		console.log(uuu.value);
+		 	swal('已無訂單資料！','${errorMsgs.diyOrderList}' , 'error').then(function () {
+		        window.location.href = "getodByPeriod_front.jsp"
+		    });
+	 }	 
+}
+</script>
 
 </body>
 </html>

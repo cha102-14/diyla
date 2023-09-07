@@ -12,27 +12,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新增常見問題</title>
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/addpbm.css">
   <style>
     *{
       box-sizing: border-box;
       margin: 0;
     }
     body{
-		background-color:#fce5cd;
 		margin-left:300px;
 	}
 
   </style>
 </head>
 
-<body>
-  <h1>新增常見問題</h1>
-  <FORM METHOD="post" ACTION="PbmController"  name="form1">
+<body id=addpbm_body>
+<jsp:include page="/pbm/pbm_header.jsp" />
+  <h1 id="addpbm_h1">新增常見問題</h1>
+  <FORM id="pbmform" METHOD="post" ACTION="PbmController"  name="form1">
   <table>
     <tr>
       <td class="td1">問題分類</td>
       <td class="td2">
-        <select name="pbmSort">
+        <select name="pbmSort" class="select">
           <option value="0">課程</option>
           <option value="1">DIY</option>
           <option value="2">商店</option>
@@ -46,12 +47,12 @@
     </tr>
     <tr>
       <td class="td1">問題內容</td>
-      <td class="td2"><textarea name="pbmContext" id="pbmContext"></textarea></td>
+      <td class="td2"><textarea name="pbmContext" id="pbmContext" cols="30" rows="10"></textarea></td>
     </tr>
+  </table>
     <input type="hidden" name="action" value="pbm_insert">
     <input id="submit" type="submit" value="送出新增">
     </form>
-  </table>
 
 </body>
 

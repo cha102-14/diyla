@@ -1,5 +1,5 @@
-    <style>
-        body {
+
+        body#lat_all {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
             margin: 0;
@@ -28,6 +28,11 @@
         th {
             background-color: #dce3e6;
             color: #555;
+            width: auto;
+        }
+
+        th #lat_pic{
+            max-width:500px;
         }
 
         tr:nth-child(even) {
@@ -35,7 +40,7 @@
         }
 
         img {
-            max-width: 200px;
+            max-width: 400px;
             height: auto;
         }
 
@@ -55,4 +60,3 @@
         th#th_time {
             width: 80px;
         }
-    </style>

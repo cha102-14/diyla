@@ -47,16 +47,18 @@ li {
 }
 
 img {
+   max-width: 100%;
    max-height: 600px;
 }
 
-a {
+a.a_addsuccess {
     color: #007bff;
     text-decoration: none;
-    padding 10px;
+    padding: 10px;
+    margin:30px;
 }
 
-       </style>
+</style>
 </head>
 <body>
 <jsp:include page="/index.jsp" />
@@ -71,9 +73,9 @@ a {
                 <li><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(addedLat.getAnnPic()) %>" alt="公告圖片"></li>
                </ul>
            <% } %>
-
-        <a href="addlat.jsp">返回</a>
-        <a href="latall.jsp">返回全部最新消息</a>
+        <br>
+        <a class="a_addsuccess" href="addlat.jsp">返回</a>
+        <a class="a_addsuccess" href="latall.jsp">返回全部最新消息</a>
     </div>
 </body>
 </html>

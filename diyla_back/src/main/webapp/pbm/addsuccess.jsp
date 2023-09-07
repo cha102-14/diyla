@@ -23,38 +23,47 @@
                background-color: #ffffff;
                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
            }
-           h1 {
+           h1#addok {
                color: #333;
+               font-size: 32px;
            }
            ul {
                list-style: none;
                padding-left: 0;
+               margin: 20px;
+               font-size: 24px;
            }
            li {
                margin-bottom: 10px;
+
            }
            img {
                max-width: 100%;
                height: auto;
            }
-           a {
-               color: #007bff;
-               text-decoration: none;
-           }
+            a.a_addsuccess {
+                color: #007bff;
+                text-decoration: none;
+                padding: 10px;
+                margin:30px;
+            }
+
        </style>
 </head>
 <body>
+<jsp:include page="/index.jsp" />
+<jsp:include page="/pbm/pbm_header.jsp" />
     <div class="container">
-        <h1>新增成功！</h1>
+        <h1 id="addok">新增成功！</h1>
 
                <ul>
                    <li>問題分類：${addpbm.pbmSort}</li>
                    <li>問題標題：${addpbm.pbmTitle}</li>
                    <li>問題內容：${addpbm.pbmContext}</li>
                </ul>
-
-        <a href="addpbm.jsp">返回</a>
-        <a href="pbmall.jsp">返回全部常見問題</a>
+        <br>
+        <a class="a_addsuccess" href="addpbm.jsp">返回</a>
+        <a class="a_addsuccess" href="pbmall.jsp">返回全部常見問題</a>
     </div>
 </body>
 </html>

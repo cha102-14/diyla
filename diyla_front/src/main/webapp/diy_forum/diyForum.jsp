@@ -1,4 +1,5 @@
 <%@ page import="com.cha102.diyla.diyforummodel.MemberEntity" %>
+<%@ page import="com.cha102.diyla.member.MemVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!--JSP 標籤，用於設置網頁的語言和編碼方式-->
@@ -8,15 +9,18 @@
 <%
     //檢查使用者是否已經登入，如果尚未登入則會重新導向使用者到登入頁面。
     //如果使用者已經登入，則會從 session 中獲取名為 "member" 的屬性並將其賦值給 memberEntity 變數。
-    MemberEntity memberEntity = null;
-    // 檢查 session 中是否存在登入資訊
-    // if (session.getAttribute("member") == null) {
-    //     // 未登入，重新導向到登入頁面
-    //     response.sendRedirect("login.jsp");
-    //     return;
-    // } else {
-    //     memberEntity = (MemberEntity) session.getAttribute("member");
-    // }
+    MemVO memVO = null;
+    Integer memId = null;
+    //檢查 session 中是否存在登入資訊
+    if (session.getAttribute("memVO") == null) {
+        // 未登入，重新導向到登入頁面
+        // response.sendRedirect("login.jsp");
+        // return;
+    } else {
+        memVO = (MemVO) session.getAttribute("memVO");
+        // 假設 memVO  Java 物件，並且有一個 memId 屬性
+        memId = (memVO != null) ? memVO.getMemId() : null;
+    }
 %>
 
 <!-- 網頁的設定和樣式 css -->
@@ -143,7 +147,7 @@ MENU DETAILS START
                                         <div class="tf__post_review">
                                             <h4>新增評論</h4>
                                             <form id="myForm" onsubmit="submitForm(event)"
-                                                  action="/diyla_back/diy/DiyForumController" method="GET">
+                                                  action="/diyla_front/diy/DiyForumController" method="GET">
                                                 <p class="rating">
                                                     <span>選擇評分數 : </span> <i class="fas fa-star"></i> <i
                                                         class="fas fa-star"></i> <i class="fas fa-star"></i> <i
@@ -167,7 +171,7 @@ MENU DETAILS START
                                                                   name="artiCont"></textarea>
                                                     </div>
                                                     <div class="col-12">
-                                                        <button class="common_btn" type="submit">提交</button>
+                                                        <button class="common_btn" type="submit" >提交</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -250,7 +254,7 @@ SCROLL BUTTON END
     function getList(s) {
         // 使用 AJAX 請求從伺服器端獲取 JSON 數據
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_back/diy/diy-forum/list'; // Servlet URL
+        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/list'; // Servlet URL
         // 後期需要傳入當前 diyNo，目前預設值為4
         var params = '&diyNo=4'; // 請求參數，以鍵值對形式拼接
 
@@ -313,13 +317,20 @@ SCROLL BUTTON END
                 // <%--var memId = '<%=memberEntity.getMemId() %>';--%>
                 // <%--                if (memId == item.memberEntity.memId --%>
                 // <%--                預設值4--%>
-                if (item.memberEntity.memId == 4) {
-                    // html += '<div>';
 
-                    html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="float: right;" onclick=\"deleteById(' + item.artiNo + ')\"><i class="layui-icon layui-icon-delete"></i> 删除</button>'
 
-                    // html += '</div>';
+                let memId = <%=memId%>
+
+                if (memId !=null) {
+                    if (item.memberEntity.memId == memId) {
+                        // html += '<div>';
+
+                        html += '<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="float: right;" onclick=\"deleteById(' + item.artiNo + ')\"><i class="layui-icon layui-icon-delete"></i> 删除</button>'
+
+                        // html += '</div>';
+                    }
                 }
+
 
                 html += '</div>';
 
@@ -402,7 +413,7 @@ SCROLL BUTTON END
         var xhr = new XMLHttpRequest();
 
         // 設定請求方法和 URL
-        var url = "http://localhost:8081/diyla_back/diy/diy-forum/delete/" + id; // 替換為實際的刪除介面 URL
+        var url = "http://localhost:8081/diyla_front/diy/diy-forum/delete/" + id; // 替換為實際的刪除介面 URL
         xhr.open("DELETE", url, true);
 
         // 設定請求完成後的回調函式
@@ -431,6 +442,14 @@ SCROLL BUTTON END
     function submitForm(event) {
         // 阻止預設提交表單行為
         event.preventDefault();
+        let memId = <%=memId%>;
+
+        if (memId == null) {
+            alert("請登入後再評論！");
+            return;
+        }
+
+
 
         // 獲取表單數據
         var formData = new FormData(event.target);
@@ -438,10 +457,11 @@ SCROLL BUTTON END
         var diyGrade = starIndex;
         var artiCont = formData.get("artiCont");
         //TODO
-        var memberId = 4;
+
+        var memberId = <%=memId%>;
 
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_back/diy/diy-forum/add'; // Servlet URL
+        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/add'; // Servlet URL
         var params = 'diyNo=' + diyNo + "&diyGrade=" + diyGrade + "&artiCont=" + artiCont + "&memId=" + memberId; // 請求參數，以鍵值對形式拼接
         xhr.open('GET', url + '?' + params, true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -452,6 +472,8 @@ SCROLL BUTTON END
                 var r = JSON.parse(xhr.responseText);
                 console.log(r);
                 getList(null);
+                // 清空評論框的內容
+                document.querySelector('textarea[name="artiCont"]').value = ""; // 這裡清空評論框的內容
             }
         };
         xhr.send();
@@ -508,7 +530,7 @@ SCROLL BUTTON END
 <style>
     .rating i.selected {
         color: red !important;
-    
+
     }
 
 

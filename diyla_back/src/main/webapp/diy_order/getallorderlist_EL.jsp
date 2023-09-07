@@ -119,101 +119,97 @@ margin-top: 20px;
 <div id="padding">
 
 	<table>
-		<tr>
-			<th>DIY訂單編號</th>
-			<th>會員編號</th>
-			<th>DIY品項編號</th>
-			<th>聯絡人</th>
-			<th>聯絡電話</th>
-			<th>預約人數</th>
-			<th>預約時段</th>
-			<th>DIY預約日期</th>
-			<th>預約單建立時間</th>
-			<th>預約狀態</th>
-			<th>付款狀態</th>
-			<th>DIY訂單金額</th>
-
-			<th id="inn">操作</th>
-		</tr>
-		<jsp:useBean id="doser" scope="page" class="com.cha102.diyla.diyOrder.DiyOrderService" />
-		<c:forEach var="DiyOrderVO" items="${doser.all}">
-
 			<tr>
-
-				<td>${DiyOrderVO.diyOrderNo}</td>
-				<td>${DiyOrderVO.memId}</td>
-
-				<c:choose>
-					<c:when test="${DiyOrderVO.diyNo == 0}">
-						<td>點心</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 1}">
-						<td>蛋糕</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 2}">
-						<td>塔派</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyNo == 3}">
-						<td>生乳酪</td>
-					</c:when>
-					<c:otherwise>
-						<td>其他</td>
-					</c:otherwise>
-				</c:choose>
-
-				<td>${DiyOrderVO.contactPerson}</td>
-				<td>${DiyOrderVO.contactPhone}</td>
-				<td>${DiyOrderVO.reservationNum}</td>
-
-				<c:choose>
-					<c:when test="${DiyOrderVO.diyPeriod == 0}">
-						<td>上午</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyPeriod == 1}">
-						<td>下午</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.diyPeriod == 2}">
-						<td>晚上</td>
-					</c:when>
-				</c:choose>
-
-				<td>${DiyOrderVO.diyReserveDate}</td>
-				<td><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
-
-				<c:choose>
-					<c:when test="${DiyOrderVO.reservationStatus == 0}">
-						<td>訂位完成</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.reservationStatus == 1}">
-						<td>訂位已取消，尚未退款完成</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.reservationStatus == 2}">
-						<td>退款完成</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.reservationStatus == 3}">
-						<td>當日未到</td>
-					</c:when>
-				</c:choose>
-
-				<c:choose>
-					<c:when test="${DiyOrderVO.paymentStatus == 0}">
-						<td>已付款</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.paymentStatus == 1}">
-						<td>已完成訂單</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.paymentStatus == 2}">
-						<td>已失效訂單</td>
-					</c:when>
-					<c:when test="${DiyOrderVO.paymentStatus == 3}">
-						<td>已退款訂單</td>
-					</c:when>
-				</c:choose>
-
-				<td>${DiyOrderVO.diyPrice}</td>
+				<!-- 		<th>DIY訂單編號</th> -->
+				<!-- 		<th>會員編號</th>  -->
 
 
-				<td id="inn">
+				<th>DIY訂單編號</th>
+				<th>DIY品項名稱</th>
+				<th>聯絡人</th>
+				<th>聯絡電話</th>
+				<th>預約人數</th>
+				<th>預約時段</th>
+				<th>DIY預約日期</th>
+				<th>預約單建立/更改時間</th>
+				<th>預約狀態</th>
+				<th>付款狀態</th>
+				<th>DIY訂單金額</th>
+				<th>操作</th>
+			</tr>
+			<c:forEach var="DiyOrderVO" items="${diyOrderList}">
+
+				<tr>
+			
+				<td id="diyOrderId">${DiyOrderVO.diyOrderNo}</td>
+
+
+			<c:forEach var="DiyCateEntity" items="${diyCateList}">
+					<c:choose>
+							<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+								<td id="diyNo">${DiyCateEntity.diyName}</td>
+							</c:when>
+					</c:choose>			
+			</c:forEach>
+								
+					<td id="contactPerson11" class="contactPerson">${DiyOrderVO.contactPerson}</td>
+					<td id="contactPhone11">${DiyOrderVO.contactPhone}</td>
+					<td id="reservationNum">${DiyOrderVO.reservationNum}</td>
+
+					<c:choose>
+						<c:when test="${DiyOrderVO.diyPeriod == 0}">
+							<td id="diyPeriod">上午</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.diyPeriod == 1}">
+							<td id="diyPeriod">下午</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.diyPeriod == 2}">
+							<td id="diyPeriod">晚上</td>
+						</c:when>
+					</c:choose>
+
+					<td id="diyReserveDate">${DiyOrderVO.diyReserveDate}</td>
+					<td id="createTime11"><fmt:formatDate value="${DiyOrderVO.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+					<c:choose>
+						<c:when test="${DiyOrderVO.reservationStatus == 0}">
+							<td id="reservationStatus">訂位完成</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.reservationStatus == 1}">
+							<td id="reservationStatus">訂位已取消，尚未退款完成</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.reservationStatus == 2}">
+							<td id="reservationStatus">退款完成</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.reservationStatus == 3}">
+							<td id="reservationStatus">當日未到</td>
+						</c:when>
+					</c:choose>
+
+					<c:choose>
+						<c:when test="${DiyOrderVO.paymentStatus == 0}">
+							<td id="paymentStatus">已付款</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.paymentStatus == 1}">
+							<td id="paymentStatus">已完成訂單</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.paymentStatus == 2}">
+							<td id="paymentStatus">已失效訂單</td>
+						</c:when>
+						<c:when test="${DiyOrderVO.paymentStatus == 3}">
+							<td id="paymentStatus">已退款訂單</td>
+						</c:when>
+					</c:choose>
+					
+					
+					<c:forEach var="DiyCateEntity" items="${diyCateList}">
+						<c:choose>
+								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
+									<td id="diyPrice">${DiyCateEntity.amount}</td>
+								</c:when>
+						</c:choose>			
+					</c:forEach>
+					
+					<td id="inn">
 					<div class="inline">
 						<FORM METHOD="post" ACTION="DiyOrderController" style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> 
@@ -228,14 +224,13 @@ margin-top: 20px;
 						</FORM>
 					</div>
 				</td>
+					
+					
+					
+				</tr>
+			</c:forEach>
+		</table>
 
-
-
-			</tr>
-
-		</c:forEach>
-
-	</table>
 
 	<div class="pennyrequest1">
 		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li>
@@ -244,7 +239,6 @@ margin-top: 20px;
 
 
 </div>	
-
 
 
 </body>

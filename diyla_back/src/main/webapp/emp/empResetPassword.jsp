@@ -38,7 +38,7 @@
                 <input required type="text" id="valid" name="valid" placeholder="請輸入驗證碼" ></label><br>
                 <!-- Email一起帶入做比對? 將驗證碼傳入Controller 調用Service方法至Jedis比對驗證碼 比對成功後將新empPassword寫入DB -->
                 <label>修改密碼<br>
-                <input required type="password" name="resetPassword" placeholder="請輸入6-12字碼英數字"  minlength="6" maxlength="12" ></label><br>
+                <input required type="password" name="empPassword" placeholder="請輸入6-12字碼英數字"  minlength="6" maxlength="12" ></label><br>
                 <label>確認密碼<br>
                 <input type="password" name="doubleCheckPassword" placeholder="再次輸入密碼" minlength="6" maxlength="12"></label><br>
                 <span  id ="doubleCheck.errors" class="error">${errorMsgMap.empPassword}</span>

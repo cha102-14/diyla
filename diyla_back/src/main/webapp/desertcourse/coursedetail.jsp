@@ -30,6 +30,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<<<<<<< HEAD
         <link rel="stylesheet" type="text/css" href="${ctxPath}/css/bootstrap.css.map"/>
         <!-- Custom styles for this template -->
         <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
@@ -47,6 +48,13 @@
                         <h2 id="title" class="title-tag" >課程細節</h2>
                     </div>
             <div id="contentBlock">
+=======
+
+    </head>
+
+    <body>
+
+>>>>>>> 804a8dec9b150a3453203e6a2784e3f322398ad0
 <div id="coursecontainer">
         <h1><%= course.getClassName() %></h1>
         <p>
@@ -148,7 +156,11 @@
             var deleteButton = document.getElementById('deleteButton');
             var urlParams = new URLSearchParams(window.location.search);
             var courseId = urlParams.get('courseid');
+<<<<<<< HEAD
             var typeFun = "${typeFun}";
+=======
+            var typeFun = ${typeFun};
+>>>>>>> 804a8dec9b150a3453203e6a2784e3f322398ad0
             //判斷是否有權限
             function isUserHaveAuth() {
                 if (typeFun === "ADMIN" || typeFun === "MASTER"){

@@ -16,6 +16,7 @@ public interface EmpSpringService {
         void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp);
 
         void logout(String empId, HttpServletRequest req, HttpServletResponse resp);
+        String getChatPic(JSONObject empIdObj);
 
         String compareEmpEmail(String empEmail,HttpServletRequest req, HttpServletResponse resp);
 

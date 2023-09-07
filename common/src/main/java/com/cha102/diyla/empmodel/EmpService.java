@@ -3,6 +3,7 @@ package com.cha102.diyla.empmodel;
 import com.cha102.diyla.backstageauthmodel.BackStageAuthVO;
 import com.cha102.diyla.enums.AuthFunEnum;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.util.ObjectUtils;
 
 import java.sql.Connection;
@@ -41,6 +42,7 @@ public class EmpService {
     //  EmpDAO daoImpl 物件在之前的流程有做Email是否重複檢查及最後員工帳號取得,要帶著此物件繼續往下走流程,
 //  EmpVO empVO, 為insert.jsp裡新增員工資訊之物件
 //  String authFun 為下拉式選單之物件
+
     public void empInsert(EmpDAO daoImpl, EmpVO empVO, String authFun) {
 //        EmpVO empVO = insertValidEmpParam(errorMsgs, empName, empAccount, empPassword, empEmail, empStatus);
 //        if (!ObjectUtils.isEmpty(errorMsgs) || ObjectUtils.isEmpty(empVO)) {
@@ -129,16 +131,7 @@ public class EmpService {
                 errorMsgMap.put("empName", "管理員名稱不得超過10個字");
             }
         }
-        if (ObjectUtils.isEmpty(empPassword)) {
-            errorMsgMap.put("empPassword", "請輸入管理員密碼");
-            //  英數字混合 符合6~12碼
-        } else {
-            empPassword = empPassword.trim();
-            if (empPassword.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,12}$")) {
-            } else {
-                System.out.println("請輸入6-12碼英數字混合密碼");
-            }
-        }
+
 
         //  e-mail驗證(正則表達式)
         if (ObjectUtils.isEmpty(empEmail)) {
