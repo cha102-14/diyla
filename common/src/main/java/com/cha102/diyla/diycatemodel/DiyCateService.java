@@ -50,7 +50,7 @@ public class DiyCateService {
 
     // 瀏覽 DIY 列表
     public List<DiyCateEntity> getAllDiyCates() {
-        return diyCateRepository.findAll();
+        return diyCateRepository.findAllPutOn();
     }
     
 }

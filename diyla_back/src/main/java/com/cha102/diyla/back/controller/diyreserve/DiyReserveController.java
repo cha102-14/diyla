@@ -4,6 +4,8 @@ package com.cha102.diyla.back.controller.diyreserve;
 import com.cha102.diyla.diyreservemodel.DIYReserveVO;
 import com.cha102.diyla.diyreservemodel.DiyReserveResultEntity;
 import com.cha102.diyla.diyreservemodel.DiyReserveResultService;
+
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -56,5 +58,22 @@ public class DiyReserveController {
         // 儲存預訂
         return diyReserveService.insert(reservation);
     }
+    
+    @RequestMapping("/diyResult/allPeriodResult")
+    public List<DiyReserveResultEntity> getAllSummary(){  // 可新增訂單之後再去呼叫此方法，就不需要排程器了
+    	List<DiyReserveResultEntity> diyReserveResultEntityList = diyReserveService.getAllSummaryFromOrder();
+//    	model.addAttribute("diyReserveResultEntityList",diyReserveResultEntityList);
+    	
+    	 
+    	return diyReserveResultEntityList;
+    	
+    };
+    
+    
+    
+    
+    
+    
+    
 
 }
