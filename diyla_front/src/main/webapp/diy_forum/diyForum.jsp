@@ -143,7 +143,7 @@ MENU DETAILS START
                                         <div class="tf__post_review">
                                             <h4>新增評論</h4>
                                             <form id="myForm" onsubmit="submitForm(event)"
-                                                  action="/diyla_back/diy/DiyForumController" method="GET">
+                                                  action="/diyla_front/diy/DiyForumController" method="GET">
                                                 <p class="rating">
                                                     <span>選擇評分數 : </span> <i class="fas fa-star"></i> <i
                                                         class="fas fa-star"></i> <i class="fas fa-star"></i> <i
@@ -250,7 +250,7 @@ SCROLL BUTTON END
     function getList(s) {
         // 使用 AJAX 請求從伺服器端獲取 JSON 數據
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_back/diy/diy-forum/list'; // Servlet URL
+        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/list'; // Servlet URL
         // 後期需要傳入當前 diyNo，目前預設值為4
         var params = '&diyNo=4'; // 請求參數，以鍵值對形式拼接
 
@@ -402,7 +402,7 @@ SCROLL BUTTON END
         var xhr = new XMLHttpRequest();
 
         // 設定請求方法和 URL
-        var url = "http://localhost:8081/diyla_back/diy/diy-forum/delete/" + id; // 替換為實際的刪除介面 URL
+        var url = "http://localhost:8081/diyla_front/diy/diy-forum/delete/" + id; // 替換為實際的刪除介面 URL
         xhr.open("DELETE", url, true);
 
         // 設定請求完成後的回調函式
@@ -441,7 +441,7 @@ SCROLL BUTTON END
         var memberId = 4;
 
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_back/diy/diy-forum/add'; // Servlet URL
+        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/add'; // Servlet URL
         var params = 'diyNo=' + diyNo + "&diyGrade=" + diyGrade + "&artiCont=" + artiCont + "&memId=" + memberId; // 請求參數，以鍵值對形式拼接
         xhr.open('GET', url + '?' + params, true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
