@@ -75,11 +75,11 @@ public List<DiyReserveResultEntity> getAllSummaryFromOrder() {  // 恆旭更動 
     }
 
 
-public DiyReserveResultEntity getOneSummary(Date diyReserveDate, Integer diyPeriod ) {  // 恆旭更動  -- 找所有筆數彙總日期時段
+public DiyReserveResultEntity getOneSummary(Date diyReserveDate, Integer diyPeriod ) {  // 恆旭更動  -- 找單筆筆數彙總日期時段
     return reserveResultRepository.getOneSummary(diyReserveDate, diyPeriod);
 }
 
-public Optional<DiyReserveResultEntity> getOneSummaryNo(Integer diyReserveNo) {  // 恆旭更動  -- 找所有筆數彙總日期時段
+public Optional<DiyReserveResultEntity> getOneSummaryNo(Integer diyReserveNo) {  // 恆旭更動  -- 找單筆數彙總日期時段
     return reserveResultRepository.findById(diyReserveNo);
 }
 

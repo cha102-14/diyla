@@ -60,12 +60,12 @@ public class DiyReserveController {
     }
     
     @RequestMapping("/diyResult/allPeriodResult")
-    public String getAllSummary(Model model){
+    public List<DiyReserveResultEntity> getAllSummary(){  // 可新增訂單之後再去呼叫此方法，就不需要排程器了
     	List<DiyReserveResultEntity> diyReserveResultEntityList = diyReserveService.getAllSummaryFromOrder();
-    	model.addAttribute("diyReserveResultEntityList",diyReserveResultEntityList);
+//    	model.addAttribute("diyReserveResultEntityList",diyReserveResultEntityList);
     	
     	 
-    	return "/diySummaryResult/(這裡接要的月曆網頁))";
+    	return diyReserveResultEntityList;
     	
     };
     
