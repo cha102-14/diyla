@@ -23,29 +23,22 @@
                          </style>
                          <style>
                               .emp_insert_title {
-                                   width: 100%;
                                    text-align: center;
-                                   margin-bottom: 20px;
+                                   padding-left: 600px;
                                    font-family: "微軟正黑體", Arial, sans-serif;
                                    font-weight: bold;
-                                   font-size: 30px;
-                                   padding: 50px 300px;
-                                   background-color: #B45F06;
-                                   border-radius: 5px;
+                                   font-size: 50px;
+                                   font-style: #f3f3f3;
+                                   background-color: #663709;
                               }
 
                               .emp_content {
-                                   width: 100%;
+                                   /* margin-top: 15%; */
                                    text-align: center;
-                                   margin-left: 45%;
-                                   padding-left: 70%;
-                                   margin-bottom: 20px;
+                                   padding-left: 600px;
                                    font-family: "微軟正黑體", Arial, sans-serif;
                                    font-weight: bold;
                                    font-size: 18px;
-                                   padding: 10px 300px;
-                                   background-color: #FFEEDD;
-                                   border-radius: 5px;
                                    background-color: #FFEEDD;
                               }
 
@@ -58,11 +51,11 @@
                     </HEAD>
 
                     <BODY>
-
+                              <jsp:include page="/index.jsp" />
 
 
                               <div class="emp_insert_title">
-
+                                        新增管理員
                               </div>
                               <div class="emp_content">
                               <FORM METHOD="post" ACTION="empInsert" enctype="multipart/form-data">
@@ -84,7 +77,7 @@
 
                                              <tr>
                                                   <td>管理員密碼:</td>
-                                                  <td><input type="TEXT" name="password"
+                                                  <td><input type="TEXT" name="empPassword"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpPassword()%>"
                                                             placeholder="請輸入管理員密碼" size="30" />
                                                             <span  id ="upFiles.errors" class="error">${errorMsgMap.empPassword}</span>
@@ -192,7 +185,7 @@
                          	}
                          }
                          </script>
-                         <jsp:include page="/index.jsp" />
+
                     </BODY>
 
                     </HTML>

@@ -73,18 +73,12 @@ public class EmpSpringServiceImpl implements EmpSpringService {
 
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
-//        if(!ObjectUtils.isEmpty(req.getSession().getAttribute("empId"))){
-//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("index.jsp");
-//            try {
-//                requestDispatcher.forward(req, resp);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
         List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
 
         ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
         Integer empId = null;
+        String empName = null;
+        byte[] empPic = null;
         List<EmpDTO> empDTOList = new ArrayList<>();
         List<String> empTypeFunList = new ArrayList<>();
         if (ObjectUtils.isEmpty(empDataList)) {
@@ -94,14 +88,23 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                 EmpDTO empDTO = new EmpDTO();
                 empDTO.setTypeFun((String) o[0]);
                 empDTO.setEmpId((Integer) o[1]);
+                empDTO.setEmpPic((byte[]) o[2]);
+                empDTO.setEmpName((String) o[3]);
                 return empDTO;
             }).collect(Collectors.toList());
             empId = empDTOList.stream().map(EmpDTO::getEmpId).findFirst().get();
+            empPic = empDTOList.stream().map(EmpDTO::getEmpPic).collect(Collectors.toList()).get(0);
+            empName = empDTOList.stream().map(EmpDTO::getEmpName).findFirst().get();
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("empPic", empPic);
         empTypeFunList.stream().forEach(t -> System.out.println(t));
         req.getSession().setAttribute("typeFun", empTypeFunList);
         req.getSession().setAttribute("empId", empId);
+        req.getSession().setAttribute("empName", empName);
+        req.getSession().setAttribute("isEmpFlag", true);
+        req.getSession().setAttribute("empPic", jsonObject.toJSONString());
         req.setAttribute("loginErrorMsgMap", errorMsgMap);
 
         String url = ObjectUtils.isEmpty(empTypeFunList) ? "empLogin.jsp" : "welcome.jsp";
@@ -155,11 +158,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
                 resultObj.put("result", "success");
                 req.getSession().setAttribute("empEmail", userEmail);
             }
-//            try {
-//                success.forward(req, resp);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            return resultObj.toJSONString();
         }
         resultObj.put("result", "fail");
         return resultObj.toJSONString();
@@ -188,6 +187,21 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getChatPic(JSONObject empIdObj) {
+        String empIdStr = empIdObj.getString("empId");
+        // 驗證是否key為empId, 不然就是memId
+        if(ObjectUtils.isEmpty(empIdStr)){
+            return empIdObj.toJSONString();
+        }
+        // 是否存在"_" ex: 1_襪襪
+        if(!empIdStr.contains("_")){
+            return empIdObj.toJSONString();
+        }
+        // 拿empId去查詢
+        return empJPADAO.getChatPic(Integer.valueOf(empIdStr.split("_")[1])).toJSONString();
     }
 
     public static void main(String[] args) {

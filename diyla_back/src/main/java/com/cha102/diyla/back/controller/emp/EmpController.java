@@ -1,8 +1,11 @@
 package com.cha102.diyla.back.controller.emp;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cha102.diyla.aop.PasswordSHA512AspectChange;
+import com.cha102.diyla.empmodel.EmpAccountAO;
 import com.cha102.diyla.empmodel.EmpJPADAO;
 import com.cha102.diyla.empmodel.EmpSpringService;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,9 +43,11 @@ public class EmpController {
         return  empSpringService.changeEmpStatus(jsonObject);
 
     }
+
+    @PasswordSHA512AspectChange
     @PostMapping("/login")
-    public void login(@RequestParam("empAccount") String empAccount, @RequestParam("empPassword") String empPassword, HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        empSpringService.validEmpLogin(empAccount,empPassword, req, resp);
+    public void login(EmpAccountAO ao, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        empSpringService.validEmpLogin(ao.getEmpAccount(), ao.getEmpPassword(), req, resp);
     }
 
     @GetMapping("/logout")
@@ -50,15 +55,17 @@ public class EmpController {
         empSpringService.logout(empId, req, resp);
     }
 
+
     @PostMapping("/forgetPassword")
     public String empResetPassword(@RequestBody String empEmail, HttpServletRequest req, HttpServletResponse resp){
         return empSpringService.compareEmpEmail(empEmail,req,resp);
     }
 
+
     @PostMapping("/validCode")
-    public void validCodeResetPassword(HttpServletRequest req,HttpServletResponse resp, @RequestParam("valid") String validCode, @RequestParam("resetPassword")String resetPassword, @RequestParam("doubleCheckPassword")String doubleCheckPassword){
-        if (resetPassword.equals(doubleCheckPassword)){
-        empSpringService.queryValidCodeResetPassword(validCode,doubleCheckPassword, req,resp);
+    public void validCodeResetPassword(EmpAccountAO ao, HttpServletRequest req,HttpServletResponse resp){
+        if (ao.getEmpPassword().equals(ao.getDoubleCheckPassword())){
+        empSpringService.queryValidCodeResetPassword(ao.getValid(), ao.getDoubleCheckPassword(), req,resp);
         }else {
 //            密碼不相符,請重新確認密碼
             req.setAttribute("password",true);
@@ -69,6 +76,11 @@ public class EmpController {
                 e.printStackTrace();
             }
         }
+    }
+
+    @PostMapping("/getChatPic")
+    public String getChatPic(@RequestBody String empId) {
+        return empSpringService.getChatPic(JSONObject.parseObject(empId));
     }
 
 

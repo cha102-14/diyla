@@ -46,7 +46,6 @@ public class EmpVO implements java.io.Serializable {
     public EmpVO(String empName, byte[] empPic, String empAccount, String empPassword, String empEmail, Boolean empStatus){
         this.empName = empName;
         this.empAccount = empAccount;
-        this.empPassword = empPassword;
         this.empEmail = empEmail;
         this.empStatus = empStatus;
         this.empPic = empPic;
