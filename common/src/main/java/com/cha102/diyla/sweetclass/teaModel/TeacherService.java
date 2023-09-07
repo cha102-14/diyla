@@ -52,6 +52,9 @@ public class TeacherService {
 
         return teaDAO.findByPrimaryKey(teaID);
     }
+    public TeacherVO getOneTeacherByEmpId (Integer empID) {
+        return teaDAO.findTeaByEmpID(empID);
+    }
     public boolean verifyTeacherId(Integer teaID) {
         Optional<TeacherVO> tea = Optional.ofNullable(teaDAO.findByPrimaryKey(teaID));
         if(tea.isPresent()) {
