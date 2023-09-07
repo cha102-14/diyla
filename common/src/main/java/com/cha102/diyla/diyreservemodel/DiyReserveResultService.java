@@ -93,6 +93,9 @@ public Optional<DiyReserveResultEntity> getOneSummaryNo(Integer diyReserveNo) { 
 //    return reserveResultRepository.getOneSummary(diyReserveDate, diyPeriod);
 //}
 
+public List<DiyReserveResultEntity> getAllGroups(){
+        return reserveResultRepository.findAll();
+}
 
 
 }

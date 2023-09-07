@@ -37,9 +37,9 @@ public class DiyReserveController {
         Date endDate = calendar.getTime();
         return diyReserveService.getItemQuantityByDateRange(endDate);
     }
-//    @GetMapping("/all-groups")
-//    public List<DiyReserveResultEntity> getAllGroups() {
-//        // 调用service层的方法获取所有DIY预订结果
-//        return diyReserveService.getAllGroups();
-//    }
+    @GetMapping("/all-groups")
+    public List<DiyReserveResultEntity> getAllGroups() {
+        // 调用service层的方法获取所有DIY预订结果
+        return diyReserveService.getAllGroups();
+    }
 }
