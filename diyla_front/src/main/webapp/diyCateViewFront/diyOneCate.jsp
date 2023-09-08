@@ -79,7 +79,10 @@
         <input type="hidden" name="action" value="addItem">
         <!--         </form> -->
         <br>
+
+
         <button type="button" class="button" id="addItem" onclick="reserve()">開始訂位</button>
+
         <br>
         <div id="gap">
             <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyCate/diyCateList'">回到商品瀏覽</button>

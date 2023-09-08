@@ -430,7 +430,7 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 				while (rs.next()) {
 					DiyOrderDTO diyOrderDTO = new DiyOrderDTO();
 					diyOrderDTO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
-					diyOrderDTO.setDiyPeriod(rs.getInt("PAYMENT_STATUS"));
+					diyOrderDTO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
 					diyOrderDTO.setPeopleCount(rs.getInt("PEO_COUNT"));
 					diyOrderDTOList.add(diyOrderDTO);
 				}

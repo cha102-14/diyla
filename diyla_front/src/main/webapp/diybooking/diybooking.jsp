@@ -251,7 +251,7 @@
 
                                     for (let i = 0; i < values.length; i++) {
 
-                                        if (values[i].diyPeriod == value && values[i].itemQuantity >=20 ) {
+                                        if (values[i].diyPeriod == value && values[i].itemQuantity <20 ) {
                                             $(this).prop("disabled", true);
                                         }
                                     }

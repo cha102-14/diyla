@@ -135,7 +135,7 @@ margin-top: 20px;
 				<th>預約狀態</th>
 				<th>付款狀態</th>
 				<th>DIY訂單金額</th>
-				<th>操作</th>
+				
 			</tr>
 			<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
@@ -201,29 +201,32 @@ margin-top: 20px;
 					</c:choose>
 					
 					
-					<c:forEach var="DiyCateEntity" items="${diyCateList}">
-						<c:choose>
-								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
-									<td id="diyPrice">${DiyCateEntity.amount}</td>
-								</c:when>
-						</c:choose>			
-					</c:forEach>
+<%-- 					<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
+<%-- 						<c:choose> --%>
+<%-- 								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
+<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
+<%-- 								</c:when> --%>
+<%-- 						</c:choose>			 --%>
+<%-- 					</c:forEach> --%>
+
+
+					<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
 					
-					<td id="inn">
-					<div class="inline">
-						<FORM METHOD="post" ACTION="DiyOrderController" style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> 
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
-							<input type="hidden" name="action" value="getOne_For_Update">
-						</FORM>
-						<FORM METHOD="post" ACTION="DiyOrderController"
-							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> 
-							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> 
-							<input type="hidden" name="action" value="delete">
-						</FORM>
-					</div>
-				</td>
+<!-- 					<td id="inn"> -->
+<!-- 					<div class="inline"> -->
+<!-- 						<FORM METHOD="post" ACTION="DiyOrderController" style="margin-bottom: 0px;"> -->
+<!-- 							<input type="submit" value="修改">  -->
+<%-- 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">  --%>
+<!-- 							<input type="hidden" name="action" value="getOne_For_Update"> -->
+<!-- 						</FORM> -->
+<!-- 						<FORM METHOD="post" ACTION="DiyOrderController" -->
+<!-- 							style="margin-bottom: 0px;"> -->
+<!-- 							<input type="submit" value="刪除">  -->
+<%-- 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">  --%>
+<!-- 							<input type="hidden" name="action" value="delete"> -->
+<!-- 						</FORM> -->
+<!-- 					</div> -->
+<!-- 				</td> -->
 					
 					
 					

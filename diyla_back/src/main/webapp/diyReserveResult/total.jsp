@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- jQuery v1.9.1 -->
@@ -24,6 +26,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
 
     <style>
+    	body{
+    	margin-left: 280px;
+    	}
 
         .nav-link.active {
             color: orangered !important;
@@ -37,7 +42,7 @@
 </head>
 
 <body>
-
+ <jsp:include page="../index.jsp" />
 <div id="example"></div>
 
 <!-- 在你的 HTML 中添加一个隐藏的模态视图 -->
@@ -150,7 +155,7 @@ function updateDate(item){
                                         title += '晚上 - ';
                                         break;
                                 }
-                                title += '可預約人數 ' + period.peoLimit + '\n';
+                                title += '剩餘可預約人數 ' + period.peoLimit + '\n';
                             });
 							console.log(title);
                             events.push({
@@ -187,7 +192,7 @@ console.log(events);
                             	console.log(item);
                                 $('#morning').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
                                 $('#morning').append('<p>時段：早上</p>');
-                                $('#morning').append('<p>預約總人數：' + item.peoCount + '</p>');
+                                $('#morning').append('<p>已預約總人數：' + item.peoCount + '</p>');
                                 if(item.reserveStatus === 0){
                                 	$('#morning').append('<p>狀態：可正常預約</p>');
                                 }else{
@@ -219,7 +224,7 @@ console.log(events);
                             	console.log(item);
                                 $('#afternoon').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
                                 $('#afternoon').append('<p>時段：下午</p>');
-                                $('#afternoon').append('<p>預約人數：' + item.peoCount + '</p>');
+                                $('#afternoon').append('<p>已預約人數：' + item.peoCount + '</p>');
                                 if(item.reserveStatus === 0){
                                 	$('#afternoon').append('<p>狀態：可正常預約</p>');
                                 }else{
@@ -250,7 +255,7 @@ console.log(events);
                             	console.log(item);
                                 $('#evening').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
                                 $('#evening').append('<p>時段：晚上</p>');
-                                $('#evening').append('<p>預約人數：' + item.peoCount + '</p>');
+                                $('#evening').append('<p>已預約人數：' + item.peoCount + '</p>');
                                 if(item.reserveStatus === 0){
                                 	$('#evening').append('<p>狀態：可正常預約</p>');
                                 }else{
