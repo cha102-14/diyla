@@ -55,7 +55,8 @@ public class diyEcpayController {
     public String ecpay(Model model, @RequestParam String tradeDesc, @RequestParam String totalPrice,
                         @RequestParam String itemName, @RequestParam String cardrecipient,
                         @RequestParam String cardrecipientAddress, @RequestParam String cardphone, @RequestParam String tokenUse,
-                        @RequestParam int period,@RequestParam int count,@RequestParam int diyNo
+                        @RequestParam int period,@RequestParam int count,@RequestParam int diyNo,@RequestParam String selectedDate
+
     ) {
         // todo 未來串接從session取得會員資料
         HttpSession session = req.getSession();
@@ -64,7 +65,10 @@ public class diyEcpayController {
         int memNO = memVO.getMemId();
         // 會員編號先另存
         memberHolder.put("memId" + memNO, memNO);
-        String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone + "," + diyNo + "," + count + "," + period;
+
+        // SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // String format = simpleDateFormat.;
+        String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone + "," + diyNo + "," + count + "," + period + "," + selectedDate;
         // 使用取號機
         if ("".equals(token)) {
             token = 0 + "";
@@ -72,9 +76,9 @@ public class diyEcpayController {
         Date date = new Date();
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(date.getTime());
 
-     //   DiyReserveResultEntity resultEntity = diyReserveResultService.insert(new DiyReserveResultEntity(null, new Date(), period, count, 1, sqlTimestamp, 1,10));
+        //   DiyReserveResultEntity resultEntity = diyReserveResultService.insert(new DiyReserveResultEntity(null, new Date(), period, count, 1, sqlTimestamp, 1,10));
 
-     //   String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,resultEntity.getDiyReserveNo());
+        //   String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,resultEntity.getDiyReserveNo());
 
         String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo, 0);
         // 自訂取號
@@ -110,6 +114,7 @@ public class diyEcpayController {
             String diyNo = info[3];
             String count = info[4];
             String period = info[5];
+            String selectedDate = info[6];
             java.util.Date utilDate = new java.util.Date(); // 这里用您的日期对象替代
             java.sql.Date sqlDate1 = new java.sql.Date(utilDate.getTime());
 
@@ -117,16 +122,15 @@ public class diyEcpayController {
             int diyReserveId = Integer.parseInt(token);
 
 // 假设 selectedDate 是用户选择的日期，它应该是一个字符串或日期对象
-            String selectedDate = "2023-09-07"; // 这里假设日期格式是 "yyyy-MM-dd"，请根据实际格式修改
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date sqlDate2 = null;
+            java.sql.Date sqlDate2 = null;
             try {
-                sqlDate2 = new Date(dateFormat.parse(selectedDate).getTime());
+                sqlDate2 = new java.sql.Date(dateFormat.parse(selectedDate).getTime());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate1
+            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
                     , Timestamp.valueOf(LocalDateTime.now()), 0, 0, totalPri);
 
             DiyOrderService DOser = new DiyOrderService();

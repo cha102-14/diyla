@@ -38,7 +38,7 @@
                             <div class="check mb-25"><img src="/diyla_front/diy/image/check.png" alt=""></div>
                             <p>Thank you for your order! Your order is being processed and will be completed within
                                 6-12 Hours. You will receive an email confirmation when your order is completed.</p>
-                            <a href="../../diybooking/diybooking.jsp" class="btn"
+                            <a href="../../diyOrder/diyOrder_front.jsp" class="btn"
                                style="font-size: 18px;">繼續瀏覽DIY品項</a>
                             <a href="../../diyOrder/diyOrder_front.jsp" class="btn" style="font-size: 18px;">查詢我的訂單</a>
                             <p class="get-ans">Get answers to all your <a href="#">Questions</a> you might have.</p>
