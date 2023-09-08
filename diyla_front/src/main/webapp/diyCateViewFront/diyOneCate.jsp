@@ -31,19 +31,19 @@
     <link rel="stylesheet" type="text/css" href="${ctxPath}/css/shop/commodityPage.css">
     <script src="${ctxPath}/js/axios/axios.min.js"></script>
     <style>
-    #gap{
-    margin-top: 15px;
-    
-    }
+        #gap{
+            margin-top: 15px;
+
+        }
     </style>
-    
+
 </head>
 <body>
 <jsp:include page="../front_header.jsp"/>
 
 <div class="prod">
     <div class="img">
-    	<img src="data:image/*;base64,${Base64.getEncoder().encodeToString(DiyCateEntity.diyPicture) }" alt="Image" class="commodityPhoto" style="width: 100%">
+        <img src="data:image/*;base64,${Base64.getEncoder().encodeToString(DiyCateEntity.diyPicture) }" alt="Image" class="commodityPhoto" style="width: 100%">
     </div>
 
     <div class="commodityPage">
@@ -53,19 +53,19 @@
         <label>DIY品項類別：</label>
         <span>
             	<c:choose>
-						<c:when test="${(DiyCateEntity.diyCategoryName) == 0}">
-								<span>小點心</span>
-						</c:when>
-						<c:when test="${(DiyCateEntity.diyCategoryName) == 1}">
-								<span>蛋糕</span>
-						</c:when>
-						<c:when test="${(DiyCateEntity.diyCategoryName) == 2}">
-								<span>塔派</span>
-						</c:when>
-						<c:when test="${(DiyCateEntity.diyCategoryName) == 3}">
-								<span>生乳酪</span>
-						</c:when>
-				</c:choose>
+                    <c:when test="${(DiyCateEntity.diyCategoryName) == 0}">
+                        <span>小點心</span>
+                    </c:when>
+                    <c:when test="${(DiyCateEntity.diyCategoryName) == 1}">
+                        <span>蛋糕</span>
+                    </c:when>
+                    <c:when test="${(DiyCateEntity.diyCategoryName) == 2}">
+                        <span>塔派</span>
+                    </c:when>
+                    <c:when test="${(DiyCateEntity.diyCategoryName) == 3}">
+                        <span>生乳酪</span>
+                    </c:when>
+                </c:choose>
 
         </span>
         <br>
@@ -79,12 +79,12 @@
         <input type="hidden" name="action" value="addItem">
         <!--         </form> -->
         <br>
-        <button type="button" class="button" id="addItem">開始訂位</button>
+        <button type="button" class="button" id="addItem" onclick="reserve()">開始訂位</button>
         <br>
         <div id="gap">
-        <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyCate/diyCateList'">回到商品瀏覽</button>
-        <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyOrder/diyOrder_front.jsp'">回到訂單管理首頁</button>
-		</div>
+            <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyCate/diyCateList'">回到商品瀏覽</button>
+            <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyOrder/diyOrder_front.jsp'">回到訂單管理首頁</button>
+        </div>
     </div>
 
     <!-- 商品評論 -->
@@ -97,6 +97,25 @@
 
         </div>
         <div class="commentArea" id="commentArea">
+            <%-- 獲取當前diyNo的值，假設存在一個名為currentDiyNo的變數 --%>
+            <c:set var="currentDiyNo" value="${param.diyNo}" />
+
+            <%-- 遍歷所有留言，只顯示與當前diyNo相符的留言 --%>
+            <c:forEach items="${commodityComments}" var="comment">
+                <%-- 檢查留言的diyNo是否與當前diyNo相符 --%>
+                <c:if test="${comment.diyNo == currentDiyNo}">
+                    <%-- 顯示相符的留言 --%>
+                    <div className="comment">
+                        <!-- 留言內容 -->
+                        <!-- 這裡顯示留言內容，可以根據需要自定義顯示格式 -->
+                        <div>會員名稱：${comment.memName}</div>
+                        <div>評分：${comment.star}</div>
+                        <div>留言時間：${comment.commentTime}</div>
+                        <div>留言內容：${comment.comContent}</div>
+                    </div>
+                </c:if>
+            </c:forEach>
+        </div>
         </div>
     </div>
 </div>
@@ -123,7 +142,7 @@
 
                 $('#commentArea').append(
 
-                  `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                    `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
                         <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
                             會員名稱：` + commodityComments[i].memName + `
                             <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
@@ -138,7 +157,7 @@
 
             average = (sum / commodityComments.length).toFixed(1);
             $('#averageRating').html("平均評分" + average);
-    })
+        })
     });
     function sortComment(sort) {
         axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort="+sort).then((res) => {
@@ -181,62 +200,66 @@
     });
 </script>
 <script>
-    $("#addItem").click(function (e) {
-        const button = $(this);
-        console.log("click");
-        let memId = <%=session.getAttribute("memId")%>;
-        if (memId == null) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'warning',
-                title: '請登入',
-                text: '您需要登入才能加入購物車。',
-                confirmButtonText: '前往登入',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '../member/mem_login.jsp';
-                }
-            });
-        } else {
-            const amount = $('.iamount').val();
-            const comNo = $('.icomNo').val();
-            console.log(amount);
-            console.log(comNo);
-            addCartItem(memId, comNo, amount)
-        }
-    });
+    <%--$("#addItem").click(function (e) {--%>
+    <%--    const button = $(this);--%>
+    <%--    console.log("click");--%>
+    <%--    let memId = <%=session.getAttribute("memId")%>;--%>
+    <%--    if (memId == null) {--%>
+    <%--        e.preventDefault();--%>
+    <%--        Swal.fire({--%>
+    <%--            icon: 'warning',--%>
+    <%--            title: '請登入',--%>
+    <%--            text: '您需要登入才能加入購物車。',--%>
+    <%--            confirmButtonText: '前往登入',--%>
+    <%--            allowOutsideClick: false--%>
+    <%--        }).then((result) => {--%>
+    <%--            if (result.isConfirmed) {--%>
+    <%--                window.location.href = '../member/mem_login.jsp';--%>
+    <%--            }--%>
+    <%--        });--%>
+    <%--    } else {--%>
+    <%--        const amount = $('.iamount').val();--%>
+    <%--        const comNo = $('.icomNo').val();--%>
+    <%--        console.log(amount);--%>
+    <%--        console.log(comNo);--%>
+    <%--        addCartItem(memId, comNo, amount)--%>
+    <%--    }--%>
+    <%--});--%>
 
-    function addCartItem(memId, comNo, amount) {
+    <%--function addCartItem(memId, comNo, amount) {--%>
 
-        fetch("http://localhost:8081/diyla_front/shop/insert", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-               memId:memId,
-               comNo:comNo,
-               comAmount:amount
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                swal("成功新增", "", "success");
-                // 延遲 1 秒後刷新
-                setTimeout(function () {
-                    window.location.reload();
-                }, 1500);
-            } else {
-                // 處理刪除失敗的情況
-            }
-        })
-        .catch(error => {
-            // 處理錯誤情況
-        });
+    <%--    fetch("http://localhost:8081/diyla_front/shop/insert", {--%>
+    <%--        method: "POST",--%>
+    <%--        headers: {--%>
+    <%--            "Content-Type": "application/json"--%>
+    <%--        },--%>
+    <%--        body: JSON.stringify({--%>
+    <%--           memId:memId,--%>
+    <%--           comNo:comNo,--%>
+    <%--           comAmount:amount--%>
+    <%--        })--%>
+    <%--    })--%>
+    <%--    .then(response => response.json())--%>
+    <%--    .then(data => {--%>
+    <%--        if (data.success) {--%>
+    <%--            swal("成功新增", "", "success");--%>
+    <%--            // 延遲 1 秒後刷新--%>
+    <%--            setTimeout(function () {--%>
+    <%--                window.location.reload();--%>
+    <%--            }, 1500);--%>
+    <%--        } else {--%>
+    <%--            // 處理刪除失敗的情況--%>
+    <%--        }--%>
+    <%--    })--%>
+    <%--    .catch(error => {--%>
+    <%--        // 處理錯誤情況--%>
+    <%--    });--%>
+    <%--}--%>
+
+
+    function reserve(){
+        window.location.href = '${ctxPath}/diyCate/reserve?diyNo=${DiyCateEntity.diyNo}';
     }
-
 </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page import="com.cha102.diyla.diyforummodel.MemberEntity" %>
 <%@ page import="com.cha102.diyla.member.MemVO" %>
+<%@ page import="com.cha102.diyla.diycatemodel.DiyCateEntity" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!--JSP 標籤，用於設置網頁的語言和編碼方式-->
@@ -18,9 +19,11 @@
         // return;
     } else {
         memVO = (MemVO) session.getAttribute("memVO");
-        // 假設 memVO  Java 物件，並且有一個 memId 屬性
+        // 假设 memVO 是一个 Java 对象，并且有一个名为 memId 的属性
         memId = (memVO != null) ? memVO.getMemId() : null;
     }
+
+    DiyCateEntity diyCateEntity = (DiyCateEntity) request.getAttribute("DiyCateEntity");
 %>
 
 <!-- 網頁的設定和樣式 css -->
@@ -163,7 +166,7 @@ MENU DETAILS START
                                                     <input type="hidden" name="action" value="add">
 
                                                     <%--  TODO 整合項目後可以使用商品詳情頁面No --%>
-                                                    <input type="hidden" name="diyNo" value="4"> <input
+                                                    <input type="hidden" name="diyNo" value="<%=diyCateEntity.getDiyNo()%>"> <input
                                                         type="hidden" name="diyGrade" value="0">
 
                                                     <div class="col-xl-12">
@@ -256,7 +259,7 @@ SCROLL BUTTON END
         var xhr = new XMLHttpRequest();
         var url = 'http://localhost:8081/diyla_front/diy/diy-forum/list'; // Servlet URL
         // 後期需要傳入當前 diyNo，目前預設值為4
-        var params = '&diyNo=4'; // 請求參數，以鍵值對形式拼接
+        var params = '&diyNo=<%=diyCateEntity.getDiyNo()%>'; // 請求參數，以鍵值對形式拼接
 
         if (s == null || s == "") {
             params += "&page=1&cSort=DESC";
@@ -445,7 +448,7 @@ SCROLL BUTTON END
         let memId = <%=memId%>;
 
         if (memId == null) {
-            alert("請登入後再評論！");
+            alert("请登录后再评论！");
             return;
         }
 

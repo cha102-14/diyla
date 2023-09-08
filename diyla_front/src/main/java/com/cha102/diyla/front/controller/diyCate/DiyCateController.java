@@ -42,6 +42,17 @@ public class DiyCateController {
 		
 		return "/diyCateViewFront/diyOneCate.jsp";
 	}
+
+
+	@GetMapping("/diyCate/reserve")
+	public String reserve(ModelMap model,@RequestParam int diyNo ) {
+		DiyCateEntity diyCateEntity = diyCateService.getDiyCateById(diyNo);
+//		System.out.println(diyCateEntity.);
+		model.addAttribute("DiyCateEntity",diyCateEntity);
+
+
+		return "/diybooking/diybooking.jsp";
+	}
 	
 	
 

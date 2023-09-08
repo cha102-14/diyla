@@ -1,3 +1,4 @@
+<%@ page import="com.cha102.diyla.diycatemodel.DiyCateEntity" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!--JSP 標籤，用於設置網頁的語言和編碼方式-->
@@ -5,6 +6,10 @@
 <!DOCTYPE html>
 <html>
 
+<%
+    DiyCateEntity diyCateEntity = (DiyCateEntity) request.getAttribute("DiyCateEntity");
+
+%>
 
 
 <head>
@@ -85,9 +90,9 @@
                             <div class="tf__reservation_input_single">
                                 <label for="name">您選擇的diy項目</label>
                                 <!--<input type="text" style="height: 110px;" id="name" placeholder="蛋糕、餅乾...">-->
-                                <textarea rows="4" cols="10" style="height: 110px; text-align: left"
+                                <textarea readonly rows="4" cols="10" style="height: 20px; text-align: left"
                                           placeholder="蛋糕、餅乾...">
-
+                                        <%=diyCateEntity.getDiyName()%>
                                     </textarea>
 
 
@@ -120,7 +125,7 @@
                                     <div class="tf__reservation_input_single">
                                         <label>選擇時段</label>
                                         <select id="select_time" class="reservation_input select_js">
-                                            <option value="" disabled="true">select</option>
+                                            <option value="-1">select</option>
                                             <option value="0">09.00 am to 12.00 pm</option>
                                             <option value="1">13.00 pm to 16.00 pm</option>
                                             <option value="2">18.00 pm to 21.00 pm</option>
@@ -130,7 +135,7 @@
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label>選擇人數</label><br>
-                                        <select class="reservation_input select_js">
+                                        <select id="person" class="reservation_input select_js">
                                             <option value="">select</option>
                                             <option value="1">1 person</option>
                                             <option value="2">2 person</option>
@@ -147,7 +152,7 @@
 
                                     <label for="name">總金額</label>
 
-                                    <input type="text" id="amount" placeholder="品項總金額">
+                                    <input type="text" id="amount" placeholder="品項總金額" readonly>
                                 </div>
                                 <div class="col-xl-12">
                                     <button type="button" class="common_btn">訂位確認</button>
@@ -210,7 +215,7 @@
                                 diyReserveDate = data[x][xx].diyReserveDate;
 
                             }
-                            if (itemQuantity >= 30) {
+                            if (itemQuantity >= 60) {
                                 mar[diyReserveDate] = '已滿';
                             }
 
@@ -234,11 +239,11 @@
                                 let values = [];
                                 for (let i = 0; i < mars.length; i++) {
                                     if (value === mars[i].diyReserveDate) {
-                                        values.push(mars[i].diyPeriod)
+                                        values.push(mars[i])
                                     }
                                 }
 
-                                $("#select_time option").prop("disabled", false);
+                                // $("#select_time option").prop("disabled", false);
 
 
                                 $("#select_time option").each(function() {
@@ -246,7 +251,7 @@
 
                                     for (let i = 0; i < values.length; i++) {
 
-                                        if (values[i] == value) {
+                                        if (values[i].diyPeriod == value && values[i].itemQuantity >=20 ) {
                                             $(this).prop("disabled", true);
                                         }
                                     }
@@ -274,11 +279,12 @@
             const selectedPeople = $('.select_js').last().val();
 
             // 驗證是否完整選擇了時段 人數  日期
-            if (!selectedDate || !selectedPeriod || !selectedPeople) {
+            if (!selectedDate || !selectedPeriod || !selectedPeople || period == "-1") {
                 layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
                 return;
             }
 
+            let diyName = '<%=diyCateEntity.getDiyName()%>'
 
 
             const formHtml =
@@ -289,22 +295,23 @@
                 '<p>電話: ' + phone + '</p>' +
                 '<p>訂位日期: ' + selectedDate + '</p>' +
                 '<p>訂位時段: ' + selectedPeriod + '</p>' +
-                '<p>您選擇的diy項目: 黑森林蛋糕</p>' +
+                '<p>您選擇的diy項目: '+ diyName +'</p>' +
                 '<p>人數: ' + selectedPeople + '</p>' +
-                '<input type="hidden" name="tradeDesc" value="黑森林蛋糕" >'+
+                '<input type="hidden" name="tradeDesc" value="'+ diyName +'" >'+
                 '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
-                '<input type="hidden" name="itemName" value="黑森林蛋糕" >'+
+                '<input type="hidden" name="itemName" value="'+ diyName +'" >'+
                 '<input type="hidden" name="period" value="'+ period +'" >'+
                 '<input type="hidden" name="count" value="'+ selectedPeople +'" >'+
-                '<input type="hidden" name="diyNo" value="'+ 1 +'" >'+
+                '<input type="hidden" name="diyNo" value="'+ <%=diyCateEntity.getDiyNo()%> +'" >'+
                 '<input type="hidden" name="cardrecipient" value="luke" >'+
                 '<input type="hidden" name="cardrecipientAddress" value="" >'+
                 '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
                 '<input type="hidden" name="tokenUse" value="0" >'+
+                '<input type="hidden" name="selectedDate" value="'+ selectedDate +'" >'+
                 '</div>' +
                 '<div class="buttons">' +
                 '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
-                '<button id="cancelButton" class="btn btn-secondary">取消</button>' +
+                '<button id="cancelButton" type="button" class="btn btn-secondary">取消</button>' +
                 '</div>'
             '</form>'
             ;
@@ -326,10 +333,16 @@
             $('#payButton').on('click', function () {
                 // 添加付款邏輯
                 // ...
-
-
-
             });
+        });
+
+        //獲取對<select>元素的引用
+        $("#person").change(function() {
+            // 獲取選中的值
+            var selectedValue = $(this).val();
+
+            let amount = <%=diyCateEntity.getAmount()%>;
+            $("#amount").val(amount * selectedValue);
         });
 
     });
