@@ -41,3 +41,4 @@ common/src/main/resources/application-jdbc.yaml
 common/bin/src/main/resources/application.yaml
 
 diyla_front/src/main/resources/application-jdbc.yaml
+common/src/main/java/com/cha102/diyla/sweetclass/jslibrary/jquery-3.7.0.min.js

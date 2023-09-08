@@ -68,6 +68,16 @@ public class TeacherService {
 
         return teaDAO.getAll();
     }
+    public boolean isEmpAlreadyTeacher(Integer empId) {
+        List<TeacherVO> allTeacher = teaDAO.getAll();
+        boolean result = false;
+        for(TeacherVO teacher: allTeacher) {
+            if (empId == teacher.getEmpId()) {
+                result = true;
+            }
+        }
+        return result;
+    }
     public boolean updateTeaStatus(Integer teaId, Integer status){
         TeacherVO teacherVO = teaDAO.findByPrimaryKey(teaId);
         teacherVO.setTeaStatus(status);
