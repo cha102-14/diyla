@@ -39,7 +39,7 @@
 <body>
 <div id="pageContent">
         <div id="indexBlock">
-            <jsp:include page="/index.jsp" />
+
         </div>
         <div id="naviContentBlock">
             <div id="naviBlock">

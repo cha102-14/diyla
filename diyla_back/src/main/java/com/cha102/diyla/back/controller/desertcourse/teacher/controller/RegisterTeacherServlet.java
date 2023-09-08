@@ -33,24 +33,16 @@ public class RegisterTeacherServlet extends HttpServlet {
         //宣告會用到的Teacher相關Service
         TeacherVO teacherVO = new TeacherVO();
         TeacherService teacherService = new TeacherService();
-        //判斷是否admin
-        int isAdmin = 1;
         // 創建回傳的json,放入success: 1or0 代表註冊成功或失敗
         StringBuilder errorMessage = new StringBuilder();
         JSONObject jsonObject = new JSONObject();
         Integer registerCode = null;
 
         //接受前端參數,前端已做圖片以外的格式檢查
-        //Integer empId = empVO.getEmpId();
-        int empId = 1;
-        String teaName = null;
-        if (isAdmin == 1) {
-            teaName = req.getParameter("teacherName");
-        } else {
-            //String teaName = empVO.getEmpName();
-            teaName = req.getParameter("teacherName");
-        }
-        Integer gender = Integer.parseInt(req.getParameter("teaGender"));
+        Integer empId = (Integer) session.getAttribute("empId");
+        String teaName = req.getParameter("teacherName");
+
+        Integer gender = Integer.parseInt(req.getParameter("teagender"));
         String phone = req.getParameter("teaPhone");
         String[] specialities = req.getParameterValues("speciality");
         String teaIntro = req.getParameter("teaIntro");
@@ -102,7 +94,7 @@ public class RegisterTeacherServlet extends HttpServlet {
         }
         if(registerCode == 1){
            jsonObject.put("isSuccessful", true);
-           jsonObject.put("teacherId", newTeacherId);
+           jsonObject.put("teacherName", teaName);
            jsonObject.put("errorMessage", "註冊成功");
         } else {
             jsonObject.put("isSuccessful", false);
