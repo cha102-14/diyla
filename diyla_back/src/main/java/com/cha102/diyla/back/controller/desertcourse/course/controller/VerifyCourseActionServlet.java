@@ -101,6 +101,7 @@ public class VerifyCourseActionServlet extends HttpServlet {
                 notAllow.forward(req,res);
             }
         } else if("back".equals(action)) {
+            //仍需改動,下架課程功能
             if(adminAuthCode) {
                 reqTeacher.setTeaStatus(1);
                 teacherService.updateTeaStatus(teacherId,0);
