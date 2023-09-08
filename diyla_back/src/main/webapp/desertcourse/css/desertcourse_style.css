@@ -1,0 +1,39 @@
+
+#pageContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 280px;
+}
+#naviContentBlock {
+    display: flex;
+    flex-direction: column;
+    width: 99vw;
+    align-items: center;
+    justify-content: center;
+}
+#naviBlock {
+    width: 100%;
+}
+#contentBlock{
+    margin-top: 5vh;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+
+}
+.title-tag {
+  position: relative;
+  padding: 1rem 2rem calc(1rem + 10px);
+  background: #ffd9b3;
+}
+.title-tag:before {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  width: 100%;
+  height: 100%;
+  content: '';
+  border: 4px solid #000;
+}

@@ -37,14 +37,19 @@
                 currentPage = Integer.parseInt(pageParam);
             }
 
-        // 计算起始和结束索引以显示当前页的卡片
+
         int startIndex = (currentPage - 1) * itemsPerPage;
         int endIndex = Math.min(startIndex + itemsPerPage, totalItems);
 
         for (int i = startIndex; i < endIndex; i++) {
             TeacherVO teacher = teacherList.get(i);
             byte[] imgBytes = teacher.getTeaPic();
-            String base64Img = Base64.getEncoder().encodeToString(imgBytes);
+            String base64Img = null;
+            if( imgBytes == null){
+                base64Img = null;
+            } else{
+            base64Img = Base64.getEncoder().encodeToString(imgBytes);
+            }
     %>
         <div class="col-md-4 teacher-card" >
             <div class="card">

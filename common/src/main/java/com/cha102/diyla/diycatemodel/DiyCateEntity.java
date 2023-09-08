@@ -22,12 +22,12 @@ public class DiyCateEntity {
 
     @Column(name = "DIY_NAME", nullable = false)
     private String diyName;
-
-    @Column(name = "DIY_GRA_PEOCOUNT", nullable = false)
-    private int diyGradePersonCount;
-
-    @Column(name = "DIY_GRA_STARCOUNT", nullable = false)
-    private int diyGradeStarCount;
+//
+//    @Column(name = "DIY_GRA_PEOCOUNT", nullable = false)
+//    private int diyGradePersonCount;
+//
+//    @Column(name = "DIY_GRA_STARCOUNT", nullable = false)
+//    private int diyGradeStarCount;
 
     @Column(name = "DIY_STATUS", nullable = false)
     private int diyStatus;

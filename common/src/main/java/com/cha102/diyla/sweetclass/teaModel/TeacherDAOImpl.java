@@ -30,7 +30,8 @@ public class TeacherDAOImpl implements TeacherDAO {
             "UPDATE teacher SET emp_id=?, tea_name=?, tea_gender=?, tea_phone=?, tea_intro=?, tea_pic=?, tea_email=?, tea_status=? WHERE tea_id = ?";
     private static final String GET_TEA_SPECIALITY =
             "SELECT s.SPE_NAME FROM tea_speciality ts JOIN speciality s ON ts.SPE_ID = s.SPE_ID WHERE ts.TEA_ID = ?";
-
+    private static final String GET_ONE_BY_EMP =
+            "SELECT tea_id, emp_id, tea_name, tea_gender, tea_phone, tea_intro, tea_pic, tea_email, tea_status FROM teacher where emp_id = ?";
     @Override
     public int insert(TeacherVO teacherVO) {
         Connection con = null;
@@ -295,5 +296,63 @@ public class TeacherDAOImpl implements TeacherDAO {
             }
         }
         return list;
+    }
+    public TeacherVO findTeaByEmpID(Integer empID) {
+        TeacherVO teacherVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            con = ds.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_BY_EMP);
+
+            pstmt.setInt(1, empID);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                teacherVO = new TeacherVO();
+                teacherVO.setTeaId(rs.getInt("tea_id"));
+                teacherVO.setEmpId(rs.getInt("emp_id"));
+                teacherVO.setTeaName(rs.getString("tea_name"));
+                teacherVO.setTeaGender(rs.getInt("tea_gender"));
+                teacherVO.setTeaPhone(rs.getString("tea_phone"));
+                teacherVO.setTeaIntro(rs.getString("tea_intro"));
+                teacherVO.setTeaPic(rs.getBytes("tea_pic"));
+                teacherVO.setTeaEmail(rs.getString("tea_email"));
+                teacherVO.setTeaStatus(rs.getInt("tea_status"));
+            }
+
+            // Handle any driver errors
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+            // Clean up JDBC resources
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return teacherVO;
     }
 }
