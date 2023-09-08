@@ -127,7 +127,7 @@ public class diyEcpayController {
             try {
                 sqlDate2 = new java.sql.Date(dateFormat.parse(selectedDate).getTime());
             } catch (ParseException e) {
-                e.printStackTrace();
+                e.printStackTrace(); 
             }
 
             DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
