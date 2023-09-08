@@ -417,7 +417,7 @@ VALUES ('1', '烘焙丙級'),
 INSERT INTO diyla.tea_speciality(`TEA_ID`, `SPE_ID`)
 VALUES ('1', '3');
 
-INSERT INTO diyla.class(`CLASS_ID`, `CATEGORY`, `TEA_ID`, `REG_END_TIME`, `CLASS_DATE`, `CLASS_SEQ`, `LIMIT`, `PRICE`,
+INSERT INTO diyla.class(`CLASS_ID`, `CATEGORY`, `TEA_ID`, `REG_END_TIME`, `CLASS_DATE`, `CLASS_SEQ`, `CLASS_LIMIT`, `PRICE`,
                         `INTRO`, `CLASS_NAME`, `HEADCOUNT`, `CLASS_STATUS`)
 VALUES ('1', '1', '1', '2023-07-30 12:00:00', '2023-08-01', '0', '5', '1500', '或許各位都有在店面看過輕乳酪蛋糕或重乳酪蛋糕,那箇中差異為何?以及能夠變化出什麼花樣呢?想知道的話就來上課吧!
 目前課程價格只要: 1300元喔!', '起司蛋糕詳解課程', '3', '1'),
