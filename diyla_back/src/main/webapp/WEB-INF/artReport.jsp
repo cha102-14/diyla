@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>論壇</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/art_header.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
     <!-- ●●css for jquery datatables 用 -->
     <style>
@@ -79,15 +78,7 @@
 </head>
 
 <body>
-    <div class="art_header">
-        <h1>論壇</h1>
-        <div>
-            <span><a href="art.jsp">查看論壇</a></span>
-            <span><a href="artnocheckall.jsp">審核文章</a></span>
-            <span><a href="${ctxPath}/art/artReport">審核留言檢舉</a></span>
-        </div>
-    </div>
-
+    <jsp:include page="/art/art.jsp" />
 
     <table id="dto" class="display" style="width: 100%">
         <thead id="header">

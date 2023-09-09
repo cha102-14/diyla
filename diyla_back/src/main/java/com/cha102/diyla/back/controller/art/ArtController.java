@@ -1,11 +1,9 @@
 package com.cha102.diyla.back.controller.art;
 
 import com.cha102.diyla.articleModel.ArtService;
-import com.cha102.diyla.member.MemVO;
-import com.cha102.diyla.noticeModel.NoticeService;
-import com.cha102.diyla.noticeModel.NoticeVO;
+import com.cha102.diyla.articleModel.ArtVO;
 import com.cha102.diyla.tokenModel.TokenService;
-import com.cha102.diyla.util.JedisNotice;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/art/ArtController")
 public class ArtController extends HttpServlet {
@@ -78,5 +77,24 @@ public class ArtController extends HttpServlet {
             successView.forward(req, res);
         }
 
+        if ("selectAll".equals(action)) {
+            Jedis jedis = new Jedis("localhost", 6379);
+            ArtService artSvc = new ArtService();
+            List<ArtVO> list = artSvc.getAllArt();
+
+            String[] imgBase64 = new String[list.size()];
+            for (ArtVO artVO : list) {
+                int i = artVO.getArtNo();
+                String key = "art:" + i;
+                imgBase64[i - 1] = jedis.get(key);
+            }
+
+            req.setAttribute("list", list);
+            req.setAttribute("imgBase64", imgBase64);
+
+            String url = "/art/artall.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);
+            successView.forward(req, res);
+        }
     }
 }
