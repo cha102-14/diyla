@@ -136,6 +136,7 @@ public class ArtController extends HttpServlet {
 
             req.setAttribute("list", list);
             req.setAttribute("imgBase64", imgBase64);
+            jedis.close();
 
             String url = "/art/art.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
