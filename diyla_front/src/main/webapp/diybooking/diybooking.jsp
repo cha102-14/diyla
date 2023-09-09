@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <%
     DiyCateEntity diyCateEntity = (DiyCateEntity) request.getAttribute("DiyCateEntity");
 
@@ -251,7 +252,7 @@
 
                                     for (let i = 0; i < values.length; i++) {
 
-                                        if (values[i].diyPeriod == value && values[i].itemQuantity <20 ) {
+                                        if (values[i].diyPeriod == value && values[i].itemQuantity < 20 ) {
                                             $(this).prop("disabled", true);
                                         }
                                     }
@@ -303,7 +304,7 @@
                 '<input type="hidden" name="period" value="'+ period +'" >'+
                 '<input type="hidden" name="count" value="'+ selectedPeople +'" >'+
                 '<input type="hidden" name="diyNo" value="'+ <%=diyCateEntity.getDiyNo()%> +'" >'+
-                '<input type="hidden" name="cardrecipient" value="luke" >'+
+                '<input type="hidden" name="cardrecipient" value="'+ name +'" >'+
                 '<input type="hidden" name="cardrecipientAddress" value="" >'+
                 '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
                 '<input type="hidden" name="tokenUse" value="0" >'+
@@ -340,7 +341,7 @@
         $("#person").change(function() {
             // 獲取選中的值
             var selectedValue = $(this).val();
-
+//計算總金額
             let amount = <%=diyCateEntity.getAmount()%>;
             $("#amount").val(amount * selectedValue);
         });

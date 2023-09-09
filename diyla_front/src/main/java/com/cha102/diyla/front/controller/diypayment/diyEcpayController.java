@@ -66,8 +66,7 @@ public class diyEcpayController {
         // 會員編號先另存
         memberHolder.put("memId" + memNO, memNO);
 
-        // SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        // String format = simpleDateFormat.;
+
         String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone + "," + diyNo + "," + count + "," + period + "," + selectedDate;
         // 使用取號機
         if ("".equals(token)) {
@@ -76,9 +75,6 @@ public class diyEcpayController {
         Date date = new Date();
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(date.getTime());
 
-        //   DiyReserveResultEntity resultEntity = diyReserveResultService.insert(new DiyReserveResultEntity(null, new Date(), period, count, 1, sqlTimestamp, 1,10));
-
-        //   String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,resultEntity.getDiyReserveNo());
 
         String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo, 0);
         // 自訂取號
@@ -115,13 +111,13 @@ public class diyEcpayController {
             String count = info[4];
             String period = info[5];
             String selectedDate = info[6];
-            java.util.Date utilDate = new java.util.Date(); // 这里用您的日期对象替代
+            java.util.Date utilDate = new java.util.Date();
             java.sql.Date sqlDate1 = new java.sql.Date(utilDate.getTime());
 
             Integer totalPri = Integer.valueOf(totalPrice);
             int diyReserveId = Integer.parseInt(token);
 
-// 假设 selectedDate 是用户选择的日期，它应该是一个字符串或日期对象
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date sqlDate2 = null;
             try {
