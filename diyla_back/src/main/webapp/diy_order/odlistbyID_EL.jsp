@@ -156,13 +156,16 @@ tr:nth-child(even) {
 						</c:when>
 					</c:choose>
 					
-		<c:forEach var="DiyCateEntity" items="${diyCateList}">
-						<c:choose>
-								<c:when test="${diyOrderVO.diyNo == DiyCateEntity.diyNo}">
-									<td id="diyPrice">${DiyCateEntity.amount}</td>
-								</c:when>
-						</c:choose>			
-					</c:forEach>
+<%-- 		<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
+<%-- 						<c:choose> --%>
+<%-- 								<c:when test="${diyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
+<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
+<%-- 								</c:when> --%>
+<%-- 						</c:choose>			 --%>
+<%-- 					</c:forEach> --%>
+
+					<td id="diyPrice">${diyOrderVO.diyPrice}</td>
+
 	</tr>
 	
 </table>

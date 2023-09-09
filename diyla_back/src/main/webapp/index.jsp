@@ -132,7 +132,7 @@
                         </c:if>
                         <c:if test="${typeFun eq 'CUSTORSERVICE'}">
                             <li class="func">
-                                <a href="${ctxPath}/art/artall.jsp" class="func_link">
+                                <a href="${ctxPath}/art/ArtController?action=selectAll" class="func_link">
                                     <svg viewBox="0 0 512 512" id="Capa_8" width="20" height="20"
                                          xmlns="http://www.w3.org/2000/svg" fill="#b45f06">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>

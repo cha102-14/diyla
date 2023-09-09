@@ -53,6 +53,8 @@ min-width: calc(100% - 300px);
          <input type="submit" value="查詢所有訂單">  (已串DiyCate 差DATATABLE)
       </form>
       
+     
+      
       
       <li><a href='getodByPeriod_front.jsp'>時段參加會員及訂單(點名系統for現場管理員)</a><br><br></li>      
 
@@ -99,10 +101,10 @@ min-width: calc(100% - 300px);
         </form>
       </li>
       
-      
+       <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyReserveResult/total.jsp'">訂單彙總日程明細</button>
     </ul>
   </div>
-  
+   
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 

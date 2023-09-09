@@ -201,13 +201,14 @@ div.inline {
 						</c:when>
 					</c:choose>
 
-					<c:forEach var="DiyCateEntity" items="${diyCateList}">
-						<c:choose>
-								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
-									<td id="diyPrice">${DiyCateEntity.amount}</td>
-								</c:when>
-						</c:choose>			
-					</c:forEach>
+<%-- 					<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
+<%-- 						<c:choose> --%>
+<%-- 								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
+<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
+<%-- 								</c:when> --%>
+<%-- 						</c:choose>			 --%>
+<%-- 					</c:forEach> --%>
+					<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
 
 
 					<!-- 				<td id="inn"> -->

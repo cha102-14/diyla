@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- jQuery v1.9.1 -->
@@ -13,7 +15,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.print.css" rel="stylesheet"
           media="print">
-    </script>
     <!-- Bootstrap v4.5.0 JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,12 +25,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
 
     <style>
+        body {
+            margin-left: 280px;
+        }
 
         .nav-link.active {
             color: orangered !important;
         }
 
-       
         .nav-link:hover {
             color: blue !important;
         }
@@ -37,9 +40,13 @@
 </head>
 
 <body>
-
+<jsp:include page="../index.jsp" />
 <div id="example"></div>
-
+<style>
+    .red-text {
+        color: red;
+    }
+</style>
 <!-- 在你的 HTML 中添加一个隐藏的模态视图 -->
 <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -82,21 +89,22 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-secondary" id="closeModalButton">關閉</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function updateDate(item){
-	var dateKey = item.diyReserveDate.split('T')[0];
-    var originalDate = new Date(dateKey); // 将日期字符串转换为日期对象
-    var nextDay = new Date(originalDate);
-    nextDay.setDate(originalDate.getDate() + 1);
-    var nextDayString = nextDay.toLocaleDateString();
-    return nextDayString;
-}
+    function updateDate(item) {
+        var dateKey = item.diyReserveDate.split('T')[0];
+        var originalDate = new Date(dateKey);
+        var nextDay = new Date(originalDate);
+        nextDay.setDate(originalDate.getDate() + 1);
+        var nextDayString = nextDay.toLocaleDateString();
+        return nextDayString;
+    }
+
     $(document).ready(function () {
         var calendar = $('#example').fullCalendar({
             timezone: 'local',
@@ -109,14 +117,13 @@ function updateDate(item){
                         var mergedEvents = {};
 
                         data.forEach(function (item) {
-                        	var newKeyDate =  updateDate(item);
+                            var newKeyDate = updateDate(item);
                             if (!mergedEvents[newKeyDate]) {
                                 mergedEvents[newKeyDate] = {
                                     diyReserveDate: newKeyDate,
                                     diyPeriods: [],
                                 };
                             }
-                            
 
                             var existingPeriod = mergedEvents[newKeyDate].diyPeriods.find(function (period) {
                                 return period.diyPeriod === item.diyPeriod;
@@ -135,8 +142,6 @@ function updateDate(item){
                         var events = [];
                         for (var date in mergedEvents) {
                             var mergedEvent = mergedEvents[date];
-                            console.log( mergedEvent);
-                            console.log( date);
                             var title = '';
                             mergedEvent.diyPeriods.forEach(function (period) {
                                 switch (period.diyPeriod) {
@@ -150,125 +155,120 @@ function updateDate(item){
                                         title += '晚上 - ';
                                         break;
                                 }
-                                title += '可預約人數 ' + period.peoLimit + '\n';
+                                var eventTitle = '';
+                                if (period.peoLimit <= 0) {
+                                    eventTitle = '不可預約';
+                                } else {
+                                    eventTitle = '剩餘可預約人數 ' + period.peoLimit;
+                                }
+
+                                events.push({
+                                    title: title + eventTitle,
+                                    start: mergedEvent.diyReserveDate,
+                                    allDay: true
+                                });
+
                             });
-							console.log(title);
-                            events.push({
-                                title: title,
-                                start: mergedEvent.diyReserveDate,
-                                allDay: true
-                            });
+
                         }
-console.log(events);
                         callback(events);
                     }
                 });
             },
-            /////////////////////////////////
-            eventClick: function a (calEvent, jsEvent, view) {
+            eventRender: function (event, element) {
+                // 检查事件标题是否为 "不可預約"，如果是，则设置颜色为红色
+                if (event.title.includes('不可預約')) {
+                    element.find('.fc-title').css('color', 'red');
+
+                }
+            },
+            eventClick: function (calEvent, jsEvent, view) {
                 // 清空选项卡内容
-               
-                
-                
+                $('#morning').empty();
+                $('#afternoon').empty();
+                $('#evening').empty();
+
                 // 根据事件标题中的关键字来确定选项卡框框
                 if (calEvent.title.includes('早上')) {
-                	 $('#morning').empty();
                     // 从数据库中获取同一天早上时段的数据并填充到选项卡
                     var selectedDate = calEvent.start.format('YYYY-MM-DD');
-                    console.log(selectedDate);
-                    console.log(0);
                     $.ajax({
-                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryMorning?date=' + selectedDate, // 替换为获取同一天早上数据的后端API或URL
+                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryMorning?date=' + selectedDate,
                         dataType: 'json',
-                        data: { selectedDate: selectedDate }, // 传递选定日期
+                        data: { selectedDate: selectedDate },
                         success: function (data) {
                             // 将数据填充到选项卡
                             data.forEach(function (item) {
-                            	console.log(item);
                                 $('#morning').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
                                 $('#morning').append('<p>時段：早上</p>');
-                                $('#morning').append('<p>預約總人數：' + item.peoCount + '</p>');
-                                if(item.reserveStatus === 0){
-                                	$('#morning').append('<p>狀態：可正常預約</p>');
-                                }else{
-                                	$('#morning').append('<p>狀態：人數已滿，無法預約</p>');
+                                $('#morning').append('<p>已預約總人數：' + item.peoCount + '</p>');
+                                if (item.reserveStatus === 0) {
+                                    $('#morning').append('<p>狀態：可正常預約</p>');
+                                } else {
+                                    $('#morning').append('<p class="red-text">狀態：人數已滿，無法預約</p>');
                                 }
-                                
-                                // 继续添加其他字段...
                             });
                         }
                     });
                 }
-                	
-                	
-//                 eventClick: function b (calEvent, jsEvent, view) {	
-                	
-               if (calEvent.title.includes('下午')) {
-            	   $('#afternoon').empty();
+
+                if (calEvent.title.includes('下午')) {
                     // 从数据库中获取同一天下午时段的数据并填充到选项卡
                     var selectedDate = calEvent.start.format('YYYY-MM-DD');
-                    console.log(selectedDate);
-                    console.log(1);
                     $.ajax({
-                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryAfternoon?date=' + selectedDate, // 替换为获取同一天下午数据的后端API或URL
+                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryAfternoon?date=' + selectedDate,
                         dataType: 'json',
-                        data: { selectedDate: selectedDate }, // 传递选定日期
+                        data: { selectedDate: selectedDate },
                         success: function (data) {
                             // 将数据填充到选项卡
                             data.forEach(function (item) {
-                            	console.log(item);
                                 $('#afternoon').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
                                 $('#afternoon').append('<p>時段：下午</p>');
-                                $('#afternoon').append('<p>預約人數：' + item.peoCount + '</p>');
-                                if(item.reserveStatus === 0){
-                                	$('#afternoon').append('<p>狀態：可正常預約</p>');
-                                }else{
-                                	$('#afternoon').append('<p>狀態：人數已滿，無法預約</p>');
+                                $('#afternoon').append('<p>已預約總人數：' + item.peoCount + '</p>');
+                                if (item.reserveStatus === 0) {
+                                    $('#afternoon').append('<p>狀態：可正常預約</p>');
+                                } else {
+                                    $('#afternoon').append('<p class="red-text">狀態：人數已滿，無法預約</p>');
                                 }
-                                // 继续添加其他字段...
-                            });
-                        }
-                    });
-                } 
-//                }
-                
-//                 eventClick: function c (calEvent, jsEvent, view) {
-                	
-                	 if (calEvent.title.includes('晚上')) {
-                		 $('#evening').empty();
-                    // 从数据库中获取同一天晚上时段的数据并填充到选项卡
-                    var selectedDate = calEvent.start.format('YYYY-MM-DD');
-                    console.log(selectedDate);
-                    console.log(2);
-                    $.ajax({
-                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryNight?date=' + selectedDate, // 替换为获取同一天晚上数据的后端API或URL
-                        dataType: 'json',
-                        data: { selectedDate: selectedDate }, // 传递选定日期
-                        success: function (data) {
-                            // 将数据填充到选项卡
-                            data.forEach(function (item) {
-                            	console.log(item);
-                                $('#evening').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
-                                $('#evening').append('<p>時段：晚上</p>');
-                                $('#evening').append('<p>預約人數：' + item.peoCount + '</p>');
-                                if(item.reserveStatus === 0){
-                                	$('#evening').append('<p>狀態：可正常預約</p>');
-                                }else{
-                                	$('#evening').append('<p>狀態：人數已滿，無法預約</p>');
-                                }
-                                // 继续添加其他字段...
                             });
                         }
                     });
                 }
-//                 }
+
+                if (calEvent.title.includes('晚上')) {
+                    // 从数据库中获取同一天晚上时段的数据并填充到选项卡
+                    var selectedDate = calEvent.start.format('YYYY-MM-DD');
+                    $.ajax({
+                        url: 'http://localhost:8081/diyla_back/api/diy-reserve/getOneSummaryNight?date=' + selectedDate,
+                        dataType: 'json',
+                        data: { selectedDate: selectedDate },
+                        success: function (data) {
+                            // 将数据填充到选项卡
+                            data.forEach(function (item) {
+                                $('#evening').append('<p>DIY預約日期：' + updateDate(item) + '</p>');
+                                $('#evening').append('<p>時段：晚上</p>');
+                                $('#evening').append('<p>已預約總人數：' + item.peoCount + '</p>');
+                                if (item.reserveStatus === 0) {
+                                    $('#evening').append('<p>狀態：可正常預約</p>');
+                                } else {
+                                    $('#evening').append('<p class="red-text">狀態：人數已滿，無法預約</p>');
+                                }
+                            });
+                        }
+                    });
+                }
+
                 // 显示模态视图
                 $('#eventModal .modal-title').text('預約詳情');
                 $('#eventModal').modal('show');
             }
         });
-    });
 
+        // 手動關閉模態框
+        $('#closeModalButton').click(function () {
+            $('#eventModal').modal('hide');
+        });
+    });
 </script>
 
 </html>
