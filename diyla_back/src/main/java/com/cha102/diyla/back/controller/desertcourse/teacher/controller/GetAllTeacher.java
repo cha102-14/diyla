@@ -37,9 +37,9 @@ public class GetAllTeacher extends HttpServlet {
                     jsonTeacher.put("gender", "女");
                 }
                 if(teachers.getTeaStatus() == 0){
-                    jsonTeacher.put("teacherStatus", "在職");
+                    jsonTeacher.put("teacherStatus", "前台可見");
                 } else{
-                    jsonTeacher.put("teacherStatus", "離職");
+                    jsonTeacher.put("teacherStatus", "不可見");
                 }
                 jsonTeacher.put("teacherPic", teachers.getTeaPic());
                 jsonTeacher.put("teacherIntro", teachers.getTeaIntro());

@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpVO" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpService" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAOImpl" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
 <%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
 <%@ page import="com.cha102.diyla.sweetclass.classModel.ClassService" %>
-<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassINGVO" %>
-<%@ page import="com.cha102.diyla.sweetclass.ingModel.IngStorageVO" %>
 <%@ page
 import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter" %>
 <%@ page import="java.util.*" %>
@@ -32,12 +37,42 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
         //Integer empId = (Integer) session.getAttribute("empId");
         //String typeFun = (String) session.getAttribute("typeFun");
         //模擬取得目前使用者權限以及empId
-        String typeFun = "ADMIN";
-        session.setAttribute("typeFun", typeFun);
-        Integer empId = 1;
-        session.setAttribute("empId", empId);
-        ClassVO courseVO = (ClassVO) request.getAttribute("courseVO");
+        //String typeFun = "ADMIN";
+        //session.setAttribute("typeFun", typeFun);
+        //Integer empId = 1;
+        //session.setAttribute("empId", empId);
 
+        //抓取權限以及empId對應的teacherVO
+        EmpService empService = new EmpService();
+        EmpDAO empDAO = new EmpDAOImpl();
+        TeacherService teacherService = new TeacherService();
+        //默認使用者type為notAuth
+        String type = "notAuth"; 
+        //若session並非為null才往下
+        if(session != null){
+            Integer empId = (Integer) (session.getAttribute("empId"));
+            EmpVO empVO = empDAO.getOne(empId);
+            String empName = empVO.getEmpName();
+            //進來的是何種使用者
+            Object typeFunObj = session.getAttribute("typeFun");
+            boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+            if (isTypeFunList) {
+                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+                } else if (containsMaster) {
+                    type = "MASTER";
+                }
+            } else {
+                type = (String) typeFunObj;
+            }
+        } else {
+            type = "NOSESSION";
+        }
+        pageContext.setAttribute("type", type);
+        ClassVO courseVO = (ClassVO) request.getAttribute("courseVO");
         %>
 
     </head>
@@ -63,7 +98,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                             <input type="hidden" id="modifyCourseId" name="modifyCourseId" value="${courseVO.classId}">
                             <div class="row">
                                 <c:choose>
-                                    <c:when test="${typeFun == 'ADMIN'}">
+                                    <c:when test="${type == 'ADMIN'}">
                                         <div id="teacherIdField"
                                             class="col-md-6 form-group">
                                             <label for="teacherId">師傅編號:
@@ -238,7 +273,8 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                                                 <label class>食材控制</label><br>
                                                 <button type="button"
                                                     id="ingIncreaseButton"
-                                                    class="btn btn-secondary">追加食材</button>
+                                                    class="btn btn-secondary"
+                                                    style="width: 5vw;">追加食材</button>
                                                 <span class="ingNumsError"
                                                     style="display: none">食材數量請輸入數字</span><br>
                                             </div>
@@ -375,7 +411,8 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
 
                     });
                 //阻擋無權限人員修改課程
-                if ("${typeFun}" !== "ADMIN" && "${typeFun}" !== "MASTER") {
+                var type = "${type}";
+                if (type !== "ADMIN" && type !== "MASTER") {
                     // 啟動定時器，5秒後導航到其他網頁
                     setTimeout(function () {
                         window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
@@ -386,7 +423,21 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                         confirmButtonText: "確定"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = "/${ctxPath}/index";
+                            window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
+                        }
+                    });
+                } else if (type == "NOSESSION" || type == "notAuth"){
+                     // 啟動定時器，5秒後導航到其他網頁
+                    setTimeout(function () {
+                        window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
+                    }, 2500); // 2500 毫秒 = 2.5 秒
+                    Swal.fire({
+                        title: "Session Expire，請嘗試重新登入!",
+                        icon: "error",
+                        confirmButtonText: "確定"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                         }
                     });
                 }
@@ -534,13 +585,16 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                                     confirmButtonText: "確定"
                                 });
                             } else {
+                                setTimeout(function () {
+                                window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
+                                }, 5000); // 5000 毫秒 = 5 秒
                                 Swal.fire({
-                                    title: "課程註冊成功",
+                                    title: "課程修改成功",
                                     icon: "success",
                                     confirmButtonText: "確定"
                                 }).then((result) => {
                                     if (result.isConfirmed) {
-                                        window.location.href = "${ctxPath}" + "/viewAllCourseCalendar";
+                                        window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                                     }
                                 })
                             }

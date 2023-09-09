@@ -4,8 +4,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpVO" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpService" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAOImpl" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassService" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,19 +33,55 @@
     <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/back_datatable_style.css" />
     <%
-        int empAuthCode = 0;
-        int adminAuthCode = 1;
-        int empId = 1;
-        request.setAttribute("empAuthCode", empAuthCode);
-        request.setAttribute("adminAuthCode", adminAuthCode);
-        request.setAttribute("requestTeaId", 1);
+        //默認使用者type為notAuth
+        String type = "notAuth"; 
+        EmpService empService = new EmpService();
+        EmpDAO empDAO = new EmpDAOImpl();
+        TeacherService teacherService = new TeacherService();
+        //若session並非為null才往下
+        if(session != null){
+            Integer empId = (Integer) (session.getAttribute("empId"));
+            EmpVO empVO = empDAO.getOne(empId);
+            String empName = empVO.getEmpName();
+            //進來的是何種使用者
+            Object typeFunObj = session.getAttribute("typeFun");
+            boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+            if (isTypeFunList) {
+                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+                } else if (containsMaster) {
+                    type = "MASTER";
+                }
+            } else {
+                type = (String) typeFunObj;
+            }
+            Integer teacherId = null;
+            TeacherVO teacher = null;
+            if("ADMIN".equals(type)) {
+                List<TeacherVO> teacherList = teacherService.getAllTeacher();
+                pageContext.setAttribute("teacherList", teacherList);
+            } else if ("MASTER".equals(type)) {
+                teacher = teacherService.getOneTeacherByEmpId(empId);
+                teacherId = teacher.getTeaId();
+            }
+            pageContext.setAttribute("type", type);
+            pageContext.setAttribute("requestTeaId", teacherId);
+            pageContext.setAttribute("teacherName", empName);
+        } else {
+            type = "NOSESSION";
+            pageContext.setAttribute("type", type);
+        }
+        
     %>
 </head>
 
 <body>
 <div id="pageContent">
         <div id="indexBlock">
-
+            <%-- <jsp:include page="/index.jsp" /> --%>
         </div>
         <div id="naviContentBlock">
             <div id="naviBlock">
@@ -72,21 +114,22 @@
 </div>
 <script>
         $(document).ready(function () {
-            // if(${request.empVO} === null) {
-            //     window.location.href = "${ctxPath}"+"index.jsp";
-            //     }
-            //判斷瀏覽人能對list的控制權, 回傳-1代表管理員,0代表該後台員工無法修改, 1~n代表回回傳師傅id
-            function checkAuth(empId){
-                return empId;
+            //判斷瀏覽人能對list的控制權, 回傳-1代表管理員,0代表該後台員工無法瀏覽, 1~n代表回回傳師傅id
+            var type = "${type}";
+            let getTeaCode = 0;
+            console.log("${requestTeaId}");
+            if (type === "ADMIN") {
+                getTeaCode = -1;
+            } else if (type === "MASTER") {
+                getTeaCode = "${requestTeaId}";
             }
-            teacherId = checkAuth(-1);
             let defaultSearchValue = "${param.defaultSearchValue}";
             let searchOptions = defaultSearchValue !== null ? { search: defaultSearchValue } : {};
-            function loadTeacher(teaId) {
+            function loadTeacher(Id) {
                 $.ajax({
                     url: '${ctxPath}'+'/getAllTeacher',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                    data: { teacherId: teaId },
+                    data: { teacherId: Id },
                     dataType: "json",
                     success: function (data) {
                         // 使用 jQuery Table 來動態生成表格
@@ -110,8 +153,8 @@
                             ],
                             columnDefs: [
                                     {
-                                        targets: [0], // 目标列的索引（从0开始），这里以第一列为例
-                                        className: "custom-header-class" // 自定义的CSS类名
+                                        targets: [0], 
+                                        className: "custom-header-class" 
                                     },
                             {
                                 targets: 7, // 對應 'teacherPic' 的索引（從 0 開始）
@@ -124,13 +167,13 @@
                             }, {
                                 targets: 9, // 對應操作按鈕的索引（從 0 開始）
                                 render: function (data, type, row, meta) {
-                                    if (teacherId === -1 && row.teacherStatus == "在職") {
+                                    if (getTeaCode === -1 && row.teacherStatus == "前台可見") {
                                         return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>'
-                                            + '<button type="button" class="delete-btn btn btn-danger" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">刪除師傅</button></div>';
-                                    } else if (teacherId === -1 && row.teacherStatus == "離職") {
+                                            + '<button type="button" class="delete-btn btn btn-danger" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">隱藏師傅</button></div>';
+                                    } else if (getTeaCode === -1 && row.teacherStatus == "不可見") {
                                         return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>'
-                                            + '<button type="button" class="back-btn btn btn-warning" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">覆職師傅</button></div>';
-                                    } else if (teacherId > 0 && row.teacherId === teacherId) {
+                                            + '<button type="button" class="back-btn btn btn-warning" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">恢復師傅</button></div>';
+                                    } else if (getTeaCode > 0 && row.teacherId === "${requestTeaId}") {
                                         return '<button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>';
                                     }
                                     return '';
@@ -139,11 +182,15 @@
                         });
                     },
                     error: function () {
-                        alert('Failed to fetch data from server.');
+                        Swal.fire({
+                            title: '抱歉，網頁發生問題，請重新整理或登入。',
+                            icon: 'error',
+                            confirmButtonText: '確定'
+                        });
                     }
                 });
             }
-            loadTeacher(teacherId);
+            loadTeacher(getTeaCode);
 
             $(document).on('click', '.modify-btn', function(modifyAction){
                 //導向servlet,傳送teacherId,再從目前連線session抓取相關權限id,若合格的話便導向修改頁面
@@ -157,7 +204,7 @@
 
                 // 使用 SweetAlert 的確認視窗
                 Swal.fire({
-                    title: '確定要刪除該位師傅嗎？',
+                    title: '確定要隱藏該位師傅嗎？',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: '確定',
@@ -176,7 +223,7 @@
                     success: function(response){
                             if(response.isAllowed) {
                                 Swal.fire({
-                                    title:'刪除師傅成功!',
+                                    title:'隱藏師傅成功!',
                                     icon: 'success',
                                     confirmButtonText: '確定'
                                 }).then((result) => {
@@ -188,7 +235,7 @@
                                 })
                             } else{
                                 Swal.fire({
-                                    title: '無權限! 刪除師傅失敗!',
+                                    title: '無權限! 隱藏師傅失敗!',
                                     icon: 'error',
                                     confirmButtonText: '確定'
                                 })

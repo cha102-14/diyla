@@ -20,14 +20,6 @@ public class modifyReserveServlet extends HttpServlet {
         System.out.println(reserveId);
         String action = req.getParameter("action");
         ClassService classService = new ClassService();
-//        if ("刪除及退款".equals(action)){
-//            RequestDispatcher refundDispatcher = req.getRequestDispatcher(path + "/refundReserve");
-//            classService.updateReserveStatus(reserveId, 2);
-//        } else if ("刪除".equals(action)){
-//
-//        } else if ("完成".equals(action)){
-//
-//        }
         //(0:預約單成立，1:預約單取消，2:預約單完成)
         if ("delete".equals(action)) {
             classService.updateReserveStatus(reserveId, 1);
@@ -35,6 +27,9 @@ public class modifyReserveServlet extends HttpServlet {
         } else if ("complete".equals(action)) {
             classService.updateReserveStatus(reserveId, 2);
         }
+        out.print("{\"status\": \"success\"}");
+        out.flush();
+        out.close();
     }
 
 }

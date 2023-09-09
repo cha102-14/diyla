@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.cha102.diyla.empmodel.EmpVO" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpService" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAOImpl" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
-<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService"%>
+<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
+<%@ page import="com.cha102.diyla.sweetclass.classModel.ClassService" %>
 <%@ page import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter" %>
 <%@page import="java.util.*"%>
 <%@ page import="java.util.Base64" %>
@@ -22,18 +28,59 @@
     <!-- responsive style -->
     <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
-    <!-- 取得送進來的teacherVO-->
+    <!--取得使用者相關的驗證和處理傳進來的東西-->
     <%
+        //抓取權限以及empId對應的teacherVO
+        EmpService empService = new EmpService();
+        EmpDAO empDAO = new EmpDAOImpl();
+        TeacherService teacherService = new TeacherService();
+        //默認使用者type為notAuth
+        String type = "notAuth"; 
+        //若session並非為null才往下
+        if(session != null){
+            Integer empId = (Integer) (session.getAttribute("empId"));
+            EmpVO empVO = empDAO.getOne(empId);
+            String empName = empVO.getEmpName();
+            //進來的是何種使用者
+            Object typeFunObj = session.getAttribute("typeFun");
+            boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+            if (isTypeFunList) {
+                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+                } else if (containsMaster) {
+                    type = "MASTER";
+                }
+            } else {
+                type = (String) typeFunObj;
+            }
+            Integer teacherId = null;
+            TeacherVO teacher = null;
+            if("ADMIN".equals(type)) {
+                List<TeacherVO> teacherList = teacherService.getAllTeacher();
+                pageContext.setAttribute("teacherList", teacherList);
+            } else if ("MASTER".equals(type)) {
+                teacher = teacherService.getOneTeacherByEmpId(empId);
+                teacherId = teacher.getTeaId();
+            }
+            pageContext.setAttribute("type", type);
+            pageContext.setAttribute("teacherId", teacherId);
+            pageContext.setAttribute("teacherName", empName);
+        } else {
+            type = "NOSESSION";
+            pageContext.setAttribute("type", type);
+        }
+        //修改的師傅資料處理
         TeacherVO teacherVO = (TeacherVO)request.getAttribute("teacherVO");
         TeacherService teacherService = new TeacherService();
         if(teacherVO != null){
         List<String> teaSpeNameList = teacherService.getOneTeaSpecialityStringList(teacherVO.getTeaId());
         pageContext.setAttribute("teaSpeNameList", teaSpeNameList);
         }
-        Integer adminAuthCode = 1;
-        Integer isTeacher = 1;
-        request.setAttribute("adminAuthCode", adminAuthCode);
-        request.setAttribute("isTeacher", isTeacher);
+
+
 
 %>
 </head>
@@ -55,7 +102,7 @@
     <a href="${ctxPath}/desertcourse/listallteacher.jsp">前往教師列表頁面</a>
     <form action="${ctxPath}/modifyTeacher" method="post" enctype="multipart/form-data">
     <c:choose>
-    <c:when test="${adminAuthCode == 1 && teacherVO != null}">
+    <c:when test="${'ADMIN'.equals(type) && teacherVO != null}">
     <div class="row">
         <div id="teacherIdField" class="col-md-3 form-group">
             <label for="teacherId">師傅編號 </label>
@@ -74,7 +121,7 @@
         </div>
     </div>
     </c:when>
-    <c:when test="${adminAuthCode == 1 && teacherVO == null}">
+    <c:when test="${'ADMIN'.equals(type) && teacherVO == null}">
     <div class="row">
     <div id="teacherIdField">
         <label for="teacherId">師傅編號</label>
@@ -212,16 +259,20 @@
     <script>
         $(document).ready(function () {
                  //先做是否有修改的權利的確認
-            if (${isTeacher} !== 1 && ${adminAuthCode} !== 1) {
+            if (${type} !== 'ADMIN' && ${type} !== 'MASTER') {
                 // 啟動定時器，5秒後導航到其他網頁
                 setTimeout(function() {
-                window.location.href = "${ctxPath}"+"/index.jsp";
+                window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                 }, 5000); // 5000 毫秒 = 5 秒
 
                 Swal.fire({
                 title: "您無權限修改師傅資料",
                 icon: "warning",
                 confirmButtonText: "確定"
+             }).then(function(result){
+                if(result.isConfirmed) {
+                    window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
+                }
              });
 }
                 //宣告新增專長時的參數
