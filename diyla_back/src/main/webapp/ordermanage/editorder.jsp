@@ -161,18 +161,18 @@ border-radius: 5px;
 				<c:if test="${not empty ErrorMap && ErrorMap['recipient'] != null}">
 					<span class="error">${ErrorMap['recipient']}</span>
 				</c:if>
-				<input name="recipient" value="${order.recipient}" type="text">
+				<input name="recipient" value="${order.recipient}" type="text" id="recipientName">
 				<span class="text">收件地址:</span>
 				<c:if
 					test="${not empty ErrorMap && ErrorMap['recipientAddress'] != null}">
 					<span class="error">${ErrorMap['recipientAddress']}</span>
 				</c:if>
 				<input name="recipientAddress" value="${order.recipientAddress}"
-					type="text"> <span class="text">連絡電話:</span>
+					type="text" id="recipientAddress"> <span class="text">連絡電話:</span>
 				<c:if test="${not empty ErrorMap && ErrorMap['phone'] != null}">
 					<span class="error">${ErrorMap['phone']}</span>
 				</c:if>
-				<input name="phone" value="${order.phone}" type="text"> <input
+				<input name="phone" value="${order.phone}" type="text" id="recipientPhone"> <input
 					name="action" value="editcomplete" type="hidden">
 				<button type="submit" class="submit-button">更新訂單</button>
 				<button type="button" class="cancel-button">取消更新</button>
@@ -184,8 +184,11 @@ border-radius: 5px;
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 	document.querySelector(".submit-button").addEventListener("click", function(e) {
+		if(!validateFormFields()){
+			console.log("wronggggggg");
 	    e.preventDefault(); // 防止提交表單
-
+		}else{
+		    e.preventDefault(); // 防止提交表單
 	    Swal.fire({
 	        title: '確認更新訂單？',
 	        icon: 'warning',
@@ -207,7 +210,48 @@ border-radius: 5px;
 	               });
 	           }
 	       });
+		}
 	});	
+	
+
+	function validateFormFields() {
+		const recipientName = $("#recipientName").val();
+		const recipientPhone = $("#recipientPhone")
+				.val();
+		const recipientAddress = $("#recipientAddress")
+				.val();
+		const phoneRegex = /^09\d{8}$/; // 電話號碼需以 "09" 開頭，總共 10 位數
+
+		if (recipientName.trim() === "") {
+			Swal.fire({
+				icon : 'error',
+				title : '錯誤',
+				text : '請填寫收件人姓名'
+			});
+			return false;
+		}
+
+		if (!phoneRegex.test(recipientPhone)) {
+			Swal.fire({
+				icon : 'error',
+				title : '錯誤',
+				text : '請填寫正確的電話號碼，需以 09 開頭且總共 10 位數'
+			});
+			return false;
+		}
+
+		if (recipientAddress.trim() === "") {
+			Swal.fire({
+				icon : 'error',
+				title : '錯誤',
+				text : '請填寫收件人地址'
+			});
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 		const cancelButton = $(".cancel-button");
 

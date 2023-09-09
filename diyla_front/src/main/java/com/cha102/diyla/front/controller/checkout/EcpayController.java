@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -48,16 +50,19 @@ public class EcpayController {
 			@RequestParam String cardrecipientAddress, @RequestParam String cardphone, @RequestParam String tokenUse) {
 		HttpSession session = req.getSession();
 		MemVO memVO = (MemVO) session.getAttribute("memVO");
+		String jsessionId = req.getSession().getId();
+		System.out.println(jsessionId);
 		String token = tokenUse;
 		int memNO = memVO.getMemId();
 		// 會員編號先另存
 		memberHolder.put("memId" + memNO, memNO);
+		memberHolder.put("jsessionid", jsessionId);
 		String receiveInfo = cardrecipient + "," + cardrecipientAddress + "," + cardphone;
 		// 使用取號機
 		if ("".equals(token)) {
 			token = 0 + "";
 		}
-		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo);
+		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,jsessionId);
 		// 自訂取號
 		model.addAttribute("toEcpay", toEcpay);
 		return "/checkout/checkoutPage.jsp";
@@ -67,7 +72,7 @@ public class EcpayController {
 	public String ecpayReturn(Model model, @RequestParam("RtnCode") String rtnCode,
 			@RequestParam("MerchantTradeNo") String merchantTradeNo, @RequestParam("CustomField1") String memKey,
 			@RequestParam("CustomField2") String totalPrice, @RequestParam("CustomField3") String receiveInfo,
-			@RequestParam("CustomField4") String token) {
+			@RequestParam("CustomField4") String token,HttpServletResponse response) {
 		// rtnCode == 1 表示交易成功
 		if ("1".equals(rtnCode)) {
 			TokenService tokenService = new TokenService();
@@ -82,6 +87,12 @@ public class EcpayController {
 			// 因為綠界交易成功導回專案時有時候會把session id換掉，所以離開專案前暫存會員資料進HashMap，交易回來再取出
 			HttpSession session = req.getSession();
 			Integer memId = memberHolder.get(memKey);
+			System.out.println("controllerback"+memId);
+			String jsessionid = memberHolder.getj("jsessionid");
+			System.out.println("return Jsessionid:"+jsessionid);
+			Cookie jsessionIdCookie = new Cookie("JSESSIONID", jsessionid);
+		    jsessionIdCookie.setPath("/diyla_front"); // 設定Cookie的路徑，確保可以在整個應用程式中使用
+		    response.addCookie(jsessionIdCookie);			
 			//從redis取cart內容
 			String redisKey = "cart:" + memId;
 			Map<String, String> cartInfo = jedis.hgetAll(redisKey);
