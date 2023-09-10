@@ -113,7 +113,7 @@
                     <c:set var="redisNo" value="art:${i}" />
                     ==${redisNo}==
                     <%= jedis.get("${redisNo}") %>
-                        @@${empty str}@@
+                        @${empty str}@
                         --==${str}==--
                         <img id="imagePre" src="data:image/jpeg;base64, <%= jedis.get("art:1") %>" alt="圖片1">
                         <img id="imagePre" src="data:image/jpeg;base64, <%= jedis.get("${redisNo}") %>"
