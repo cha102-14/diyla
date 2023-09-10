@@ -90,7 +90,7 @@
                         <%-- 					<c:forEach var="typeFun" items="${typeFun}"> --%>
                         <c:if test="${typeFun eq 'CLASS'}">
                             <li class="func">
-                                <a href="${ctxPath}/diycate/back_diycate.html" class="func_link">
+                                <a href="${ctxPath}/diycate/back_diycate.jsp" class="func_link">
                                     <svg fill="#b45f06" version="1.1" id="Capa_4" width="20" height="20"
                                          xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                          viewBox="0 0 963.4 963.4" xml:space="preserve" stroke="#b45f06"><g
