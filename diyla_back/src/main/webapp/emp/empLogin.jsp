@@ -130,6 +130,12 @@
             font-size: 1rem;
             color: #B26021;
         }
+
+        .error {
+             color:red ;
+             font-family: "微軟正黑體", Arial, sans-serif;
+             font-weight: bold;
+                             }
     </style>
 
 </head>
@@ -138,17 +144,23 @@
 
     <div class="loginTitle">
         <h5>員工登入</h5>
-        <span class="error">${loginErrorMsgMap.errorMsg}</span>
+        <!-- <label class="error">${errorMsgMap.empLoginError}</label> -->
         <div class="backStageLogin">
             <form method="post" action="login">
+            <span>
                 <label class="empAccount">員工帳號</label><br>
+            <br>
+                <!-- <label class="error">${errorMsgMap.empAccount}</label><br> -->
+            </span>
                 <input type="text" class="inputLogin" name="empAccount" placeholder="請輸入員工帳號" value="${(empVO==null)?"":empVO.empAccount()}"}><br>
+            <div>
+            
                 <label class="password">密碼</label><br>
+                <!-- <p class="error">${errorMsgMap.empPassword}</p> -->
                 <input type="password" class="inputLogin" name="empPassword" placeholder="請輸入6-12碼英數字"minlength="6" maxlength="12">
-                <br>
-                </label>
+            </div>
                 <button type="submit">登入</button><br>
-                <br>
+            <br>
                 <a href="${ctxPath}/emp/empForgetPassword.jsp" class="forgetPassword">忘記密碼</a>
 
             </form>
@@ -164,14 +176,46 @@
             }else{
                 checkNewPassword();
             }
+
+            checkTypeIsEmpty();
+            checkEmpLoginInformation();
         }
 
 
         function checkNewPassword(){
-        if("${newPassword}" !== ""){
+        if("${newPassword}" == "succes"){
             Swal.fire('更新成功！');
         }        
     }
+
+        function checkTypeIsEmpty(){
+            if("${empAccount}" == "account" && "${empPassword}" == "password" ){
+                Swal.fire('請輸入員工帳號及密碼 !');
+            }else if("${empAccount}" == "account"){
+                Swal.fire('請輸入員工帳號 !');
+            }else if("${empPassword}" == "password"){
+                Swal.fire('請輸入員工密碼 !');
+            }
+
+        }
+        function checkempAccount(){
+            if("${empAccount}" == "account"){
+                Swal.fire('請輸入員工帳號 !');
+            }
+        }
+
+        function checkempPassword(){
+            if("${empPassword}" == "password"){
+                Swal.fire('請輸入員工密碼 !');
+            }
+        }
+
+        function checkEmpLoginInformation(){
+            if("${empAccount}" == "false" && ("${empPassword}" == "false") ){
+                Swal.fire('員工帳號密碼不匹配,請重新確認 !');
+            }
+
+        }
 
 
     </script>

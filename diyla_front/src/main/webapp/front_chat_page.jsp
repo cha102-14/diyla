@@ -56,12 +56,12 @@
 
         .user-message {
             background-color: #DCF8C6;
-            align-self: flex-end;
+            align-self_chat: flex-end;
         }
 
         .other-message {
             background-color: #F4F4F4;
-            align-self: flex-start;
+            align-self_chat: flex-start;
         }
 
         #chatInputContainer {
@@ -234,7 +234,7 @@
         let statusOutput = document.getElementById("statusOutput");
         let messagesArea = document.getElementById("messagesArea");
         // 可替換成名稱
-        let self = '${memVO.memName}';
+        let self_chat = '${memVO.memName}';
         let webSocket_chat;
 
 
@@ -271,7 +271,7 @@
         // 開啟網頁就建立連線
         window.onload(webSocketOnloadConnect());
         function webSocketOnloadConnect() {
-            console.log(self); 
+            console.log(self_chat); 
             webSocket_chat = new WebSocket(endPointURL_chat);
             webSocket_chat.onopen = function (event) {
                 console.log("connect success!");
@@ -299,9 +299,9 @@
                         div.appendChild(li);
                         let nameLi = document.createElement('li');
                         // 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-                        fixedSender === self ? div.className +='me_div' : div.className += 'friend_div';
-                        fixedSender === self ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
-                        fixedSender === self ? li.className += 'me' : li.className += 'friend';
+                        fixedSender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
+                        fixedSender === self_chat ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
+                        fixedSender === self_chat ? li.className += 'me' : li.className += 'friend';
                         
                         // 接收到訊息時 顏色變更
                         let getMesageColor = "#007bff"
@@ -327,7 +327,7 @@
                     // 接收到訊息時 顏色變更
                     let getMesageColor = "#f55454"
                     chatIcon.style.backgroundColor = getMesageColor;
-                    if (self != receiver && self != fixedSender){
+                    if (self_chat != receiver && self_chat != fixedSender){
                         return;
                     }
                     let talkToName = document.getElementById("statusOutput").textContent;
@@ -336,9 +336,9 @@
                     }
 
 
-                    fixedSender === self ? div.className +='me_div' : div.className += 'friend_div';
-                    fixedSender === self ? li.className += 'me' : li.className += 'friend';
-                    fixedSender === self ? nameLi.className += 'me_div' : nameLi.className += 'friend_div';
+                    fixedSender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
+                    fixedSender === self_chat ? li.className += 'me' : li.className += 'friend';
+                    fixedSender === self_chat ? nameLi.className += 'me_div' : nameLi.className += 'friend_div';
                     li.innerHTML = jsonObj.message;
                     nameLi.innerHTML = fixedSender + "  " + dateTimeNow;
                     document.getElementById("area").appendChild(nameLi);
@@ -393,7 +393,7 @@
                 }
                 var jsonObj = {
                     "type": "chat",
-                    "sender": self,
+                    "sender": self_chat,
                     "receiver": friend,
                     "message": message,
                     "dateTime": dateTimeNowToBackend
@@ -412,7 +412,7 @@
             row.innerHTML = '';
             for (var i = 0; i < friends.length; i++) {
                 let root = friends[i].split("_")[1];
-                if (friends[i] === self || root == 1) { continue; }
+                if (friends[i] === self_chat || root == 1) { continue; }
                 // 請求後端拿回好友列表名稱及圖片（只有管理者有圖片）
                 getMyPic(friends[i]);
                 // // 等待一秒后执行的代码
@@ -430,7 +430,7 @@
                 updateFriendName(friend);
                 var jsonObj = {
                     "type": "history",
-                    "sender": self,
+                    "sender": self_chat,
                     "receiver": friend,
                     "message": ""
                 };

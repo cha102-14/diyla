@@ -3,6 +3,7 @@ package com.cha102.diyla.empmodel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cha102.diyla.enums.AuthFunEnum;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         int pageSize = jsonObject.getIntValue("pageSize");
         String chooseTypeFun = jsonObject.getString("chooseTypeFun");
 //      前端傳入值 pageIndex 1 , pageSize 10 第一頁取10筆, 第二頁為 10 * (2-1),10...
-        List<Object[]> allEmpObjArr = empJPADAO.getAllEmp(pageSize * (pageIndex - 1), pageSize,chooseTypeFun);
+        List<Object[]> allEmpObjArr = empJPADAO.getAllEmp(pageSize * (pageIndex - 1), pageSize, chooseTypeFun);
 //      將ObjectArr 透過stream流轉換成 stream<ObjectArr> 透過map方法做轉換-> stream<EmpDTO>,
         List<EmpDTO> empDTOList = allEmpObjArr.stream().map(EmpDTO::new)
 //      stream<EmpDTO>在此處代名詞為 o (隨便取都行),o先拿著自己的TypeFun英文傳入參數去調用AuthFunEnum方法
@@ -70,19 +72,50 @@ public class EmpSpringServiceImpl implements EmpSpringService {
             return "";
         }
     }
-
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
-        List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
-
         ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
         Integer empId = null;
         String empName = null;
         byte[] empPic = null;
         List<EmpDTO> empDTOList = new ArrayList<>();
         List<String> empTypeFunList = new ArrayList<>();
-        if (ObjectUtils.isEmpty(empDataList)) {
-            errorMsgMap.put("errorMsg", "請輸入員工帳號及密碼");
+        if (ObjectUtils.isEmpty(empAccount)) {
+            req.setAttribute("empAccount","account");
+            errorMsgMap.put("empAccount", "請輸入員工帳號");
+        }
+        if (ObjectUtils.isEmpty(empPassword)) {
+            req.setAttribute("empPassword","password");
+            errorMsgMap.put("empPassword", "請輸入員工密碼");
+        }
+
+        if (!ObjectUtils.isEmpty(errorMsgMap)) {
+            req.setAttribute("errorMsgMap", errorMsgMap);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+        List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
+        if (empDataList.size() == 0) {
+            errorMsgMap.put("empLoginError", "員工帳號密碼不匹配,請重新確認");
+            req.setAttribute("empAccount","false");
+            req.setAttribute("empPassword","false");
+            req.setAttribute("errorMsgMap", errorMsgMap);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
         } else {
             empDTOList = empDataList.stream().map(o -> {
                 EmpDTO empDTO = new EmpDTO();
@@ -97,6 +130,19 @@ public class EmpSpringServiceImpl implements EmpSpringService {
             empName = empDTOList.stream().map(EmpDTO::getEmpName).findFirst().get();
             empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
         }
+        empDTOList = empDataList.stream().map(o -> {
+            EmpDTO empDTO = new EmpDTO();
+            empDTO.setTypeFun((String) o[0]);
+            empDTO.setEmpId((Integer) o[1]);
+            empDTO.setEmpPic((byte[]) o[2]);
+            empDTO.setEmpName((String) o[3]);
+            return empDTO;
+        }).collect(Collectors.toList());
+        empId = empDTOList.stream().map(EmpDTO::getEmpId).findFirst().get();
+        empPic = empDTOList.stream().map(EmpDTO::getEmpPic).collect(Collectors.toList()).get(0);
+        empName = empDTOList.stream().map(EmpDTO::getEmpName).findFirst().get();
+        empTypeFunList = empDTOList.stream().map(EmpDTO::getTypeFun).collect(Collectors.toList());
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("empPic", empPic);
         empTypeFunList.stream().forEach(t -> System.out.println(t));
@@ -105,10 +151,19 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         req.getSession().setAttribute("empName", empName);
         req.getSession().setAttribute("isEmpFlag", true);
         req.getSession().setAttribute("empPic", jsonObject.toJSONString());
-        req.setAttribute("loginErrorMsgMap", errorMsgMap);
+        String location = (String) req.getSession().getAttribute("location");
+        if (location != null) {
+//          看有無來源網頁
+//            req.getSession().removeAttribute("location");
+            try {
+                resp.sendRedirect(location);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
 
         String url = ObjectUtils.isEmpty(empTypeFunList) ? "empLogin.jsp" : "welcome.jsp";
-//        String url = ObjectUtils.isEmpty(typeFun) ? "empLogin.jsp" : req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath();
         RequestDispatcher requestDispatcher = req.getRequestDispatcher(url);
         try {
             requestDispatcher.forward(req, resp);
@@ -172,13 +227,13 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         RequestDispatcher requestDispatcher = null;
         if (validCode.equals(redisValidCode)) {
             empJPADAO.resertPassword(empEmail, doubleCheckPassword);
-            req.setAttribute("newPassword",true);
+            req.setAttribute("newPassword", "succes");
             requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
 //             更新成功
             req.getSession().removeAttribute("empEmail");
         } else {
 //            資料錯誤,請重新驗證
-            req.setAttribute("validcode",true);
+            req.setAttribute("validcode", false);
             requestDispatcher = req.getRequestDispatcher("empResetPassword.jsp");
 
         }
@@ -193,11 +248,11 @@ public class EmpSpringServiceImpl implements EmpSpringService {
     public String getChatPic(JSONObject empIdObj) {
         String empIdStr = empIdObj.getString("empId");
         // 驗證是否key為empId, 不然就是memId
-        if(ObjectUtils.isEmpty(empIdStr)){
+        if (ObjectUtils.isEmpty(empIdStr)) {
             return empIdObj.toJSONString();
         }
         // 是否存在"_" ex: 1_襪襪
-        if(!empIdStr.contains("_")){
+        if (!empIdStr.contains("_")) {
             return empIdObj.toJSONString();
         }
         // 拿empId去查詢

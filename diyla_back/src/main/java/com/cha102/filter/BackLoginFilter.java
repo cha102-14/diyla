@@ -25,14 +25,14 @@ public class BackLoginFilter implements Filter{
         HttpServletResponse res = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
-        EmpVO empVO = (EmpVO) session.getAttribute("empVO");
-        if (empVO == null){
+        Integer empId = (Integer) session.getAttribute("empId");
+
+        if (empId == null){
             session.setAttribute("location",req.getRequestURI());
             res.sendRedirect(req.getContextPath()+"/emp/empLogin.jsp");
             return;
 
         }else {
-//            res.sendRedirect(req.getContextPath()+"/index.jsp");
             chain.doFilter(request, response);
         }
     }
