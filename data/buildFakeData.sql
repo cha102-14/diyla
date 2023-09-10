@@ -56,11 +56,11 @@ VALUES (1, '擀麵棍', null, '取材等級最高的A級櫸木,竹木紋理完�
 INSERT INTO diyla.commodity_order (MEM_ID, ORDER_TIME, ORDER_STATUS, ORDER_PRICE, DISCOUNT_PRICE, ACTUAL_PRICE,
                                    UPDATE_TIME, RECIPIENT, RECIPIENT_ADDRESS, PHONE)
 
-VALUES (1, DEFAULT, 3, 85, 0, 85, DEFAULT, '老爹', 0987654321, '南方公園'),
+VALUES (1, DEFAULT, 3, 85, 0, 85, DEFAULT, '老爹', '南方公園', '0987654321'),
 
-       (2, DEFAULT, 2, 400, 0, 400, DEFAULT, '大頭', 0987654321, '南方公園'),
+       (2, DEFAULT, 2, 400, 0, 400, DEFAULT, '大頭', '南方公園', '0987654321'),
 
-       (3, DEFAULT, 2, 295, 0, 295, DEFAULT, '凱子', 0987654321, '南方公園');
+       (3, DEFAULT, 2, 295, 0, 295, DEFAULT, '凱子', '南方公園', '0987654321');
 
 INSERT INTO diyla.commodity_order_detail (ORDER_NO, COM_NO, COM_QUANTITY, COM_PRICE)
 VALUES (1, 11, 2, 25),

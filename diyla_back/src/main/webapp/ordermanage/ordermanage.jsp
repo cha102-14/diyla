@@ -326,12 +326,17 @@ p.orderNO {
 }
 
 .priceblock {
+	border:1px solid rgb(107,107,107,0.5);
 	position: static;
 	bottom: 30px;
 	/* display:flex; */
 	/* justify-content:flex; */
 	flex-direction: column;
-	white-space: normal;
+	white-space: no-wrap;
+	padding:5px 1px;
+	margin:5px 1px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	
 }
 
 .Pri {
@@ -380,6 +385,21 @@ p.orderNO {
     margin: 15px 0;
     border-radius: 5px;
     cursor: pointer;
+}
+.Info{
+margin:5px 0px;
+border: 1px solid rgb(107,107,107,.3);
+padding: 5px 3px;
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.orderInfo{
+margin: 3px;
+}
+.actuPrice{
+font-weight:bold;
+
+
 }
 </style>
 </head>
@@ -580,6 +600,9 @@ p.orderNO {
 	        console.log(lightboxContent)
 	        console.log("Order number:", orderNo);
 	        let htmlContent = '<p class="orderNO">訂單編號: ' + orderNo + '</p>';
+	        htmlContent += '<div class="Info"><p class="orderInfo">收件人: ' + data.recipient + '</p>';
+	        htmlContent += '<p class="orderInfo">收件地址: ' + data.recipientAddress + '</p>';
+	        htmlContent += '<p class="orderInfo">收件人電話: ' + data.phone + '</p></div>';
             htmlContent += '<table class="detailTable">';
             htmlContent += '<tr class="title o-detail">';
             htmlContent += '<td class="subtitle o-detail">商品名稱</td>';
