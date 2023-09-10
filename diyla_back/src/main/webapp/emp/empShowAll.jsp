@@ -22,6 +22,41 @@
                     font-size: 18px;
                     background-color: #FFEEDD;
                 }
+
+                #addempicon {
+                    float:right;
+
+
+
+                }
+
+/* TODO 修改頁籤CSS */
+                .tab {
+                    display: inline-block;
+                    padding: 10px 20px;
+                    background-color: #eee;
+                    cursor: pointer;
+                    border: 1px solid #ccc;
+                    border-radius: 5px 5px 0 0;
+                 }
+
+                .tab.active {
+                    background-color: #fff;
+                    border-bottom: none;
+                }
+
+                /* 添加样式以控制页签内容的显示 */
+                .tab-content {
+                    display: none;
+                }
+
+                .tab-content.active {
+                    display: block;
+                }
+
+
+
+
             </style>
             <link rel="stylesheet" href="../css/style.css">
         </head>
@@ -29,12 +64,13 @@
         <body>
             <jsp:include page="/index.jsp" />
             <div class="showAllEmpPage">
+                <svg fill="#000000" width="88px" height="88px" viewBox="0 0 24.00 24.00" id="addempicon" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path id="secondary" d="M8.54,13A4,4,0,1,0,12,7a3.66,3.66,0,0,0-1,.13" style="fill: none; stroke: #ffbfbf; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path><path id="secondary-2" data-name="secondary" d="M7,19.5a9,9,0,0,0,9.94,0A5,5,0,0,0,7,19.5ZM3,9H7M5,11V7" style="fill: none; stroke: #ffbfbf; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path><path id="primary" d="M8,3.94A9,9,0,1,1,5.64,18.36,8.86,8.86,0,0,1,3.52,15" style="fill: none; stroke: #9a3b3b; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path></g></svg>
                 <table class="display" style="width:100%">
                     <thead>
 
                         <br>
 
-                        <div>
+                        <div class="select">
                             <td>請選擇權限類別</td>
                             <td><select id="chooseTypeFun" ><option select="selected" value="" >請選擇權限類別</option>
                                 <option value="SHOP">商店管理員</option>
@@ -47,6 +83,25 @@
                            <button type="button" class="btn btn-primary" onclick="getAllEmpList()">查詢</button>
                         </div>
                         <br>
+
+                        <!--  TODO 修改頁籤div -->
+                        <div class="showAllEmpPage">
+                            <!-- 添加两个按钮用于切换页签 -->
+                            <button class="tab active" onclick="showTab('tab1')">页签1</button>
+                            <button class="tab" onclick="showTab('tab2')">页签2</button>
+
+                            <!-- 添加两个页签内容块 -->
+                            <div class="tab-content active" id="tab1-content">
+                                <!-- 这里放置页签1的内容 -->
+                                <!-- 例如：<p>这是页签1的内容</p> -->
+                            </div>
+
+                            <div class="tab-content" id="tab2-content">
+                                <!-- 这里放置页签2的内容 -->
+                                <!-- 例如：<p>这是页签2的内容</p> -->
+                            </div>
+                        </div>
+
                         <tr style="background-color:#b45f06">
                             <th>筆數</th>
                             <th>編號</th>
@@ -86,7 +141,7 @@
                 </div>
 
             </div>
-            
+
             <!--   優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
             <script>
                 let emp_totalSize = 0;
@@ -95,10 +150,10 @@
                     getAllEmpList();
                 }
 
-                
+
                 let chooseTypeFun = document.getElementById('chooseTypeFun');
                 chooseTypeFun.onchange = resetCurrentPage;
-                
+
                 function resetCurrentPage(){
                     // 當使用者按下 (click) 按鈕時，執行 triggerAlert 函數
                     console.log('resetCurrentPage');
@@ -255,7 +310,7 @@
                             html += `<td>` + (i + 1) + `</td>`;
                             html += `<td>` + emp.empId + `</td>`;
                             html += `<td>` + emp.empName + `</td>`;
-                            console.log(emp);  
+                            console.log(emp);
                             if(emp.empPic == "" || emp.empPic == undefined){
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
                             } else {
@@ -311,11 +366,11 @@
                     }
                     return statusData;
                 }
-                
+
                 function sendStatusChange(statusData) {
                     // console.log(statusData.empId);
                     // console.log(statusData.empStatus);
-                    
+
                     // 這邊option為傳給後端的值
                     return fetch("changeEmpStatus", {
                         body: JSON.stringify(statusData),
@@ -337,6 +392,34 @@
 
                 //  一進入網頁即呼叫該函式,抓取資料
                 window.onload(getAllEmpList());
+
+                // TODO 修改 Script
+                   // JavaScript 函数，用于显示选定的页签内容
+                function showTab(tabId) {
+                    // 隐藏所有页签内容块
+                    var tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(function (tabContent) {
+                        tabContent.classList.remove('active');
+                    });
+
+                    // 隐藏所有页签按钮的激活状态
+                    var tabs = document.querySelectorAll('.tab');
+                    tabs.forEach(function (tab) {
+                        tab.classList.remove('active');
+                    });
+
+                    // 显示选定的页签内容块
+                    var selectedTabContent = document.getElementById(tabId + '-content');
+                    selectedTabContent.classList.add('active');
+
+                    // 设置选定的页签按钮为激活状态
+                    var selectedTab = document.querySelector('.tab[data-tab="' + tabId + '"]');
+                    selectedTab.classList.add('active');
+                }
+
+                // 页面加载时，默认显示第一个页签内容
+                showTab('tab1');
+
             </script>
 
         </body>

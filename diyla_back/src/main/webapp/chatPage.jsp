@@ -56,12 +56,12 @@
 
         .user-message {
             background-color: #DCF8C6;
-            align-self: flex-end;
+            align-self_chat: flex-end;
         }
 
         .other-message {
             background-color: #F4F4F4;
-            align-self: flex-start;
+            align-self_chat: flex-start;
         }
 
         #chatInputContainer {
@@ -218,7 +218,7 @@
         let dateTimeNowToBackend = formatDate(date, 'yyyy-MM-dd HH:mm:ss');
 
 
-        
+
 
         let MyPoint = "/chat/Master_${empId}_${empName}";
         let port = window.location.host.port;
@@ -230,7 +230,7 @@
         let statusOutput = document.getElementById("statusOutput");
         let messagesArea = document.getElementById("messagesArea");
         // 可替換成名稱
-        let self = "Master_" + '${empId}_${empName}';
+        let self_chat = "Master_" + '${empId}_${empName}';
 
         let webSocket;
 
@@ -311,9 +311,9 @@
                         div.appendChild(li);
                         let nameLi = document.createElement('li');
                         // 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
-                        fixedSender === self ? div.className +='me_div' : div.className += 'friend_div';
-                        fixedSender === self ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
-                        fixedSender === self ? li.className += 'me' : li.className += 'friend';
+                        fixedSender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
+                        fixedSender === self_chat ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
+                        fixedSender === self_chat ? li.className += 'me' : li.className += 'friend';
 
                         // TODO 接收到訊息時 顏色變更
                         let getMesageColor = "#007bff"
@@ -328,7 +328,7 @@
                         ul.appendChild(div);
                     }
                     messagesArea.scrollTop = messagesArea.scrollHeight;
-                // 在寫入後端，同時傳給對象跟自己    
+                // 在寫入後端，同時傳給對象跟自己
                 } else if ("chat" === jsonObj.type) {
                     var li = document.createElement('li');
                     let nameLi = document.createElement('li');
@@ -340,25 +340,25 @@
                     let getMesageColor = "#f55454"
                     chatIcon.style.backgroundColor = getMesageColor;
                     console.log(jsonObj);
-                    if (self != receiver && self != sender){
+                    if (self_chat != receiver && self_chat != sender){
                         return;
                     }
                     let talkToName = document.getElementById("statusOutput").textContent;
                     if (talkToName != sender && talkToName != receiver){
                         return;
                     }
-                    
 
-                    sender === self ? div.className +='me_div' : div.className += 'friend_div';
-                    sender === self ? li.className += 'me' : li.className += 'friend';
-                    sender === self ? nameLi.className += 'me_div' : nameLi.className += 'friend_div';
+
+                    sender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
+                    sender === self_chat ? li.className += 'me' : li.className += 'friend';
+                    sender === self_chat ? nameLi.className += 'me_div' : nameLi.className += 'friend_div';
                     li.innerHTML = jsonObj.message;
 
                     nameLi.innerHTML = jsonObj.sender + "  " + dateTimeNow;
                     document.getElementById("area").appendChild(nameLi);
                     document.getElementById("area").appendChild(div);
                     messagesArea.scrollTop = messagesArea.scrollHeight;
-                // 再斷線的時候，從別人好友列表移除    
+                // 再斷線的時候，從別人好友列表移除
                 } else if ("close" === jsonObj.type) {
                     refreshFriendList(jsonObj);
                 }
@@ -409,7 +409,7 @@
             var inputMessage = document.getElementById("message");
             var friend = statusOutput.textContent;
             var message = inputMessage.value.trim();
-            console.log("sendMessage: "+ message);    
+            console.log("sendMessage: "+ message);
             if (message === "") {
                 alert("Input a message");
                 inputMessage.focus();
@@ -418,7 +418,7 @@
             } else {
                 var jsonObj = {
                     "type": "chat",
-                    "sender": self,
+                    "sender": self_chat,
                     "receiver": friend,
                     "message": message,
                     "dateTime": dateTimeNowToBackend
@@ -436,8 +436,8 @@
             let friendPic;
             row.innerHTML = '';
             for (var i = 0; i < friends.length; i++) {
-                if (friends[i] === self  || "Master_" === friends[i].substring(0,7)) {
-                     continue; 
+                if (friends[i] === self_chat  || "Master_" === friends[i].substring(0,7)) {
+                     continue;
                 }
                 // 取得好友列表名稱與圖片
                 getMyPic(friends[i]);
@@ -455,7 +455,7 @@
                 updateFriendName(friend);
                 var jsonObj = {
                     "type": "history",
-                    "sender": self,
+                    "sender": self_chat,
                     "receiver": friend,
                     "message": ""
                 };

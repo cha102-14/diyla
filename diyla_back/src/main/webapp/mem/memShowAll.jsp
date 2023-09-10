@@ -86,6 +86,13 @@
                     getAllMemList();
                 }
 
+                let memEmail = document.getElementById('memEmail');
+                memEmail.onclick = resetCurrentPage;
+
+                function resetCurrentPage(){
+                    document.getElementById("pageIndex").value = 1;
+                }
+
                 function getCurrentPage() {
                     let selectElement = document.getElementById("pageIndex");
                     return parseInt(selectElement.value);
@@ -180,7 +187,7 @@
                     let tt = getMemList('getAllMemList', memData)
                 }
 
-                
+
                 //  此處的url代表送出請求後端url的位置,要和controller的postMapping相同
                 function getMemList(url, memData) {
                     return fetch(url, {//此括號開始為option
@@ -198,10 +205,11 @@
                         // referrer: 'no-referrer' // *client, no-referrer
                     })
                         .then(res => res.json()) // 把回傳的JSON字串取回，放在promise物件中回傳
-                        
-                        
+
+
                         .then(function (res) { //一樣有then
                             let mems = res.memList;
+                            console.log(mems)
                             mem_totalSize = res.totalSize
                             document.getElementById("currentPage").textContent = getCurrentPage();
                             document.getElementById("totalPages").textContent = getTotalPageSize();

@@ -338,13 +338,23 @@ INSERT INTO DIY_ING(DIY_NO, ING_ID, ING_COUNT)
     ('7', '4', '300');
 
 INSERT INTO EMPLOYEE (EMP_NAME, EMP_ACCOUNT, EMP_PASSWORD, EMP_EMAIL, EMP_STATUS)
-VALUES ('女王', 'Root', 'c592f84b4cffa1d360e87ff7651fa6f564a0d119ec67ada1c6098fae3a511cc14af61826ae5a09965c49b80904219bcb95d53b6017cde9ce12b44e2f5fd25259', 'while8@gmail.com', '1'), #tibame515
-       ('襪襪是廚師', 'D100002', '781e4215a7c4418c4292aae18839fe8ab7b5f73a39faee31fe9f0bc4692d47537ada39ad23e626058da0bd14010c6db83c605609ba9ee2d7b9e6cc6651eeb55e', 'seefood@yahoo.tw', '1'),    # 師傅 seefood
-       ('襪襪是隻貓', 'D100003', '74ffdd13ba4c7570117f5898d0ac5bfca3c0324d70fb93884aa02db074503995de1c4cfa81bdcbfcda65e43e13b9c18642c59429f56f4afadb1b86a1a30132a6', 'meowmeow@gmail.com', '1'), # 商店 meowmeow
-       ('襪襪吃肉泥', 'D100004', '21b9ba16cfee150f2355e7517f246ab121dbc148b7d3962d09c26857f5bf882db34092a4b7cfa7a00f3aa3905549aa06e86f1b8fced0ca7bbe3599bde0f99a13', 'eatmeat@gmail.com', '1'),   # 課程 eatmeat
-       ('襪襪睡覺覺', 'D100005', '6def5c17d9e6a7417d49ac1048854b8f9b253fd1345d7e8596c676a6f34f766ab95fb0064a2290caa5de07a9bbdf1b2682641b1b4cfe641b50f2dd84435a6976', 'sleep666@gmail.com', '1'), # 會員 sleep666
---       ('襪襪出去玩', 'D100006', '4f776de7b3e3f7f0cf6ab532baaaa54942b0650d25a7996b0a18f29248149c78cfc7734a49b9c95f8a3ee8bd14f087529a4a394d288525bb38c93dcd9d28d84c', 'outdoor@msn.com', '1'),     # 倉儲 outdoor
-       ('襪襪裝起來', 'D100007', 'dcd7c479b9f7cc79a11098314b1004ef9ae43ded190d6fbd0799d7a7303472233a8e9631c8f2a4ba198107a9bac924c49539a6bc662bbf8dfb03bbcdd1f9277e', 'bagmeow@yahoo.com', '1');   # 客服 bagmeow
+VALUES ('ROOT', 'Root', 'c592f84b4cffa1d360e87ff7651fa6f564a0d119ec67ada1c6098fae3a511cc14af61826ae5a09965c49b80904219bcb95d53b6017cde9ce12b44e2f5fd25259', 'tibame515@gmail.com', '1'),        # ROOT   tibame515
+       ('吳寶春', 'D100002', 'da8fa9956f008064a76477aec1e609c74d773f2492fd65a29f10da41cf4b3997110f2a94d26ff77a79860e50628201ea1eeee6df34dcfd381fd479f9fc2ea063', 'seefood1@yahoo.tw', '1'),      # 師傅 1  seefood1
+       ('商店管理員', 'D100003', 'a239891db9f6e23374f52ebcc0ca4db17636a5fbb467e0cba8702080b66c6d01a1c4872c66027dc6ec0acab43d229281976e405af48be9c0bd18256fa5d3f0b1', 'meowmeow@gmail.com', '1'),  # 商店   cha10201
+       ('課程管理員', 'D100004', 'b33cc7b316f494df80eb33b1af794956bf6fa3c92ee963ce0b06c065d575ebee2bdea2a072f93c4eb7cf56afe51fb49da882f0aac93c8f90bc3c40ed0682a9ab','hahow@gmail.com','1'),      # 課程   cha10202
+       ('會員管理員', 'D100005', '6016e86c0a6f391198a714f14e0cec7253bc93215226560988db61645c6af976a337e72d38536c744bfc5ab7767c118cf76b69f1df8feb1ebd78ec937a1f12b0', 'sleep666@gmail.com', '1'),  # 會員   cha10203
+       ('倉儲管理員', 'D100006', 'db00bc0fad66d04103778732a5b33b9318500982fb20071d0b5622aa5348a08aa45b3c28aaad79f4c832ab56b24dd9cd8f9ced64bb64d321294e48d0165a37e2', 'outdoor@msn.com', '1'),     # 倉儲   cha10204
+       ('客服管理員', 'D100007', '67f06350f25f2120bcb294fc1e79898c1ecc9f15ad0be9bedf063184ca75c2711f2b94347bbd36d2542563f11ef4483f81ac2584f47fb2587f09ded5f3658a0d', 'bagmeow@yahoo.com', '1'),   # 客服   cha10205
+       ('皮埃爾艾爾梅', 'D100008', 'f01923a806f37495a0b0bb55bfb79e7c929b7079614940af0cf443cddbd7e3b57b6e28670ab7f5b8ee3db1a18bce96f120fc71d56aa1eaeac065e046c8e05ae5', 'seefood2@yahoo.tw', '1'),  # 師傅 2 seefood2
+       ('侯布雄', 'D100009', 'ff9756ae4d49a355a337862682721d8d814ac18aee8627a883d9556778105d502214e3e94aa1a9c5d122f9c5396ff113cfef32aad2e679a8e346de6f191c8894', 'seefood3@yahoo.tw', '1'),       # 師傅 3 seefood3
+       ('阿基獅', 'D100010', 'c6403a1a2065a95ef65ab4c57a104b72cc6d54ea8b6d2aef23ba2d090f788b1a92d0ad36c08e56553c1690691a94bbe33173480fca742e3691b560789bc5af48', 'seefood4@yahoo.tw', '1'),       # 師傅 4 seefood4
+       ('沾姆士', 'D100011', 'df8f7acfcfb18cbf6019917af5429acf2907f1efaed2ed3c2cb3743e0008eb80f7547271fcc60f09d343a578392f113cc1111aa48713af2d4fdfc9a7022da3ed', 'seefood5@yahoo.tw', '1'),       # 師傅 5 seefood5
+       ('小當家', 'D100012', 'c989b16810b641a3080ed65a660f2b699c64d17da5100cc0344ed5d56b579cbb569a6cd2a9bf15a67fc70fcbe561701971cf8d515ba32bf42ffee82aecafd91a', 'seefood6@yahoo.tw', '1'),       # 師傅 6 seefood6
+       ('美食獵人', 'D100013', 'c62ce94fa66b3c5ca897a89001130699566702b5075c8ae94831d4ffa21a72018556107f80cc0f5e29a9449b484c6bae8f761596a448b03b2c4b94c553badcb2', 'seefood7@yahoo.tw', '1'),     # 師傅 7 seefood7
+       ('紅葉', 'D100014', 'd5209fb4dbb3bb40ea406a82212034802a127ec7f4f2cfef7eeaa3ad351d83b4c6c864313e1e8b8c137f9e91a344657482f79b3b56118cca894978f148f52a53', 'seefood8@yahoo.tw', '1');         # 師傅 8 seefood8
+
+
+
 
 
 INSERT INTO BACKSTAGE_FUN (AUTH_ID, AUTH_FUN, TYPE_FUN)
@@ -364,7 +374,7 @@ VALUES ('1', '商品訂單管理', 'SHOP'),
        ('14', '帖子討論區管理', 'CUSTORSERVICE'),
        ('15', '後台帳號管理', 'BACKADMIN');
 
-INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID)
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- Root
 VALUES ('1', '1'),
        ('1', '2'),
        ('1', '3'),
@@ -380,6 +390,77 @@ VALUES ('1', '1'),
        ('1', '13'),
        ('1', '14'),
        ('1', '15');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 1
+VALUES ('2', '5'),
+       ('2', '6'),
+       ('2', '7'),
+       ('2', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 商店
+VALUES ('3', '1'),
+       ('3', '2');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 課程
+VALUES ('4', '3'),
+       ('4', '4');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 會員
+VALUES ('5', '9'),
+       ('5', '10');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 倉儲
+VALUES ('6', '11'),
+       ('6', '12');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 客服
+VALUES ('7', '13'),
+       ('7', '14');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 2
+VALUES ('8', '5'),
+       ('8', '6'),
+       ('8', '7'),
+       ('8', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 3
+VALUES ('9', '5'),
+       ('9', '6'),
+       ('9', '7'),
+       ('9', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 4
+VALUES ('10', '5'),
+       ('10', '6'),
+       ('10', '7'),
+       ('10', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 5
+VALUES ('11', '5'),
+       ('11', '6'),
+       ('11', '7'),
+       ('11', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 6
+VALUES ('12', '5'),
+       ('12', '6'),
+       ('12', '7'),
+       ('12', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 7
+VALUES ('13', '5'),
+       ('13', '6'),
+       ('13', '7'),
+       ('13', '8');
+
+INSERT INTO BACKSTAGE_AUTH(EMP_ID, AUTH_ID) -- 師傅 8
+VALUES ('14', '5'),
+       ('14', '6'),
+       ('14', '7'),
+       ('14', '8');
+
+
+
 
 INSERT INTO NOTICE(MEM_ID, NOTICE_TITLE, NOTICE_TIME)
 VALUES (1, '您的留言因受到檢舉並審核通過，提醒您若受到檢舉三次將只能瀏覽文章。',
