@@ -1,0 +1,11 @@
+#pageContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#indexBlock {
+    border: 2px solid red !important;
+}
+#tableBlock {
+    border: 2px solid blue;
+}

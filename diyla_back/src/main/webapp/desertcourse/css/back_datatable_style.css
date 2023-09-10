@@ -1,0 +1,25 @@
+table tr th{
+  background:#ffb84d;
+  color:black;
+  text-align:left;
+  white-space: nowrap;
+  border: 1px solid gray;
+  vertical-align:center;
+  justify-content: space-around;
+}
+table tbody tr td{
+    color:black;
+    border: 1px solid gray;
+    justify-content: space-around;
+    text-align:left;
+}
+.btn{
+    white-space: nowrap;
+    margin: 5px;
+}
+
+.button-group{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
