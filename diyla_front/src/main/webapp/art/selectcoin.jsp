@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.cha102.diyla.tokenModel.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     TokenService tokenSvc = new TokenService();
     Integer memId = (Integer)session.getAttribute("memId");
@@ -58,9 +59,24 @@
             <tbody>
                 <c:forEach var="tokenVO" items="${list}">
                     <tr>
-                        <td>${tokenVO.tokenGetUse}</td>
+                        <c:choose>
+                            <c:when test="${tokenVO.tokenGetUse == 0}">
+                                <td>討論區</td>
+                            </c:when>
+                            <c:when test="${tokenVO.tokenGetUse == 1}">
+                                <td>商店</td>
+                            </c:when>
+                            <c:when test="${tokenVO.tokenGetUse == 2}">
+                                <td>課程</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>過期</td>
+                            </c:otherwise>
+                        </c:choose>
                         <td>${tokenVO.tokenCount}</td>
-                        <td>${tokenVO.tokenTime}</td>
+                        <td>
+                            <fmt:formatDate value="${tokenVO.tokenTime}" pattern="yyyy-MM-dd HH:mm" />
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
