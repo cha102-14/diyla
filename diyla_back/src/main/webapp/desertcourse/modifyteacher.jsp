@@ -37,15 +37,16 @@
         //默認使用者type為notAuth
         String type = "notAuth"; 
         //若session並非為null才往下
-        if(session != null){
-            Integer empId = (Integer) (session.getAttribute("empId"));
+        Integer empId = (Integer) (session.getAttribute("empId"));
+        List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+        if(session != null && empId != null && typeFun != null){
             EmpVO empVO = empDAO.getOne(empId);
             String empName = empVO.getEmpName();
             //進來的是何種使用者
             Object typeFunObj = session.getAttribute("typeFun");
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
-                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                
                 boolean containsMaster = typeFun.contains("MASTER");
                 boolean containsAdmin = typeFun.contains("ADMIN");
                 if (containsMaster && containsAdmin) {
@@ -258,12 +259,30 @@
 </div>
     <script>
         $(document).ready(function () {
-                 //先做是否有修改的權利的確認
-            if (${type} !== 'ADMIN' && ${type} !== 'MASTER') {
+            //檢查是否登入
+            var type = "${type}";
+            if (type === "NOSESSION") {
                 // 啟動定時器，5秒後導航到其他網頁
                 setTimeout(function() {
+                window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }, 3000); // 3000 毫秒 = 3 秒
+
+                Swal.fire({
+                title: "您沒有登入!",
+                icon: "warning",
+                confirmButtonText: "確定"
+             }).then(function(result){
+                if(result.isConfirmed) {
+                    window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }
+             });
+            }
+                 //先做是否有修改的權利的確認
+            if (${type} !== 'ADMIN' && ${type} !== 'MASTER') {
+                // 啟動定時器，3秒後導航到其他網頁
+                setTimeout(function() {
                 window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
-                }, 5000); // 5000 毫秒 = 5 秒
+                }, 3000); 
 
                 Swal.fire({
                 title: "您無權限修改師傅資料",

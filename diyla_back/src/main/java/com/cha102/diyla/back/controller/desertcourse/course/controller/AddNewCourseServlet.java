@@ -33,40 +33,60 @@ public class AddNewCourseServlet extends HttpServlet {
         //宣告用的到的service和變數
         ClassService classService = new ClassService();
         ClassVO classVO = new ClassVO();
-
         JSONObject errorMessage = new JSONObject();
-        //前端已做輸入參數的驗證了，這邊只要取得前端傳來的參數即可
-        Integer teacherId = Integer.parseInt(req.getParameter("teacherId").trim());
-        String courseName = req.getParameter("courseName").trim();
-        java.sql.Date courseDate = Date.valueOf(req.getParameter("courseDate").trim());
-        Integer courseSeq = Integer.parseInt(req.getParameter("courseSeq").trim());
-        java.sql.Date regEndDate = Date.valueOf(req.getParameter("regEndDate").trim());
-        Integer category = Integer.parseInt(req.getParameter("category").trim());
-        String intro = req.getParameter("courseIntro").trim();
-        Integer limit = Integer.parseInt(req.getParameter("courseLimit").trim());
-        Integer price = Integer.parseInt(req.getParameter("price").trim());
-        // 開始做圖片相關的處理
-        InputStream in = null;
-        try {
-            in = req.getPart("coursePic").getInputStream();
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        }
+        //宣告參數
+        Integer teacherId = null;
+        String courseName = null;
+        java.sql.Date courseDate = null;
+        Integer courseSeq = null;
+        java.sql.Date regEndDate = null;
+        Integer category = null;
+        String intro = null;
+        Integer limit = null;
+        Integer price = null;
+        String[] ingredientTypes = null;
+        String[] ingredientQuantities = null;
+        Integer[] courseIngIdList = null;
+        Integer[] courseIngQuantitiesList = null;
         byte[] coursePic = null;
-        if(in.available() != 0) {
-            coursePic = new byte[in.available()];
-            in.read(coursePic);
-            in.close();
+        //前端已做輸入參數的驗證了，這邊只要取得前端傳來的參數即可
+        try {
+            teacherId = Integer.parseInt(req.getParameter("teacherId").trim());
+            courseName = req.getParameter("courseName").trim();
+            courseDate = Date.valueOf(req.getParameter("courseDate").trim());
+            courseSeq = Integer.parseInt(req.getParameter("courseSeq").trim());
+            regEndDate = Date.valueOf(req.getParameter("regEndDate").trim());
+            category = Integer.parseInt(req.getParameter("category").trim());
+            intro = req.getParameter("courseIntro").trim();
+            limit = Integer.parseInt(req.getParameter("courseLimit").trim());
+            price = Integer.parseInt(req.getParameter("price").trim());
+            ingredientTypes = req.getParameterValues("ingredientType[]");
+            ingredientQuantities = req.getParameterValues("ingredientQuantity[]");
+            courseIngIdList = new Integer[ingredientTypes.length];
+            courseIngQuantitiesList = new Integer[ingredientQuantities.length];
+            // 開始做圖片相關的處理
+            InputStream in = null;
+            try {
+                in = req.getPart("coursePic").getInputStream();
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(in.available() != 0) {
+                coursePic = new byte[in.available()];
+                in.read(coursePic);
+                in.close();
+            }
+            // 確認報名時間不能早於報名截止時間
+            if (courseDate.before(regEndDate)) {
+                errorMessage.put("errorMessage", "報名截止日期不可晚於課程日期。");
+            }
+        } catch (NullPointerException npe) {
+            errorMessage.put("errorMessage", "資料接收失敗!");
+            out.print(errorMessage);
+            out.flush();
         }
-        // 確認報名時間不能早於報名截止時間
-        if (courseDate.before(regEndDate)) {
-            errorMessage.put("errorMessage", "報名截止日期不可晚於課程日期。");
-        }
-        // 取得表單傳遞的食材資料陣列
-        String[] ingredientTypes = req.getParameterValues("ingredientType[]");
-        String[] ingredientQuantities = req.getParameterValues("ingredientQuantity[]");
-        Integer[] courseIngIdList = new Integer[ingredientTypes.length];
-        Integer[] courseIngQuantitiesList = new Integer[ingredientQuantities.length];
+        //放入食材
         for(int i = 0; i < courseIngIdList.length; i++) {
             courseIngIdList[i] = Integer.parseInt(ingredientTypes[i]);
             courseIngQuantitiesList[i] = Integer.parseInt(ingredientQuantities[i]);
