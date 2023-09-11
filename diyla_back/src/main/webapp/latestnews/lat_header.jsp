@@ -24,11 +24,11 @@
     <div class="art_header">
         <h1>最新消息</h1>
         <div>
-            <span><a href="latall.jsp">查看最新公告</a></span>
-            <span><a href="addlat.jsp">新增最新公告</a> </span>
+            <span><a href="latall.jsp">查看公告</a></span>
+            <span><a href="addlat.jsp">新增公告</a> </span>
             <span>
-                <FORM METHOD="post" ACTION="latServlet" style="display: inline-block;">
-                    輸入公告編號 (如1):<input type="text" name="newsNO">
+                <FORM METHOD="post" ACTION="latServlet" style="display: inline;">
+                    輸入公告編號:<input type="text" name="newsNO" style="width: 200px;    vertical-align: middle;">
                     <input type="hidden" name="action" value="getOne_For_Display">
                     <input type="submit" value="送出">
                 </FORM>

@@ -43,11 +43,11 @@
     </tr>
     <tr>
       <td class="td1">問題標題</td>
-      <td class="td2"><textarea name="pbmTitle" id="pbmTitle"></textarea></td>
+      <td class="td2"><textarea name="pbmTitle" id="pbmTitle" required="required"></textarea></td>
     </tr>
     <tr>
       <td class="td1">問題內容</td>
-      <td class="td2"><textarea name="pbmContext" id="pbmContext" cols="30" rows="10"></textarea></td>
+      <td class="td2"><textarea name="pbmContext" id="pbmContext" cols="30" rows="10" required="required"></textarea></td>
     </tr>
   </table>
     <input type="hidden" name="action" value="pbm_insert">
