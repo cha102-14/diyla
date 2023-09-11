@@ -9,12 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
-<title>訂單列表 for Period</title>
+<title>訂單列表</title>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <style type="text/css">
 body {
 	margin-left: 280px;
-	font-size: 0;
-
+	
 }
 
 div#padding{
@@ -58,7 +58,7 @@ table {
 	width: 100%; /* 設定表格寬度 */
 	font-family: Arial, sans-serif; /* 設定字體 */
 	border: 1px solid black; /* 設定邊框 */
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	
 }
 
@@ -69,12 +69,6 @@ th, td {
 	
 }
 
-td#inn{
-display: flex;
-/* padding: 0px; */
-/* width: 90px; */
-/* height: 10px 0; */
-}
 
 th {
 	background-color: #f2f2f2; /* 設定表頭背景顏色 */
@@ -96,9 +90,22 @@ div.inline {
 
 .pennyrequest1{
 margin-top: 20px;
+list-style-type: none;
+ font-weight: bold;
 }
 
+a {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #333; /* 设置链接文本颜色为灰色 */
+}
 
+/* 鼠标悬停时的链接样式 */
+a:hover {
+    color: red; /* 设置鼠标悬停时的文本颜色为红色 */
+    font-weight: bold; /* 设置文本粗体 */
+    font-size: 1.3rem;
+}
 </style>
 </head>
 <body>
@@ -107,33 +114,19 @@ margin-top: 20px;
 		<span>
 			<h1 class="header-title">
 			以下為 ${diyReserveDate}
-			
-<%-- 			<c:choose> --%>
-<%-- 					<c:when test="${diyOrderVO.diyPeriod == 0}"> --%>
-<!-- 						<span> 上午</span> -->
-<%-- 					</c:when> --%>
-<%-- 					<c:when test="${diyOrderVO.diyPeriod == 1}"> --%>
-<!-- 						<span> 下午</span> -->
-<%-- 					</c:when> --%>
-<%-- 					<c:when test="${diyOrderVO.diyPeriod == 2}"> --%>
-<%-- 					<span> ${diyPeriod}</span> --%>
-<%-- 					</c:when>	 --%>
-<%-- 			</c:choose> --%>
 			<span> ${diyPeriod}</span>
-			的所有訂單列表(By Period)
+			的所有狀態之訂單列表
 			</h1>
 		</span>
 	</header>
 	
-	
-	--${diyOrderVO1.diyReserveDate}--
-	--${diyOrderVO1.diyPeriod}--
 
 
 	<input type="hidden" class="uuu" value="${uuu}">
 <div id="padding">
 
-	<table>
+	<table id="table_id">
+	<thead>	
 		<tr>
 			<th>DIY訂單編號</th>
 			<th>會員編號</th>
@@ -148,7 +141,8 @@ margin-top: 20px;
 			<th>付款狀態</th>
 			<th>DIY訂單金額</th>
 		</tr>
-		
+	</thead>	
+	<tbody>
 		<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 			<tr>
@@ -213,91 +207,52 @@ margin-top: 20px;
 					</c:when>
 				</c:choose>
 
-				<c:forEach var="DiyCateEntity" items="${diyCateList}">
-						<c:choose>
-								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}">
-									<td id="diyPrice">${DiyCateEntity.amount}</td>
-								</c:when>
-						</c:choose>			
-					</c:forEach>
-
-
-<!-- 				<td id="inn"> -->
-<!-- 					<div class="inline"> -->
-<!-- 						<FORM METHOD="post" ACTION="DiyOrderController" -->
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- <!-- 							<input type="submit" value="修改">  --> -->
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${(DiyOrderVO.paymentStatus) == 1}"> --%>
-<!-- 									<input type="submit" value="實到" disabled>  -->
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${(DiyOrderVO.paymentStatus) == 2}">  --%>
-<!-- 									<input type="submit" value="實到" disabled>   -->
-<%-- 								</c:when>  --%>
-<%--  								<c:when test="${(DiyOrderVO.paymentStatus) == 3}">  --%>
-<!--  									<input type="submit" value="實到" disabled>    -->
-<%--  								</c:when>  --%>
-<%-- 								<c:otherwise> --%>
-<!-- 									<input type="submit" value="實到" >  -->
-<%-- 								</c:otherwise>		 --%>
-<%-- 							</c:choose> --%>
-							
-<%-- 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}"> --%>
-<%-- 							<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}"> --%>
-<%-- 							<input type="hidden" name="diyPeriod" value="${DiyOrderVO.diyPeriod}"> --%>
-<!-- 							<input type="hidden" name="result" value="0"> -->
-<!-- 							<input type="hidden" name="action" value="comeORnot"> -->
-<!-- 						</FORM> -->
-<!-- 						<FORM METHOD="post" ACTION="DiyOrderController" -->
-<!-- 							style="margin-bottom: 0px;"> -->
-							
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${(DiyOrderVO.paymentStatus) == 1}"> --%>
-<!-- 									<input type="submit" value="未到" disabled>  -->
-<%-- 								</c:when> --%>
-<%-- 								<c:when test="${(DiyOrderVO.paymentStatus) == 2}">  --%>
-<!-- 									<input type="submit" value="未到" disabled>   -->
-<%-- 								</c:when>  --%>
-<%--  								<c:when test="${(DiyOrderVO.paymentStatus) == 3}">  --%>
-<!--  									<input type="submit" value="未到" disabled>    -->
-<%--  								</c:when>  --%>
-<%-- 								<c:otherwise> --%>
-<!-- 									<input type="submit" value="未到" >  -->
-<%-- 								</c:otherwise>		 --%>
-<%-- 							</c:choose> --%>
-							
-<%-- 							<input type="hidden" name="diyOrderNo" value="${DiyOrderVO.diyOrderNo}">  --%>
-<%-- 							<input type="hidden" name="diyReserveDate" value="${DiyOrderVO.diyReserveDate}"> --%>
-<%-- 							<input type="hidden" name="diyPeriod" value="${DiyOrderVO.diyPeriod}"> --%>
-<!-- 							<input type="hidden" name="result" value="1"> -->
-<!-- 							<input type="hidden" name="action" value="comeORnot"> -->
-<!-- 						</FORM> -->
-						
-<!-- 						<p style="color:red;font-weight: bold;font-size:2rem;"></p> -->
-						
-<!-- 					</div> -->
-<!-- 				</td> -->
-
-
-
-			</tr>
-
+				<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
+		</tr>
 		</c:forEach>
-
+		</tbody>
 	</table>
 
 	<div class="pennyrequest1">
-		<li><a href='getodByPeriod_front.jsp'>返回點名系統首頁</a></li>
+		<li><a href='getodByPeriod_front.jsp'>>返回點名系統首頁</a></li>
 	</div>
 
 	<div class="pennyrequest1">
-		<li><a href='diyorderfront.jsp'>返回DIY後台管理首頁</a></li>
+		<li><a href='diyorderfront.jsp'>>返回DIY後台管理首頁</a></li>
 	</div>
 	
 	
 
 
 </div>	
+
+ <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"></script>
+    
+ <script type="text/javascript">
+ 
+//  new DataTable('#table_id');
+ $('#table_id').DataTable( {
+    language: {
+        search: "搜尋:",
+        sLengthMenu:"顯示_MENU_筆結果",
+        sInfo: "顯示第_START_至_END_筆結果，共_TOTAL_筆",
+        oPaginate:{
+        	sFirst: "首頁",
+        	sPrevious: "上頁",
+        	sNext: "下頁",
+        	sLast: "最後頁"        	
+        }
+    }
+} );
+
+ 
+ </script>   
+
+
+
+
 
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">

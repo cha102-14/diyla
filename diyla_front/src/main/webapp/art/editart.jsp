@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,8 +47,8 @@
                         <td class="td2">
                             <input id="addimg" type="file" name="artPic" accept="image/*" onchange="preImg()">
                             <div id="imagePreview">
-                                <img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
-                                    alt="Image">
+                                <img src="data:image/jpeg;base64,${ Base64.getEncoder().encodeToString(artVO.artPic) }"
+                                    alt="Image" style="width: 100%">
                             </div>
                         </td>
                     </tr>
@@ -137,7 +138,6 @@
                 };
                 reader.readAsDataURL(addimg.files[0]);
             } else {
-                preDiv.innerHTML = "";
             }
         }
     </script>
