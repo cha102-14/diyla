@@ -39,7 +39,7 @@
                             <td>
                                 <%= a.getNewsNo() %>
                             </td>
-                            <td>
+                            <td style="padding: 35px;">
                                 <%= a.getNewsContext() %>
                             </td>
                             <td><img id="lat_img" src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(a.getAnnPic()) %>"

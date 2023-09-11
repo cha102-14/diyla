@@ -120,7 +120,7 @@
             </tr>
             <tr>
                 <td class="td1">公告內容:</td>
-                <td class="td2"> <input id="text" type="text" name="newsContext"> </td>
+                <td class="td2"> <input id="text" type="text" name="newsContext" required="required"> </td>
             </tr>
             <tr>
                 <td class="td1">公告圖片:</td>
