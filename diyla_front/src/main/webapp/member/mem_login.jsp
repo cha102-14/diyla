@@ -48,10 +48,12 @@
             border-radius: 5px;
             letter-spacing: 3px;
             margin:50px 0;
+            background-color:snow;
         }
         h4.member{
             margin-top:30px;
-            margin-bottom:20px
+            margin-bottom:20px;
+            font-weight:bold;
         }
 
         div.error {
@@ -88,6 +90,7 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
+            padding: 0 0 0 8px;
         }
         input.inputform:focus {
               outline: 1.5px solid #B26021;
@@ -145,6 +148,7 @@
             font-size: 1rem;
             color: #B26021;
         }
+
     </style>
 
 </head>

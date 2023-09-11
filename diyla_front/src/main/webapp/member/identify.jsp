@@ -25,6 +25,109 @@
 
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family:"jf open 粉圓 1.1";
+
+        }
+
+        body {
+            margin: 0;
+        }
+
+        div.title {
+            border: 1px solid #B26021;
+            text-align: center;
+            width: 400px;
+            color: #B26021;
+            position: relative;
+            top:50%;
+            left:50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            letter-spacing: 3px;
+            margin:50px 0;
+            background-color:snow;
+        }
+        h4.member{
+            margin-top:30px;
+            margin-bottom:20px;
+            font-weight:bold;
+        }
+
+        div.error {
+            padding: 10px;
+            background-color: #FCE5CD;
+        }
+
+        div.member {
+            padding: 10px;
+            font-size: 1rem;
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        label.user {
+            position: absolute;
+            top: 22px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+        label.pw {
+            position: absolute;
+            top: 110px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+
+        input.inputform {
+            border: 1px solid #B26021;
+            margin: 15px;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            color: #B26021;
+            height: 35px;
+            letter-spacing: 1px;
+            padding: 0 0 0 8px;
+        }
+        input.inputform:focus {
+              outline: 1.5px solid #B26021;
+              box-shadow: 2px;
+        }
+
+        /* 移除瀏覽器預設藍色背景 */
+        input.inputform:-webkit-autofill,
+        input.inputform:-webkit-autofill:focus {
+               -webkit-box-shadow: 0 0 0 30px white inset;
+               -webkit-text-fill-color:#B26021;
+        }
+
+
+        button.member {
+            border-radius: 0.5rem;
+            background-color: #B26021;
+            color: #FCE5CD;
+            border: 1px #B26021;
+            width: 199.33px;
+            height: 35px;
+            letter-spacing: 3px;
+            margin-top: 40px;
+            font-size: 1rem;
+        }
+        button.member:hover {
+            background-color: #FCE5CD;
+            color:  #B26021;
+            transition: all 0.3s;
+        }
+
+
+        p {
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
 
 
 </head>
@@ -32,7 +135,7 @@
 
     <jsp:include page="../front_header.jsp"/>
     <div class="title">
-        <h4>驗證信箱</h4>
+        <h4 class="member">驗證信箱</h4>
         <c:if test="${not empty exMsgs}">
              <div style="color:red" class="error">
                   <c:forEach var="message" items="${exMsgs}">
@@ -40,13 +143,13 @@
                   </c:forEach>
              </div>
         </c:if>
-        <div class="">
+        <div class="member">
             <form method="post" action="identify">
-                <label>帳號</label><br>
-                <input type="email" name="email" placeholder="請輸入信箱" id="email" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
-                <label>驗證碼</label><br>
-                <input type="text" name="identifycode" placeholder="請輸入驗證信的驗證碼" ><br>
-                <button type="submit" value="identify">確認驗證</button><br>
+                <label class="user">帳號</label><br>
+                <input type="email" name="email" placeholder="請輸入信箱" id="email" class="inputform" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
+                <label class="pw">驗證碼</label><br>
+                <input type="text" name="identifycode" placeholder="請輸入驗證信的驗證碼" class="inputform"><br>
+                <button type="submit" value="identify" class="member">確認驗證</button><br>
             </form>
         </div>
     </div>

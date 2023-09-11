@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="/index.jsp"/>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,15 +23,11 @@
     <div class="art_header">
         <h1>論壇</h1>
         <div>
-            <span><a href="art.jsp">查看論壇</a></span>
+            <span><a href="${ctxPath}/art/ArtController?action=selectAll">查看論壇</a></span>
             <span><a href="artnocheckall.jsp">審核文章</a></span>
             <span><a href="${ctxPath}/art/artReport">審核留言檢舉</a> </span>
         </div>
     </div>
-
-   <jsp:include page="/art/artall.jsp"/>
-
-
 </body>
 
 </html>

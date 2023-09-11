@@ -3,6 +3,10 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpVO" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpService" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAOImpl" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
 <%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
 <%@ page import="com.cha102.diyla.sweetclass.classModel.ClassVO" %>
@@ -34,26 +38,52 @@
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
     <%  //若authCode=0/1/>2 分別代表無權限後台人員/admin/以及師傅>
         //假資料區
-        String fakeTypeFun = "ADMIN";
-        session.setAttribute("typeFun", fakeTypeFun);
-        Integer fakeEmpId = 1;
-        session.setAttribute("empId", fakeEmpId);
+        //String fakeTypeFun = "ADMIN";
+        //session.setAttribute("typeFun", fakeTypeFun);
+        //Integer fakeEmpId = 1;
+        //session.setAttribute("empId", fakeEmpId);
         //抓取權限以及empId對應的teacherVO
-        String typeFun = (String) session.getAttribute("typeFun");
-        Integer empId = (Integer) (session.getAttribute("empId"));
+        EmpService empService = new EmpService();
+        EmpDAO empDAO = new EmpDAOImpl();
         TeacherService teacherService = new TeacherService();
-        Integer teacherId = null;
-        String empName = "無詠致";
-        TeacherVO teacher = null;
-        if("ADMIN".equals(typeFun)) {
-            List<TeacherVO> teacherList = teacherService.getAllTeacher();
-            pageContext.setAttribute("teacherList", teacherList);
-        } else if ("MASTER".equals(typeFun)) {
-            teacher = teacherService.getOneTeacherByEmpId(empId);
-            teacherId = teacher.getTeaId();
+        //默認使用者type為notAuth
+        String type = "notAuth"; 
+        //若session並非為null才往下
+        if(session != null){
+            Integer empId = (Integer) (session.getAttribute("empId"));
+            EmpVO empVO = empDAO.getOne(empId);
+            String empName = empVO.getEmpName();
+            //進來的是何種使用者
+            Object typeFunObj = session.getAttribute("typeFun");
+            boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+            if (isTypeFunList) {
+                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+                } else if (containsMaster) {
+                    type = "MASTER";
+                }
+            } else {
+                type = (String) typeFunObj;
+            }
+            Integer teacherId = null;
+            TeacherVO teacher = null;
+            if("ADMIN".equals(type)) {
+                List<TeacherVO> teacherList = teacherService.getAllTeacher();
+                pageContext.setAttribute("teacherList", teacherList);
+            } else if ("MASTER".equals(type)) {
+                teacher = teacherService.getOneTeacherByEmpId(empId);
+                teacherId = teacher.getTeaId();
+            }
+            pageContext.setAttribute("type", type);
+            pageContext.setAttribute("teacherId", teacherId);
+            pageContext.setAttribute("teacherName", empName);
+        } else {
+            type = "NOSESSION";
+            pageContext.setAttribute("type", type);
         }
-        session.setAttribute("teacherId", teacherId);
-        session.setAttribute("teacherName", empName);
     %>
 
 </head>
@@ -77,8 +107,8 @@
             <div class="col-md-6">
                 <div id="teacherIdField" class="form-group">
                     <c:choose>
-                    <c:when test="${typeFun == 'ADMIN'}">
-                        <label for="teacherSelect">師傅編號</label><br>
+                    <c:when test="${type == 'ADMIN'}">
+                        <label for="teacherSelect">師傅</label><br>
                         <select id="teacherSelect" class="teacherSelect form-control">
                         <c:forEach var="tea" items="${teacherList}" varStatus="loop">
                             <option id="teacher${loop.index}" value="${tea.teaId}">${tea.teaName}</option>
@@ -122,7 +152,7 @@
     <div id="registerEndDateBlock" class="col-md-6">
         <div class="form-group">
             <label for="registerEndDate">註冊截止日期</label>
-            <input type="datetime-local" class="form-control" id="regEndDate" name="regEndDate" required>
+            <input type="date" class="form-control" id="regEndDate" name="regEndDate" required>
             <span class="error" style="display: none">請輸入有效的日期(yyyy-mm-dd : hh:mm:ss)。</span>
         </div>
     </div>
@@ -185,7 +215,7 @@
         <img id="picPreview" src="#" alt="圖片預覽" style="max-width: 300px; max-height: 300px;">
     </div>
     <div id="buttonBlock" class="col-md-6 form-group" style:>
-        <button type="button" class="btn btn-secondary form-control" id="submitButton" style="width: 5vw;"disabled>新增課程</button>
+        <button type="submit" class="btn btn-secondary form-control" id="submitButton" style="width: 5vw;"disabled>新增課程</button>
     </div>
 </form>
 </div>
@@ -194,7 +224,6 @@
 </div>
     <script>
         $(document).ready(function() {
-            var typeFun = "${typeFun}";
             //取得食材列表
             var ingOptionString = "";
             fetch("${ctxPath}"+"/getIngredientList")
@@ -205,18 +234,37 @@
                 })
                 $("#ingredientType1").html(ingOptionString);
             });
-
-            //阻擋無權限人員新增課程
-           if(typeFun !== "ADMIN" && typeFun !== "MASTER") {
-            Swal.fire({
-                title: "您沒有權限拜訪此頁面!",
+            //取得權限
+            var type = "${type}";
+            //若無session
+            if(type === "NOSESSION") {
+                Swal.fire({
+                title: "您沒有登入!",
                 icon: "error",
                 confirmButtonText: "確定"
             }).then((result) => {
                 if(result.isConfirmed) {
-                    window.location.href="/${ctxPath}/index";
+                    window.location.href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
                 }
             });
+            setTimeout(function() {
+                window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+                }, 2500);
+            }
+            //阻擋無權限人員新增課程
+           if(type !== "ADMIN" && type !== "MASTER") {
+            Swal.fire({
+                title: "您沒有權限新增課程!",
+                icon: "error",
+                confirmButtonText: "確定"
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    window.location.href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+                }
+            });
+            setTimeout(function() {
+                window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+                }, 2500);
            }
            //圖片預覽處理以及需要上傳圖片才可以送出表單
            $("#coursePic").on("change", function () {

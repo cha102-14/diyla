@@ -8,7 +8,7 @@
    <el-ignored>false</el-ignored>
   </jsp-property-group>
  </jsp-config>
-  <display-name>Archetype Created Web Application</display-name>
+ <display-name>Archetype Created Web Application</display-name>
  <welcome-file-list>
   <welcome-file>index.jsp</welcome-file>
  </welcome-file-list>
@@ -19,6 +19,16 @@
  <filter-mapping>
   <filter-name>loginFilter</filter-name>
   <url-pattern>/member/mem_update.jsp</url-pattern>
+  <url-pattern>/member/updadePw.jsp</url-pattern>
+  <url-pattern>/track/*</url-pattern>
+  <url-pattern>/allOrder/*</url-pattern>
+  <url-pattern>/token/*</url-pattern>
+  <url-pattern>/diybooking/diybooking.jsp</url-pattern>
+  <url-pattern>/art/addart.jsp</url-pattern>
+  <url-pattern>/art/editart.jsp</url-pattern>
+  <url-pattern>/art/personalart.jsp</url-pattern>
+  <url-pattern>/art/selectcoin.jsp</url-pattern>
+  <url-pattern>/front_chat_page.jsp</url-pattern>
   <dispatcher>REQUEST</dispatcher>
   <dispatcher>FORWARD</dispatcher>
   <dispatcher>INCLUDE</dispatcher>

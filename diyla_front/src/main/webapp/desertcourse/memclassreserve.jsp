@@ -12,35 +12,65 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/datatable_style.css" />
+        <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/front_basic_style.css" />
 </head>
 
 <body>
-<jsp:include page="/front_header.jsp" />
+<%-- <jsp:include page="/front_header.jsp" /> --%>
 <section id="navibar">
 <jsp:include page="/desertcourse/navibar.jsp" />
 </section>
-<table id="reserveTable">
-    <thead>
-    <tr>
-        <th data-field="reserveId">訂單編號</th>
-        <th data-field="courseId">課程編號</th>
-        <th data-field="courseName">課程名稱</th>
-        <th data-field="courseDate">課程日期</th>
-        <th data-field="courseSeq">課程場次</th>
-        <th data-field="memName">姓名</th>
-        <th data-field="headcount">報名人數</th>
-        <th data-field="status">訂單狀態</th>
-        <th data-field="createTime">訂單創建日期</th>
-        <th data-field="totalPrice">總金額</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-</table>
-
+<div id="contentBlock">
+    <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
+        <h2 id="title" class="title-tag" >會員訂單</h2>
+    </div>
+    <div id="tableBlock" class="shadow p-3 mb-5 bg-body rounded">
+    <table id="reserveTable">
+        <thead>
+        <tr>
+            <th data-field="reserveId">訂單編號</th>
+            <th data-field="courseId">課程編號</th>
+            <th data-field="courseName">課程名稱</th>
+            <th data-field="courseDate">課程日期</th>
+            <th data-field="courseSeq">課程場次</th>
+            <th data-field="memName">姓名</th>
+            <th data-field="headcount">報名人數</th>
+            <th data-field="status">訂單狀態</th>
+            <th data-field="createTime">訂單創建日期</th>
+            <th data-field="totalPrice">總金額</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+    </table>
+    </div>
+</div>
 
 <script>
         $(document).ready(function () {
-            var getMemId = 1;
+            var getMemId = "${memId}";
+            if (getMemId == '') {
+                // 啟動定時器，3秒後導航到其他網頁
+                setTimeout(function() {
+                window.location.href = "${ctxPath}/member/mem_login.jsp";
+                }, 3000); 
+                Swal.fire({
+                    title: "您尚未登入，請登入。",
+                    icon: "warning",
+                    confirmButtonText: "確定"
+                }).then(function(result){
+                    if(result.isConfirmed) {
+                        window.location.href="${ctxPath}/member/mem_login.jsp";
+                    }
+                });
+            } else{
 
             function loadReserve(getMemId) {
                 $.ajax({
@@ -51,7 +81,33 @@
                     success: function (data) {
                         // 使用 jQuery Table 來動態生成表格
                         $('#reserveTable').DataTable({
+                            language: {
+                                "sProcessing": "處理中...",
+                                "sLengthMenu": "顯示 _MENU_ 項結果",
+                                "sZeroRecords": "沒有匹配結果",
+                                "sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+                                "sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+                                "sInfoFiltered": "(從 _MAX_ 項結果過濾)",
+                                "sInfoPostFix": "",
+                                "sSearch": "搜索:",
+                                "sUrl": "",
+                                "sEmptyTable": "表格中無可用數據",
+                                "sLoadingRecords": "載入中...",
+                                "sInfoThousands": ",",
+                                "oPaginate": {
+                                    "sFirst": "首頁",
+                                    "sPrevious": "上一頁",
+                                    "sNext": "下一頁",
+                                    "sLast": "末頁"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": 升冪排列",
+                                    "sSortDescending": ": 降冪排列"
+                                }
+                            },
                             data: data,
+                            lengthMenu: [5, 10, 25, 50],
+                            pageLength: 5,
                             columns: [
                                 { data: 'reserveId' },
                                 { data: 'courseId', visible: false },
@@ -111,7 +167,7 @@
                     }
                 });
             });
-
+            }
         });
     </script>
     <jsp:include page="/front_footer.jsp" />

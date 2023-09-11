@@ -2,15 +2,19 @@ package com.cha102.diyla.front.controller.notice;
 
 import com.cha102.diyla.noticeModel.NoticeService;
 import com.cha102.diyla.noticeModel.NoticeVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class NoticeController {
     private HttpSession session;
+    @Autowired
     private NoticeService noticeService;
 
     public NoticeController(HttpSession session, NoticeService noticeService) {
@@ -33,4 +37,11 @@ public class NoticeController {
     public void saveNewNotice(List<NoticeVO> noticeVOS) {
         noticeService.saveNotice(noticeVOS);
     }
+
+    @PostMapping("/notice/updateStatus")
+    @ResponseBody
+    public String updateStatus(@RequestBody Map<String,String> map){
+        Integer noticeNo = Integer.valueOf(map.get("noticeNo"));
+        noticeService.updateStatus(noticeNo);
+        return "success";}
 }
