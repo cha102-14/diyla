@@ -399,7 +399,7 @@ a.subbarlink:hover {
 					  let form = $(this).closest("form"); // 找到最近的父級 form
 					  var orderStatus = parseInt($(this).data('order-status'));
 					  console.log(orderStatus);
-					  if (orderStatus === 2) {
+					  if (orderStatus === 3) {
 						  swal({
 							    title: "商品已出貨，無法取消訂單",
 							    icon:"warning",
@@ -408,7 +408,7 @@ a.subbarlink:hover {
 							});
 				            return;
 				        }
-					  if (orderStatus >= 3) {
+					  if (orderStatus >= 4) {
 						  swal({
 							    title: "訂單已完成，無法取消訂單",
 							    icon:"warning",
