@@ -121,7 +121,6 @@ public class diyEcpayController {
             Integer totalPri = Integer.valueOf(totalPrice);
             int diyReserveId = Integer.parseInt(token);
 
-// 假设 selectedDate 是用户选择的日期，它应该是一个字符串或日期对象
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.sql.Date sqlDate2 = null;
             try {
@@ -138,8 +137,8 @@ public class diyEcpayController {
 
 
             MemVO memVO = memberService.selectMem(memId);
-            session.setAttribute("memId", memId);
-            session.setAttribute("memVO", memVO);
+            model.addAttribute("memId", memId);
+            model.addAttribute("memVO", memVO);
             String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "收件地址:"
                     + recipientAddress + "\n" + "訂購日期:" + formattedDate + "\n" + "_____________________\n"
                     + "DIYLA感謝您的預約";
