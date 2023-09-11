@@ -72,6 +72,7 @@ public class EmpSpringServiceImpl implements EmpSpringService {
             return "";
         }
     }
+
     @Override
     public void validEmpLogin(String empAccount, String empPassword, HttpServletRequest req, HttpServletResponse resp) {
         ConcurrentHashMap<String, String> errorMsgMap = new ConcurrentHashMap<>();
@@ -80,36 +81,51 @@ public class EmpSpringServiceImpl implements EmpSpringService {
         byte[] empPic = null;
         List<EmpDTO> empDTOList = new ArrayList<>();
         List<String> empTypeFunList = new ArrayList<>();
+        int errorCount = 0;
         if (ObjectUtils.isEmpty(empAccount)) {
-            req.setAttribute("empAccount","account");
-            errorMsgMap.put("empAccount", "請輸入員工帳號");
+            req.setAttribute("empAccount", "account");
+            errorCount++;
+//            errorMsgMap.put("empAccount", "請輸入員工帳號");
+
         }
         if (ObjectUtils.isEmpty(empPassword)) {
-            req.setAttribute("empPassword","password");
-            errorMsgMap.put("empPassword", "請輸入員工密碼");
+            req.setAttribute("empPassword", "password");
+            errorCount++;
+//            errorMsgMap.put("empPassword", "請輸入員工密碼");
         }
-
-        if (!ObjectUtils.isEmpty(errorMsgMap)) {
-            req.setAttribute("errorMsgMap", errorMsgMap);
+        if(errorCount > 0){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            return;
         }
+
+
+//        if (!ObjectUtils.isEmpty(errorMsgMap)) {
+//            req.setAttribute("errorMsgMap", errorMsgMap);
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
+//            try {
+//                requestDispatcher.forward(req,resp);
+//            } catch (ServletException e) {
+//                throw new RuntimeException(e);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//            return;
+//        }
         List<Object[]> empDataList = empJPADAO.validEmpLogin(empAccount, empPassword);
         if (empDataList.size() == 0) {
-            errorMsgMap.put("empLoginError", "員工帳號密碼不匹配,請重新確認");
-            req.setAttribute("empAccount","false");
-            req.setAttribute("empPassword","false");
-            req.setAttribute("errorMsgMap", errorMsgMap);
+//            errorMsgMap.put("empLoginError", "員工帳號密碼不匹配,請重新確認");
+            req.setAttribute("empAccount", "false");
+            req.setAttribute("empPassword", "false");
+//            req.setAttribute("errorMsgMap", errorMsgMap);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("empLogin.jsp");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {

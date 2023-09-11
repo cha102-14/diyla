@@ -66,7 +66,7 @@
 
     function checkPassword(){
         if("${password}" != "" ){
-            console.log(${password})
+            // console.log(${password})
             Swal.fire('密碼不相符,請重新確認密碼！');
         }
     }
