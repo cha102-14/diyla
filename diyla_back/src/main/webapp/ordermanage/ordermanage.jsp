@@ -332,10 +332,10 @@ p.orderNO {
 	/* display:flex; */
 	/* justify-content:flex; */
 	flex-direction: column;
-	white-space: no-wrap;
-	padding:5px 1px;
-	margin:5px 1px;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+		white-space: no-wrap;
+		padding:5px 1px;
+		margin:5px 1px;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	
 }
 
