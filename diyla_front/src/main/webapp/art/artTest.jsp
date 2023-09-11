@@ -10,6 +10,7 @@
     List<ArtVO> list = artSvc.getAllArt();
     pageContext.setAttribute("list", list);
     Jedis jedis = new Jedis("localhost", 6379);
+    pageContext.setAttribute("jedis", jedis);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,21 +109,11 @@
                     <td>${artVO.memVO}</td>
                     <td>${artVO.artTitle}</td>
 
-                    <c:set var="i" value="${artVO.artNo}" />
-                    --${i}-
-                    <c:set var="redisNo" value="art:${i}" />
-                    ==${redisNo}==
-                    <%= jedis.get("${redisNo}") %>
-                        @${empty str}@
-                        --==${str}==--
-                        <img id="imagePre" src="data:image/jpeg;base64, <%= jedis.get("art:1") %>" alt="圖片1">
-                        <img id="imagePre" src="data:image/jpeg;base64, <%= jedis.get("${redisNo}") %>"
-                        alt="圖片${i}"><br>
-
-
+                    <c:set var="redisNo" value="art:${artVO.artNo}" />
                         <c:choose>
-                            <c:when test="${not empty imgBase64}">
-                                <td><img id="imagePre" src="data:image/jpeg;base64, ${imgBase64}" alt="圖片2"></td>
+                            <c:when test="${not empty redisNo}">
+                                <td><img id="imagePre" src="data:image/jpeg;base64, ${jedis.get(redisNo)}" alt="圖片${redisNo}"></td>
+                                <td><img id="imagePre" src="data:image/jpeg;base64, <%= jedis.get(${redisNo}) %>" alt="圖片${redisNo}"></td>
                             </c:when>
 
                             <c:otherwise>
@@ -153,7 +144,7 @@
                         </td>
                 </tr>
             </c:forEach>
-            <% jedis.close(); %>
+            ${ jedis.close() }
         <tbody>
     </table>
     <jsp:include page="/front_footer.jsp" />
