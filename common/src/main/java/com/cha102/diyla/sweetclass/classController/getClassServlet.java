@@ -28,7 +28,11 @@ public class getClassServlet extends HttpServlet {
         for (ClassVO courses : courseList) {
             if (categoryId == -1 && courses.getClassStatus() == 0 || courses.getClassStatus() == 2){
             JSONObject jsonCourse = new JSONObject();
-            jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
+            if(courses.getClassPic().length == 0){
+                jsonCourse.put("coursePic", "無圖片。");
+            } else {
+                jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
+            }
             jsonCourse.put("courseName", courses.getClassName());
             jsonCourse.put("courseDate", courses.getClassDate().toString());
             jsonCourse.put("regEndDate", courses.getRegEndTime().toString());
@@ -46,7 +50,11 @@ public class getClassServlet extends HttpServlet {
             jsonArray.put(jsonCourse);
             } else if (courses.getCategory() == categoryId && courses.getClassStatus() == 0 || courses.getClassStatus() == 2) {
                 JSONObject jsonCourse = new JSONObject();
-                jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
+                if(courses.getClassPic().length == 0){
+                    jsonCourse.put("coursePic", "無圖片。");
+                } else {
+                    jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
+                }
                 jsonCourse.put("courseName", courses.getClassName());
                 jsonCourse.put("courseDate", courses.getClassDate().toString());
                 jsonCourse.put("regEndDate", courses.getRegEndTime().toString());

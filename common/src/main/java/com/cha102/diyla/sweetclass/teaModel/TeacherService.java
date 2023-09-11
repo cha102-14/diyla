@@ -52,6 +52,9 @@ public class TeacherService {
 
         return teaDAO.findByPrimaryKey(teaID);
     }
+    public TeacherVO getOneTeacherByEmpId (Integer empID) {
+        return teaDAO.findTeaByEmpID(empID);
+    }
     public boolean verifyTeacherId(Integer teaID) {
         Optional<TeacherVO> tea = Optional.ofNullable(teaDAO.findByPrimaryKey(teaID));
         if(tea.isPresent()) {
@@ -64,6 +67,16 @@ public class TeacherService {
     public List<TeacherVO> getAllTeacher(){
 
         return teaDAO.getAll();
+    }
+    public boolean isEmpAlreadyTeacher(Integer empId) {
+        List<TeacherVO> allTeacher = teaDAO.getAll();
+        boolean result = false;
+        for(TeacherVO teacher: allTeacher) {
+            if (empId == teacher.getEmpId()) {
+                result = true;
+            }
+        }
+        return result;
     }
     public boolean updateTeaStatus(Integer teaId, Integer status){
         TeacherVO teacherVO = teaDAO.findByPrimaryKey(teaId);
