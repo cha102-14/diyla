@@ -7,10 +7,10 @@
 
 
 <%
-Integer memId = (Integer)session.getAttribute("memId");
-MemberService memSvc = new MemberService();
-MemVO memVO =  memSvc.selectMem(memId);
-pageContext.setAttribute("memVO", memVO);
+// Integer memId = (Integer)session.getAttribute("memId");
+// MemberService memSvc = new MemberService();
+// MemVO memVO =  memSvc.selectMem(memId);
+// pageContext.setAttribute("memVO", memVO);
 %>
 <!DOCTYPE html>
 <html>

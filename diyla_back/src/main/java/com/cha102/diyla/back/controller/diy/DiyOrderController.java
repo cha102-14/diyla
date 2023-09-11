@@ -63,22 +63,26 @@ public class DiyOrderController extends HttpServlet {
 		}
 
 		long delay = now.getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-		Calendar cal = new GregorianCalendar(2023, Calendar.SEPTEMBER, 4, 18, 11, 0);
+		Calendar cal = new GregorianCalendar(2023, Calendar.SEPTEMBER, 10, 14, 15, 0);
 
 		timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-
+				int count = 0;
 				DiyOrderService DOser = new DiyOrderService();
 				List<DiyOrderVO> diyOrderList = DOser.getAll();
 
 				for (DiyOrderVO diyOrderVO : diyOrderList) {
-					if (diyOrderVO.getReservationStatus() == 1 && diyOrderVO.getPaymentStatus() == 0) {
+					if (diyOrderVO.getReservationStatus() == 1 /*&& diyOrderVO.getPaymentStatus() == 0*/) {
 						Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 						long timediff = currentTime.getTime() - diyOrderVO.getCreateTime().getTime();
-						long daysDifference = timediff / (1000 * 60 * 60 * 24);
-						if (daysDifference >= 1) {
+						long daysDifference = timediff / (1000 * 60 );
+						if (daysDifference >= 5) {
+							count++;
+							diyOrderVO.setReservationStatus(2);
 							diyOrderVO.setPaymentStatus(3);
+							
+							DOser.upOD(diyOrderVO);
 
 						}
 
@@ -86,9 +90,9 @@ public class DiyOrderController extends HttpServlet {
 
 				}
 
-				System.out.println("11111111111111111111111111111111111111。");
+//				System.out.println(count);
 			}
-		}, cal.getTime(), 10800000); // 任务每3小时执行一次
+		}, cal.getTime(), 60000); // 任务每3小时执行一次
 
 	}
 
@@ -110,7 +114,7 @@ public class DiyOrderController extends HttpServlet {
 		// 後台前端顯示所有訂單 (差DATATABLE) done
 		if ("getAllOrder".equals(action)) {
 
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 
 			DiyOrderService DOser = new DiyOrderService();
@@ -126,7 +130,7 @@ public class DiyOrderController extends HttpServlet {
 		// 後台前端顯示某訂單編號之訂單 done
 		if ("getOne_For_Display".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -197,7 +201,7 @@ public class DiyOrderController extends HttpServlet {
 		if ("getEffectOrderByPeriod".equals(action)) {
 			// 錯誤處理及 匯入 DiyCateEntity
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -266,7 +270,7 @@ public class DiyOrderController extends HttpServlet {
 		if ("comeORnot".equals(action) && "0".equals(result)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
@@ -297,7 +301,7 @@ public class DiyOrderController extends HttpServlet {
 		} else if ("comeORnot".equals(action) && "1".equals(result)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
@@ -331,7 +335,7 @@ public class DiyOrderController extends HttpServlet {
 		if ("getAllOrderByPeriod".equals(action)) {
 			// 錯誤處理及 匯入 DiyCateEntity
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -455,7 +459,7 @@ public class DiyOrderController extends HttpServlet {
 		if ("getOneMemId_For_Display".equals(action)) {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -504,7 +508,7 @@ public class DiyOrderController extends HttpServlet {
 //			int diyPeriod = Integer.valueOf(req.getParameter("diyPeriod"));
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 			DiyOrderService DOser = new DiyOrderService();

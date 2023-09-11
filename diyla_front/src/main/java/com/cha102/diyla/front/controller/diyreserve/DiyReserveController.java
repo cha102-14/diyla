@@ -8,6 +8,7 @@ import com.cha102.diyla.diyreservemodel.DiyReserveResultService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -27,8 +28,8 @@ public class DiyReserveController {
     //GetMapping查詢   PostMapping新增
     @GetMapping("/peoItemQuantityReport")
     public List<DIYReserveVO[]> getItemQuantityReport(
-            // @RequestParam(value = "endDate",required = false) Date endDate,
-            // @RequestParam("period") int period
+//             @RequestParam(value = "endDate",required = false) Date endDate,
+//             @RequestParam("period") int period
     ) {
         //設定只能訂六十天內
         Calendar calendar = Calendar.getInstance();
