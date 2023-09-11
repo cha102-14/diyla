@@ -595,7 +595,7 @@ font-weight:bold;
 	    	console.log("嗨");
 	        const orderId = this.getAttribute("data-order-id");
 	    	console.log(orderId);
-	        fetch("http://localhost:8081/diyla_back/orderManage/OrderManageController?action=showDetail&orderNo="+orderId)
+	        fetch("${ctxPath}/orderManage/OrderManageController?action=showDetail&orderNo="+orderId)
 	        .then(response => response.json())
             .then(data => {
                 // 從json拿到值並填入

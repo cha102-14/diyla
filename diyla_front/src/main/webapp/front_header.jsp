@@ -124,7 +124,7 @@
                             <div class="dropdown-content" id="notification-dropdown">
 
                             </div>
-                            <a href="http://localhost:8081/diyla_front/shopR/getlist/${memId}" id="shoppingcart"
+                            <a href="${ctxPath}/shopR/getlist/${memId}" id="shoppingcart"
                                class="position-relative">
 
                                 <svg fill="#fce5cd" height="28px" width="28px" version="1.1" id="Layer_1"

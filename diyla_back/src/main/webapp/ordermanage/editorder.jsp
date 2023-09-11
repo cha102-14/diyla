@@ -212,7 +212,7 @@ border-radius: 5px;
 		const cancelButton = $(".cancel-button");
 
 		cancelButton.click(function() {
-		    window.location.href = "http://localhost:8081/diyla_back/orderManage/OrderManageController?action=listAllOrder";
+		    window.location.href = "${ctxPath}/orderManage/OrderManageController?action=listAllOrder";
 		});
 	</script>
 </body>
