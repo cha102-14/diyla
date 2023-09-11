@@ -1,13 +1,17 @@
-.center {
-    text-align: center;
-    font-family: monospace;
-}
 
 .pagination {
     display: inline-block;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-}
 
+}
+#pageContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 .pagination a {
     color: #000000;
     float: left;

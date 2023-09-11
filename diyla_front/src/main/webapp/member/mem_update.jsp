@@ -27,95 +27,88 @@
 
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
-
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-thin-rounded/css/uicons-thin-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-thin-straight/css/uicons-thin-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
     <style>
         * {
             box-sizing: border-box;
             font-family:"jf open 粉圓 1.1";
 
         }
-
         body {
             margin: 0;
         }
-
         div.title {
-            border: 1px solid #B26021;
-            text-align: center;
-            width: 400px;
-            height: 1000px;
+            width: 800px;
+            height: 700px;
             color: #B26021;
             position: relative;
             top:50%;
             left:50%;
             transform: translateX(-50%);
-            border-radius: 5px;
             letter-spacing: 3px;
             margin:50px 0;
+            display:flex;
+        }
+        aside{
+            width: 200px;
+            border: 1px solid #B26021;
+            margin-right:1.5rem;
+            border-radius: 6px;
+            background-color:snow;
         }
         h4.member{
             margin-top:30px;
-            margin-bottom:20px
+            margin-bottom:20px;
+            font-weight:bold;
         }
-
-        div.error {
-            padding: 10px;
-            background-color: #FCE5CD;
+        span.error {
+            color:red;
+            font-weight:bold;
         }
-
         div.member {
-            padding: 10px;
+            border: 1px solid #B26021;
+            flex:1;
+            padding: 10px 10px 10px 1.5rem;
             font-size: 1rem;
             width: 400px;
-            height: 400px;
+            height: 700px;
             position: relative;
+            border-radius: 6px;
+            background-color:snow;
         }
-
-        label.user {
-            position: absolute;
-            top: 22px;
-            left: 100px;
-            letter-spacing: 3px;
-        }
-        label.pw {
-            position: absolute;
-            top: 110px;
-            left: 100px;
-            letter-spacing: 3px;
-        }
-
         input.inputform {
             border: 1px solid #B26021;
-            margin: 15px;
-            border-radius: 0.5rem;
+            border-radius: 0.3rem;
             font-size: 1rem;
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
+            padding: 0 25px 0 8px;
+            margin-top:5px;
         }
         input.inputform:focus {
               outline: 1.5px solid #B26021;
               box-shadow: 2px;
         }
+        select {
+            border: 1px solid #B26021;
+            border-radius: 0.3rem;
+            font-size: 1rem;
+            color: #B26021;
+            height: 35px;
+            letter-spacing: 1px;
+            padding: 0 25px 0 8px;
+            margin-top:5px;
 
+        }
         /* 移除瀏覽器預設藍色背景 */
         input.inputform:-webkit-autofill,
         input.inputform:-webkit-autofill:focus {
                -webkit-box-shadow: 0 0 0 30px white inset;
                -webkit-text-fill-color:#B26021;
         }
-
-
-        label.remember {
-               font-size: 0.85rem;
-               text-align: center;
-               position: absolute;
-               top: 190px;
-               left: 103px;
-               letter-spacing: 1px;
-
-        }
-
         button.member {
             border-radius: 0.5rem;
             background-color: #B26021;
@@ -126,30 +119,78 @@
             letter-spacing: 3px;
             margin-top: 40px;
             font-size: 1rem;
+            position:relative;
+            left:58%;
         }
         button.member:hover {
             background-color: #FCE5CD;
             color:  #B26021;
             transition: all 0.3s;
         }
-
-
         p {
             margin-top: 5px;
             margin-bottom: 20px;
         }
+        aside > ul{
+            margin-top:2rem;
+            padding-left:0
+        }
+        aside > ul >li{
+            margin-bottom:1rem;
+            list-style:none;
+            padding:1rem;
+            position:relative;
+            width:198px;
+            display:block;
+        }
+        aside > ul >li:hover {
 
-        a {
+            background:#F1F1F1;
+        }
+        aside > ul >li>a {
+            display:block;
             text-decoration: none;
-            font-size: 0.9rem;
+            color:#B26021;
+            width:100%;
+            height:100%;
         }
-
-        a:hover {
-            text-decoration: underline;
-            font-size: 1rem;
-            color: #B26021;
+        aside > ul >li>a:hover {
+            text-decoration: none;
+            color:#B26021;
         }
-
+        i{
+            padding-right:0.3rem;
+        }
+        form > div{
+            display:inline-block;
+        }
+        div.gender{
+            position:relative;
+            left:25%;
+            vertical-align:top;
+            line-height: 2.1rem;
+        }
+        input#address{
+            width:283px;
+        }
+        input[type="radio"]{
+            margin-right: 10px;
+        }
+        input#f{
+            margin-left: 40px;
+        }
+        #a1::before {
+            content: "";
+            position: absolute;
+            top:7px;
+            left:0px;
+            height: 40px;
+            width: 4px;
+            background-color: #B26021;
+        }
+        #a1{
+            font-weight:bold;
+        }
         </style>
 
 
@@ -157,38 +198,50 @@
 <body>
 
     <jsp:include page="../front_header.jsp"/>
-    <a href="${ctxPath}/member/update?action=select&memId=${memId}">會員資訊管理</a>
-    <a href="${ctxPath}/member/updatePw.jsp">修改密碼</a>
-    <a href="${ctxPath}/allOrder/allOrder?memId=${memId}">我的訂單</a>
-    <a href="${ctxPath}/track/track?memId=${memId}">我的商品追蹤</a>
-    <a href="${ctxPath}/token/MyToken.jsp">我的代幣</a>
-    <a href="${ctxPath}/member/login?action=logout">登出</a>
     <div class="title">
-    <h4 class="member">會員資訊管理</h4>
+
+        <aside>
+        <ul>
+            <li><a  id="a1" href="${ctxPath}/member/update?action=select&memId=${memId}"><i class="fi fi-ts-user-gear"></i>會員資訊管理</a></li>
+            <li><a  href="${ctxPath}/member/updatePw.jsp"><i class="fi fi-tr-key-skeleton-left-right"></i>修改密碼</a></li>
+            <li><a  href="${ctxPath}/allOrder/allOrder?memId=${memId}"><i class="fi fi-ts-ballot"></i>我的訂單</a></li>
+            <li><a  href="${ctxPath}/track/track?memId=${memId}"><i class="fi fi-tr-hand-love"></i>我的商品追蹤</a></li>
+            <li><a  href="${ctxPath}/token/MyToken.jsp"><i class="fi fi-ts-piggy-bank"></i>我的代幣</a></li>
+            <li><a  href="${ctxPath}/member/login?action=logout"><i class="fi fi-tr-hand-wave"></i>登出</a></li>
+        </ul>
+        </aside>
         <div class="member">
-            <form method="post" action="update">
+        <h4 class="member">會員資訊管理</h4>
+            <form method="post" action="update" class="member">
                 <label>姓名<br>
-                <input type="text" name="memName" value="${memVO.memName}"></label><br>
+                <input type="text" name="memName" value="${memVO.memName}" class="inputform"></label><br>
+                <span id ="memName.errors" class="error">${exMsgs.memName}<br/></span>
                 <label>帳號<br>
-                <input type="email" name="user" value="${memVO.memEmail}" disabled></label><br>
-                <label for="gender" >性別
-                <input type="radio" name="gender" value="0" disabled ${(0==memVO.memGender)? 'checked':'' }>男
-                <input type="radio" name="gender" value="1" disabled ${(1==memVO.memGender)? 'checked':'' }>女</label><br>
-                <label >生日
-                <input type="date" name="birthday" id="birthday" value="${memVO.memBirthday}" disabled></label><br>
-                <label>聯絡電話<br>
-                <input type="tel" name="phone" minlength="10" value="${memVO.memPhone}" ></label><br>
-                <span  id ="memPhone.errors" class="error">${exMsgs.memPhone}<br/></span>
-                <div>聯絡地址</label><br>
-                    <label for="city">縣市</label>
-                    <select id="city" name="city" ></select><br>
-                    <label for="district">地區</label>
-                    <select id="district" name="district"></select><br>
+                <input type="email" name="user" value="${memVO.memEmail}" disabled class="inputform"></label><br>
+                <br>
+                <div>
+                <label>生日<br>
+                <input type="date" name="birthday" id="birthday" value="${memVO.memBirthday}" disabled class="inputform"></label>
                 </div>
-                <label for="address">詳細地址</label><br>
-                <input type="text" id="address" name="address" value="${addMap.address}"><br>
+                <div class="gender">
+                    <label for="gender" >性別<br>
+                    <input  type="radio" name="gender" value="0" disabled ${(0==memVO.memGender)? 'checked':'' }>男
+                    <input id="f" type="radio" name="gender" value="1" disabled ${(1==memVO.memGender)? 'checked':'' }>女</label>
+                </div>
+                <br><br>
+                <label>聯絡電話<br>
+                <input type="tel" name="phone" minlength="10" value="${memVO.memPhone}" class="inputform"></label><br>
+                <span  id ="memPhone.errors" class="error">${exMsgs.memPhone}<br/></span>
+                <div>聯絡地址<br>
+                    <label for="city">縣市<br>
+                    <select id="city" name="city" ></select></label>
+                    <label for="district">地區<br>
+                    <select id="district" name="district" ></select></label>
+                    <label for="address">
+                    <input type="text" id="address" name="address" value="${addMap.address}" class="inputform"></label><br>
                 <span  id ="memAddress.errors" class="error">${exMsgs.memAddress}<br/></span>
-                <input type="hidden" name="memId" value="${memId}"><br>
+                </div>
+                <input type="hidden" name="memId" value="${memId}">
                 <input type="hidden" name="action" value="update">
                 <button type="submit" value="update"  class="member" >送出修改</button>
             </form>

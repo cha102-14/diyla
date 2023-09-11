@@ -66,7 +66,7 @@
                         </div>
                         <div>
                             <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span> service@tibame.com</span>
+                            <span> tibame515@google.com</span>
                         </div>
                     </div>
                 </div>

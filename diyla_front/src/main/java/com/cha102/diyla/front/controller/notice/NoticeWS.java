@@ -3,10 +3,7 @@ package com.cha102.diyla.front.controller.notice;
 import com.cha102.diyla.util.JedisNotice;
 import com.google.gson.Gson;
 
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -29,15 +26,25 @@ public class NoticeWS {
 //                memIdSession.getAsyncRemote().sendText(idJson);
 //            }
 //        System.out.println(memId);
+        //一連線先執行一次
+        List<String> data = JedisNotice.getJedisNotice(memId);
+        Collection<Session> memIdSessions = sessionMap.values();
+        for (Session session : memIdSessions){
+            if(session.isOpen()){
+                session.getAsyncRemote().sendText(gson.toJson(data));
+            }
+        }
+
+        //排程器 定時取出redis 送到前端
         timer = new Timer();
         timer.schedule(new Task(),5000);
     }
 
 
-    @OnMessage //當有新的個人通知觸發  or 當有狀態改變(黑名單狀態/檢舉新增/留言新增/代幣新增)時觸發
+    @OnMessage //當收到前端訊息時移除redis
     public void onMessage(Session memIdSession,String message){
+
         Set<Integer> memIds = sessionMap.keySet();
-        List<String> data = null;
         for (Integer memId : memIds){
             System.out.println(memId);
             JedisNotice.delJedisNotice(memId);
@@ -51,25 +58,20 @@ public class NoticeWS {
     public void onError(Session memIdSession,Throwable e){
         System.out.println("Error");
     }
-//    @OnClose
-//    public void onClose(Session memIdSession){
-//
-//    }
+
     public class Task extends TimerTask implements Runnable{
         public void run(){
             Set<Integer> memIds = sessionMap.keySet();
             List<String> data = null;
             for (Integer memId : memIds){
                 data = JedisNotice.getJedisNotice(memId);
-
             }
 
             Collection<Session> memIdSessions = sessionMap.values();
             for (Session session : memIdSessions){
                 if(session.isOpen()){
-                   session.getAsyncRemote().sendText(gson.toJson(data));
+                    session.getAsyncRemote().sendText(gson.toJson(data));
                 }
-
             }
 
 //            onMessage(memIdSession,memId);
@@ -80,6 +82,6 @@ public class NoticeWS {
 
 
         }
-}
+    }
 
 }

@@ -25,9 +25,29 @@ import java.util.List;
 public class VerifyCourseActionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        //取得當前連線session的
+        //確認當前session和使用者權限
         HttpSession session = req.getSession();
-        String typeFun = (String) session.getAttribute("typeFun");
+        Object typeFunObj = session.getAttribute("typeFun");
+        boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+        String type = "notAuth";
+        if (session == null){
+            if (isTypeFunList) {
+                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+
+                } else if (containsMaster) {
+                    type = "MASTER";
+
+                }
+            } else {
+                type = (String) typeFunObj;
+            }
+    } else {
+        type = "NOSESSION";
+    }
         //處理res相關
         res.setContentType("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
@@ -37,19 +57,19 @@ public class VerifyCourseActionServlet extends HttpServlet {
         Integer courseId = Integer.parseInt(req.getParameter("courseId"));
         ClassService classService = new ClassService();
         TeacherService teacherService = new TeacherService();
-        typeFun = "ADMIN";
+        String ctxPath = req.getContextPath();
+
         boolean adminAuthCode = false;
         ClassVO reqCourse = classService.getOneClass(courseId);
         //確認是否有管理員權限
-        if ("ADMIN".equals(typeFun)) {
+        if ("ADMIN".equals(type)) {
             adminAuthCode = true;
         }
         //取得請求修改courseId以及當前請求的empId
         Integer teacherId = classService.getOneClass(courseId).getTeaId();
         TeacherVO reqTeacher = teacherService.getOneTeacher(teacherId);
         Integer reqEmpId = reqTeacher.getEmpId();
-//        Integer thisEmpId = (Integer) session.getAttribute("empId");
-        Integer thisEmpId = 1;
+        Integer thisEmpId = (Integer) session.getAttribute("empId");
         //取得使用者打算做甚麼action
         String action = req.getParameter("action");
 
@@ -79,14 +99,14 @@ public class VerifyCourseActionServlet extends HttpServlet {
             List<Integer> reqCourseIngId = new ArrayList<>();
             List<Integer> reqCourseIngAmount = new ArrayList<>();
             for(int i = 0; i < reqCourseIngIdAmountList.size(); i++) {
-                System.out.println(reqCourseIngIdAmountList.get(i).getIngNums());
+
                 reqCourseIngId.add(reqCourseIngIdAmountList.get(i).getIngId());
                 reqCourseIngAmount.add(reqCourseIngIdAmountList.get(i).getIngNums());
-                System.out.println(reqCourseIngId.get(i));
+
             }
 
 
-            if(adminAuthCode) {
+            if(adminAuthCode || reqEmpId == thisEmpId) {
                 String url = "/desertcourse/modifydesertcourse.jsp";
                 RequestDispatcher allowModify = req.getRequestDispatcher(url);
                 req.setAttribute("ingList", ingList);
@@ -96,7 +116,7 @@ public class VerifyCourseActionServlet extends HttpServlet {
                 req.setAttribute("reqCourseIngAmountList", reqCourseIngAmount);
                 allowModify.forward(req,res);
             } else {
-                String url = req.getContextPath()+"/desertcourse/notallowed.jsp";
+                String url = "/desertcourse/listalldesertcoursecalendar.jsp";
                 RequestDispatcher notAllow = req.getRequestDispatcher(url);
                 notAllow.forward(req,res);
             }
