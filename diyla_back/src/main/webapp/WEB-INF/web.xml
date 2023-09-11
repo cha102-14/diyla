@@ -12,4 +12,35 @@
       <el-ignored>false</el-ignored>
     </jsp-property-group>
   </jsp-config>
+  <filter>
+    <filter-name>BackLoginFilter</filter-name>
+    <filter-class>com.cha102.filter.BackLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>BackLoginFilter</filter-name>
+
+    <url-pattern>/aboutus/*</url-pattern>
+    <url-pattern>/art/*</url-pattern>
+    <url-pattern>/latestnews/*</url-pattern>
+    <url-pattern>/pbm/*</url-pattern>
+    <url-pattern>/shop/*</url-pattern>
+    <url-pattern>/diycate/*</url-pattern>
+    <url-pattern>/emp/insert.jsp</url-pattern>
+    <url-pattern>/emp/empShowAll.jsp</url-pattern>
+    <url-pattern>/mem/memShowAll.jsp</url-pattern>
+    <url-pattern>/emp/welcome.jsp</url-pattern>
+    <url-pattern>/chatPage.jsp</url-pattern>
+    <url-pattern>/back_diycate.jsp</url-pattern>
+    <url-pattern>/back_add_diycate.jsp</url-pattern>
+    <url-pattern>/back_edit_diycate.jsp</url-pattern>
+
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+
+
+
 </web-app>

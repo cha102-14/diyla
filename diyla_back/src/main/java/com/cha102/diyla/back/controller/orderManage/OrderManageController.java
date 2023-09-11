@@ -71,6 +71,9 @@ public class OrderManageController extends HttpServlet {
 			jsonObject.put("orderPri", commodityOrderVO.getOrderPrice());
 			jsonObject.put("orderDisActPri", commodityOrderVO.getDiscountPrice());
 			jsonObject.put("orderActPri", commodityOrderVO.getActualPrice());
+			jsonObject.put("recipient", commodityOrderVO.getRecipient());
+			jsonObject.put("recipientAddress", commodityOrderVO.getRecipientAddress());
+			jsonObject.put("phone", commodityOrderVO.getPhone());
 			jsonObject.put("orderNo", orderNo);
 			jsonObject.put("commodityOrderDetailList", commodityOrderDetailList);
 			// 將JSON物件轉String
