@@ -1,4 +1,3 @@
-<!--刷淡背景圖-->
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.empmodel.*" %>
@@ -32,12 +31,17 @@
 
         body {
             margin: 0;
+            background-image: url('../img/login.png'); /* 背景图像的URL，注意路径 */
+            background-size: cover; /* 按照视口大小覆盖整个屏幕 */
+            background-repeat: no-repeat; /* 不重复平铺背景图像 */
+            background-attachment: fixed; /* 固定背景图像 */
+            background-position: center center; /* 居中显示背景图像 */
         }
 
         div.loginTitle {
             font-family: "微軟正黑體", Arial, sans-serif;
             font-weight: bold;
-            border: 1px solid #B26021;
+            border: 2px solid #B26021;
             text-align: center;
             width: 400px;
             color: #B26021;
@@ -172,23 +176,23 @@
         window.onload(checkIsLogin());
         function checkIsLogin(){
             if("${empId}" !== ""){
-                location.href = "/diyla_back";
+                // location.href = "/diyla_back";
+               location.href = "/diyla_back/src/main/webapp/emp/welcome.jsp";
             }else{
                 checkNewPassword();
+                checkTypeIsEmpty();
             }
 
-            checkTypeIsEmpty();
-            checkEmpLoginInformation();
         }
 
 
         function checkNewPassword(){
         if("${newPassword}" == "succes"){
             Swal.fire('更新成功！');
-        }        
+        }
     }
 
-        function checkTypeIsEmpty(){
+    function checkTypeIsEmpty(){
             if("${empAccount}" == "account" && "${empPassword}" == "password" ){
                 Swal.fire('請輸入員工帳號及密碼 !');
             }else if("${empAccount}" == "account"){
@@ -196,6 +200,7 @@
             }else if("${empPassword}" == "password"){
                 Swal.fire('請輸入員工密碼 !');
             }
+            checkEmpLoginInformation();
 
         }
         function checkempAccount(){

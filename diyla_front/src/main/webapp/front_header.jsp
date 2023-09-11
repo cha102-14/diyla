@@ -117,12 +117,6 @@
                             常見問題
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" id="myOrder">
-                            我的訂單
-                        </a>
-                    </li>
                 </ul>
                 <div class="user_option">
                     <c:choose>

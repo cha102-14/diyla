@@ -152,7 +152,7 @@
             text-align: right; /* 将文本容器内的内容靠右 */
         }
         /* .friend.div{
-            text-align: right; /* 将文本容器内的内容靠右 
+            text-align: right; /* 将文本容器内的内容靠右
         } */
         /* 删除列表项的标记 */
         ul {
@@ -271,7 +271,11 @@
         // 開啟網頁就建立連線
         window.onload(webSocketOnloadConnect());
         function webSocketOnloadConnect() {
+<<<<<<< HEAD
+            console.log(self_chat);
+=======
             console.log(self_chat); 
+>>>>>>> main
             webSocket_chat = new WebSocket(endPointURL_chat);
             webSocket_chat.onopen = function (event) {
                 console.log("connect success!");
@@ -302,7 +306,11 @@
                         fixedSender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
                         fixedSender === self_chat ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
                         fixedSender === self_chat ? li.className += 'me' : li.className += 'friend';
+<<<<<<< HEAD
+
+=======
                         
+>>>>>>> main
                         // 接收到訊息時 顏色變更
                         let getMesageColor = "#007bff"
                         chatIcon.style.backgroundColor = getMesageColor;
@@ -323,7 +331,7 @@
                     let nameLi = document.createElement('li');
                     var div = document.createElement('div');
                     div.appendChild(li);
-                    
+
                     // 接收到訊息時 顏色變更
                     let getMesageColor = "#f55454"
                     chatIcon.style.backgroundColor = getMesageColor;
@@ -380,7 +388,7 @@
             var inputMessage = document.getElementById("message");
             var friend = statusOutput.textContent;
             var message = inputMessage.value.trim();
-            console.log("sendMessage: "+ message);    
+            console.log("sendMessage: "+ message);
             if (message === "") {
                 alert("Input a message");
                 inputMessage.focus();

@@ -70,7 +70,7 @@ a.a_addsuccess {
                    <li>公告狀態：<%= addedLat.getAnnStatus() %></li>
                    <li>公告內容：<%= addedLat.getNewsContext() %></li>
                    <li>公告圖片：</li>
-                <li><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(addedLat.getAnnPic()) %>" alt="公告圖片"></li>
+                <li><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(addedLat.getAnnPic()) %>" alt="沒有新增圖片"></li>
                </ul>
            <% } %>
         <br>
