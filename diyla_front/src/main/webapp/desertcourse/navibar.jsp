@@ -103,6 +103,9 @@
     li:hover.one {
       background-color: white;
     }
+    li:hover.four {
+      background-color: white;
+    }
   </style>
 </head>
 
@@ -111,6 +114,7 @@
     <li class="one"><a href="${ctxPath}/desertcourse/findclasslist.jsp">課程列表</a></li>
     <li class="two"><a href="${ctxPath}/desertcourse/findclasscalendar.jsp">課程日曆表</a></li>
     <li class="three"><a href="${ctxPath}/desertcourse/findteacher.jsp">師傅列表</a></li>
+    <li class="four"><a href="${ctxPath}/desertcourse/memclassreserve.jsp">會員訂單</a></li>
   </ul>
 </body>
 
