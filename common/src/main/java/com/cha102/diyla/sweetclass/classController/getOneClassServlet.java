@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.Base64;
 
 @WebServlet("/getOneClassServlet")
 public class getOneClassServlet extends HttpServlet {
@@ -41,8 +42,12 @@ public class getOneClassServlet extends HttpServlet {
         String isoStartTime = courseDate + startTime;
         String isoEndTime = courseDate + endTime;
         String courseDateTime = isoStartTime + "~" + isoEndTime;
+        //圖片處理
+        byte[] pic = course.getClassPic();
+        String base64 = Base64.getEncoder().encodeToString(pic);
         //將回傳訊息打包進Json內
         JSONObject courseJson = new JSONObject();
+        courseJson.put("coursePic", base64);
         courseJson.put("courseName", course.getClassName());
         courseJson.put("courseDate", courseDateTime);
         courseJson.put("coursePrice", course.getPrice());

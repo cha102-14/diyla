@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.empmodel.EmpVO" %>
 <%@ page import="com.cha102.diyla.empmodel.EmpService" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAOImpl" %>
+<%@ page import="com.cha102.diyla.empmodel.EmpDAO" %>
+<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherVO" %>
+<%@ page import="com.cha102.diyla.sweetclass.teaModel.TeacherService" %>
 <%@page import="java.util.*"%>
 <%@ page import="java.util.Base64" %>
 <!DOCTYPE html>
@@ -12,8 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>註冊師傅</title>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <!-- Custom styles for this template -->
@@ -23,23 +26,46 @@
     <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
+ 
     <%
+Integer canRegister = null;
+if (session != null) {
+    Integer empId = (Integer) session.getAttribute("empId");
+    // 检查 empId 是否为 null
+    if (empId != null) {
         EmpService empService = new EmpService();
-        List<String> errorMessages = new ArrayList<>();
-        String empId = (String) session.getAttribute("empId");
-        empId = "1";
-        EmpVO empVO = empService.empGetOne(errorMessages, empId);
+        EmpDAO empDAO = new EmpDAOImpl();
+        TeacherService teacherService = new TeacherService();
+        boolean isEmpAlreadyTeacher = teacherService.isEmpAlreadyTeacher(empId);
+        EmpVO empVO = empDAO.getOne(empId);
         String empname = empVO.getEmpName();
         session.setAttribute("empname", empname);
-        Integer isTeacher = null;
-        String typeFun = (String) session.getAttribute("typeFun");
-        if("MASTER".equals(typeFun)) {
-            isTeacher = 1;
+        
+        // 檢查 "typeFun" 是否存在並且是 List類型
+        Object typeFunObj = session.getAttribute("typeFun");
+        boolean isTypeFunNotList = (typeFunObj != null && !(typeFunObj instanceof java.util.List));
+        if (typeFunObj != null && typeFunObj instanceof List<?>) {
+            List<String> typeFun = (List<String>) typeFunObj;
+            for (String type : typeFun) {
+                if ("MASTER".equals(type) && !isEmpAlreadyTeacher) {
+                    canRegister = 1;
+                } else {
+                    request.setAttribute("expiresession", isTypeFunNotList ? "1" : "0");
+                    canRegister = 0;
+                }
+            }
         } else {
-            isTeacher = 0;
+            canRegister = 0;
         }
-        session.setAttribute("isTeacher", isTeacher);
+        session.setAttribute("canRegister", canRegister);
+    } else {
+        canRegister = 0;
+    }
+} else {
+    canRegister = 0;
+}
     %>
+
 </head>
 
 <body>
@@ -56,7 +82,7 @@
         </div>
     <div id="contentBlock">
     <div id="formBlock">
-    <form action="/${ctxPath}/registerTeacher" method="post" enctype="multipart/form-data">
+    <form action="registerTeacher" method="post" enctype="multipart/form-data">
     <div class="row">
         <div id="teacherNameField" class="col-md-6 form-group" >
             <label for="teacherName">師傅名稱 </label>
@@ -65,7 +91,7 @@
 
         <div id="genderBlock" class="col-md-3 form-group">
             <label for="teagender">性別</label>
-            <select id="teagender" class="form-control" name="teaGender">
+            <select id="teagender" class="form-control" name="teagender">
                 <option value="0">男</option>
                 <option value="1">女</option>
             </select><br>
@@ -111,7 +137,7 @@
     <div id="picPreviewBlock" style="display: none;">
         <img id="picPreview" src="#" alt="圖片預覽" style="max-width: 280px; max-height: 280px;">
     </div>
-    <input type="submit" class="btn btn-primary" value="註冊" id="submitButton" disabled>
+    <input type="submit" class="btn btn-primary" value="註冊" id="submitButton" >
 </form>
 </div>
 </div>
@@ -119,18 +145,38 @@
 </div>
     <script>
         $(document).ready(function () {
-                 //先做是否已是師傅的驗證
-            if (${isTeacher} !== 0) {
-                Swal.fire({
-                title: "您已註冊為教師，或您無權註冊為教師!",
-                icon: "warning",
-                confirmButtonText: "確定"
-                }).then(function(result){
-                    if(result.isConfirmed) {
-                        window.location.href = "/${ctxPath}/index.jsp";
-                    }
-                });
-        }
+          
+        //     // 判斷 expiresession 的值
+        //     if (${expiresession} === 1) {
+        //         Swal.fire({
+        //             title: "您的session已過期, 請重新登入。",
+        //             icon: "error",
+        //             confirmButtonText: "確定"
+        //         }).then(function(result){
+        //             if(result.isConfirmed) {
+        //                 window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+        //             }
+        //         });
+        //             setTimeout(function() {
+        //             window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+        //             }, 2500);
+        //     }
+                
+        //          //先做是否已可以註冊師傅的驗證
+        //     if (${canRegister} !== 1) {
+        //         Swal.fire({
+        //         title: "您已註冊為教師，或您無權註冊為教師!",
+        //         icon: "warning",
+        //         confirmButtonText: "確定"
+        //         }).then(function(result){
+        //             if(result.isConfirmed) {
+        //                 window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+        //             }
+        //         });
+        //             setTimeout(function() {
+        //             window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+        //             }, 2500);
+        // }
                 //宣告各區塊的參數
                 const specialityBlock = $("#specialityBlock");
                 const addButton = $("#speincbutton");
@@ -149,7 +195,7 @@
     }
                     event.preventDefault();
 
-            fetch("${ctxPath}"+"/registerTeacher", {
+            fetch("${ctxPath}/registerTeacher", {
             method: "post",
             body: formData
         })
@@ -162,7 +208,7 @@
                                     confirmButtonText: "確定"
                                 }).then(function(result){
                                     if(result.isConfirmed) {
-                                        window.location.href = "/${ctxPath}/listallteacher.jsp?defaultSearchValue="+result.teacherId;
+                                        window.location.href = "${ctxPath}/desertcourse/listallteacher.jsp?defaultSearchValue="+ data.teacherName;
                                     }
                                 });
                             } else {

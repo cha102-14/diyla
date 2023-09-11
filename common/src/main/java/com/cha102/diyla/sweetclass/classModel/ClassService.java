@@ -67,6 +67,10 @@ public class ClassService {
         claDAO.update(classVO);
         return classVO;
     }
+    public ClassVO updateClass(ClassVO classVO){
+        claDAO.update(classVO);
+        return classVO;
+    }
     public void deleteClass(Integer claID) {
         claDAO.delete(claID);
     }
@@ -88,6 +92,10 @@ public class ClassService {
         classReserveVO.setHeadcount(headcount);
         classReserveVO.setStatus(0);
         classReserveVO.setTotalPrice(classVO.getPrice() * headcount);
+        //課程本身的headcount也需要更新
+        int oldHeadcount = classVO.getHeadcount();
+        classVO.setHeadcount(oldHeadcount + headcount);
+        claDAO.update(classVO);
         resDAO.insert(classReserveVO);
         return classReserveVO;
     }
@@ -136,6 +144,10 @@ public class ClassService {
         classReserveVO.setCreateTime(createTime);
         classReserveVO.setTotalPrice(totalPrice);
         classReserveVO.setReserveId(reserveID);
+        resDAO.update(classReserveVO);
+        return classReserveVO;
+    }
+    public ClassReserveVO updateReserve(ClassReserveVO classReserveVO){
         resDAO.update(classReserveVO);
         return classReserveVO;
     }
