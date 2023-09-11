@@ -329,16 +329,17 @@ VALUES ('Juicy馬卡龍', 0, 3, '馬卡龍：原味+黃色色粉 內餡：檸檬
 
 INSERT INTO diy_order (MEM_ID, DIY_NO, CONTACT_PERSON, CONTACT_PHONE, RESERVATION_NUM, DIY_PERIOD, DIY_RESERVE_DATE,
                        CREATE_TIME, RESERVATION_STATUS, PAYMENT_STATUS, DIY_PRICE)
-VALUES (1, 1, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580),
-       (2, 2, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
+VALUES (1, 8001, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580),
+       (2, 8002, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
 
 
 INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA, CREATE_TIME)
-VALUES (1, 1, '我覺得超級好玩', 5, DEFAULT),
-       (2, 1, '下次還會來,空間很寬敞舒適,適合情侶來!', 5, DEFAULT),
-       (3, 1, '為了專題做蛋糕,不過還挺好玩的', 5, DEFAULT),
-       (4, 2, '品項有點貴,買85度C回家吃實在', 1, DEFAULT),
-       (4, 1, '第一次跟女朋友來這種地方 好玩 值得 還碰到她的手 讚讚讚 下次還要來', 5, DEFAULT);
+VALUES (1, 8029, '我覺得超級好玩', 5, DEFAULT),
+       (2, 8030, '下次還會來,空間很寬敞舒適,適合情侶來!', 5, DEFAULT),
+       (3, 8029, '為了專題做蛋糕,不過還挺好玩的', 5, DEFAULT),
+       (4, 8027, '品項有點貴,買85度C回家吃實在', 1, DEFAULT),
+       (4, 8030, '第一次跟女朋友來這種地方 好玩 值得 還碰到她的手 讚讚讚 下次還要來', 5, DEFAULT);
+
 
 
 INSERT INTO DIY_RESERVE_RESULT( DIY_RESERVE_DATE, DIY_PERIOD, PEO_COUNT
