@@ -86,7 +86,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${ctxPath}/art/art.jsp">
+                        <a class="nav-link" href="${ctxPath}/art/ArtController?action=selectAll">
                             社群分享
                         </a>
                     </li>
