@@ -15,6 +15,6 @@ public class DiyReserveSchedule {  // 排程器 spring boot版本
 	
 	@Scheduled(cron = "*/10 * * * * ?")
 	public void test() {
-		diyReserveController.getAllSummaryFromOrder();
+		diyReserveController.getAllSummary();
 	}
 }

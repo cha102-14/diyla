@@ -69,6 +69,8 @@ $.ajax({
     success: function (data) {
         var courseContainer = $('#courseContainer');
         $('#courseContainer').empty();
+
+
         var rowContainer = $('<div class="row"></div>');
 
         data.forEach(function (course, index) {

@@ -4,6 +4,12 @@
 <%@ page import="java.text.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    ArtService artSvc = new ArtService();
+    List<ArtVO> list = artSvc.getAllArt();
+    pageContext.setAttribute("list",list);
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,12 +107,9 @@
                     <td>${artVO.memVO}</td>
                     <td>${artVO.artTitle}</td>
                     <c:choose>
-                        <c:when test="${not empty imgBase64[(artVO.artNo)-1]}">
-                            <td><img src="data:image/jpeg;base64,${imgBase64[(artVO.artNo)-1]}" alt="Image"></td>
-                        </c:when>
                         <c:when test="${not empty artVO.artPic}">
                             <td><img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
-                                    alt="Image2"></td>
+                                    alt="Image"></td>
                         </c:when>
                         <c:otherwise>
                             <td><img src="" alt="無圖片"></td>
@@ -124,16 +127,14 @@
                                 </c:otherwise>
                             </c:choose>
                             <form action="select" method="post" modelAttribute="ArtMsgVO">
-                                <input type=hidden name="artNo" value="${artVO.artNo}">
-                                <input name="memId" type="hidden" value="${memId}" />
-                                <input type=hidden name="action" value="selectone">
-                                <button type="submit" class="showall_button">查看完整貼文</button>
+                            <input type=hidden name="artNo" value="${artVO.artNo}">
+                            <input name="memId" type="hidden" value="${memId}"/>
+                            <input type=hidden name="action" value="selectone">
+                            <button type="submit" class="showall_button">查看完整貼文</button>
                             </form>
                         </div>
                     </td>
-                    <td>
-                        <fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm" />
-                    </td>
+                    <td><fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                 </tr>
             </c:forEach>
         <tbody>

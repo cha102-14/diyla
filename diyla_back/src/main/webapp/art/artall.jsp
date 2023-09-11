@@ -4,6 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
+<%
+    ArtService artSvc = new ArtService();
+    List<ArtVO> list = artSvc.getAllArt();
+    pageContext.setAttribute("list",list);
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -75,7 +80,6 @@
 
 <body bgcolor='white'>
     <jsp:include page="/index.jsp" />
-    <jsp:include page="art.jsp" />
 
     <table id="art" class="display" style="width: 100%">
         <thead id="header">
@@ -96,9 +100,6 @@
                     <td>${artVO.artNo}</td>
                     <td>${artVO.artTitle}</td>
                     <c:choose>
-                        <c:when test="${not empty imgBase64[(artVO.artNo)-1]}">
-                            <td><img src="data:image/jpeg;base64,${imgBase64[(artVO.artNo)-1]}" alt="Image"></td>
-                        </c:when>
                         <c:when test="${not empty artVO.artPic}">
                             <td><img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
                                     alt="Image"></td>
