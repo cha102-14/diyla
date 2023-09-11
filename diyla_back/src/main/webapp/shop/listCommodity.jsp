@@ -28,7 +28,7 @@
     <form action="${ctxPath}/shop/CommodityController" method="get" enctype="application/x-www-form-urlencoded"
           id="findByClassNOForm">
         <input type="text" name="action" value="findByClassNO" hidden="hidden">
-        <select id="comClassNo" name="comClassNo">
+        <select id="comClassNo" name="comClassNo"style="margin-bottom: 10px">
             <option value="" selected disabled>請選擇商品類別</option>
             <c:forEach var="i" begin="1" end="${classNameMapSize}">
                 <option value="${i}">${classNameMap[i]}</option>
@@ -40,14 +40,14 @@
         <form action="${ctxPath}/shop/CommodityController" method="get"
               enctype="application/x-www-form-urlencoded">
             <input type="text" name="action" value="search" hidden="hidden">
-            <input type="text" class="search-box" value="請輸入關鍵字" name="keyword"
+            <input type="text" class="search-box" value="請輸入關鍵字" name="keyword" style="height:30px;width:150px;"
                    onfocus="if (this.value=='請輸入關鍵字') this.value='';"
                    onblur="if (this.value=='') this.value='請輸入關鍵字';">
-            <button type="submit">搜尋</button>
+            <button type="submit" style="height:30px;width:50px;border-radius: 4px;background-color:#B26021;color:#FCE5CD;border:none;">搜尋</button>
         </form>
 
     </div>
-    <hr>
+    <hr style="border: 1px solid #B26021;margin:20px 0;">
     <table>
         <tr>
             <th>商品類別</th>
