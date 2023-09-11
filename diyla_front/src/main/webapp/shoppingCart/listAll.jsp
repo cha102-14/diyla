@@ -89,7 +89,7 @@
 					<input type="hidden" name="action" value="clear"> <a
 						href="${ctxPath}/shop/CommodityController?action=listAll"
 						class="shopPage">繼續購物</a> <span class="total-price">總金額:${totalPrice}元</span>
-						<a href="http://localhost:8081/diyla_front/shopR/checkout/${memId}" class="checkout-btn" type="button" id="checkout">結帳</a>
+						<a href="${ctxPath}/shopR/checkout/${memId}" class="checkout-btn" type="button" id="checkout">結帳</a>
 				</div>
 			</c:when>
 
@@ -180,11 +180,11 @@
 	                         window.location.reload("#mainContent");
 	                     }, 1500);
 	                } else {
-	                	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+	                	window.location.href="${ctxPath}/error.jsp"
 	                }
 	            },
 	            error: function() {
-	            	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+	            	window.location.href="${ctxPath}/error.jsp"
 	            }
 	        });
 	    }
@@ -238,11 +238,11 @@
                 	window.location.reload("#mainContent");
                 }, 1500);
             } else {
-            	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+            	window.location.href="${ctxPath}/error.jsp"
             }
         })
         .catch(error => {
-        	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+        	window.location.href="${ctxPath}/error.jsp"
         });
 	}
 	 
@@ -281,12 +281,12 @@
 		                         window.location.reload("#mainContent");
 		                     }, 1500);
 		                } else {
-		                	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+		                	window.location.href="${ctxPath}/error.jsp"
 		                    
 		                }
 		            },
 		            error: function() {
-		            	window.location.href="http://localhost:8081/diyla_front/error.jsp"
+		            	window.location.href="${ctxPath}/error.jsp"
 		            }
 		        });
 		    }
