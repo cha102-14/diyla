@@ -181,7 +181,7 @@
             }else{
                 checkNewPassword();
                 checkTypeIsEmpty();
-            } 
+            }
 
         }
 
@@ -189,7 +189,7 @@
         function checkNewPassword(){
         if("${newPassword}" == "succes"){
             Swal.fire('更新成功！');
-        }        
+        }
     }
 
     function checkTypeIsEmpty(){

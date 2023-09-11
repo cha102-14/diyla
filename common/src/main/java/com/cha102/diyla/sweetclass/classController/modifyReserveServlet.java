@@ -1,6 +1,8 @@
 package com.cha102.diyla.sweetclass.classController;
 
+import com.cha102.diyla.sweetclass.classModel.ClassReserveVO;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
+import com.cha102.diyla.sweetclass.classModel.ClassVO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,15 +17,22 @@ public class modifyReserveServlet extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
         PrintWriter out = res.getWriter();
-        String path = req.getContextPath();
         Integer reserveId = Integer.valueOf(req.getParameter("reserveId"));
         System.out.println(reserveId);
         String action = req.getParameter("action");
         ClassService classService = new ClassService();
+        ClassReserveVO classReserveVO = new ClassReserveVO();
         //(0:預約單成立，1:預約單取消，2:預約單完成)
         if ("delete".equals(action)) {
             classService.updateReserveStatus(reserveId, 1);
-
+            classReserveVO = classService.getOneReserve(reserveId);
+            Integer classId = classReserveVO.getClassId();
+            ClassVO classVO = classService.getOneClass(classId);
+            int reserveHeadcount = classReserveVO.getHeadcount();
+            int classHeadCount = classVO.getHeadcount();
+            int newClassHeadCount = classHeadCount - reserveHeadcount;
+            classVO.setHeadcount(newClassHeadCount);
+            classService.updateClass(classVO);
         } else if ("complete".equals(action)) {
             classService.updateReserveStatus(reserveId, 2);
         }

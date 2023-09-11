@@ -63,6 +63,9 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 	// SQL指令 - 查時段的所有訂單//訂位人數\\ PEOPLE_COUNT_BY_PERIOD -- 新表格名
 	private final String GET_ORDER_PEOPLE_COUNT_BY_PERIOD_SQL = "SELECT DIY_RESERVE_DATE, DIY_PERIOD,sum(RESERVATION_NUM) as PEO_COUNT FROM DIYLA.DIY_ORDER  WHERE  RESERVATION_STATUS = 0 AND PAYMENT_STATUS = 0 group by DIY_RESERVE_DATE, DIY_PERIOD order by DIY_RESERVE_DATE;";
 
+	// SQL指令 - 查某個別時段的單筆訂單//訂位人數\\ PEOPLE_COUNT_BY_PERIOD -- 新表格名
+	private final String GET_ONE_ORDER_PEOPLE_COUNT_BY_PERIOD_SQL = "SELECT DIY_RESERVE_DATE, DIY_PERIOD,sum(RESERVATION_NUM) as PEO_COUNT FROM DIYLA.DIY_ORDER  WHERE DIY_RESERVE_DATE = ? and DIY_PERIOD = ? and RESERVATION_STATUS = 0 AND PAYMENT_STATUS = 0 group by DIY_RESERVE_DATE, DIY_PERIOD order by DIY_RESERVE_DATE;";
+	
 	@Override
 	public void insert(DiyOrderVO diyOrderVO) {
 		try (Connection conn = ds.getConnection(); PreparedStatement ps = conn.prepareStatement(INSERT_SQL);) {
@@ -439,6 +442,25 @@ public class DiyOrderDaoImpl implements DiyOrderDAO_interface {
 			e.printStackTrace();
 		}
 		return diyOrderDTOList;
+	}
+	@Override
+	public DiyOrderDTO getOneDTODatePeriod(Date diyReserveDate,Integer diyPeriod) {
+		DiyOrderDTO diyOrderDTO = new DiyOrderDTO();
+		try (Connection conn = ds.getConnection();
+				PreparedStatement ps = conn.prepareStatement(GET_ONE_ORDER_PEOPLE_COUNT_BY_PERIOD_SQL);) {
+			ps.setDate(1, diyReserveDate);
+			ps.setInt(2, diyPeriod);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {					
+					diyOrderDTO.setDiyReserveDate(rs.getDate("DIY_RESERVE_DATE"));
+					diyOrderDTO.setDiyPeriod(rs.getInt("DIY_PERIOD"));
+					diyOrderDTO.setPeopleCount(rs.getInt("PEO_COUNT"));					
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return diyOrderDTO;
 	}
 
 

@@ -150,6 +150,30 @@
                                 // 使用 jQuery Table 來動態生成表格
                                 //(0:預約單建立，1:預約單付款完成，2:預約單取消(未退款)，3.預約單取消(退款完成)，4.預約單完成)
                                 $('#reserveTable').DataTable({
+                                    language: {
+                                        "sProcessing": "處理中...",
+                                        "sLengthMenu": "顯示 _MENU_ 項結果",
+                                        "sZeroRecords": "沒有匹配結果",
+                                        "sInfo": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+                                        "sInfoEmpty": "顯示第 0 至 0 項結果，共 0 項",
+                                        "sInfoFiltered": "(從 _MAX_ 項結果過濾)",
+                                        "sInfoPostFix": "",
+                                        "sSearch": "搜索:",
+                                        "sUrl": "",
+                                        "sEmptyTable": "表格中無可用數據",
+                                        "sLoadingRecords": "載入中...",
+                                        "sInfoThousands": ",",
+                                        "oPaginate": {
+                                            "sFirst": "首頁",
+                                            "sPrevious": "上一頁",
+                                            "sNext": "下一頁",
+                                            "sLast": "末頁"
+                                        },
+                                        "oAria": {
+                                            "sSortAscending": ": 升冪排列",
+                                            "sSortDescending": ": 降冪排列"
+                                        }
+                                    },
                                     data: data,
                                     searching: true,
                                     searchDelay: 500,

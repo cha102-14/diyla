@@ -52,8 +52,8 @@ public class createReserveServlet extends HttpServlet {
         Date regEndDate = reqCourse.getRegEndTime();
         Integer courseStatus = reqCourse.getClassStatus();
         Integer courseLimit = reqCourse.getClassLimit();
-        //暫時設定mem=1, session內有memberId後再來去除
-        Integer memId = 1;
+        //抓取下訂單的memberId
+        Integer memId = (Integer)session.getAttribute("memId");
         MemberService memberService = new MemberService();
         MemVO member = memberService.selectMem(memId);
         String to = member.getMemEmail();

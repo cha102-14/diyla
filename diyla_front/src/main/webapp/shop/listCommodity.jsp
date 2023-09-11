@@ -57,7 +57,7 @@
                     <input type="text" class="search-box" value="請輸入關鍵字" name="keyword"
                            onfocus="if (this.value=='請輸入關鍵字') this.value='';"
                            onblur="if (this.value=='') this.value='請輸入關鍵字';">
-                    <button type="submit" style="height:43px;width:100px;border-radius: 4px;background-color:#B26021;color:#ffffff;border:none;">搜尋</button>
+                    <button type="submit" style="height:43px;width:100px;border-radius: 4px;background-color:#B26021;color:#FCE5CD;border:none;">搜尋</button>
                 </form>
             </div>
         </div>

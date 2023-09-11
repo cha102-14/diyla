@@ -348,7 +348,6 @@
                         return;
                     }
 
-
                     sender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
                     sender === self_chat ? li.className += 'me' : li.className += 'friend';
                     sender === self_chat ? nameLi.className += 'me_div' : nameLi.className += 'friend_div';
@@ -437,7 +436,7 @@
             row.innerHTML = '';
             for (var i = 0; i < friends.length; i++) {
                 if (friends[i] === self_chat  || "Master_" === friends[i].substring(0,7)) {
-                     continue;
+
                 }
                 // 取得好友列表名稱與圖片
                 getMyPic(friends[i]);

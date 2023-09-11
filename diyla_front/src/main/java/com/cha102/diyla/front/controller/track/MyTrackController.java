@@ -22,7 +22,7 @@ public class MyTrackController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/track/track")
-    public String trackList(@RequestParam("memId") Integer memId, ModelMap model, HttpServletRequest req, HttpServletResponse resp) {
+    public String trackList(@RequestParam("memId") Integer memId, ModelMap model) {
         System.out.println(memId);
         List<CommodityTrackDTO> trackList = service.findById(memId);
 //        for (CommodityTrackDTO c : trackList) {
@@ -34,9 +34,11 @@ public class MyTrackController {
     }
 
     @RequestMapping(method = RequestMethod.POST,value="/track/del")
-    public String delTrack(@RequestParam("trackId")Integer trackId){
+    public String delTrack(@RequestParam("trackId")Integer trackId,@RequestParam("memId")Integer memId, ModelMap model){
         System.out.println(trackId);
         service.deleteById(trackId);
+        List<CommodityTrackDTO> trackList = service.findById(memId);
+        model.addAttribute("trackList",trackList);
         return "/track/trackList.jsp";
     }
 }

@@ -29,4 +29,6 @@ public class NoticeService {
     public void addNotice(NoticeVO noticeVO){
         noticeRepository.save(noticeVO);
     }
+
+    public void updateStatus(Integer noticeNo){noticeRepository.updateStatus(noticeNo);}
 }

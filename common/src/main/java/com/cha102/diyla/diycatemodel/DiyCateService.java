@@ -53,4 +53,8 @@ public class DiyCateService {
         return diyCateRepository.findAllPutOn();
     }
     
+    public List<DiyCateEntity> getAllNotPutOn(){
+    	return diyCateRepository.findAll();
+    }
+    
 }

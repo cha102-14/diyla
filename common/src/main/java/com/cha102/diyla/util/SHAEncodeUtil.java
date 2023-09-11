@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 
 public class SHAEncodeUtil {
     public static void main(String[] args) {
-        String password = "eatmeat"; // 用户密碼
+        String password = "seefood8"; // 用户密碼
         String setSalt = "SleepAndEat";
 
         // 生成隨機的鹽值

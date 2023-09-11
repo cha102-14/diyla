@@ -72,5 +72,10 @@ public class DiyOrderService {
 		return dao.getPeopleCountByAllPeriod();
 
 	}
+	
+	public DiyOrderDTO getOneDTODatePeriod(Date DiyReserveDate,Integer diyPeriod){////////////////////////////////9/11
+		return dao.getOneDTODatePeriod(DiyReserveDate,diyPeriod);
+
+	}
 
 }

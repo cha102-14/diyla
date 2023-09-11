@@ -98,7 +98,6 @@ public class EcpayController {
 			Map<String, String> cartInfo = jedis.hgetAll(redisKey);
 			List<ShoppingCartVO> shoppingCartList = shoppingCartService.getCart(memId, cartInfo);
 			// 收件人資訊取出
-			System.out.println(receiveInfo);
 			String[] info = receiveInfo.split(",");
 			String recipient = info[0];
 			String recipientAddress = info[1];
@@ -122,8 +121,8 @@ public class EcpayController {
 				session.setAttribute("tokenFeedBack", tokenFeedBack);
 			}
 			MemVO memVO = memberService.selectMem(memId);
-			session.setAttribute("memId", memId);
-			session.setAttribute("memVO", memVO);
+			model.addAttribute("memId", memId);
+			model.addAttribute("memVO", memVO);
 			String messageContent = "訂單詳情:\n" + "訂單編號:" + orderNo + "\n" + "收件人:" + recipient + "\n" + "收件地址:"
 					+ recipientAddress + "\n" + "購買日期:" + formattedDate + "\n" + "_____________________\n"
 					+ "DIYLA感謝您的訂購，我們將盡快將商品寄出";

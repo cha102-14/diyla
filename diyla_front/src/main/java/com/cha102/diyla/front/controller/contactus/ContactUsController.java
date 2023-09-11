@@ -27,8 +27,8 @@ public class ContactUsController extends HttpServlet {
             String mailTitle=req.getParameter("mailTitle");
             String mailContext=req.getParameter("mailContext");
             String str = "會員Email是:\t" + memEmail + "\n"
-                        +  memName + "\t反應:\n"
-                        + category +"問題:" + mailContext;
+                    +  memName + "\t反應:\n"
+                    + category +"問題:" + mailContext;
             String emailTO = "tibame515@gmail.com";
             MailService mailSvc = new MailService();
             mailSvc.sendEmail(emailTO,mailTitle,str);

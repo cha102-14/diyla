@@ -1,6 +1,7 @@
 package com.cha102.diyla.back.controller.diyreserve;
 
 import com.cha102.diyla.diyOrder.DiyOrderDTO;
+import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyreservemodel.DIYReserveVO;
 import com.cha102.diyla.diyreservemodel.DiyReserveResultEntity;
 import com.cha102.diyla.diyreservemodel.DiyReserveResultEntityRepository;
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @RestController
@@ -67,10 +69,26 @@ public class DiyReserveController {
 	}
 
 	@GetMapping("/CreateVacancySummary") // 新增30天空彙總
-	public List<DiyReserveResultEntity> getAllVacancySummary() { // 可新增訂單之後再去呼叫此方法，就不需要排程器了
-		diyReserveService.newVacancyAllSummary();
+	public boolean getAllVacancySummary() {
 
-		return null;
+		Date currentDate = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = dateFormat.format(currentDate);
+
+		try {
+			Date parsedDate = dateFormat.parse(formattedDate);
+			System.out.println(formattedDate);
+			System.out.println(parsedDate);
+			if (diyReserveService.getOneSummary(parsedDate, 0) == null) {
+				diyReserveService.newVacancyAllSummary();
+				return true;
+			} else {
+				return false;
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
 
 	};
 
@@ -87,25 +105,25 @@ public class DiyReserveController {
 	@GetMapping("/getOneSummaryMorning") // 拿單筆彙總資料 -- 早
 	public List<DiyReserveResultEntity> getOneSummaryMorning(
 			@RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date diyReserveDate) {
-		System.out.println(diyReserveDate);
+//		System.out.println(diyReserveDate);
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 0);
 		List<DiyReserveResultEntity> diyReserveResultEntityList = new LinkedList<>();
 		diyReserveResultEntityList.add(diyReserveResultEntity);
-		System.out.println(diyReserveResultEntityList);
+//		System.out.println(diyReserveResultEntityList);
 		return diyReserveResultEntityList;
 	};
 
-	@GetMapping("/getOneSummaryAfternoon") // 拿單筆彙總資料  -- 下午
+	@GetMapping("/getOneSummaryAfternoon") // 拿單筆彙總資料 -- 下午
 	public List<DiyReserveResultEntity> getOneSummaryAfternoon(
 			@RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date diyReserveDate) {
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 1);
 		List<DiyReserveResultEntity> diyReserveResultEntityList = new LinkedList<>();
 		diyReserveResultEntityList.add(diyReserveResultEntity);
-		System.out.println(diyReserveResultEntityList);
+//		System.out.println(diyReserveResultEntityList);
 		return diyReserveResultEntityList;
 	};
 
-	@GetMapping("/getOneSummaryNight") // 拿單筆彙總資料  -- 晚
+	@GetMapping("/getOneSummaryNight") // 拿單筆彙總資料 -- 晚
 	public List<DiyReserveResultEntity> getOneSummaryNight(
 			@RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date diyReserveDate) {
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 2);
@@ -117,24 +135,37 @@ public class DiyReserveController {
 
 	@GetMapping("/diyResult/allPeriodResult")
 	public List<DiyReserveResultEntity> getAllSummaryFromOrder() {
-
 //		List<DiyReserveResultEntity> diyReserveResultEntityList_update = new LinkedList<>();
 		List<DiyReserveResultEntity> diyReserveResultEntityList_DTO = diyReserveService.setSummaryFromOrderPeriod();
 		List<DiyReserveResultEntity> diyReserveResultEntityList = diyReserveService.getAllSummaryFromOrder();
+		//////////////////////////////////////////////////////////
+		DiyOrderService diyOrderService = new DiyOrderService();
+		//////////////////////////////////////////////////////////
 //    	model.addAttribute("diyReserveResultEntityList",diyReserveResultEntityList);
 		for (DiyReserveResultEntity diyReserveResultEntity : diyReserveResultEntityList) {
 			for (DiyReserveResultEntity diyReserveResultEntity_DTO : diyReserveResultEntityList_DTO) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+//				System.out.println("DTO  "+diyReserveResultEntity_DTO);
+				
+				////////////////////////////////////////////////////////////////////////////
+				Date dateNoSummary = diyReserveResultEntity.getDiyReserveDate();
+				Integer periodNoSummary = diyReserveResultEntity.getDiyPeriod();
+				java.sql.Date dateNoSummarySQL = new java.sql.Date(dateNoSummary.getTime());
+//				System.out.println("sql  "+dateNoSummarySQL);
+				java.sql.Date sqlDate = new java.sql.Date(diyReserveResultEntity.getDiyReserveDate().getTime());
+//				System.out.println("SQLDATE  "+ sqlDate);
+//				System.out.println("DTOGET    " + diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary));
+				///////////////////////////////////////////////////////////////////////////
+				
 				if (sdf.format(diyReserveResultEntity.getDiyReserveDate())
 						.equals(sdf.format(diyReserveResultEntity_DTO.getDiyReserveDate()))
 						&& diyReserveResultEntity.getDiyPeriod() == diyReserveResultEntity_DTO.getDiyPeriod()
 						&& diyReserveResultEntity.getPeoCount() != diyReserveResultEntity_DTO.getPeoCount()) {
 
-					
 					diyReserveResultEntity.setPeoCount(diyReserveResultEntity_DTO.getPeoCount());
-					diyReserveResultEntity.setPeoLimit(    ///////////////
-							/*diyReserveResultEntity.getPeoLimit() -*/ diyReserveResultEntity_DTO.getPeoLimit());
+//					System.out.println( "有人訂的  " + diyReserveResultEntity_DTO.getPeoCount());
+					diyReserveResultEntity.setPeoLimit( ///////////////
+							/* diyReserveResultEntity.getPeoLimit() - */ diyReserveResultEntity_DTO.getPeoLimit());
 
 					if (diyReserveResultEntity_DTO.getPeoCount() < 20) {
 						diyReserveResultEntity.setReserveStatus(0);
@@ -148,13 +179,18 @@ public class DiyReserveController {
 
 					reserveResultRepository.save(diyReserveResultEntity);
 
-				} else {
+				} else if(diyReserveResultEntity.getPeoCount() !=20 && diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary).getDiyPeriod()== null){
+//					System.out.println("進來嘍"   +  diyReserveResultEntity.getDiyReserveDate());
+					diyReserveResultEntity.setPeoCount(0);
+					diyReserveResultEntity.setPeoLimit(20);
+					diyReserveResultEntity.setItemQuantity(20);
+					reserveResultRepository.save(diyReserveResultEntity);
 				}
 
 			}
 		}
 
-		System.out.println(diyReserveResultEntityList);
+//		System.out.println("最後的  " + diyReserveResultEntityList);
 //		return diyReserveService.getAllSummaryFromOrder();
 		return diyReserveResultEntityList;
 
