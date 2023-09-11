@@ -12,5 +12,4 @@ public interface TeacherDAO {
     TeacherVO findByPrimaryKey(Integer teaID);
 
     List<TeacherVO> getAll();
-    TeacherVO findTeaByEmpID(Integer empID);
 }
