@@ -49,15 +49,15 @@
         //默認使用者type為notAuth
         String type = "notAuth"; 
         //若session並非為null才往下
-        if(session != null){
-            Integer empId = (Integer) (session.getAttribute("empId"));
+        Integer empId = (Integer) (session.getAttribute("empId"));
+        List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+        if(session != null && empId != null && typeFun != null){
             EmpVO empVO = empDAO.getOne(empId);
             String empName = empVO.getEmpName();
             //進來的是何種使用者
             Object typeFunObj = session.getAttribute("typeFun");
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
-                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
                 boolean containsMaster = typeFun.contains("MASTER");
                 boolean containsAdmin = typeFun.contains("ADMIN");
                 if (containsMaster && containsAdmin) {
@@ -117,7 +117,7 @@
                     </c:when>
                     <c:otherwise>
                         <label for="teacherId">師傅編號</label>
-                        <input type="text" id="teacherId" name="teacherId" class="form-control" value= ${teacherId} readonly style="background-color: #f2f2f2;"><br>
+                        <input type="text" id="teacherId" name="teacherId" class="form-control" value= "${teacherId}" readonly style="background-color: #f2f2f2;"><br>
                     </c:otherwise>
                     </c:choose>
                 </div>
@@ -224,6 +224,23 @@
 </div>
     <script>
         $(document).ready(function() {
+            //取得權限
+            var type = '${type}';
+            //若無session
+            if(type === "NOSESSION") {
+                Swal.fire({
+                title: "您沒有登入!",
+                icon: "error",
+                confirmButtonText: "確定"
+            }).then((result) => {
+                if(result.isConfirmed) {
+                    window.location.href="${ctxPath}/emp/empLogin.jsp";
+                }
+            });
+            setTimeout(function() {
+                window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }, 2500);
+            } else{
             //取得食材列表
             var ingOptionString = "";
             fetch("${ctxPath}"+"/getIngredientList")
@@ -234,23 +251,6 @@
                 })
                 $("#ingredientType1").html(ingOptionString);
             });
-            //取得權限
-            var type = "${type}";
-            //若無session
-            if(type === "NOSESSION") {
-                Swal.fire({
-                title: "您沒有登入!",
-                icon: "error",
-                confirmButtonText: "確定"
-            }).then((result) => {
-                if(result.isConfirmed) {
-                    window.location.href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-                }
-            });
-            setTimeout(function() {
-                window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-                }, 2500);
-            }
             //阻擋無權限人員新增課程
            if(type !== "ADMIN" && type !== "MASTER") {
             Swal.fire({
@@ -483,7 +483,7 @@ $("#price").on("input", function () {
 
 
 
-
+            }
         });
     </script>
 </body>
