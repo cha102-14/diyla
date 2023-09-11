@@ -33,4 +33,5 @@ public interface DiyOrderDAO_interface {
     
     // 查詢所有退款審核訂單
     public List<DiyOrderVO> getAllRefundod();
+	public DiyOrderDTO getOneDTODatePeriod(Date diyReserveDate,Integer diyPeriod);
 }

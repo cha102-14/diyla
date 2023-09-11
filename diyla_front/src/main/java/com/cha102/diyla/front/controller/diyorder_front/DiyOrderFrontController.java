@@ -81,7 +81,7 @@ public class DiyOrderFrontController extends HttpServlet {
 		// 找會員所有訂單--前台
 		if ("getAllOrderByMemId_front".equals(action)) {
 			DiyOrderService DOser = new DiyOrderService();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 			List<DiyOrderVO> diyOrderList = DOser.findMemIdAllOrder(Integer.valueOf(req.getParameter("memId")));
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -120,7 +120,7 @@ public class DiyOrderFrontController extends HttpServlet {
 		if ("getAllDeleteByMemId_front".equals(action)) {
 			// 錯誤處理及 匯入 DiyCateEntity
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -153,7 +153,7 @@ public class DiyOrderFrontController extends HttpServlet {
 		if ("getMemIdOrderByPeriod".equals(action)) {
 			// 錯誤處理及 匯入 DiyCateEntity
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("errorMsgs", errorMsgs);
 			req.setAttribute("diyCateList", diyCateList);
 
@@ -225,7 +225,7 @@ public class DiyOrderFrontController extends HttpServlet {
 		if ("update_contact".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 			int period;
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));
@@ -335,7 +335,7 @@ public class DiyOrderFrontController extends HttpServlet {
 
 		// 準備要取消訂單(判斷有無三天) done
 		if ("cancel_order".equals(action)) {
-			List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+			List<DiyCateEntity> diyCateList = diyCateService.getAllNotPutOn();
 			req.setAttribute("diyCateList", diyCateList);
 
 			int diyOrderNo = Integer.valueOf(req.getParameter("diyOrderNo"));

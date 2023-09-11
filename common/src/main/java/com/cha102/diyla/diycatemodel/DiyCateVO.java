@@ -24,8 +24,6 @@ public class DiyCateVO implements Serializable {
 			Byte diyCateName, byte[] diyPic, String itemDetails) {
 		this.diyNo = diyNo;
 		this.diyName = diyName;
-		this.diyGraPeoCount = diyGraPeoCount;
-		this.diyGraStarCount = diyGraStarCount;
 		this.diyStatus = diyStatus;
 		this.diyCateName = diyCateName;
 		this.diyPic = diyPic;
@@ -49,21 +47,6 @@ public class DiyCateVO implements Serializable {
 		this.diyName = diyName;
 	}
 
-	public Integer getDiyGraPeoCount() {
-		return diyGraPeoCount;
-	}
-
-	public void setDiyGraPeoCount(Integer diyGraPeoCount) {
-		this.diyGraPeoCount = diyGraPeoCount;
-	}
-
-	public Integer getDiyGraStarCount() {
-		return diyGraStarCount;
-	}
-
-	public void setDiyGraStarCount(Integer diyGraStarCount) {
-		this.diyGraStarCount = diyGraStarCount;
-	}
 
 	public Byte getDiyStatus() {
 		return diyStatus;
