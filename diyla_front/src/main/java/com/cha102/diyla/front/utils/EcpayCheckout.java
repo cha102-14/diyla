@@ -11,7 +11,7 @@ public class EcpayCheckout {
 	 * memNo：會員編號 tradeDesc: 交易敘述 totalPrice: 總價 itemName: 條列式商品敘述
 	 */
 	public static String goToEcpay(Integer memNO, String tradeDesc, String totalPrice,String token, String itemName,
-								   String receiveInfo) {
+								   String receiveInfo,String jsessionid) {
 		// 一般信用卡測試卡號 : 4311-9522-2222-2222 安全碼 : 222
 		// 取得交易時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -32,6 +32,9 @@ public class EcpayCheckout {
 		aioCheckOutALL.setCustomField2(totalPrice);
 		aioCheckOutALL.setCustomField3(receiveInfo);
 		aioCheckOutALL.setCustomField4(token);
+		aioCheckOutALL.setRemark(jsessionid);
+		System.out.println("jid"+jsessionid);
+		System.out.println("aioRemark"+aioCheckOutALL.getRemark());
 //		System.out.println("測試:" + 111);
 //        String ECPAY_PROD_FORMAT = "品名：%s 數量：%s 價格：%s #";
 		aioCheckOutALL.setItemName("Diyla商品一批"); // 商品敘述不能超過兩百字，否則顯示商品一批
