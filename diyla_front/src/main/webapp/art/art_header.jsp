@@ -50,7 +50,7 @@
 <div class="art_header">
     <h1>論壇</h1>
     <div>
-        <span><a href="art.jsp">討論區</a></span>
+        <span><a href="${ctxPath}/art/ArtController?action=selectAll">討論區</a></span>
         <span><a href="personalart.jsp">個人貼文</a></span>
         <span><a href="addart.jsp">新增文章</a></span>
         <span><a href="editart.jsp">修改文章</a></span>
