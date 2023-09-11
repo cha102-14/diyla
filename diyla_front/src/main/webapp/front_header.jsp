@@ -42,10 +42,32 @@
             right: -9px;
             top: -8px;
         }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: snow;
+          min-width: 400px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+          top:195px;
+          right:50px;
+          border-radius: 0.5rem;
+        }
+
+        .dropdown-content p {
+          color:#B26021;
+          padding: 10px;
+          margin: 0;
+          width:500px;
+          border-radius: 0.5rem;
+        }
+        .dropdown-content p:hover {
+            background-color:#F1F1F1;
+        }
     </style>
 </head>
 
-<body onload="connect()" onload="disconnect()">
+<body onload="connect();" onunload="disconnect();">
 <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
@@ -117,14 +139,14 @@
                                     <span>${memVO.memName}你好</span>
                                 </a>
                             </div>
-                            <div onclick="toggleNotifications()">
+                            <div onclick="toggleNotifications();">
                                 <i class="fa fa-bell" aria-hidden="true" style="color:#FCE5CD;"></i>
-                                <span class="badge" id="notification-count">0</span>
+                                <span class="badge" id="notification-count"></span>
                             </div>
-                            <div class="dropdown-content" id="notification-dropdown">
+                            <div class="dropdown-content" id="notification-dropdown" onclick="toggleNotifications();">
 
                             </div>
-                            <a href="${ctxPath}/shopR/getlist/${memId}" id="shoppingcart"
+                            <a href="http://localhost:8081/diyla_front/shopR/getlist/${memId}" id="shoppingcart"
                                class="position-relative">
 
                                 <svg fill="#fce5cd" height="28px" width="28px" version="1.1" id="Layer_1"
@@ -274,10 +296,10 @@
         webSocket.onmessage = function (event) {
             let jsonObj = JSON.parse(event.data);
             console.log(jsonObj);
-            getNotices();
-            addNotification();
-            addListener();
-
+            if (jsonObj != null){
+                addListener();
+                getNotices();
+            }
         }
 
         function addListener() {
@@ -294,45 +316,41 @@
         webSocket.close();
     }
 
-
-    let notificationCount = 0;
+    //let notificationCount = 0; //重整時又會從0開始
     let notices = null;
-    //getNotices()
 
-    // 添加通知
-    function addNotification() {
-        notificationCount++;
-        document.getElementById('notification-count').textContent = notificationCount;
-
-        // 創建通知
-        let notificationItem = document.createElement('p');
-        notificationItem.textContent = ` ${notificationCount}`;
-
-        // 將通知添加到下拉框中
-        document.getElementById('notification-dropdown').appendChild(notificationItem);
-    }
-
-    // 切换通知下拉框的顯示和隱藏
-    // function toggleNotifications() {
-    //   const dropdown = document.getElementById('notification-dropdown');
-    // dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
-    //}
 
     function toggleNotifications() {
         const dropdown = document.getElementById('notification-dropdown');
         if (dropdown.style.display === 'block') {
             dropdown.style.display = 'none';
-            notificationCount = 0; // 重置通知
-            document.getElementById('notification-count').textContent = notificationCount;
             for (let i = 0; i < notices.length; i++) {
-                notices[i].noticeStatus = 1
-            }
-            let noticeJson = JSON.stringify(notices);
-            axios.post("${ctxPath}/notice/saveRead", noticeJson, {
-                headers: {
-                    'Content-Type': 'application/json'
+                if(notices[i].noticeStatus === 0){
+                    console.log(notices[i].noticeNo);
+                    let data = {
+                        noticeNo:notices[i].noticeNo
+                    };
+                    fetch("${ctxPath}/notice/updateStatus", {
+                        method: "post",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).then(function (response) {
+                        if(response.ok){
+                            console.log(response);
+                            console.log("success");
+                            let notificationCount = 0; // 重置通知
+                            document.getElementById('notification-count').textContent = notificationCount;
+                        }else{
+                            console.log("ng");
+                        }
+                    }).catch(error => {
+                            console.log("error");
+                    });
+                    }
                 }
-            })
+
         } else {
             dropdown.style.display = 'block';
         }
@@ -344,26 +362,23 @@
             notices = res.data;
             console.log(notices)
             let noticeLength = 0;
-            $('#notification-count').html(notices.length);
-            for (let i = 0; i < notices.length; i++) {
+            let maxNotice = 5;
+            $('#notification-dropdown').empty();
+            for (let i = 0; i < notices.length && i<maxNotice; i++) {
                 let htmlParagraphElement = document.createElement('p');
-                htmlParagraphElement.textContent = notices[i].noticeTitle;
+                htmlParagraphElement.textContent = notices[i].noticeTitle+"\n"+notices[i].noticeTime;
                 $('#notification-dropdown').append(htmlParagraphElement);
                 if (notices[i].noticeStatus === 0) {
                     noticeLength += 1;
                 }
             }
-            if (noticeLength === 0) {
-                $('#notification-count').hide();
-            } else {
-                $('#notification-count').html(noticeLength);
-                $('#notification-count').show();
-            }
+
+            $('#notification-count').html(noticeLength);
 
         })
     }
+
 </script>
-<jsp:include page="front_chat_page.jsp"/>
 </body>
 
 </html>
