@@ -16,7 +16,6 @@
     <title>全部論壇文章</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
     <!-- ●●css for jquery datatables 用 -->
-    <link rel="stylesheet" href="../css/art_header.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         body {
@@ -80,14 +79,7 @@
 
 <body bgcolor='white'>
     <jsp:include page="/index.jsp" />
-    <div class="art_header">
-        <h1>論壇</h1>
-        <div>
-            <span><a href="art.jsp">查看論壇</a></span>
-            <span><a href="artnocheckall.jsp">審核文章</a></span>
-            <span><a href="${ctxPath}/art/artReport">審核留言檢舉</a> </span>
-        </div>
-    </div>
+        <jsp:include page="art.jsp" />
     <table id="art" class="display" style="width: 100%">
         <thead id="header">
             <tr>
