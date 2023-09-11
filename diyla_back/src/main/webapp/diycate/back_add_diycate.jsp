@@ -235,16 +235,21 @@
             var nameInput = document.querySelector('#diyName');
             var amountInput = document.querySelector('#amount');
 
-            if (nameInput.value === '') {
+            if (nameInput.value === '' && amountInput.value === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: '錯誤',
+                    text: '請輸入DIY品項名稱及DIY金額'
+                });
+                return; // 不繼續提交表單
+            } else if (nameInput.value === '') {
                 Swal.fire({
                     icon: 'error',
                     title: '錯誤',
                     text: '請輸入DIY品項名稱'
                 });
                 return; // 不繼續提交表單
-            }
-
-            if (amountInput.value === '') {
+            } else if (amountInput.value === '') {
                 Swal.fire({
                     icon: 'error',
                     title: '錯誤',
@@ -257,6 +262,15 @@
             if (isNaN(amountValue)) {
                 alert('請輸入有效的數字作為DIY金額');
                 return; // 不繼續提交表單
+            }
+            // 添加额外的防呆机制：检查金额是否小于100
+            if (amountValue < 100) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '錯誤',
+                    text: 'DIY金額必須大於或等於100'
+                });
+                return; // 不继续提交表单
             }
             // 發送 POST 請求
             var formData = new FormData();
