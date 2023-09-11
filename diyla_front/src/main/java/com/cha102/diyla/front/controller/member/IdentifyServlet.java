@@ -33,6 +33,9 @@ public class IdentifyServlet extends HttpServlet {
         String tempAuth = jedis.get(email);
         if (!identifycode.equals(tempAuth)){
             exMsgs.add("請輸入正確驗證碼");
+            RequestDispatcher ng = req.getRequestDispatcher("/member/identify.jsp");
+            ng.forward(req,res);
+            return;
         } else {
             MemberService memSer = new MemberService();
             memSer.upStatus(exMsgs,email);

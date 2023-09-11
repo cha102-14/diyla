@@ -76,11 +76,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>commons-validator</groupId>
-            <artifactId>commons-validator</artifactId>
-            <version>1.7</version>
-        </dependency>
-        <dependency>
             <groupId>com.cha102.diyla</groupId>
             <artifactId>common</artifactId>
             <version>1.0</version>
