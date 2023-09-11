@@ -136,7 +136,7 @@ border-radius: 5px;
 	<div class="editform">
 		<h1 style="text-align: center;" class="heading">編輯訂單</h1>
 		<form action="${ctxPath}/orderManage/OrderManageController"
-			method="post">
+			method="post" id="edit">
 			<!-- commodityOrderVOList -->
 			<div class="info">
 				<span class="text">訂單編號:</span> <input name="orderNO"
@@ -205,7 +205,7 @@ border-radius: 5px;
 	               }).then(() => {
 	                   setTimeout(() => {
 	                       // 延遲 1 秒提交表單
-	                       document.querySelector("form").submit();
+	                       $("#edit").submit();
 	                   }, 1000);
 	               });
 	           }
