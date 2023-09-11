@@ -86,6 +86,13 @@
                     getAllMemList();
                 }
 
+                let memEmail = document.getElementById('memEmail');
+                memEmail.onclick = resetCurrentPage;
+
+                function resetCurrentPage(){
+                    document.getElementById("pageIndex").value = 1;
+                }
+
                 function getCurrentPage() {
                     let selectElement = document.getElementById("pageIndex");
                     return parseInt(selectElement.value);
@@ -202,6 +209,7 @@
                         
                         .then(function (res) { //一樣有then
                             let mems = res.memList;
+                            console.log(mems)
                             mem_totalSize = res.totalSize
                             document.getElementById("currentPage").textContent = getCurrentPage();
                             document.getElementById("totalPages").textContent = getTotalPageSize();

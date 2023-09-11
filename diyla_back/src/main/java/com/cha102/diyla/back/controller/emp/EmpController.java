@@ -5,12 +5,10 @@ import com.cha102.diyla.aop.PasswordSHA512AspectChange;
 import com.cha102.diyla.empmodel.EmpAccountAO;
 import com.cha102.diyla.empmodel.EmpJPADAO;
 import com.cha102.diyla.empmodel.EmpSpringService;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -61,14 +59,14 @@ public class EmpController {
         return empSpringService.compareEmpEmail(empEmail,req,resp);
     }
 
-
+    @PasswordSHA512AspectChange
     @PostMapping("/validCode")
     public void validCodeResetPassword(EmpAccountAO ao, HttpServletRequest req,HttpServletResponse resp){
         if (ao.getEmpPassword().equals(ao.getDoubleCheckPassword())){
         empSpringService.queryValidCodeResetPassword(ao.getValid(), ao.getDoubleCheckPassword(), req,resp);
         }else {
 //            密碼不相符,請重新確認密碼
-            req.setAttribute("password",true);
+            req.setAttribute("password",false);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("empResetPassword.jsp");
             try {
                 requestDispatcher.forward(req, resp);
