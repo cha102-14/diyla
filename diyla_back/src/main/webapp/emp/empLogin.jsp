@@ -41,7 +41,7 @@
         div.loginTitle {
             font-family: "微軟正黑體", Arial, sans-serif;
             font-weight: bold;
-            border: 1px solid #B26021;
+            border: 2px solid #B26021;
             text-align: center;
             width: 400px;
             color: #B26021;

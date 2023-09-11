@@ -76,7 +76,7 @@
         }
 
         #chatInput {
-            flex-grow: 1;
+            flex-grow_chat: 1;
             padding: 8px;
             border: none;
             border-radius: 20px;
@@ -154,7 +154,7 @@
         .friend.div{
             text-align: right; /* 将文本容器内的内容靠右 */
         }
-        #row{
+        #row_chat{
             width: 30px;
         }
         /* 朋友圖片 */
@@ -182,16 +182,15 @@
 </head>
 
 <body>
-    <form action="" enctype=""></form>
     <div id="chatIcon" onclick="closeChat()">Chat</div>
     <div id="chatContainer" style="display: none;">
         <div id="closeChat" onclick="closeChat()">-</div>
-        <!-- <div id="row"></div> -->
+        <!-- <div id="row_chat"></div> -->
 
         <div id="friendList">
             <span>Talk to : </span><div id="statusOutput" class="statusOutput"></div>
             <hr>
-        <div id="row"></div>
+        <div id="row_chat"></div>
         <!-- <div id="friendImg"></div> //測試用-->
         </div>
         <div id="activeChat">
@@ -272,9 +271,10 @@
         function notMasterEmpfilter(){
             let empFunList = `${typeFun}`;
             // 判斷是否存在多筆 權限
-            let isSingle = empFunList.includes(",");
-            let empFun = isSingle ? "MASTER" : empFunList.substring(1, empFunList.length-1);
-            let isMaster = empFun.includes("MASTER");
+            let isNotSingle = empFunList.includes(",");
+            let empFun = isNotSingle ? "MASTER" : empFunList.substring(1, empFunList.length-1);
+            let isMaster = !empFun.includes("MASTER");
+            return isMaster;
         }
         // 開啟網頁就建立連線
         window.onload(webSocketOnloadConnect());
@@ -282,8 +282,11 @@
             webSocket = new WebSocket(endPointURL);
 
             webSocket.onopen = function (event) {
+                // 停止且隱藏
                 if(notMasterEmpfilter()){
+                chatIcon.style.display = "none";
                 webSocket.close();
+
                 } else {
                     console.log("connect success!");
                 }
@@ -347,6 +350,7 @@
                     if (talkToName != sender && talkToName != receiver){
                         return;
                     }
+
 
                     sender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
                     sender === self_chat ? li.className += 'me' : li.className += 'friend';
@@ -431,12 +435,12 @@
         // 有好友上線或離線就更新列表
         function refreshFriendList(jsonObj) {
             var friends = jsonObj.users;
-            var row = document.getElementById("row");
+            var row_chat = document.getElementById("row_chat");
             let friendPic;
-            row.innerHTML = '';
+            row_chat.innerHTML = '';
             for (var i = 0; i < friends.length; i++) {
                 if (friends[i] === self_chat  || "Master_" === friends[i].substring(0,7)) {
-
+                     continue;
                 }
                 // 取得好友列表名稱與圖片
                 getMyPic(friends[i]);
@@ -448,7 +452,7 @@
         }
         // 註冊列表點擊事件並抓取好友名字以取得歷史訊息（推送給後端onMessage)
         function addListener() {
-            var container = document.getElementById("row");
+            var container = document.getElementById("row_chat");
             container.addEventListener("click", function (e) {
                 var friend = e.srcElement.textContent;
                 updateFriendName(friend);
@@ -487,13 +491,13 @@
                 let empName = res.empId;
                 let picData = arrayBufferToBase64(empIdObj);
                 let temp =  `<img class="friendImg" src="data: image/jpeg;base64,` + picData + `">`;
-                var row = document.getElementById("row");
+                var row_chat = document.getElementById("row_chat");
                 let count = 0;
                 // 把返回來的圖片直接放入好友列表
                 if(empIdObj != null || empIdObj == ''){
-                    row.innerHTML += '<div id=' + count++ + ' class="column" name="friendName" value=' + empName + ' ><div class="friendIng-div">'+temp +'<p class="friendName">' +empName + '</p></div></div>';
+                    row_chat.innerHTML += '<div id=' + count++ + ' class="column" name="friendName" value=' + empName + ' ><div class="friendIng-div">'+temp +'<p class="friendName">' +empName + '</p></div></div>';
                 } else {
-                    row.innerHTML += '<div id=' + count++ + ' class="column" name="friendName" value=' + empName + ' ><div class="friendIng-div"><p class="friendName">' +empName + '</p></div></div>';
+                    row_chat.innerHTML += '<div id=' + count++ + ' class="column" name="friendName" value=' + empName + ' ><div class="friendIng-div"><p class="friendName">' +empName + '</p></div></div>';
                 }
             })
             .catch(function (error) {
