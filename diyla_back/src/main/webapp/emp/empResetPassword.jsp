@@ -25,24 +25,90 @@
 
     <!-- responsive style -->
     <link href="../css/responsive.css" rel="stylesheet"/>
+    <style>
 
+        * {
+                    box-sizing: border-box;
+                    font-family:"jf open 粉圓 1.1";
 
+                }
+
+                body {
+            margin: 0;
+            background-image: url('../img/login.png'); /* 背景图像的URL，注意路径 */
+            background-size: cover; /* 按照视口大小覆盖整个屏幕 */
+            background-repeat: no-repeat; /* 不重复平铺背景图像 */
+            background-attachment: fixed; /* 固定背景图像 */
+            background-position: center center; /* 居中显示背景图像 */
+        }
+
+        div.reset {
+            font-family: "微軟正黑體", Arial, sans-serif;
+            font-weight: bold;
+            border: 2px solid #B26021;
+            text-align: center;
+            width: 400px;
+            color: #B26021;
+            position: relative;
+            top:50%;
+            left:50%;
+            transform: translateX(-50%);
+            border-radius: 25px;
+            letter-spacing: 4px;
+            padding: 40px;
+            margin:50px 0;
+        }
+        h4{
+            font-family: "微軟正黑體", Arial, sans-serif;
+            font-size:30px;
+            font-weight: bold;
+            margin-top:30px;
+            margin-bottom:15px
+        }
+
+        /* label.valid {
+            position: fixed;
+            top: 120px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+
+        label.reset {
+            position: fixed;
+            top: 220px;
+            left: 100px;
+            letter-spacing: 3px;
+        }
+
+        label.check {
+            position: fixed;
+            top: 320px;
+            left: 100px;
+            letter-spacing: 3px;
+        } */
+</style>
 </head>
 <body>
 
-    <div class="title">
+    <div class="reset">
         <h4>重新設定密碼</h4>
         <div class="">
             <form method="post" action="validCode">
-                <label>驗證碼<br>
+                <label class="valid">驗證碼<br>
+                <br>   
                 <input required type="text" id="valid" name="valid" placeholder="請輸入驗證碼" ></label><br>
+                <br>
                 <!-- Email一起帶入做比對? 將驗證碼傳入Controller 調用Service方法至Jedis比對驗證碼 比對成功後將新empPassword寫入DB -->
-                <label>修改密碼<br>
+                <label class="reset">修改密碼<br>
+                <br>
                 <input required type="password" name="empPassword" placeholder="請輸入6-12字碼英數字"  minlength="6" maxlength="12" ></label><br>
-                <label>確認密碼<br>
+                <br>
+                <label class="check">確認密碼<br>
+                <br>  
                 <input type="password" name="doubleCheckPassword" placeholder="再次輸入密碼" minlength="6" maxlength="12"></label><br>
-                <span  id ="doubleCheck.errors" class="error">${errorMsgMap.empPassword}</span>
-                <button required type="submit" value="resetPassword">確認送出</button>
+                <br>
+                <!-- <span  id ="doubleCheck.errors" class="error">${errorMsgMap.empPassword}</span> -->
+                <button required type="submit" value="resetPassword">送出</button>
             </form>
         </div>
     </div>

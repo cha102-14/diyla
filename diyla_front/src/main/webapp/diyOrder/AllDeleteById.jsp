@@ -229,7 +229,7 @@ window.onload=function(){
 	 const uuu = document.querySelector('.uuu');
 	 if(uuu.value === '404'){
 		 swal('${errorMsgs.diyOrderList}','${errorMsgs.diyOrderList} ！ 點擊"OK"將導向前頁' , 'error').then(function () {
-		        window.location.href = "diyOrder_front.jsp"
+		        window.location.href = "Front.jsp"
 		    });
 	   }
 }

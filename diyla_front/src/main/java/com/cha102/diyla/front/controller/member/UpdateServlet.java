@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +36,7 @@ public class UpdateServlet extends HttpServlet {
             }
 
             MemVO memVO = memSer.selectMem(memId);
+            //將地址分成縣市區域和最後詳細地址
             Pattern p = Pattern.compile("(..[縣市])(.{1,3}[區鄉鎮市嶼])(.+)");
             Matcher m = p.matcher(memVO.getMemAddress());
             Map<String,String> addMap = new LinkedHashMap<>();
@@ -45,9 +45,6 @@ public class UpdateServlet extends HttpServlet {
                 addMap.put("city",m.group(1));
                 addMap.put("district",m.group(2));
                 addMap.put(("address"),m.group(3));
-                System.out.println(m.group(1));
-                System.out.println(m.group(2));
-                System.out.println(m.group(3));
             }
 
             req.setAttribute("memVO",memVO);
@@ -60,6 +57,7 @@ public class UpdateServlet extends HttpServlet {
         if("update".equals(action)){
             Map<String,String> exMsgs = new LinkedHashMap<String,String>();
             Map<String,String> addMap = new LinkedHashMap<>();
+            Map<String,String> success = new LinkedHashMap<String,String>();
             req.setAttribute("exMsgs",exMsgs);
 
             Integer memId = Integer.valueOf(req.getParameter("memId"));
@@ -79,20 +77,53 @@ public class UpdateServlet extends HttpServlet {
             addMap.put("district",district);
             addMap.put(("address"),address);
 
-//            if (!password.equals(pwcheck)){
-//                exMsgs.put("pwcheck","該密碼與您設定的密碼不一致");
-//            }
 
             MemVO memVO = memSer.updateMem(exMsgs,name,phone,addressAll,memId);
 
             HttpSession session = req.getSession();
             session.setAttribute("memVO", memVO);
             req.setAttribute("addMap",addMap);
+            if (memVO != null && exMsgs.isEmpty()){
+                success.put("success","修改成功！");
+                req.setAttribute("success",success);
+            }
+
             RequestDispatcher select = req.getRequestDispatcher("/member/mem_update.jsp");
             select.forward(req,res);
 
         }
 
+        //        修改密碼
+        if ("updatePw".equals(action)) {
+            String upemail = req.getParameter("upemail");
+            String upPw = req.getParameter("upPw");
+            String upPwcheck = req.getParameter("upPwcheck");
+            Map<String,String> exMap = new LinkedHashMap<>();
+            Map<String,String> successMap = new LinkedHashMap<>();
+
+            String pwReg = "^\\w{6,12}$";
+            if (upPw == null || (upPw.trim()).length()==0){
+                exMap.put("password","請輸入密碼");
+            } else if (!(upPw.matches(pwReg))){
+                exMap.put("password","密碼格式錯誤，請重新輸入");
+            }
+            if (!upPwcheck.equals(upPw)){
+                exMap.put("pwcheck","該密碼與您設定的密碼不一致");
+            }
+//             memVO =null;
+            if(exMap.isEmpty()){
+                MemVO memVO = memSer.updateNewPw(exMap,upPw,upemail);
+                 successMap.put("successMap","修改成功！");
+                 req.setAttribute("successMap",successMap);
+            } else {
+                req.setAttribute("exMap",exMap);
+            }
+
+//            req.setAttribute("memVO",memVO);
+            RequestDispatcher failure = req.getRequestDispatcher("/member/updatePw.jsp");
+            failure.forward(req, res);
+
+        }
 
 
     }

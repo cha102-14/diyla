@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
                 RequestDispatcher failure = req.getRequestDispatcher("/member/mem_login.jsp");
                 failure.forward(req,res);
             } else {
-                String url = "/";
                 Integer memId =memVO.getMemId();
                 session.setAttribute("memVO", memVO);
                 session.setAttribute("memId", memId);

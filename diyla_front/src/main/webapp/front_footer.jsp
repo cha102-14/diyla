@@ -98,10 +98,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
 </script>
 <script src="${ctxPath}/js/custom.js"></script>
+<jsp:include page="front_chat_page.jsp"/>
 
 </body>
 
 </html>
+
 
 </body>
 </html>
