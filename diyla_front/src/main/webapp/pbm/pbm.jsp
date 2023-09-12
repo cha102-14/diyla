@@ -35,7 +35,7 @@
         <table>
             <tr>
                 <th class="category-column">問題分類</th>
-                <th>常見問題標題</th>
+                <th class="QA-column">常見問題標題</th>
                 <th>常見問題內容</th>
             </tr>
             <c:forEach var="pbmVO" items="${list}">

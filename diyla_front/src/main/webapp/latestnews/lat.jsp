@@ -53,6 +53,7 @@
                                     </c:otherwise>
                             </c:choose>
                         </div>
+                        <hr>
                     </td>
                 </tr>
             </c:forEach>

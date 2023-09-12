@@ -13,7 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class DIYReserve2VO implements Serializable {
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date diyReserveDate;
     private int diyPeriod;
     private long peoCount;

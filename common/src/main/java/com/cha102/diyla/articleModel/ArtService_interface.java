@@ -24,4 +24,8 @@ public interface ArtService_interface {
 
     public List<ArtVO> getAllArt();
 
+    public List<ArtVO> getAllNoCheckArt();
+
+    public List<ArtVO> getAllCheckArt();
+
 }
