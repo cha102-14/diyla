@@ -138,4 +138,20 @@ public class ArtDAO implements ArtDAO_interface {
         }
     }
 
+    @Override
+    public List<ArtVO> getAllCheck() {
+        final String hql = "FROM ArtVO WHERE artStatus = 1 or artStatus = 2";
+        session = getSession();
+        try {
+            Transaction transaction = session.beginTransaction();
+            List<ArtVO> artlist = session.createQuery(hql, ArtVO.class).getResultList();
+            transaction.commit();
+            return artlist;
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+            return null;
+        }
+    }
+
 }

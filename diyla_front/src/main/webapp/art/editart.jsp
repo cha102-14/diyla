@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,15 +48,17 @@
                         <td class="td2">
                             <input id="addimg" type="file" name="artPic" accept="image/*" onchange="preImg()">
                             <div id="imagePreview">
-                                <img src="data:image/jpeg;base64,${ Base64.getEncoder().encodeToString(artVO.artPic) }"
+                            <c:if test="${not empty artVO.artPic}">
+                                <img id="oldimg" name="oldArtPic" src="data:image/jpeg;base64,${ Base64.getEncoder().encodeToString(artVO.artPic) }"
                                     alt="Image" style="width: 100%">
+                            </c:if>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="td1">發布時間</td>
                         <td class="td2">
-                            <p>${artVO.artTime}</p>
+                            <p><fmt:formatDate value="${artVO.artTime}" pattern="yyyy-MM-dd HH:mm" /></p>
                             <input type="hidden" name="artTime" value="${artVO.artTime}">
                         </td>
                     </tr>
@@ -72,6 +75,11 @@
     <jsp:include page="/front_footer.jsp" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        // 在頁面載入完成後執行的動作
+        window.addEventListener("load", function () {
+            edit_art();
+        });
+
         function sendeditart() {
             if (!document.querySelector("#addimg").files[0]) {
                 swal("確定要移除照片?", "請按確定送出或按取消返回", {
@@ -117,10 +125,6 @@
             }
         }
 
-        // 在頁面載入完成後執行的動作
-        window.addEventListener("load", function () {
-            edit_art();
-        });
 
         function preImg() {
             const preDiv = document.querySelector("#imagePreview");
@@ -138,6 +142,7 @@
                 };
                 reader.readAsDataURL(addimg.files[0]);
             } else {
+                preDiv.innerHTML = "";
             }
         }
     </script>
