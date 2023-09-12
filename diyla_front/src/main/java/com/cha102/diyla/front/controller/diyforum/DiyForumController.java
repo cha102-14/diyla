@@ -1,9 +1,14 @@
 package com.cha102.diyla.front.controller.diyforum;
 
+import com.cha102.diyla.diyOrder.DiyOrderService;
+import com.cha102.diyla.diyOrder.DiyOrderVO;
 import com.cha102.diyla.diyforummodel.*;
+import com.cha102.diyla.diyreservemodel.DiyReserveResultService;
 import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.util.PageBean;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +17,9 @@ import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/diy/diy-forum")
@@ -22,6 +29,7 @@ public class DiyForumController {
 	//使用了@Resource註解，將MemberRepository這個數據存取物件注入到該類中，這個物件用於和會員資料庫進行交互。
 	@Resource
 	MemberRepository memberRepository;
+
 
 
 	@RequestMapping("/list")
@@ -41,17 +49,26 @@ public class DiyForumController {
 	}
 
 	@RequestMapping("/add")
-	public DiyForumVO add(DiyForumEntity diyForum, HttpSession httpSession) {
+	public ResponseEntity add(DiyForumEntity diyForum, HttpSession httpSession) {
+		DiyOrderService diyOrderService = new DiyOrderService();
 		MemVO memVO = (MemVO) httpSession.getAttribute("memVO");
-		DiyForumVO diyForumVO = null;
 		if (!ObjectUtils.isEmpty(memVO)){
-			MemberEntity memberEntity = memberRepository.findById(memVO.getMemId()).get();
-			diyForum.setCreateTime(new Timestamp(new Date().getTime()));
-			diyForum.setMemberEntity(memberEntity);
-			diyForumVO = service.addDF(diyForum);
-		}
+			List<DiyOrderVO> orders = diyOrderService.findMemIdAllOrder(memVO.getMemId());
 
-		return diyForumVO;
+			List<DiyOrderVO> collect = orders.stream().filter(diyOrderVO -> diyOrderVO.getDiyNo() == diyForum.getDiyNo() && diyOrderVO.getPaymentStatus() == 1).collect(Collectors.toList());
+
+			if (collect.size() > 0) {
+				MemberEntity memberEntity = memberRepository.findById(memVO.getMemId()).get();
+				diyForum.setCreateTime(new Timestamp(new Date().getTime()));
+				diyForum.setMemberEntity(memberEntity);
+				DiyForumVO diyForumVO = service.addDF(diyForum);
+				return new ResponseEntity(diyForumVO,HttpStatus.OK);
+			}else {
+				return new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
+			}
+		} else {
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")

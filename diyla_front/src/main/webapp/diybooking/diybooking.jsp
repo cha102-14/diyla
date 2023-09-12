@@ -46,7 +46,8 @@
     <link rel="stylesheet" href="/diyla_front/diy/css/spacing.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/style.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/responsive.css">
-
+    <!-- 引入 SweetAlert2 的 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
     <title>
         DIY訂位
     </title>
@@ -90,27 +91,28 @@
                             </style>
                             <div class="tf__reservation_input_single">
                                 <label for="name">您選擇的diy項目</label>
-                                <!--<input type="text" style="height: 110px;" id="name" placeholder="蛋糕、餅乾...">-->
-                                <textarea readonly rows="4" cols="10" style="height: 20px; text-align: left"
+                                <textarea readonly rows="1.5" cols="10"
+                                          style="height: 60%; text-align: center; resize: none; overflow: hidden;"
                                           placeholder="蛋糕、餅乾...">
-                                        <%=diyCateEntity.getDiyName()%>
-                                    </textarea>
+        <%=diyCateEntity.getDiyName()%>
+    </textarea>
 
-
-                            </div>
+                    </div>
                             <%-- 获取 HttpSession 中的用户对象 --%>
-                            <c:set var="memVO" value="${sessionScope.memVO}" />
+                            <c:set var="memVO" value="${sessionScope.memVO}"/>
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="name">姓名</label>
-                                        <input type="text" id="name" value="${memVO.memName}" placeholder="Name" readonly>
+                                        <input type="text" id="name" value="${memVO.memName}" placeholder="Name"
+                                               readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="phone">電話</label>
-                                        <input type="text" id="phone" value="${memVO.memPhone}" placeholder="Phone" readonly>
+                                        <input type="text" id="phone" value="${memVO.memPhone}" placeholder="Phone"
+                                               readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
@@ -118,7 +120,8 @@
                                         <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
 
-                                        <input type="text" id="ID-laydate-mark" name="diyReserveDate" placeholder="yyyy-MM-dd">
+                                        <input type="text" id="ID-laydate-mark" name="diyReserveDate"
+                                               placeholder="yyyy-MM-dd">
 
                                     </div>
                                 </div>
@@ -178,8 +181,14 @@
 </script>
 <script src="/diyla_front/js/custom.js"></script>
 <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
+<!-- 引入 SweetAlert2 的 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+        let currentCount = 0;
+
+        let map = new Map();
         // 取得專案路徑
         layui.use(['laydate', 'layer'], function () {
             let laydate = layui.laydate;
@@ -188,7 +197,7 @@
             // 監聽點擊事件
             $('#ID-laydate-mark').on('click', function () {
                 $.ajax({
-                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoCountReport",
+                    url: "/diyla_front/api/diy-reserve/peoCountReport",
                     data: {
                         period: 0
                     },
@@ -229,14 +238,12 @@
                                         values.push(mars[i])
                                     }
                                 }
-
-                                $("#select_time option").each(function() {
+                                $("#select_time option").each(function () {
                                     let value = $(this).val();
-                                    $(this).prop("disatable",false);
+                                    $(this).prop("disabled", false);
                                     for (let i = 0; i < values.length; i++) {
-
+                                        map.set(values[i].diyPeriod, values[i].peoCount);
                                         if (values[i].diyPeriod == value && (values[i].peoCount >= 20 || values[i].reserveStatus === 1)) {
-
                                             $(this).prop("disabled", true);
                                         }
                                     }
@@ -263,14 +270,32 @@
 
             // 驗證是否完整選擇了時段、人數、日期
             if (!selectedDate || !selectedPeriod || !selectedPeople || period == "-1") {
-                layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '請選擇完整的日期、時段和人數！',
+                });
                 return;
             }
+
+            let p = parseInt(period, 10);
+            if (map.has(p)) {
+                let residue = 20 - map.get(p);
+                if (residue < selectedPeople) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '此時段只剩下 ' + residue + ' 人數可選！',
+                    });
+                    return;
+                }
+            }
+
 
             let diyName = '<%=diyCateEntity.getDiyName()%>';
 
             const formHtml =
-                '<form method="post" action="http://localhost:8081/diyla_front/diy/checkout/ecpay">' +
+                '<form method="post" action="/diyla_front/diy/checkout/ecpay">' +
                 '<div id="pop">' +
                 '<p>姓名: ' + name + '</p>' +
                 '<p>電話: ' + phone + '</p>' +
@@ -315,7 +340,7 @@
         });
 
         // 獲取對<select>元素的引用
-        $("#person").change(function() {
+        $("#person").change(function () {
             // 獲取選中的值
             var selectedValue = $(this).val();
             // 計算總金額
@@ -323,7 +348,6 @@
             $("#amount").val(amount * selectedValue);
         });
     });
-
 
 
 </script>
