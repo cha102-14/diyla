@@ -19,6 +19,8 @@
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <!-- 引入 SweetAlert2 的 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
@@ -44,7 +46,8 @@
 
     <!-- Page level custom scripts -->
     <script src="/diyla_back/js/demo/datatables-demo.js"></script>
-
+    <!-- 引入 SweetAlert2 的 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.js"></script>
     <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
 
     <!-- 自訂css -->
@@ -330,9 +333,12 @@
 
     function deleteRow(button, diyNo) {
         let row = button.closest('tr');
-        layer.msg('已刪除', {
-            icon: 1,
-            time: 2000 // 2秒關閉
+
+        Swal.fire({
+            icon: 'success',
+            title: '已刪除',
+            showConfirmButton: false,
+            timer: 2000 // 2秒後自動關閉
         });
         $.ajax({
             type: "DELETE",
