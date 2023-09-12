@@ -373,6 +373,7 @@
     }
 
 </script>
+<jsp:include page="front_chat_page.jsp"/>
 </body>
 
 </html>
