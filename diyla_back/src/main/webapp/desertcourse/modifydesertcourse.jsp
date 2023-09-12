@@ -19,6 +19,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
     <html lang="en">
 
     <head>
+        <jsp:include page="/index.jsp" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>修改甜點課程</title>
@@ -33,14 +34,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
         <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
         <!-- 設定session的後台會員名稱以及其是否是師傅-->
-        <% //若authCode=0/1 />2 分別代表無權限後台人員/admin/以及師傅>
-        //Integer empId = (Integer) session.getAttribute("empId");
-        //String typeFun = (String) session.getAttribute("typeFun");
-        //模擬取得目前使用者權限以及empId
-        //String typeFun = "ADMIN";
-        //session.setAttribute("typeFun", typeFun);
-        //Integer empId = 1;
-        //session.setAttribute("empId", empId);
+        <% 
 
         //抓取權限以及empId對應的teacherVO
         EmpService empService = new EmpService();
@@ -80,7 +74,6 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
     <body>
         <div id="pageContent">
             <div id="indexBlock">
-
             </div>
             <div id="naviContentBlock">
                 <div id="naviBlock">
@@ -408,7 +401,6 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                         data.forEach(ingredient => {
                             ingOptionString += "<option value=" + ingredient.id + ">" + ingredient.name + "</option>"
                         })
-
                     });
                 //阻擋無權限人員修改課程
                 var type = "${type}";
