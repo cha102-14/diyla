@@ -270,6 +270,9 @@ font-size: 18px;
 a.subbarlink:hover {
 	color:blue;
 }
+tr:nth-child(even) {
+    background-color: #f2f2f2 !important; 
+}
 </style>
 </head>
 <body>
@@ -402,7 +405,7 @@ a.subbarlink:hover {
 					  if (orderStatus === 3) {
 						  swal({
 							    title: "商品已出貨，無法取消訂單",
-							    icon:"warning",
+							    icon:"error",
 							    buttonsStyling: false,
 							    confirmButtonClass: 'btn btn-primary btn-block'
 							});
@@ -411,7 +414,7 @@ a.subbarlink:hover {
 					  if (orderStatus >= 4) {
 						  swal({
 							    title: "訂單已完成，無法取消訂單",
-							    icon:"warning",
+							    icon:"error",
 							    buttonsStyling: false,
 							    confirmButtonClass: 'btn btn-primary btn-block'
 							});
@@ -419,15 +422,25 @@ a.subbarlink:hover {
 				        }
 					swal({
 						title : "確定取消訂單?",
+						 text: "取消代幣將無法退回。",		
 						icon : "warning",
 						buttons : true,
 						 buttonsStyling: false,
 						 confirmButtonClass: 'btn btn-primary btn-block'
 					}).then((cancel)=>{
 						if(cancel){
-							 form.submit();
-						}
-					});
+							 Swal.fire({
+						            title: '訂單已成功取消',
+						            icon: 'success',
+						            timer: 1000, // 顯示成功提示 1 秒
+						            showConfirmButton: false
+						        }).then(() => {
+						            setTimeout(() => {
+						                form.submit();
+						            }, 1000);
+						        });
+						    }
+				});
 				});
 
 		  
