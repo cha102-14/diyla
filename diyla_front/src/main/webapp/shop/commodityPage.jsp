@@ -149,6 +149,20 @@
     function addTrack(event) {
         event.preventDefault();
         axios.get('${ctxPath}/shop/track/${commodity.comNO}').then((res) => {
+            console.log(res.data);
+            if (res.data.length===0) {
+                Swal.fire({
+                    title: "請先登入後才能加入追蹤",
+                    text: "點選OK引導至登入頁面",
+                    showCancelButton: true
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = '${ctxPath}/member/mem_login.jsp';
+
+                    }
+                });
+                return;
+            }
             if (res.data === '已在追蹤清單裡') {
                 swal("已在追蹤清單裡", "", "warning");
 

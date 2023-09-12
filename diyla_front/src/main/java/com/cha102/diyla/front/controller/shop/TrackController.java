@@ -33,7 +33,12 @@ public class TrackController {
     @ResponseBody
     public String track(@PathVariable Integer comNO, Model model) {
         MemVO memVO = (MemVO) httpSession.getAttribute("memVO");
+        if (memVO == null) {
+            return null;
+        }
+
         Integer memId = memVO.getMemId();
+
         if (commodityTrackService.isTracking(comNO,memId)) {
             return "已在追蹤清單裡";
         }
