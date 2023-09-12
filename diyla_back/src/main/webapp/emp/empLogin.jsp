@@ -49,22 +49,18 @@
             top:50%;
             left:50%;
             transform: translateX(-50%);
-            border-radius: 5px;
+            border-radius: 25px;
             letter-spacing: 3px;
             margin:50px 0;
         }
         h5{
             font-family: "微軟正黑體", Arial, sans-serif;
-            font-size:20px;
+            font-size:30px;
             font-weight: bold;
             margin-top:30px;
             margin-bottom:15px
         }
 
-        div.error {
-            padding: 10px;
-            background-color: #FCE5CD;
-        }
 
         div.backStageLogin {
             padding: 10px;
@@ -176,8 +172,7 @@
         window.onload(checkIsLogin());
         function checkIsLogin(){
             if("${empId}" !== ""){
-                // location.href = "/diyla_back";
-               location.href = "/diyla_back/src/main/webapp/emp/welcome.jsp";
+               location.href = "welcome.jsp";
             }else{
                 checkNewPassword();
                 checkTypeIsEmpty();
