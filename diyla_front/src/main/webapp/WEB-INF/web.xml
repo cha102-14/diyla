@@ -19,7 +19,7 @@
  <filter-mapping>
   <filter-name>loginFilter</filter-name>
   <url-pattern>/member/mem_update.jsp</url-pattern>
-  <url-pattern>/member/updadePw.jsp</url-pattern>
+  <url-pattern>/member/updatePw.jsp</url-pattern>
   <url-pattern>/track/*</url-pattern>
   <url-pattern>/allOrder/*</url-pattern>
   <url-pattern>/token/*</url-pattern>
@@ -29,6 +29,10 @@
   <url-pattern>/art/personalart.jsp</url-pattern>
   <url-pattern>/art/selectcoin.jsp</url-pattern>
   <url-pattern>/front_chat_page.jsp</url-pattern>
+  <url-pattern>/diyOrder/diyOrder_front.jsp</url-pattern>
+  <url-pattern>/diyOrder/diyOrder.jsp</url-pattern>
+  <url-pattern>/diyOrder/diyOrder_ByMemPeriod.jsp</url-pattern>
+  <url-pattern>/diyOrder/AllDeleteById.jsp</url-pattern>
   <dispatcher>REQUEST</dispatcher>
   <dispatcher>FORWARD</dispatcher>
   <dispatcher>INCLUDE</dispatcher>
