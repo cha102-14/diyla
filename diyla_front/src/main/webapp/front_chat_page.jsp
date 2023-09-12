@@ -467,7 +467,6 @@
                 let memIdObj = res.EMP_PIC;
                 let memId = res.EMP_ID;
                 let memName = res.EMP_NAME;
-                console.log("memIdObj : "+memIdObj +" , memId : "+ memId +" , memName : "+memName);
                 let picData = arrayBufferToBase64(memIdObj);
                 let temp =  `<img class="friendImg" src="data: image/jpeg;base64,` + picData + `">`;
                 var row = document.getElementById("row");
