@@ -15,9 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/member/updatePw")
 public class updatePwServlet extends HttpServlet {
@@ -49,6 +47,7 @@ public class updatePwServlet extends HttpServlet {
 
 
         List<String> exMsgs = new LinkedList<String>();
+        Map<String,String> exMap = new LinkedHashMap<>();
         req.setAttribute("exMsgs", exMsgs);
         String action = req.getParameter("action");
 
@@ -77,7 +76,7 @@ public class updatePwServlet extends HttpServlet {
             String title = "【DIYLA】密碼重置信";
             String context = "親愛的會員您好，您的臨時密碼為" + code + "，請登入並盡快修改密碼";
             mailService.sendEmail(email, title, context);
-            memSer.updateNewPw(exMsgs, code, email);
+            memSer.updateNewPw(exMap, code, email);
             res.getWriter().write("success");
             return;
         } else {
@@ -108,23 +107,7 @@ public class updatePwServlet extends HttpServlet {
 //
 //            }
 
-//        修改密碼
-        if ("updatePw".equals(action)) {
-            String upemail = req.getParameter("upemail");
-            String upPw = req.getParameter("upPw");
-            String upPwcheck = req.getParameter("upPwcheck");
 
-            if (!upPwcheck.equals(upPw)){
-                exMsgs.add("該密碼與您設定的密碼不一致");
-            }
-
-            MemVO mem = memSer.updateNewPw(exMsgs,upPw,upemail);
-
-            session.setAttribute("memVO", mem);
-            RequestDispatcher failure = req.getRequestDispatcher("/member/updatePw.jsp");
-            failure.forward(req, res);
-
-        }
 
     }
 }

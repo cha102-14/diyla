@@ -15,11 +15,12 @@ public class CommodityTrackDTO {
 
 
     public CommodityTrackDTO(Object[] objects){
-        this.memId = (Integer) objects[0];
-        this.comNO = (Integer) objects[1];
-        this.comName = (String) objects[2];
-        this.comPic = (byte[]) objects[3];
-        this.comPri = (Integer) objects[4];
-        this.comQua = (Integer) objects[5];
+        this.trackId=(Integer) objects[0];
+        this.memId = (Integer) objects[1];
+        this.comNO = (Integer) objects[2];
+        this.comName = (String) objects[3];
+        this.comPic = (byte[]) objects[4];
+        this.comPri = (Integer) objects[5];
+        this.comQua = (Integer) objects[6];
     }
 }

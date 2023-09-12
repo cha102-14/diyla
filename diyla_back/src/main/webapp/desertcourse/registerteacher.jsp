@@ -26,45 +26,53 @@
     <link rel="stylesheet" type="text/css" href="${ctxPath}/desertcourse/css/desertcourse_style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- 設定session的後台會員名稱以及其是否是師傅-->
- 
     <%
-Integer canRegister = null;
-if (session != null) {
-    Integer empId = (Integer) session.getAttribute("empId");
-    // 检查 empId 是否为 null
-    if (empId != null) {
+     //抓取權限以及empId對應的teacherVO
         EmpService empService = new EmpService();
         EmpDAO empDAO = new EmpDAOImpl();
         TeacherService teacherService = new TeacherService();
-        boolean isEmpAlreadyTeacher = teacherService.isEmpAlreadyTeacher(empId);
-        EmpVO empVO = empDAO.getOne(empId);
-        String empname = empVO.getEmpName();
-        session.setAttribute("empname", empname);
-        
-        // 檢查 "typeFun" 是否存在並且是 List類型
-        Object typeFunObj = session.getAttribute("typeFun");
-        boolean isTypeFunNotList = (typeFunObj != null && !(typeFunObj instanceof java.util.List));
-        if (typeFunObj != null && typeFunObj instanceof List<?>) {
-            List<String> typeFun = (List<String>) typeFunObj;
-            for (String type : typeFun) {
-                if ("MASTER".equals(type) && !isEmpAlreadyTeacher) {
-                    canRegister = 1;
-                } else {
-                    request.setAttribute("expiresession", isTypeFunNotList ? "1" : "0");
-                    canRegister = 0;
+        //默認使用者type為notAuth
+        String type = "notAuth"; 
+        Integer canRegister = null;
+        //若session並非為null才往下
+        Integer empId = (Integer) (session.getAttribute("empId"));
+        List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+        if(session != null && empId != null && typeFun != null){
+            boolean isEmpAlreadyTeacher = teacherService.isEmpAlreadyTeacher(empId);
+            EmpVO empVO = empDAO.getOne(empId);
+            String empName = empVO.getEmpName();
+            //進來的是何種使用者
+            Object typeFunObj = session.getAttribute("typeFun");
+            boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
+            if (isTypeFunList) {
+                boolean containsMaster = typeFun.contains("MASTER");
+                boolean containsAdmin = typeFun.contains("ADMIN");
+                if (containsMaster && containsAdmin) {
+                    type = "ADMIN";
+                } else if (containsMaster) {
+                    type = "MASTER";
                 }
+            } else {
+                type = (String) typeFunObj;
             }
+            if("ADMIN".equals(type)) {
+                canRegister = 0;
+            } else if ("MASTER".equals(type) && !isEmpAlreadyTeacher) {
+                canRegister = 1;
+            }
+            pageContext.setAttribute("type", type);
+            pageContext.setAttribute("teacherName", empName);
+            pageContext.setAttribute("canRegister", canRegister);
         } else {
             canRegister = 0;
+            type = "NOSESSION";
+            pageContext.setAttribute("type", type);
+            pageContext.setAttribute("canRegister", canRegister);
+        
         }
-        session.setAttribute("canRegister", canRegister);
-    } else {
-        canRegister = 0;
-    }
-} else {
-    canRegister = 0;
-}
+    
     %>
+  
 
 </head>
 
@@ -86,7 +94,7 @@ if (session != null) {
     <div class="row">
         <div id="teacherNameField" class="col-md-6 form-group" >
             <label for="teacherName">師傅名稱 </label>
-            <input type="text" class="form-control" id="teacherName" name="teacherName" value = ${empname} readonly style="background-color: #f2f2f2;"><br>
+            <input type="text" class="form-control" id="teacherName" name="teacherName" value = "${teacherName}" readonly style="background-color: #f2f2f2;"><br>
         </div>
 
         <div id="genderBlock" class="col-md-3 form-group">
@@ -145,38 +153,38 @@ if (session != null) {
 </div>
     <script>
         $(document).ready(function () {
-          
-        //     // 判斷 expiresession 的值
-        //     if (${expiresession} === 1) {
-        //         Swal.fire({
-        //             title: "您的session已過期, 請重新登入。",
-        //             icon: "error",
-        //             confirmButtonText: "確定"
-        //         }).then(function(result){
-        //             if(result.isConfirmed) {
-        //                 window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-        //             }
-        //         });
-        //             setTimeout(function() {
-        //             window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-        //             }, 2500);
-        //     }
+            var type = '${type}';
+            // 判斷 expiresession 的值
+            if (type === "NOSESSION") {
+                Swal.fire({
+                    title: "您尚未登入!",
+                    icon: "error",
+                    confirmButtonText: "確定"
+                }).then(function(result){
+                    if(result.isConfirmed) {
+                        window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                    }
+                });
+                    setTimeout(function() {
+                    window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                    }, 2500);
+            } else{
                 
-        //          //先做是否已可以註冊師傅的驗證
-        //     if (${canRegister} !== 1) {
-        //         Swal.fire({
-        //         title: "您已註冊為教師，或您無權註冊為教師!",
-        //         icon: "warning",
-        //         confirmButtonText: "確定"
-        //         }).then(function(result){
-        //             if(result.isConfirmed) {
-        //                 window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-        //             }
-        //         });
-        //             setTimeout(function() {
-        //             window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
-        //             }, 2500);
-        // }
+                 //先做是否已可以註冊師傅的驗證
+            if (${canRegister} !== 1) {
+                Swal.fire({
+                title: "您已註冊為教師，或您無權註冊為教師!",
+                icon: "warning",
+                confirmButtonText: "確定"
+                }).then(function(result){
+                    if(result.isConfirmed) {
+                        window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+                    }
+                });
+                    setTimeout(function() {
+                    window.location.href = "${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp";
+                    }, 2500);
+        }
                 //宣告各區塊的參數
                 const specialityBlock = $("#specialityBlock");
                 const addButton = $("#speincbutton");
@@ -319,6 +327,7 @@ if (session != null) {
                 errorMessage.show();
             }
         });
+            }
         });
     </script>
 </body>

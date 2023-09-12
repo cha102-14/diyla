@@ -92,7 +92,7 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="${ctxPath}/diyOrder/diyOrder_front.jsp">
+                        <a class="nav-link" href="${ctxPath}/diyCate/diyCateList">
                             DIY體驗
                         </a>
                     </li>
