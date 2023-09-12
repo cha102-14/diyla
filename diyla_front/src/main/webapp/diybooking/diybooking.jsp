@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <%
     DiyCateEntity diyCateEntity = (DiyCateEntity) request.getAttribute("DiyCateEntity");
 
@@ -184,41 +185,28 @@
             let laydate = layui.laydate;
             let layer = layui.layer;
 
-
-
             // 監聽點擊事件
             $('#ID-laydate-mark').on('click', function () {
-                // var selectedDate = $(this).val(); // 取得選擇的日期
-
-
-                // 發送 AJAX 請求取得資料並渲染日期選框的內容
                 $.ajax({
-                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoItemQuantityReport",
+                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoCountReport",
                     data: {
-                        //endDate: selectedDate,
                         period: 0
                     },
                     success: function (data) {
-
                         let mar = {};
-
                         let mars = [];
 
                         for (let x in data) {
-                            let itemQuantity = 0;
+                            let peoCount = 0;
                             let diyReserveDate = "";
                             for (let xx in data[x]) {
                                 mars.push(data[x][xx]);
-
-
-                                itemQuantity += data[x][xx].itemQuantity;
+                                peoCount += data[x][xx].peoCount;
                                 diyReserveDate = data[x][xx].diyReserveDate;
-
                             }
-                            if (itemQuantity >= 60) {
+                            if (peoCount >= 60) {
                                 mar[diyReserveDate] = '已滿';
                             }
-
                         }
 
                         // 處理接收到的 JSON 資料並更新日期選擇框的內容
@@ -228,7 +216,6 @@
                             max: 60,
                             mark: mar, // 使用接收到的資料來標記日期
                             done: function (value, date) {
-
                                 for (let key in mar) {
                                     if (key === value) {
                                         layer.msg("無法選擇該日期！", {icon: 2});
@@ -243,21 +230,15 @@
                                     }
                                 }
 
-                                // $("#select_time option").prop("disabled", false);
-
-
                                 $("#select_time option").each(function() {
                                     let value = $(this).val();
-
+                                    $(this).prop("disatable",false);
                                     for (let i = 0; i < values.length; i++) {
-
-                                        if (values[i].diyPeriod == value && values[i].itemQuantity >=20 ) {
+                                        if (values[i].diyPeriod == value && (values[i].peoCount >= 20 || values[i].reserveStatus === 1)) {
                                             $(this).prop("disabled", true);
                                         }
                                     }
                                 });
-
-
                             }
                         });
                     },
@@ -267,8 +248,8 @@
                     }
                 });
             });
-
         });
+
         $('.common_btn').on('click', function () {
             const name = $('#name').val();
             const phone = $('#phone').val();
@@ -278,43 +259,40 @@
             const period = $('#select_time option:selected').val();
             const selectedPeople = $('.select_js').last().val();
 
-            // 驗證是否完整選擇了時段 人數  日期
+            // 驗證是否完整選擇了時段、人數、日期
             if (!selectedDate || !selectedPeriod || !selectedPeople || period == "-1") {
                 layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
                 return;
             }
 
-            let diyName = '<%=diyCateEntity.getDiyName()%>'
-
+            let diyName = '<%=diyCateEntity.getDiyName()%>';
 
             const formHtml =
-                //拿取綠界端口
                 '<form method="post" action="http://localhost:8081/diyla_front/diy/checkout/ecpay">' +
                 '<div id="pop">' +
                 '<p>姓名: ' + name + '</p>' +
                 '<p>電話: ' + phone + '</p>' +
                 '<p>訂位日期: ' + selectedDate + '</p>' +
                 '<p>訂位時段: ' + selectedPeriod + '</p>' +
-                '<p>您選擇的diy項目: '+ diyName +'</p>' +
+                '<p>您選擇的diy項目: ' + diyName + '</p>' +
                 '<p>人數: ' + selectedPeople + '</p>' +
-                '<input type="hidden" name="tradeDesc" value="'+ diyName +'" >'+
-                '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
-                '<input type="hidden" name="itemName" value="'+ diyName +'" >'+
-                '<input type="hidden" name="period" value="'+ period +'" >'+
-                '<input type="hidden" name="count" value="'+ selectedPeople +'" >'+
-                '<input type="hidden" name="diyNo" value="'+ <%=diyCateEntity.getDiyNo()%> +'" >'+
-                '<input type="hidden" name="cardrecipient" value="luke" >'+
-                '<input type="hidden" name="cardrecipientAddress" value="" >'+
-                '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
-                '<input type="hidden" name="tokenUse" value="0" >'+
-                '<input type="hidden" name="selectedDate" value="'+ selectedDate +'" >'+
+                '<input type="hidden" name="tradeDesc" value="' + diyName + '" >' +
+                '<input type="hidden" name="totalPrice" value="' + amount + '" >' +
+                '<input type="hidden" name="itemName" value="' + diyName + '" >' +
+                '<input type="hidden" name="period" value="' + period + '" >' +
+                '<input type="hidden" name="count" value="' + selectedPeople + '" >' +
+                '<input type="hidden" name="diyNo" value="' + '<%=diyCateEntity.getDiyNo()%>' + '" >' +
+                '<input type="hidden" name="cardrecipient" value="' + name + '" >' +
+                '<input type="hidden" name="cardrecipientAddress" value="" >' +
+                '<input type="hidden" name="cardphone" value="' + phone + '" >' +
+                '<input type="hidden" name="tokenUse" value="0" >' +
+                '<input type="hidden" name="selectedDate" value="' + selectedDate + '" >' +
                 '</div>' +
                 '<div class="buttons">' +
                 '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
                 '<button id="cancelButton" type="button" class="btn btn-secondary">取消</button>' +
-                '</div>'
-            '</form>'
-            ;
+                '</div>' +
+                '</form>';
 
             var popup = layer.open({
                 type: 1,
@@ -324,28 +302,26 @@
                 shadeClose: true,
             });
 
-            // 關閉彈窗
             $('#cancelButton, .layui-layer-close').on('click', function () {
                 layer.close(popup);
             });
 
-            // 點擊付款按紐
             $('#payButton').on('click', function () {
                 // 添加付款邏輯
                 // ...
             });
         });
 
-        //獲取對<select>元素的引用
+        // 獲取對<select>元素的引用
         $("#person").change(function() {
             // 獲取選中的值
             var selectedValue = $(this).val();
-
-            let amount = <%=diyCateEntity.getAmount()%>;
+            // 計算總金額
+            let amount = '<%=diyCateEntity.getAmount()%>';
             $("#amount").val(amount * selectedValue);
         });
-
     });
+
 
 
 </script>
