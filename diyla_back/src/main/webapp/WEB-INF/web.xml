@@ -33,15 +33,15 @@
     <url-pattern>/back_diycate.jsp</url-pattern>
     <url-pattern>/back_add_diycate.jsp</url-pattern>
     <url-pattern>/back_edit_diycate.jsp</url-pattern>
-    <url-pattern>diyorderfront.jsp</url-pattern>
-    <url-pattern>getallorderlist_EL.jsp</url-pattern>
-    <url-pattern>getallorderlistByMemID.jsp</url-pattern>
-    <url-pattern>getAllStatusodByPeriod.jsp</url-pattern>
-    <url-pattern>getodByPeriod_front.jsp</url-pattern>
-    <url-pattern>getodListByPeriod.jsp</url-pattern>
-    <url-pattern>odlistbyID_EL.jsp</url-pattern>
-    <url-pattern>refund_verify.jsp</url-pattern>
-    <url-pattern>total.jsp</url-pattern>
+    <url-pattern>/diy_order/diyorderfront.jsp</url-pattern>
+    <url-pattern>/diy_order/getallorderlist_EL.jsp</url-pattern>
+    <url-pattern>/diy_order/getallorderlistByMemID.jsp</url-pattern>
+    <url-pattern>/diy_order/getAllStatusodByPeriod.jsp</url-pattern>
+    <url-pattern>/diy_order/getodByPeriod_front.jsp</url-pattern>
+    <url-pattern>/diy_order/getodListByPeriod.jsp</url-pattern>
+    <url-pattern>/diy_order/odlistbyID_EL.jsp</url-pattern>
+    <url-pattern>/diy_order/refund_verify.jsp</url-pattern>
+    <url-pattern>/diy_order/total.jsp</url-pattern>
 
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>

@@ -134,6 +134,7 @@ color:#f8bb86 !important;
 div:where(.swal2-icon){
 margin:2.5em auto .6em !important;
 }
+
 </style>
 </head>
 <body>
