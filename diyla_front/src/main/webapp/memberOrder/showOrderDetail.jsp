@@ -187,8 +187,8 @@ a.backLink:hover {
 	</div>
 	<div class="mainContent">
 		<div class="bar">
-			<a href="#" class="backLink">會員資訊管理</a> > 
-			<a href="#" class="backLink">我的訂單</a> > 
+			<a href="${ctxPath}/member/update?action=select&memId=${memId}" class="backLink">會員資訊管理</a> > 
+			<a href="${ctxPath}/allOrder/allOrder?memId=${memId}" class="backLink">我的訂單</a> > 
 			<a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}"
 				class="backLink">商店訂單</a> > <span class="backLink">訂單明細</span>
 		</div>

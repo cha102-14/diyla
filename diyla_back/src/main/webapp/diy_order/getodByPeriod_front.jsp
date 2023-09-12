@@ -9,31 +9,121 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
-<title>點名系統(for現場人員_傳值)</title>
+<title>點名系統首頁</title>
 <style type="text/css">
-body{
-
-margin-left: 300px;
+body, p, ul {
+    margin: 0;
+    padding: 0;
 }
 
-p{
-
-margin-top: 10px;
+/* Apply a background color and set font styles for the entire page */
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin-left: 280px;
 }
+
+/* Center the main content horizontally */
+#bodymain {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px; /* Adjust as needed */
+}
+
+/* Style the header */
+header {
+    background-color: #f8a229;
+    color: white;
+    padding: 20px 40% 30px;
+    font-size: 2rem;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+/* Style the h1 element */
+.header-title {
+    margin: 0; /* 移除默认上下外边距 */
+    font-size: 24px;
+    margin-top: 10px; /* 添加一些顶部间距 */
+}
+
+#header-title2 {
+    font-size: 24px;
+    margin-top: 50px; /* 添加上方间距 */
+}
+
+/* Style the form elements */
+form {
+    margin-top: 20px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+}
+
+/* Add some spacing between form elements */
+input[type="date"],
+select {
+    margin-bottom: 10px;
+}
+
+/* Style the submit button */
+input[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Style error messages */
+.error-message {
+    color: red;
+    font-weight: bold;
+}
+
+/* Style the "返回DIY首頁" link */
+.pennyrequest1 {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pennyrequest1 a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: #333;
+     margin-left: 80%;
+     font-weight: bold;
+}
+
+.pennyrequest1 a:hover {
+    text-decoration: underline;
+    color: red;
+    font-weight: bold;
+    font-size:1.5rem; 
+}
+
 
 </style>
 
 </head>
 <body>
 	<header>
-		<span>
+		<span style="font-weight: bold;">
 		點名系統首頁
 		</span>
 	</header>
-		<h1 class="header-title">查詢時段"有效"訂單(for現場人員點名用_請輸入日期及時段)</h1>
-			
 		
-<%-- 	 <input type="hidden" class="uuu"  value="${uuu}"> --%>
+			
+<div class="margin">	
+
+<div id="bodymain">
+<h1 class="header-title" style="font-weight: bold;">查詢時段「有效」訂單(點名系統-請輸入日期及時段)</h1>	
 	<form action="DiyOrderController" method="post">
 
 	
@@ -54,14 +144,14 @@ margin-top: 10px;
 		<br>
 
 		<input type="hidden" name="action" value="getEffectOrderByPeriod"> 
-		<input type="submit" value="查詢時段訂單明細">
+		<input type="submit" value="進入點名系統">
 
 	</form>
 	
 	<p style="color:red;font-weight: bold;">${errorMsgs.diyOrderList}</p>
 	
-	==========================================================================
-	<h1 class="header-title">查詢時段所有訂單(for現場人員_請輸入日期及時段)</h1>
+
+	<h1 class="header-title" id="header-title2" style="font-weight: bold;">查詢時段「所有」訂單(請輸入日期及時段)</h1>
 				
 
 	<form action="DiyOrderController" method="post">
@@ -91,10 +181,12 @@ margin-top: 10px;
 	<p style="color:red;font-weight: bold;">${errorMsgs.diyOrderList1}</p>
 
 
+	
+</div>
+</div>
 <div class="pennyrequest1">
-		<li><a href='diyorderfront.jsp'>返回DIY首頁</a></li>
+		<li style="list-style-type: none;"><a href='diyorderfront.jsp' style="text-decoration: none;">>返回DIY首頁</a></li>
 	</div>
-
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
 

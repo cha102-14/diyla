@@ -1,5 +1,7 @@
 package com.cha102.filter;
 
+import com.cha102.diyla.empmodel.EmpVO;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

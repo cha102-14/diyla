@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
     <title>DIYLA</title>
 </head>
 <body>
@@ -164,8 +164,8 @@
                             </li>
                             <li class="func">
                                 <a href="${ctxPath}/latestnews/latall.jsp" class="func_link">
-                                    <svg viewBox="0 0 1024 1024" fill="#b45f06" xmlns="http://www.w3.org/2000/svg" width="20" height="20"                                         xmlns="http://www.w3.org/2000/svg" fill="#000000">
-                                           id="Capa_5">
+                                    <svg fill="#b45f06" viewBox="0 0 1024 1024"  xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                         id="Capa_5">
                                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
                                            stroke-linejoin="round"></g>
