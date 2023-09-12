@@ -127,6 +127,10 @@ background-color:#9999CC;
 /* border: 1px solid black; */
 border-radius: 5px;
 }
+div:where(.swal2-icon).swal2-warning{
+margin:40px auto !important;
+color:#f8bb86 !important;
+}
 </style>
 </head>
 <body>
