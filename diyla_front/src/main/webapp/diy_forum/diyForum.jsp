@@ -19,7 +19,6 @@
         // return;
     } else {
         memVO = (MemVO) session.getAttribute("memVO");
-        // 假设 memVO 是一个 Java 对象，并且有一个名为 memId 的属性
         memId = (memVO != null) ? memVO.getMemId() : null;
     }
 
@@ -42,7 +41,7 @@
     <link rel="stylesheet" href="/diyla_front/diy/css/venobox.min.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/animate.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/jquery.exzoom.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/spacing.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/style.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/responsive.css">
@@ -191,31 +190,13 @@ MENU DETAILS START
     </div>
 </section>
 
-<!--=============================
-MENU DETAILS END
-==============================-->
 
-
-<!--=============================
-FOOTER START
-==============================-->
-
-<!--=============================
-FOOTER END
-==============================-->
-
-
-<!--=============================
-SCROLL BUTTON START
-==============================-->
 <!-- 捲動按鈕 -->
 
 <div class="tf__scroll_btn">
     <i class="fas fa-hand-pointer"></i>
 </div>
-<!--=============================
-SCROLL BUTTON END
-==============================-->
+
 
 <!-- 引入必要的 JavaScript  -->
 <!--jquery library js-->
@@ -245,7 +226,7 @@ SCROLL BUTTON END
 <!--main/custom js-->
 <script src="/diyla_front/diy/js/main.js"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.7/dist/sweetalert2.min.js"></script>
 <!-- 自訂的 JavaScript 腳本 -->
 
 <script>
@@ -257,7 +238,7 @@ SCROLL BUTTON END
     function getList(s) {
         // 使用 AJAX 請求從伺服器端獲取 JSON 數據
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/list'; // Servlet URL
+        var url = '/diyla_front/diy/diy-forum/list'; // Servlet URL
         // 後期需要傳入當前 diyNo，目前預設值為4
         var params = '&diyNo=<%=diyCateEntity.getDiyNo()%>'; // 請求參數，以鍵值對形式拼接
 
@@ -416,7 +397,7 @@ SCROLL BUTTON END
         var xhr = new XMLHttpRequest();
 
         // 設定請求方法和 URL
-        var url = "http://localhost:8081/diyla_front/diy/diy-forum/delete/" + id; // 替換為實際的刪除介面 URL
+        var url = "/diyla_front/diy/diy-forum/delete/" + id;
         xhr.open("DELETE", url, true);
 
         // 設定請求完成後的回調函式
@@ -448,7 +429,12 @@ SCROLL BUTTON END
         let memId = <%=memId%>;
 
         if (memId == null) {
-            alert("请登录后再评论！");
+            //使用sweetAlert2彈窗
+            Swal.fire({
+                icon: 'error',
+                title:'請登入後再評論!',
+            });
+
             return;
         }
 
@@ -464,7 +450,7 @@ SCROLL BUTTON END
         var memberId = <%=memId%>;
 
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost:8081/diyla_front/diy/diy-forum/add'; // Servlet URL
+        var url = '/diyla_front/diy/diy-forum/add';
         var params = 'diyNo=' + diyNo + "&diyGrade=" + diyGrade + "&artiCont=" + artiCont + "&memId=" + memberId; // 請求參數，以鍵值對形式拼接
         xhr.open('GET', url + '?' + params, true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');

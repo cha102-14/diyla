@@ -1,6 +1,7 @@
 package com.cha102.diyla.front.controller.diyreserve;
 
 
+import com.cha102.diyla.diyreservemodel.DIYReserve2VO;
 import com.cha102.diyla.diyreservemodel.DIYReserveVO;
 
 import com.cha102.diyla.diyreservemodel.DiyReserveResultEntity;
@@ -8,6 +9,7 @@ import com.cha102.diyla.diyreservemodel.DiyReserveResultService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -27,8 +29,8 @@ public class DiyReserveController {
     //GetMapping查詢   PostMapping新增
     @GetMapping("/peoItemQuantityReport")
     public List<DIYReserveVO[]> getItemQuantityReport(
-            // @RequestParam(value = "endDate",required = false) Date endDate,
-            // @RequestParam("period") int period
+//             @RequestParam(value = "endDate",required = false) Date endDate,
+//             @RequestParam("period") int period
     ) {
         //設定只能訂六十天內
         Calendar calendar = Calendar.getInstance();
@@ -36,6 +38,15 @@ public class DiyReserveController {
         calendar.add(Calendar.DAY_OF_MONTH, 60);
         Date endDate = calendar.getTime();
         return diyReserveService.getItemQuantityByDateRange(endDate);
+    }
+
+    @GetMapping("/peoCountReport") // 將端點名稱修改為peoCountReport
+    public List<DIYReserve2VO[]> getPeoCountReport(){
+        // 設定只能訂六十天內
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 60);
+        Date endDate = calendar.getTime();
+        return diyReserveService.getPeoCountByDateRange(endDate);
     }
     @GetMapping("/all-groups")
     public List<DiyReserveResultEntity> getAllGroups() {
