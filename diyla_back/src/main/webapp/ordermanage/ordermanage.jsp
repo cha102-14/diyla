@@ -24,7 +24,6 @@ List<CommodityOrderVO> commodityOrderVOList = service.getAll();
 <style>
 body {
 	font-family: Arial, sans-serif;
-	margin-left: 280px;
 	padding: 0;
 	background-color: #f4f4f4;
 }
@@ -68,6 +67,8 @@ th, td {
 /* 	float: right; */
 	width: 980px;
 	overflow: scoll;
+		margin-left: 280px;
+	
 }
 
 .heading {
