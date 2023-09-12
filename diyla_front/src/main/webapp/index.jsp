@@ -175,7 +175,7 @@
                         <div class="client_info">
                             <div class="client_name">
                                 <h5>
-                                    小玟
+                                    阿文
                                 </h5>
                                 <h6>
                                     DIY體驗
@@ -196,7 +196,7 @@
                         <div class="client_info">
                             <div class="client_name">
                                 <h5>
-                                    小靚
+                                    小靜
                                 </h5>
                                 <h6>
                                     甜點課程
@@ -218,7 +218,7 @@
                         <div class="client_info">
                             <div class="client_name">
                                 <h5>
-                                    小李
+                                    老李
                                 </h5>
                                 <h6>
                                     商店

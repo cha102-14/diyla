@@ -44,15 +44,15 @@
         EmpDAO empDAO = new EmpDAOImpl();
         TeacherService teacherService = new TeacherService();
         //若session並非為null才往下
-        if(session != null){
-            Integer empId = (Integer) (session.getAttribute("empId"));
+        Integer empId = (Integer) (session.getAttribute("empId"));
+        List<String> typeFun = (List<String>) session.getAttribute("typeFun");
+        if(session != null && empId != null && typeFun != null){
             EmpVO empVO = empDAO.getOne(empId);
             String empName = empVO.getEmpName();
             //進來的是何種使用者
             Object typeFunObj = session.getAttribute("typeFun");
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
-                List<String> typeFun = (List<String>) session.getAttribute("typeFun");
                 boolean containsMaster = typeFun.contains("MASTER");
                 boolean containsAdmin = typeFun.contains("ADMIN");
                 if (containsMaster && containsAdmin) {
@@ -117,6 +117,20 @@
             <script>
                 $(document).ready(function () {
                     var type = "${type}";
+                    if (type === "NOSESSION") {
+                    Swal.fire({
+                    title: "您沒有登入!",
+                    icon: "error",
+                    confirmButtonText: "確定"
+                    }).then((result) => {
+                if(result.isConfirmed) {
+                    window.location.href="${ctxPath}/emp/empLogin.jsp";
+                }
+            });
+            setTimeout(function() {
+                window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }, 2500);
+                    } else{
                     var Id = null;
                     //若type為ADMIN,則將teaId設-1,可瀏覽全部課程, MASTER則為後台教師,則將teaId設為目前教師Id
                     if (type === "ADMIN") {
@@ -287,6 +301,7 @@
                             }
                         });
                     });
+                    }
                 });
             </script>
 
