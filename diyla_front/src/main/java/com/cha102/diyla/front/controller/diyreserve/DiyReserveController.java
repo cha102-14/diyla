@@ -1,6 +1,7 @@
 package com.cha102.diyla.front.controller.diyreserve;
 
 
+import com.cha102.diyla.diyreservemodel.DIYReserve2VO;
 import com.cha102.diyla.diyreservemodel.DIYReserveVO;
 
 import com.cha102.diyla.diyreservemodel.DiyReserveResultEntity;
@@ -37,6 +38,15 @@ public class DiyReserveController {
         calendar.add(Calendar.DAY_OF_MONTH, 60);
         Date endDate = calendar.getTime();
         return diyReserveService.getItemQuantityByDateRange(endDate);
+    }
+
+    @GetMapping("/peoCountReport") // 將端點名稱修改為peoCountReport
+    public List<DIYReserve2VO[]> getPeoCountReport(){
+        // 設定只能訂六十天內
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, 60);
+        Date endDate = calendar.getTime();
+        return diyReserveService.getPeoCountByDateRange(endDate);
     }
     @GetMapping("/all-groups")
     public List<DiyReserveResultEntity> getAllGroups() {
