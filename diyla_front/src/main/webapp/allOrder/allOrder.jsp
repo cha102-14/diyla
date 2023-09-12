@@ -321,12 +321,12 @@
     </div>
     <script>
         function cart(){
-            let button_el = parseInt(this.getAttribute("data-cart"));
+            //let button_el = parseInt(this.getAttribute("data-cart"));
+            //console.log(button_el);
             //filterCart(button_el); //1 //2 //3
             let divs = document.getElementsByClassName("order");
             for(div of divs){
-                if (){
-                }
+
             }
         }
 

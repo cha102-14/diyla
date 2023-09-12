@@ -377,7 +377,7 @@ public class MemDAO implements MemDAO_interface {
     }
 
 
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
 //        MemDAO mem = new MemDAO();
 //        // 新增
 //        MemVO memVo = new MemVO();
@@ -458,34 +458,34 @@ public class MemDAO implements MemDAO_interface {
 //
 //    }
     @Override
-public void reportCount(Integer mem_id) {
-    Connection con = null;
-    PreparedStatement pre = null;
+    public void reportCount(Integer mem_id) {
+        Connection con = null;
+        PreparedStatement pre = null;
 
-    try {
-        con = ds.getConnection();
-        pre = con.prepareStatement("UPDATE member SET rpmsg_count=(rpmsg_count + 1) WHERE mem_id =?");
-        pre.setInt(1, mem_id);
-        pre.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        if (pre != null) {
-            try {
-                pre.close();
-            } catch (SQLException e) {
-                e.printStackTrace(System.err);
+        try {
+            con = ds.getConnection();
+            pre = con.prepareStatement("UPDATE member SET rpmsg_count=(rpmsg_count + 1) WHERE mem_id =?");
+            pre.setInt(1, mem_id);
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
             }
-        }
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace(System.err);
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
             }
         }
     }
-}
 
     @Override
     public int selectReportCount(Integer mem_id) {
@@ -526,31 +526,31 @@ public void reportCount(Integer mem_id) {
     }
 
     public void artBlackList(Integer mem_id) {
-    Connection con = null;
-    PreparedStatement pre = null;
+        Connection con = null;
+        PreparedStatement pre = null;
 
-    try {
-        con = ds.getConnection();
-        pre = con.prepareStatement("UPDATE member SET blacklist_art=1 WHERE mem_id = ?");
-        pre.setInt(1, mem_id);
-        pre.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        if (pre != null) {
-            try {
-                pre.close();
-            } catch (SQLException e) {
-                e.printStackTrace(System.err);
+        try {
+            con = ds.getConnection();
+            pre = con.prepareStatement("UPDATE member SET blacklist_art=1 WHERE mem_id = ?");
+            pre.setInt(1, mem_id);
+            pre.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
             }
-        }
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace(System.err);
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace(System.err);
+                }
             }
         }
     }
-}
 }
