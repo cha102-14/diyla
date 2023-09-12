@@ -17,6 +17,7 @@
         <html lang="en">
 
         <head>
+            <jsp:include page="/index.jsp" />
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>甜點課程訂單</title>
@@ -86,9 +87,6 @@
 
         <body>
             <div id="pageContent">
-                <div id="indexBlock">
-                    <%-- <jsp:include page="/index.jsp" /> --%>
-                </div>
                 <div id="naviContentBlock">
                     <div id="naviBlock">
                         <jsp:include page="/desertcourse/navibar.jsp" />
