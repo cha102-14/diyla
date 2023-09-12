@@ -51,14 +51,14 @@
 <script>
 // 1. 前端輸入資料後送至後端
 // 2. Filter 驗證加密前的密碼是否為空及是否相符
-// 3. 將密碼寫入DB 
+// 3. 將密碼寫入DB
 // 4. 寫入成功 返回前端提示訊息並跳轉
 // 5. 寫入失敗 返回前端提示訊息
 
 
     window.onload(checkFail());
     function checkFail (){
-        // 1. 檢查2次輸入密碼是否一致   
+        // 1. 檢查2次輸入密碼是否一致
         checkPassword();
         // 2. 檢查驗證碼是否和後端一致
         checkValidCode();
@@ -66,7 +66,7 @@
 
     function checkPassword(){
         if("${password}" != "" ){
-            console.log(${password})
+            // console.log(${password})
             Swal.fire('密碼不相符,請重新確認密碼！');
         }
     }

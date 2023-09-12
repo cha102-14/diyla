@@ -54,7 +54,7 @@
                     display: block;
                 }
 
-                
+
 
 
             </style>
@@ -89,13 +89,13 @@
                             <!-- 添加两个按钮用于切换页签 -->
                             <button class="tab active" onclick="showTab('tab1')">页签1</button>
                             <button class="tab" onclick="showTab('tab2')">页签2</button>
-                        
+
                             <!-- 添加两个页签内容块 -->
                             <div class="tab-content active" id="tab1-content">
                                 <!-- 这里放置页签1的内容 -->
                                 <!-- 例如：<p>这是页签1的内容</p> -->
                             </div>
-                        
+
                             <div class="tab-content" id="tab2-content">
                                 <!-- 这里放置页签2的内容 -->
                                 <!-- 例如：<p>这是页签2的内容</p> -->
@@ -141,7 +141,7 @@
                 </div>
 
             </div>
-            
+
             <!--   優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
             <script>
                 let emp_totalSize = 0;
@@ -150,10 +150,10 @@
                     getAllEmpList();
                 }
 
-                
+
                 let chooseTypeFun = document.getElementById('chooseTypeFun');
                 chooseTypeFun.onchange = resetCurrentPage;
-                
+
                 function resetCurrentPage(){
                     // 當使用者按下 (click) 按鈕時，執行 triggerAlert 函數
                     console.log('resetCurrentPage');
@@ -310,7 +310,7 @@
                             html += `<td>` + (i + 1) + `</td>`;
                             html += `<td>` + emp.empId + `</td>`;
                             html += `<td>` + emp.empName + `</td>`;
-                            console.log(emp);  
+                            console.log(emp);
                             if(emp.empPic == "" || emp.empPic == undefined){
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
                             } else {
@@ -366,11 +366,11 @@
                     }
                     return statusData;
                 }
-                
+
                 function sendStatusChange(statusData) {
                     // console.log(statusData.empId);
                     // console.log(statusData.empStatus);
-                    
+
                     // 這邊option為傳給後端的值
                     return fetch("changeEmpStatus", {
                         body: JSON.stringify(statusData),

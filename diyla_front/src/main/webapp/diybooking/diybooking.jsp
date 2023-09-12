@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <%
     DiyCateEntity diyCateEntity = (DiyCateEntity) request.getAttribute("DiyCateEntity");
 
@@ -45,7 +46,8 @@
     <link rel="stylesheet" href="/diyla_front/diy/css/spacing.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/style.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/responsive.css">
-
+    <!-- 引入 SweetAlert2 的 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.css">
     <title>
         DIY訂位
     </title>
@@ -89,27 +91,28 @@
                             </style>
                             <div class="tf__reservation_input_single">
                                 <label for="name">您選擇的diy項目</label>
-                                <!--<input type="text" style="height: 110px;" id="name" placeholder="蛋糕、餅乾...">-->
-                                <textarea readonly rows="4" cols="10" style="height: 20px; text-align: left"
+                                <textarea readonly rows="1.5" cols="10"
+                                          style="height: 60%; text-align: center; resize: none; overflow: hidden;"
                                           placeholder="蛋糕、餅乾...">
-                                        <%=diyCateEntity.getDiyName()%>
-                                    </textarea>
+        <%=diyCateEntity.getDiyName()%>
+    </textarea>
 
-
-                            </div>
+                    </div>
                             <%-- 获取 HttpSession 中的用户对象 --%>
-                            <c:set var="memVO" value="${sessionScope.memVO}" />
+                            <c:set var="memVO" value="${sessionScope.memVO}"/>
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="name">姓名</label>
-                                        <input type="text" id="name" value="${memVO.memName}" placeholder="Name" readonly>
+                                        <input type="text" id="name" value="${memVO.memName}" placeholder="Name"
+                                               readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
                                     <div class="tf__reservation_input_single">
                                         <label for="phone">電話</label>
-                                        <input type="text" id="phone" value="${memVO.memPhone}" placeholder="Phone" readonly>
+                                        <input type="text" id="phone" value="${memVO.memPhone}" placeholder="Phone"
+                                               readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6">
@@ -117,7 +120,8 @@
                                         <label for="ID-laydate-mark">預約日期</label>
                                         <!--<input type="date" id="date">-->
 
-                                        <input type="text" id="ID-laydate-mark" name="diyReserveDate" placeholder="yyyy-MM-dd">
+                                        <input type="text" id="ID-laydate-mark" name="diyReserveDate"
+                                               placeholder="yyyy-MM-dd">
 
                                     </div>
                                 </div>
@@ -177,48 +181,41 @@
 </script>
 <script src="/diyla_front/js/custom.js"></script>
 <script src="//unpkg.com/layui@2.8.15/dist/layui.js"></script>
+<!-- 引入 SweetAlert2 的 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.3/dist/sweetalert2.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+        let currentCount = 0;
+
+        let map = new Map();
         // 取得專案路徑
         layui.use(['laydate', 'layer'], function () {
             let laydate = layui.laydate;
             let layer = layui.layer;
 
-
-
             // 監聽點擊事件
             $('#ID-laydate-mark').on('click', function () {
-                // var selectedDate = $(this).val(); // 取得選擇的日期
-
-
-                // 發送 AJAX 請求取得資料並渲染日期選框的內容
                 $.ajax({
-                    url: "http://localhost:8081/diyla_front/api/diy-reserve/peoItemQuantityReport",
+                    url: "/diyla_front/api/diy-reserve/peoCountReport",
                     data: {
-                        //endDate: selectedDate,
                         period: 0
                     },
                     success: function (data) {
-
                         let mar = {};
-
                         let mars = [];
 
                         for (let x in data) {
-                            let itemQuantity = 0;
+                            let peoCount = 0;
                             let diyReserveDate = "";
                             for (let xx in data[x]) {
                                 mars.push(data[x][xx]);
-
-
-                                itemQuantity += data[x][xx].itemQuantity;
+                                peoCount += data[x][xx].peoCount;
                                 diyReserveDate = data[x][xx].diyReserveDate;
-
                             }
-                            if (itemQuantity >= 60) {
+                            if (peoCount >= 60) {
                                 mar[diyReserveDate] = '已滿';
                             }
-
                         }
 
                         // 處理接收到的 JSON 資料並更新日期選擇框的內容
@@ -228,7 +225,6 @@
                             max: 60,
                             mark: mar, // 使用接收到的資料來標記日期
                             done: function (value, date) {
-
                                 for (let key in mar) {
                                     if (key === value) {
                                         layer.msg("無法選擇該日期！", {icon: 2});
@@ -242,22 +238,16 @@
                                         values.push(mars[i])
                                     }
                                 }
-
-                                // $("#select_time option").prop("disabled", false);
-
-
-                                $("#select_time option").each(function() {
+                                $("#select_time option").each(function () {
                                     let value = $(this).val();
-
+                                    $(this).prop("disabled", false);
                                     for (let i = 0; i < values.length; i++) {
-
-                                        if (values[i].diyPeriod == value && values[i].itemQuantity >20 ) {
+                                        map.set(values[i].diyPeriod, values[i].peoCount);
+                                        if (values[i].diyPeriod == value && (values[i].peoCount >= 20 || values[i].reserveStatus === 1)) {
                                             $(this).prop("disabled", true);
                                         }
                                     }
                                 });
-
-
                             }
                         });
                     },
@@ -267,8 +257,8 @@
                     }
                 });
             });
-
         });
+
         $('.common_btn').on('click', function () {
             const name = $('#name').val();
             const phone = $('#phone').val();
@@ -278,43 +268,58 @@
             const period = $('#select_time option:selected').val();
             const selectedPeople = $('.select_js').last().val();
 
-            // 驗證是否完整選擇了時段 人數  日期
+            // 驗證是否完整選擇了時段、人數、日期
             if (!selectedDate || !selectedPeriod || !selectedPeople || period == "-1") {
-                layer.msg("請選擇完整的日期、時段和人數！", {icon: 2});
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '請選擇完整的日期、時段和人數！',
+                });
                 return;
             }
 
-            let diyName = '<%=diyCateEntity.getDiyName()%>'
+            let p = parseInt(period, 10);
+            if (map.has(p)) {
+                let residue = 20 - map.get(p);
+                if (residue < selectedPeople) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '此時段只剩下 ' + residue + ' 人數可選！',
+                    });
+                    return;
+                }
+            }
 
+
+            let diyName = '<%=diyCateEntity.getDiyName()%>';
 
             const formHtml =
-                //拿取綠界端口
-                '<form method="post" action="http://localhost:8081/diyla_front/diy/checkout/ecpay">' +
+                '<form method="post" action="/diyla_front/diy/checkout/ecpay">' +
                 '<div id="pop">' +
                 '<p>姓名: ' + name + '</p>' +
                 '<p>電話: ' + phone + '</p>' +
                 '<p>訂位日期: ' + selectedDate + '</p>' +
                 '<p>訂位時段: ' + selectedPeriod + '</p>' +
-                '<p>您選擇的diy項目: '+ diyName +'</p>' +
+                '<p>您選擇的diy項目: ' + diyName + '</p>' +
                 '<p>人數: ' + selectedPeople + '</p>' +
-                '<input type="hidden" name="tradeDesc" value="'+ diyName +'" >'+
-                '<input type="hidden" name="totalPrice" value="'+ amount +'" >'+
-                '<input type="hidden" name="itemName" value="'+ diyName +'" >'+
-                '<input type="hidden" name="period" value="'+ period +'" >'+
-                '<input type="hidden" name="count" value="'+ selectedPeople +'" >'+
-                '<input type="hidden" name="diyNo" value="'+ <%=diyCateEntity.getDiyNo()%> +'" >'+
-                '<input type="hidden" name="cardrecipient" value="luke" >'+
-                '<input type="hidden" name="cardrecipientAddress" value="" >'+
-                '<input type="hidden" name="cardphone" value="'+ phone +'" >'+
-                '<input type="hidden" name="tokenUse" value="0" >'+
-                '<input type="hidden" name="selectedDate" value="'+ selectedDate +'" >'+
+                '<input type="hidden" name="tradeDesc" value="' + diyName + '" >' +
+                '<input type="hidden" name="totalPrice" value="' + amount + '" >' +
+                '<input type="hidden" name="itemName" value="' + diyName + '" >' +
+                '<input type="hidden" name="period" value="' + period + '" >' +
+                '<input type="hidden" name="count" value="' + selectedPeople + '" >' +
+                '<input type="hidden" name="diyNo" value="' + '<%=diyCateEntity.getDiyNo()%>' + '" >' +
+                '<input type="hidden" name="cardrecipient" value="' + name + '" >' +
+                '<input type="hidden" name="cardrecipientAddress" value="" >' +
+                '<input type="hidden" name="cardphone" value="' + phone + '" >' +
+                '<input type="hidden" name="tokenUse" value="0" >' +
+                '<input type="hidden" name="selectedDate" value="' + selectedDate + '" >' +
                 '</div>' +
                 '<div class="buttons">' +
                 '<button type="submit" id="payButton" class="btn btn-primary">付款</button>' +
                 '<button id="cancelButton" type="button" class="btn btn-secondary">取消</button>' +
-                '</div>'
-            '</form>'
-            ;
+                '</div>' +
+                '</form>';
 
             var popup = layer.open({
                 type: 1,
@@ -324,27 +329,24 @@
                 shadeClose: true,
             });
 
-            // 關閉彈窗
             $('#cancelButton, .layui-layer-close').on('click', function () {
                 layer.close(popup);
             });
 
-            // 點擊付款按紐
             $('#payButton').on('click', function () {
                 // 添加付款邏輯
                 // ...
             });
         });
 
-        //獲取對<select>元素的引用
-        $("#person").change(function() {
+        // 獲取對<select>元素的引用
+        $("#person").change(function () {
             // 獲取選中的值
             var selectedValue = $(this).val();
-
-            let amount = <%=diyCateEntity.getAmount()%>;
+            // 計算總金額
+            let amount = '<%=diyCateEntity.getAmount()%>';
             $("#amount").val(amount * selectedValue);
         });
-
     });
 
 
