@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../index.jsp" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +54,6 @@
 </head>
 
 <body>
-<jsp:include page="../index.jsp" />
 <h1>時段預約彙總</h1>
 <div id="example"></div>
 

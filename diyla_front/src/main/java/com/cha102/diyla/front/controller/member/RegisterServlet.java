@@ -31,6 +31,7 @@ public class RegisterServlet extends HttpServlet {
         List<String> exMsgs = new LinkedList<String>();
         req.setAttribute("exMsgs",exMsgs);
         Map<String,String> addMap = new LinkedHashMap<String,String>();
+        Map<String,String> successMap = new LinkedHashMap<String,String>();
 
         String name = req.getParameter("newName");
         String email = req.getParameter("user");
@@ -68,7 +69,7 @@ public class RegisterServlet extends HttpServlet {
         MemberService memSer = new MemberService();
         MemVO memVO=memSer.addMem(exMsgs,name,email,pw,phone,birthday,gender,addressAll);
         if (!exMsgs.isEmpty()){
-            req.setAttribute("memVO",memVO);
+            req.setAttribute("mem",memVO);
             req.setAttribute("address",address);
             RequestDispatcher failure = req.getRequestDispatcher("/member/mem_register.jsp");
             failure.forward(req,res);

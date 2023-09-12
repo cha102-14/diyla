@@ -32,16 +32,15 @@
                             font-weight: bold;
                             color: #B26021;
                             position: relative;
-                            width:400px;
+                            width:600px;
                             top:50%;
                             left:50%;
                             transform: translateX(-50%);
-                            border-radius: 5px ;
+                            border-radius: 25px ;
                             letter-spacing: 3px;
                             margin:50px 0;
-                            background-color: #E6F7FF; /* 淡蓝色背景 */
                             border: 2px solid #333; /* 外边框线 */
-                            padding: 20px; /* 内边距 */
+                            padding: 40px; /* 内边距 */
                             text-align: center; /* 文本居中 */
                         }
 
@@ -54,21 +53,23 @@
                             margin-bottom: 10px; /* 底部间距 */
                         }
 
-                        /* 按钮样式 */
-                        #sub {
-                            background-color: #4CAF50; /* 按钮背景颜色 */
-                            color: white; /* 文字颜色 */
-                            padding: 10px 20px; /* 上下内边距 左右内边距 */
-                            border: none; /* 去掉按钮边框 */
-                            cursor: pointer; /* 鼠标指针样式为手型 */
+
+                        h4{
+                            font-family: "微軟正黑體", Arial, sans-serif;
+                            font-size:30px;
+                            font-weight: bold;
+                            margin-top:10px;
+                            margin-bottom:20px
                         }
 
-                        /* 按钮悬停效果 */
-                        #sub:hover {
-                            background-color: #45a049; /* 悬停时的背景颜色 */
+                        body {
+                            margin: 0;
+                            background-image: url('../img/forget.png'); /* 背景图像的URL，注意路径 */
+                            background-size: cover; /* 按照视口大小覆盖整个屏幕 */
+                            background-repeat: no-repeat; /* 不重复平铺背景图像 */
+                            background-attachment: fixed; /* 固定背景图像 */
+                            background-position: center center; /* 居中显示背景图像 */
                         }
-
-                      
 
                     </style>
 
@@ -80,15 +81,9 @@
 
                     <div class="title">
                         <h4>忘記密碼</h4>
-                        <c:if test="${not empty exMsgs}">
-                            <div style="color:red" class="error">
-                                <c:forEach var="message" items="${exMsgs}">
-                                    ${message}
-                                </c:forEach>
-                            </div>
-                        </c:if>
                         <div class="importemail">
                             請輸入您的Email帳號，系統將會寄送驗證碼到您的Email信箱。
+                            <br>
                             <br>
                             <input type="text" name="email" id="email" placeholder="請輸入信箱"
                                 value="${(empVO==null)? "" : empVO.empEmail()}" </br>

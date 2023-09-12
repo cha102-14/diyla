@@ -89,7 +89,7 @@ public class CommodityController extends HttpServlet {
         if ("insertPage".equals(action)) {
             List<CommodityClassVO> commodityClasses = classService.getAll(); // 取回所有商品類別
             req.setAttribute("commodityClasses", commodityClasses); // 放到大中小的小
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/insertNewCommodity.jsp"); // 設定下個頁面路徑
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/shop/CommodityController?action=listAll"); // 設定下個頁面路徑
             requestDispatcher.forward(req, res); // 轉導到下個頁面，並把請求跟回應一併交給
         }
 

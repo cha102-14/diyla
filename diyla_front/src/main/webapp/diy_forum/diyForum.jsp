@@ -464,6 +464,15 @@ MENU DETAILS START
                 // 清空評論框的內容
                 document.querySelector('textarea[name="artiCont"]').value = ""; // 這裡清空評論框的內容
             }
+            if (xhr.readyState === 4 && xhr.status === 405) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '注意',
+                    html: '您沒有上過此DIY品項課程，因此無法留下評論！<br>誠摯歡迎您參加DIY體驗哦',
+                });
+            }
+
+
         };
         xhr.send();
     }

@@ -33,6 +33,15 @@
     <url-pattern>/back_diycate.jsp</url-pattern>
     <url-pattern>/back_add_diycate.jsp</url-pattern>
     <url-pattern>/back_edit_diycate.jsp</url-pattern>
+    <url-pattern>/diy_order/diyorderfront.jsp</url-pattern>
+    <url-pattern>/diy_order/getallorderlist_EL.jsp</url-pattern>
+    <url-pattern>/diy_order/getallorderlistByMemID.jsp</url-pattern>
+    <url-pattern>/diy_order/getAllStatusodByPeriod.jsp</url-pattern>
+    <url-pattern>/diy_order/getodByPeriod_front.jsp</url-pattern>
+    <url-pattern>/diy_order/getodListByPeriod.jsp</url-pattern>
+    <url-pattern>/diy_order/odlistbyID_EL.jsp</url-pattern>
+    <url-pattern>/diy_order/refund_verify.jsp</url-pattern>
+    <url-pattern>/diy_order/total.jsp</url-pattern>
 
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>

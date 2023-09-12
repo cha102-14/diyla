@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<jsp:include page="../index.jsp" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.List"%>
 <%@ page isELIgnored="false"%>
@@ -118,7 +119,7 @@ input[type="submit"]:hover, .button:hover {
 </head>
 <body>
 <div class="flex-container">
-    <jsp:include page="../index.jsp" />
+    
 </div>
 <div class="center-div">
     <h1 style="font-weight: bold;">DIY管理後台首頁</h1>

@@ -24,7 +24,6 @@ List<CommodityOrderVO> commodityOrderVOList = service.getAll();
 <style>
 body {
 	font-family: Arial, sans-serif;
-	margin-left: 280px;
 	padding: 0;
 	background-color: #f4f4f4;
 }
@@ -68,6 +67,8 @@ th, td {
 /* 	float: right; */
 	width: 980px;
 	overflow: scoll;
+		margin-left: 280px;
+	
 }
 
 .heading {
@@ -326,7 +327,7 @@ p.orderNO {
 }
 
 .priceblock {
-	border:1px solid rgb(107,107,107,0.5);
+/* 	border:1px solid rgb(107,107,107,0.5); */
 	position: static;
 	bottom: 30px;
 	/* display:flex; */
@@ -337,6 +338,9 @@ p.orderNO {
 		margin:5px 1px;
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 	
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2 !important; 
 }
 
 .Pri {
@@ -387,7 +391,7 @@ p.orderNO {
     cursor: pointer;
 }
 .Info{
-margin:5px 0px;
+margin:9px 0px;
 border: 1px solid rgb(107,107,107,.3);
 padding: 5px 3px;
 box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -403,8 +407,10 @@ padding: 1px 2px 1px 3px;}
 .actuPrice{
 font-weight:bold;
 	white-space: no-wrap;
-
-
+	color: red;
+}
+.priceblock{
+margin: 10px 3px;
 }
 </style>
 </head>

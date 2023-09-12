@@ -66,7 +66,7 @@ public class ArtController extends HttpServlet {
                 artSvc.addArt(artTitle, artContext, memId);
             }
 
-            String url = "/art/art.jsp";
+            String url = "/art/personalart.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
             successView.forward(req, res);
         }
@@ -125,7 +125,7 @@ public class ArtController extends HttpServlet {
         if ("selectAll".equals(action)) {
             Jedis jedis = new Jedis("localhost", 6379);
             ArtService artSvc = new ArtService();
-            List<ArtVO> list = artSvc.getAllArt();
+            List<ArtVO> list = artSvc.getAllCheckArt();
 
             String[] imgBase64 = new String[list.size()];
             for (ArtVO artVO : list) {

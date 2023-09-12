@@ -71,13 +71,13 @@
 
         label.user {
             position: absolute;
-            top: 22px;
+            top: 70px;
             left: 100px;
             letter-spacing: 3px;
         }
         label.pw {
             position: absolute;
-            top: 110px;
+            top: 160px;
             left: 100px;
             letter-spacing: 3px;
         }
@@ -144,12 +144,14 @@
              </div>
         </c:if>
         <div class="member">
+        註冊成功，已發送認證信至您的信箱，請於24小時內完成認證！
             <form method="post" action="identify">
                 <label class="user">帳號</label><br>
                 <input type="email" name="email" placeholder="請輸入信箱" id="email" class="inputform" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"><br>
                 <label class="pw">驗證碼</label><br>
                 <input type="text" name="identifycode" placeholder="請輸入驗證信的驗證碼" class="inputform"><br>
                 <button type="submit" value="identify" class="member">確認驗證</button><br>
+                <span style="font-size:14px;">認證成功會自動跳轉到登入頁面</span>
             </form>
         </div>
     </div>

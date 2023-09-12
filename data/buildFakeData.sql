@@ -335,10 +335,11 @@ VALUES (1, 1, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580
 
 INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA, CREATE_TIME)
 VALUES (1, 1, '我覺得超級好玩', 5, DEFAULT),
-       (2, 1, '下次還會來,空間很寬敞舒適,適合情侶來!', 5, DEFAULT),
-       (3, 1, '為了專題做蛋糕,不過還挺好玩的', 5, DEFAULT),
-       (4, 2, '品項有點貴,買85度C回家吃實在', 1, DEFAULT),
-       (4, 1, '第一次跟女朋友來這種地方 好玩 值得 還碰到她的手 讚讚讚 下次還要來', 5, DEFAULT);
+       (2, 2, '下次還會來,空間很寬敞舒適,適合情侶來!', 5, DEFAULT),
+       (3, 3, '為了專題做蛋糕,不過還挺好玩的', 5, DEFAULT),
+       (4, 4, '品項有點貴,買85度C回家吃實在', 1, DEFAULT),
+       (4, 2, '第一次跟女朋友來這種地方 好玩 值得 還碰到她的手 讚讚讚 下次還要來', 5, DEFAULT);
+
 
 
 INSERT INTO DIY_RESERVE_RESULT( DIY_RESERVE_DATE, DIY_PERIOD, PEO_COUNT

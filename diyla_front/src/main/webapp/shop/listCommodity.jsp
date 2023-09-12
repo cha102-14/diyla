@@ -28,7 +28,7 @@
     <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
     <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="../css/shop/listCommodity.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/shop/listCommodity.css">
 </head>
 
 <body>
@@ -92,10 +92,10 @@
 <jsp:include page="../front_footer.jsp"/>
 
 
-<script src="../js/jquery-3.4.1.min.js"></script>
-<script src="../js/bootstrap.js"></script>
+<script src="${ctxPath}/js/jquery-3.4.1.min.js"></script>
+<script src="${ctxPath}/js/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script src="../js/custom.js"></script>
+<script src="${ctxPath}/js/custom.js"></script>
 <script>
     $(document).ready(function () {
 

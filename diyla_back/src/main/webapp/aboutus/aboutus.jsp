@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page import="java.util.Base64"%>
 <%@ page import="redis.clients.jedis.Jedis"%>
+    <jsp:include page="/index.jsp" />
 <%
     Jedis jedis = new Jedis("localhost", 6379);
     String content = jedis.get("content");
@@ -77,7 +78,6 @@
 </head>
 
 <body>
-    <jsp:include page="/index.jsp" />
 
     <h1 id="aboutus">關於我們</h1>
     <div class="container">
