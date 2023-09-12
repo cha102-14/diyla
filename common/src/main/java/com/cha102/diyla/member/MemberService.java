@@ -83,12 +83,12 @@ public class MemberService {
 		mem.setMemAddress(mem_address);
 		mem.setMemId(mem_id);
 
-//		String pwReg = "^\\w{6,12}$";
-//		if (mem_password == null || (mem_password.trim()).length()==0){
-//			exMsgs.put("memPassword","請輸入密碼");
-//		} else if (!(mem_password.matches(pwReg))){
-//			exMsgs.put("memPassword","密碼格式錯誤，請重新輸入");
-//		}
+		String nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+		if (mem_name == null || (mem_name.trim()).length()==0){
+			exMsgs.put("memName","請輸入姓名");
+		}else if (!(mem_name.matches(nameReg))){
+			exMsgs.put("memName","姓名格式只能為中、英文字母、數字和_ , 且長度必需在2到10之間");
+		}
 
 		String phoneReg ="^\\d{10,}$";
 		if (mem_phone == null || (mem_phone.trim()).length()==0){
@@ -101,9 +101,6 @@ public class MemberService {
 		if (mem_address == null || (mem_address.trim()).length()==0){
 			exMsgs.put("memAddress","請輸入地址");
 		}
-//		else if (!(mem_address.matches(addReg))){
-//			exMsgs.put("memAddress","地址格式只能為中、英文字母、數字、-和,");
-//		}
 		if (exMsgs.isEmpty()){
 			dao.update(mem);
 		}
@@ -112,24 +109,13 @@ public class MemberService {
 
 	}
 
-	public MemVO updateNewPw(List<String> exMsgs,String mem_password,String mem_email){
+	public MemVO updateNewPw(Map<String,String> exMap,String mem_password,String mem_email){
 		MemVO mem = new MemVO();
-		EmailValidator emailValidator = EmailValidator.getInstance();
-		if(mem_email == null || (mem_email.trim()).isEmpty()){
-			exMsgs.add("請輸入信箱");
-		} else if (!emailValidator.isValid(mem_email)){
-			exMsgs.add("格式錯誤，請重新輸入");
-		}
 
-		String pwReg = "^\\w{6,12}$";
-		if (mem_password == null || (mem_password.trim()).length()==0){
-			exMsgs.add("請輸入密碼");
-		} else if (!(mem_password.matches(pwReg))){
-			exMsgs.add("密碼格式錯誤，請重新輸入");
-		}
+
 		mem.setMemPassword(mem_password);
 		mem.setMemEmail(mem_email);
-		if (exMsgs.isEmpty()){
+		if (exMap.isEmpty()){
 			dao.updatePw(mem_password,mem_email);
 		}
 

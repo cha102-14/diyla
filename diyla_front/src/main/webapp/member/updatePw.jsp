@@ -3,8 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.member.*"%>
 <%@ page import="java.util.*"%>
-<%@ page import="javax.servlet.*"%>
-<%@ page isELIgnored="false" %>
 
 <%
     MemVO memVO = (MemVO)session.getAttribute("memVO");
@@ -82,7 +80,7 @@
             border-radius: 6px;
             background-color:snow;
         }
-        input.inputform {
+        input.inputform,input.read {
             border: 1px solid #B26021;
             border-radius: 0.3rem;
             font-size: 1rem;
@@ -195,6 +193,18 @@
         #a1{
             font-weight:bold;
         }
+       input.read{
+            background-color:rgba(239, 239, 239, 0.3);
+        }
+        input.read:focus{
+            background-color:rgba(239, 239, 239, 0.3);
+            outline:none;
+        }
+        .success{
+            position:absolute;
+            right:80px;
+            margin-top:5px;
+        }
         </style>
 
 </head>
@@ -214,30 +224,20 @@
         </aside>
         <div class="member">
         <h4 class="member">修改密碼</h4>
-        <c:if test="${not empty exMsgs}">
-             <div style="color:red" class="error">
-                  <c:forEach var="message" items="${exMsgs}">
-                       ${message}
-                  </c:forEach>
-             </div>
-        </c:if>
-
-            <form method="post" action="updatePw" class="member">
-                <label>姓名<br>
-                <input type="text" name="memName" value="${memVO.memName}" disabled class="inputform"></label><br>
+            <form method="post" action="update" class="member">
                 <br>
                 <label>帳號<br>
-                <input type="email" name="upemail" value="${memVO.memEmail}" disabled class="inputform"></label><br>
+                <input class="read" type="email" name="upemail" value="${memVO.memEmail}" readonly ></label><br>
                 <br>
                 <label>修改密碼<br>
                 <input type="password" name="upPw" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" class="inputform"></label><br>
-                <span  id ="memPassword.errors" class="error">${exMsgs.memPassword}<br/></span>
+                <span  class="error">${exMap.password}<br/></span>
                 <label>確認密碼<br>
                 <input type="password" name="upPwcheck" placeholder="再次輸入密碼" class="inputform"></label><br>
-                <span  id ="pwcheck.errors" class="error">${exMsgs.pwcheck}<br/></span>
-                <input type="hidden" name="memId" value="${memVO.memId}"><br>
+                <span  class="error">${exMap.pwcheck}<br/></span>
                 <input type="hidden" name="action" value="updatePw">
-                <button type="submit" value="updatePw" class="member">送出修改</button>
+                <button type="submit" value="updatePw" class="member">送出修改</button><br>
+                <div class="success">${successMap.successMap}</div>
             </form>
         </div>
     </div>

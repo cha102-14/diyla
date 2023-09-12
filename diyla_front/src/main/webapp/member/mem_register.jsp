@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.cha102.diyla.member.*"%>
 <%@ page import="java.util.*"%>
-<% MemVO memVO = (MemVO) request.getAttribute("memVO");%>
+<% MemVO mem = (MemVO) request.getAttribute("mem");%>
 <% String address = (String) request.getAttribute("address");%>
 <%@ page isELIgnored="false" %>
 
@@ -48,7 +48,7 @@
             border-radius: 5px;
             letter-spacing: 3px;
             margin:50px 0;
-            height:700px;
+            height:800px;
             background-color:snow;
         }
         h4.member{
@@ -65,7 +65,7 @@
             padding: 10px 10px 10px 40px;
             font-size: 1rem;
             width: 580px;
-            height: 600px;
+            height: 700px;
             position: relative;
 
         }
@@ -172,15 +172,15 @@
             <form method="post" action="register">
                 <div class="name">
                     <label>姓名<br>
-                    <input class="inputform" type="text" name="newName" value="<%= (memVO==null)? "" : memVO.getMemName()%>"></label><br>
+                    <input class="inputform" type="text" name="newName" value="<%= (mem==null)? "" : mem.getMemName()%>"></label><br>
                 </div>
                 <div>
                     <label>帳號<br>
-                    <input class="inputform" type="email" name="user" placeholder="請輸入信箱" value="<%= (memVO==null)? "" : memVO.getMemEmail()%>"></label><br>
+                    <input class="inputform" type="email" name="user" placeholder="請輸入信箱" value="<%= (mem==null)? "" : mem.getMemEmail()%>"></label><br>
                 </div>
                 <div class="name">
                     <label>密碼<br>
-                    <input class="inputform" type="password" name="password" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" value="<%= (memVO==null)? "" : memVO.getMemPassword()%>"></label><br>
+                    <input class="inputform" type="password" name="password" placeholder="請輸入6-12字(含英數字)"  minlength="6" maxlength="12" value="<%= (mem==null)? "" : mem.getMemPassword()%>"></label><br>
                 </div>
                 <div>
                     <label>確認密碼<br>
@@ -188,16 +188,16 @@
                 </div>
                 <div class="name">
                     <label>生日<br>
-                    <input class="inputform" type="date" name="birthday" id="birthday" max="" value="<%= (memVO==null)? "" : memVO.getMemBirthday()%>"></label><br>
+                    <input class="inputform" type="date" name="birthday" id="birthday" max="" value="<%= (mem==null)? "" : mem.getMemBirthday()%>"></label><br>
                 </div>
                 <div class="gender">
                     <label for="gender" required="required">性別<br>
-                    <input type="radio" name="gender" value="0"  ${(0==memVO.memGender)? 'checked':''}>男
-                    <input id="f" type="radio" name="gender" value="1"  ${(1==memVO.memGender)? 'checked':''}>女</label><br>
+                    <input type="radio" name="gender" value="0"  ${(0==mem.memGender)? 'checked':''}>男
+                    <input id="f" type="radio" name="gender" value="1"  ${(1==mem.memGender)? 'checked':''}>女</label><br>
                 </div>
                 <div>
                     <label>聯絡電話<br>
-                    <input class="inputform" type="tel" name="phone" minlength="10" value="<%= (memVO==null)? "" : memVO.getMemPhone()%>"></label><br>
+                    <input class="inputform" type="tel" name="phone" minlength="10" value="<%= (mem==null)? "" : mem.getMemPhone()%>"></label><br>
                 <div>聯絡地址<br>
                     <label for="city">縣市<br>
                     <select id="city" name="city"></select></label>
@@ -215,8 +215,7 @@
                     <span style="vertical-align:middle;">我想收到DIYLA的最新消息和活動優惠</span><br>
                 </label><br>
 
-                <button type="submit" value="register" id="b" class="member">註冊</button>
-
+                <button type="submit" value="register" id="b" class="member">註冊</button><br>
             </form>
         </div>
         </div>

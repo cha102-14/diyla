@@ -191,6 +191,11 @@
         #a1{
             font-weight:bold;
         }
+        .success{
+            position:absolute;
+            right:80px;
+            margin-top:5px;
+        }
         </style>
 
 
@@ -239,11 +244,12 @@
                     <select id="district" name="district" ></select></label>
                     <label for="address">
                     <input type="text" id="address" name="address" value="${addMap.address}" class="inputform"></label><br>
-                <span  id ="memAddress.errors" class="error">${exMsgs.memAddress}<br/></span>
+                    <span  id ="memAddress.errors" class="error">${exMsgs.memAddress}<br/></span>
                 </div>
                 <input type="hidden" name="memId" value="${memId}">
                 <input type="hidden" name="action" value="update">
-                <button type="submit" value="update"  class="member" >送出修改</button>
+                <button type="submit" value="update"  class="member" >送出修改</button><br/>
+                <div class="success">${success.success}</div>
             </form>
             </div>
         </div>
