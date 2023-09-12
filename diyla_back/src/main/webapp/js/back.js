@@ -1,5 +1,5 @@
 $("a.func_link").on("click",function(e){
-    e.preventDefault();
+    // e.preventDefault();
     $("a.func_link").removeClass("chose");
     $(this).addClass("chose");
     

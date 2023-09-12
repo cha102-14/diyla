@@ -33,7 +33,7 @@ public class CommodityPageController {
             //將類別編號當key，類別名稱當Value放進HashMap中
             classNameMap.put(commodityClassVO.getComClassNo(), commodityClassVO.getComClassName());
         }
-        Page<Commodity> pages = commodityPageService.findAll(page);
+        Page<Commodity> pages = commodityPageService.findAll(page-1);
         List<Commodity> commodityList = pages.getContent();
         int size = pages.getSize();
         model.addAttribute("classNameMap", classNameMap);
