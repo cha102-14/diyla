@@ -24,9 +24,60 @@
                     <link href="./css/responsive.css" rel="stylesheet" />
                     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
+
+                    <style>
+                       /* 整体样式 */
+                        .title {
+                            font-family: "微軟正黑體", Arial, sans-serif;
+                            font-weight: bold;
+                            color: #B26021;
+                            position: relative;
+                            width:400px;
+                            top:50%;
+                            left:50%;
+                            transform: translateX(-50%);
+                            border-radius: 5px ;
+                            letter-spacing: 3px;
+                            margin:50px 0;
+                            background-color: #E6F7FF; /* 淡蓝色背景 */
+                            border: 2px solid #333; /* 外边框线 */
+                            padding: 20px; /* 内边距 */
+                            text-align: center; /* 文本居中 */
+                        }
+
+                    
+
+                        /* 输入框样式 */
+                        input[type="text"] {
+                            width: 280px; /* 输入框宽度100% */
+                            padding: 10px; /* 输入框内边距 */
+                            margin-bottom: 10px; /* 底部间距 */
+                        }
+
+                        /* 按钮样式 */
+                        #sub {
+                            background-color: #4CAF50; /* 按钮背景颜色 */
+                            color: white; /* 文字颜色 */
+                            padding: 10px 20px; /* 上下内边距 左右内边距 */
+                            border: none; /* 去掉按钮边框 */
+                            cursor: pointer; /* 鼠标指针样式为手型 */
+                        }
+
+                        /* 按钮悬停效果 */
+                        #sub:hover {
+                            background-color: #45a049; /* 悬停时的背景颜色 */
+                        }
+
+                      
+
+                    </style>
+
                 </head>
 
                 <body>
+
+                    
+
                     <div class="title">
                         <h4>忘記密碼</h4>
                         <c:if test="${not empty exMsgs}">
@@ -39,7 +90,6 @@
                         <div class="importemail">
                             請輸入您的Email帳號，系統將會寄送驗證碼到您的Email信箱。
                             <br>
-                            <label>信箱</label><br>
                             <input type="text" name="email" id="email" placeholder="請輸入信箱"
                                 value="${(empVO==null)? "" : empVO.empEmail()}" </br>
                             <button type="submit" value="" 　id="sub" onclick="sendEmail()">送出驗證信</button><br>

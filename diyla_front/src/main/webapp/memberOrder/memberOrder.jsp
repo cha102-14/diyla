@@ -278,8 +278,8 @@ a.subbarlink:hover {
 	</div>
 	<div id="main_content">
 		<div class="barblcok">
-			<span id="memberInfo" class="subbar"><a href="#" class="subbarlink">會員資訊管理</a></span>> <span
-				id="orderitem" class="subbar"><a  href="#" class="subbarlink">我的訂單</a></span>> <span
+			<span id="memberInfo" class="subbar"><a href="${ctxPath}/member/update?action=select&memId=${memId}" class="subbarlink">會員資訊管理</a></span>> <span
+				id="orderitem" class="subbar"><a  href="${ctxPath}/allOrder/allOrder?memId=${memId}" class="subbarlink">我的訂單</a></span>> <span
 				id="shoporder" class="subbar"><a  href="" class="subbarlink">商店訂單</a></span>
 		</div>
 		<p class="heading">

@@ -92,7 +92,7 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="${ctxPath}/diyOrder/diyOrder_front.jsp">
+                        <a class="nav-link" href="${ctxPath}/diyCate/diyCateList">
                             DIY體驗
                         </a>
                     </li>
@@ -115,12 +115,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${ctxPath}/pbm/pbm.jsp">
                             常見問題
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" id="myOrder">
-                            我的訂單
                         </a>
                     </li>
                 </ul>

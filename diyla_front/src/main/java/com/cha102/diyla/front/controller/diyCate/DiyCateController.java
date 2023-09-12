@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,19 @@ public class DiyCateController {
 		
 		return "/diyCateViewFront/diyCateView_2.jsp";
 	}
+	
+	@GetMapping("/diyCate/bookDiyOrder")
+	public String newDiyOrder(
+			@RequestParam("DiyNo")Integer DiyNo , Model model) {
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		List<DiyCateEntity> diyCateList = diyCateService.getAllDiyCates();
+		DiyCateEntity diyCateEntity = diyCateService.findById(DiyNo);
+		model.addAttribute("diyCateEntity",diyCateEntity);
+		System.out.println(diyCateEntity);
+		
+		return "/diybooking/diybooking.jsp";
+	}
+	
 	
 	@GetMapping("/diyCate/diyCate_detail")
 	public String getOneCateFront(ModelMap model,@RequestParam int diyNo ) {

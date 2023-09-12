@@ -375,7 +375,7 @@ a.canceled::hover {
 							});
 
 							$(
-									"#recipientName, #recipientPhone, #recipientAddress")
+									"#recipientName, #recipientPhone, #recipientAddress, #tokenAmount")
 									.on(
 											"input",
 											function() {
@@ -388,8 +388,8 @@ a.canceled::hover {
 												const recipientAddress = $(
 														"#recipientAddress")
 														.val();
-												const token = $("#tokenAmount")
-														.val();
+												const token = $("#tokenAmount").val();
+												
 
 												// 將收件人值填入下面表單的對應欄位
 												$("#cardrecipient").val(

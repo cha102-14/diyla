@@ -234,7 +234,9 @@
                                     let value = $(this).val();
                                     $(this).prop("disatable",false);
                                     for (let i = 0; i < values.length; i++) {
+
                                         if (values[i].diyPeriod == value && (values[i].peoCount >= 20 || values[i].reserveStatus === 1)) {
+
                                             $(this).prop("disabled", true);
                                         }
                                     }

@@ -8,58 +8,72 @@
     List<PbmVO> list = pbmSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<title>常見問題</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
-<style>
-    body{
-    margin-left:300px;
-    }
-</style>
+    <title>常見問題</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
+    <style>
+        body {
+            margin-left: 300px;
+        }
+    </style>
 
 
 
 </head>
-<body bgcolor='white'>
- <jsp:include page="/pbm/pbm_header.jsp" />
-<table id="pbmtable" class="display">
-<thead id="header" >
-	<tr>
-		<th>問題編號</th>
-		<th>問題分類</th>
-		<th>常見問題標題</th>
-		<th>常見問題內容</th>
-		<th>操作</th>
-	</tr>
-		  </thead>
-<tbody id="content">
-		<c:forEach var="pbmVO" items="${list}" >
-	<tr>
-		<td>${pbmVO.pbmNo}</td>
-		<td>${pbmVO.pbmSort}</td>
-		<td>${pbmVO.pbmTitle}</td>
-		<td>${pbmVO.pbmContext}</td>
-	<td>
-	<form method="post" action="PbmController">
-        <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">
-        <input type="hidden" name="action" value="update_start">
-        <button type="submit">✏️編輯</button>
-    </form>
 
-    <form method="post" action="PbmController">
-        <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">
-        <input type="hidden" name="action" value="delete_pbm">
-        <button type="submit">❌刪除</button>
-    </form>
-	</td>
-	</tr>
-	</c:forEach>
-	</tbody>
-</table>
+<body bgcolor='white'>
+    <jsp:include page="/pbm/pbm_header.jsp" />
+    <table id="pbmtable" class="display">
+        <thead id="header">
+            <tr>
+                <th>問題編號</th>
+                <th>問題分類</th>
+                <th>常見問題標題</th>
+                <th>常見問題內容</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="content">
+            <c:forEach var="pbmVO" items="${list}">
+                <tr>
+                    <td>${pbmVO.pbmNo}</td>
+                    <c:choose>
+                        <c:when test="${pbmVO.pbmSort == 0}">
+                            <td>課程</td>
+                        </c:when>
+                        <c:when test="${pbmVO.pbmSort == 1}">
+                            <td>DIY</td>
+                        </c:when>
+                        <c:when test="${pbmVO.pbmSort == 2}">
+                            <td>商店</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>其他</td>
+                        </c:otherwise>
+                    </c:choose>
+                    <td>${pbmVO.pbmTitle}</td>
+                    <td>${pbmVO.pbmContext}</td>
+                    <td>
+                        <form method="post" action="PbmController">
+                            <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">
+                            <input type="hidden" name="action" value="update_start">
+                            <button type="submit">✏️編輯</button>
+                        </form>
+
+                        <form method="post" action="PbmController">
+                            <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">
+                            <input type="hidden" name="action" value="delete_pbm">
+                            <button type="submit">❌刪除</button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script><!-- ●●js  for jquery datatables 用 -->
     <!-- ●●css for jquery datatables 用 -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
@@ -98,4 +112,5 @@
         });
     </script>
 </body>
+
 </html>

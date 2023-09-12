@@ -16,7 +16,7 @@
     margin-left:280px;
     }
     #pbm_select{
-        width: 300px;
+        width: 100px;
     }
 
     </style>
@@ -30,8 +30,8 @@
             <span><a href="addpbm.jsp">新增常見問題</a> </span>
                 <jsp:useBean id="pbmSvc" scope="page" class="com.cha102.diyla.commonproblemmodel.PbmService" />
             <span>
-                      <b>選擇員工編號:</b>
-                    <FORM METHOD="post" ACTION="PbmController" style="display: inline-block;">
+                    <FORM METHOD="post" ACTION="PbmController" style="display: inline;">
+                      <b>選擇常見問題:</b>
                       <select id="pbm_select" size="1" name="pbmNo">
                         <c:forEach var="pbmVO" items="${pbmSvc.all}" >
                          <option  value="${pbmVO.pbmNo}">${pbmVO.pbmTitle}
