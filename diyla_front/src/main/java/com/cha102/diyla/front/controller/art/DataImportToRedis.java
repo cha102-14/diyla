@@ -21,6 +21,7 @@ public class DataImportToRedis {
         List<ArtVO> datas = artService.getAllArt();
 
         for (ArtVO data : datas) {
+            if(data.getArtPic() != null)
             jedis.set("art:" + data.getArtNo(), Base64.getEncoder().encodeToString(data.getArtPic()));
         }
 

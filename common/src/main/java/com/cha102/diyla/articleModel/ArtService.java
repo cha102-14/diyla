@@ -103,5 +103,8 @@ public class ArtService implements ArtService_interface {
         return dao.getAllNoCheck();
     }
 
+    public List<ArtVO> getAllCheckArt() {
+        return dao.getAllCheck();
+    }
 
 }

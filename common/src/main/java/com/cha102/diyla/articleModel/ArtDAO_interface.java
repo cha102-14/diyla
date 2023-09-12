@@ -23,6 +23,7 @@ public interface ArtDAO_interface {
     public List<ArtVO> getAll();
 
     public List<ArtVO> getAllNoCheck();
+    public List<ArtVO> getAllCheck();
 
     default Session getSession() {
 //        return getSessionFactory().openSession();
