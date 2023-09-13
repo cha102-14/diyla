@@ -47,16 +47,16 @@
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
             } else {
                 type = (String) typeFunObj;
             }
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 canRegister = 0;
             } else if ("MASTER".equals(type) && !isEmpAlreadyTeacher) {
                 canRegister = 1;

@@ -60,9 +60,9 @@
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -71,7 +71,7 @@
             }
             Integer teacherId = null;
             TeacherVO teacher = null;
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 List<TeacherVO> teacherList = teacherService.getAllTeacher();
                 pageContext.setAttribute("teacherList", teacherList);
             } else if ("MASTER".equals(type)) {
@@ -107,9 +107,9 @@
             <div class="col-md-6">
                 <div id="teacherIdField" class="form-group">
                     <c:choose>
-                    <c:when test="${type == 'ADMIN'}">
+                    <c:when test="${type == 'BACKADMIN'}">
                         <label for="teacherSelect">師傅</label><br>
-                        <select id="teacherSelect" class="teacherSelect form-control">
+                        <select id="teacherSelect" name="teacherId" class="teacherSelect form-control">
                         <c:forEach var="tea" items="${teacherList}" varStatus="loop">
                             <option id="teacher${loop.index}" value="${tea.teaId}">${tea.teaName}</option>
                         </c:forEach>
@@ -252,7 +252,7 @@
                 $("#ingredientType1").html(ingOptionString);
             });
             //阻擋無權限人員新增課程
-           if(type !== "ADMIN" && type !== "MASTER") {
+           if(type !== "BACKADMIN" && type !== "MASTER") {
             Swal.fire({
                 title: "您沒有權限新增課程!",
                 icon: "error",

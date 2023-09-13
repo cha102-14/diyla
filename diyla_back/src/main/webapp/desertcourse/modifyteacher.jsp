@@ -49,9 +49,9 @@
             if (isTypeFunList) {
                 
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -60,7 +60,7 @@
             }
             Integer teacherId = null;
             TeacherVO teacher = null;
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 List<TeacherVO> teacherList = teacherService.getAllTeacher();
                 pageContext.setAttribute("teacherList", teacherList);
             } else if ("MASTER".equals(type)) {
@@ -102,7 +102,7 @@
     <a href="${ctxPath}/desertcourse/listallteacher.jsp">前往教師列表頁面</a>
     <form action="${ctxPath}/modifyTeacher" method="post" enctype="multipart/form-data">
     <c:choose>
-    <c:when test="${'ADMIN'.equals(type) && teacherVO != null}">
+    <c:when test="${'BACKADMIN'.equals(type) && teacherVO != null}">
     <div class="row">
         <div id="teacherIdField" class="col-md-3 form-group">
             <label for="teacherId">師傅編號 </label>
@@ -121,7 +121,7 @@
         </div>
     </div>
     </c:when>
-    <c:when test="${'ADMIN'.equals(type) && teacherVO == null}">
+    <c:when test="${'BACKADMIN'.equals(type) && teacherVO == null}">
     <div class="row">
     <div id="teacherIdField">
         <label for="teacherId">師傅編號</label>
@@ -277,7 +277,7 @@
              });
             }
                  //先做是否有修改的權利的確認
-            if (type !== 'ADMIN' && type !== 'MASTER') {
+            if (type !== 'BACKADMIN' && type !== 'MASTER') {
                 // 啟動定時器，3秒後導航到其他網頁
                 setTimeout(function() {
                 window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
