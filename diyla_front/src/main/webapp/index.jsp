@@ -45,9 +45,9 @@
                                     來DIYLA！自己動手做
                                 </h1>
                                 <p>
-                                    使用DIYLA精選的食材，親自做出自己喜愛的甜點吧！
+                                    使用DIYLA精選的食材及完整舒適的環境，親自做出自己喜愛的甜點吧！
                                 </p>
-                                <a href="#" class="btn btn-primary">
+                                <a href="${ctxPath}/diyCate/diyCateList" class="btn btn-primary">
                                     立即跟上
                                 </a>
                             </div>
@@ -64,10 +64,10 @@
                                     限時特惠體驗
                                 </h1>
                                 <p>
-                                    DIY蛋糕限時大特惠，名額有限，蛋糕控別錯過
+                                    由專業師傅手把手教學的蛋糕課程，名額有限，蛋糕控別錯過
                                 </p>
-                                <a href="#" class="btn btn-primary">
-                                    立即搶購
+                                <a href="${ctxPath}/desertcourse/findclasslist.jsp" class="btn btn-primary">
+                                    立即預定
                                 </a>
                             </div>
                         </div>
@@ -83,10 +83,10 @@
                                     新品上市！
                                 </h1>
                                 <p>
-                                    獨創小豆沙餐包，早餐、下午餐必備！
+                                    豐富精緻點心限量上架中！
                                 </p>
-                                <a href="#" class="btn btn-primary">
-                                    立即體驗
+                                <a href="${ctxPath}/shop/CommodityController?action=listAll" class="btn btn-primary">
+                                    立即搶購
                                 </a>
                             </div>
                         </div>
