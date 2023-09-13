@@ -44,7 +44,16 @@ public class ArtMsgService {
     public void updateStatus(Integer msgNo) {
         artMsgRepository.updateStatus(msgNo);
     }
+
     public void rollbackStatus(Integer msgNo) {
         artMsgRepository.rollbackStatus(msgNo);
+    }
+
+    public void deleteAllMsgByArtno(Integer artNo) {
+        artMsgRepository.deleteAllMsg(artNo);
+    }
+
+    public Integer[] selectAllMsgNoByArtNo(Integer artNo) {
+        return artMsgRepository.allMsgNo(artNo);
     }
 }
