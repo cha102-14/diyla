@@ -209,7 +209,7 @@
 
                         .then(function (res) { //一樣有then
                             let mems = res.memList;
-                            console.log(mems)
+                            // console.log(mems)
                             mem_totalSize = res.totalSize
                             document.getElementById("currentPage").textContent = getCurrentPage();
                             document.getElementById("totalPages").textContent = getTotalPageSize();
@@ -223,7 +223,7 @@
                         // .then(response => response.json())
                         // .then(respdata)
                         .catch(function (error) {
-                            console.log(error)
+                            // console.log(error)
                         })
                     }
 
@@ -243,9 +243,10 @@
                             html += `<td>` + mem.memName + `</td>`;
                             html += `<td>` + mem.memEmail + `</td>`;
                             html += `<td>` + mem.memPhone + `</td>`;
-                            html += `<td><button type="button" id="` + mem.memId + `" class="memStatus">` + (mem.memStatus ? "停用" : "正常") + `</button></td>`;
+                            html += `<td><button type="button" id="` + mem.memId + `" class="memStatus">` + (mem.blacklistArt ? "停用" : "正常") + `</button></td>`;
                             // html += `<td><input type="SUBMIT" value="修改"></td>`;
                             html += `</tr>`;
+                            console.log(mem.blacklistArt);
                         }
                         //將mems資料放入頁面中
                     }
