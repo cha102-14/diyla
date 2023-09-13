@@ -82,7 +82,7 @@
 
         function sendeditart() {
             if (!document.querySelector("#addimg").files[0]) {
-                swal("確定要移除照片?", "請按確定送出或按取消返回", {
+                swal("確定不修改照片?", "請按確定送出或按取消返回", {
                     dangerMode: true,
                     buttons: ["取消", "確定"],
                 }).then((confirm) => {
