@@ -68,7 +68,6 @@
     <html lang="en">
     <head>
         <jsp:include page="/index.jsp" />
-                    <jsp:include page="/desertcourse/navibar.jsp" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>課程詳情</title>
@@ -145,6 +144,7 @@
         </div>
             <div id= "naviContentBlock">
                 <div id="naviBlock">
+                <jsp:include page="/desertcourse/navibar.jsp" />
                 </div>
                 <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
                     <h2 id="title" class="title-tag" >課程細節</h2>
@@ -187,6 +187,9 @@
                         </div>
                         <div id="courseDateBlock"><strong class="label">課程日期: </strong>
                             <p class="text"><%= course.getClassDate() %></p>
+                        </div>
+                        <div id="courseEngDateBlock"><strong class="label">報名截止日期: </strong>
+                            <p class="text"><%= course.getRegEndTime() %></p>
                         </div>
                         <div id="courseSeqBlock"><strong class="label">課程場次: </strong>
                         <p class="text">
@@ -237,8 +240,27 @@
                         <div id="introText"><%= course.getIntro() %></div>
                     </div>
                     <div id="buttonGroup">
-                        <button type="button" id="modifyButton" class="btn btn-warning">修改課程</button>
-                        <button type="button" id="deleteButton" class="btn btn-danger">下架課程</button>
+                        <%  
+                            if (courseStatus == 0) {
+                        %>
+                                <button type="button" id="modifyButton" class="btn btn-warning">修改課程</button>
+                                <button type="button" id="deleteButton" class="btn btn-danger">下架課程</button>
+                                <button type="button" id="backButton" class="btn btn-success" disabled>上架課程</button>
+                        <%
+                            } else if (courseStatus == 1) {
+                        %>
+                                <button type="button" id="modifyButton" class="btn btn-warning">修改課程</button>
+                                <button type="button" id="deleteButton" class="btn btn-danger" disabled>下架課程</button>
+                                <button type="button" id="backButton" class="btn btn-success">上架課程</button>
+                        <%
+                            } else {
+                        %>
+                                <button type="button" id="modifyButton" class="btn btn-warning">修改課程</button>
+                                <button type="button" id="deleteButton" class="btn btn-danger" disabled>下架課程</button>
+                                <button type="button" id="backButton" class="btn btn-success" disabled>上架課程</button>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
                 </div>
@@ -250,6 +272,7 @@
             //變數區
             var modifyButton = document.getElementById('modifyButton');
             var deleteButton = document.getElementById('deleteButton');
+            var backButton = document.getElementById('backButton');
             var ingBlock = document.getElementById('courseIngredientBlock');
             var urlParams = new URLSearchParams(window.location.search);
             var courseId = urlParams.get('courseid');
@@ -321,10 +344,92 @@
             });
             deleteButton.addEventListener('click', function() {
                 if(type === "ADMIN" || courseTeaId === reqTeaId){
-                    window.location.href = "${ctxPath}"+'/verifyCourseAction?action=delete&courseId=' + courseId;
+                    Swal.fire({
+                        title: "確定要下架課程嗎?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "確定",
+                        cancelButtonText: "取消"
+                    }).then(function(result){
+                        if(result.isConfirmed) {
+                            fetch("${ctxPath}"+'/verifyCourseAction?action=delete&courseId=' + courseId)
+                            .then(response => response.json())
+                            .then(data => {
+                                if(data.isAllowed === true) {
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 3000);
+                                    Swal.fire({
+                                        title: "課程下架成功",
+                                        icon:"success",
+                                        confirmButtonText: "確定"
+                                    }).then(function(result) {
+                                        if(result.isConfirmed) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                } else{
+                                    Swal.fire({
+                                        title: "課程下架失敗",
+                                        icon:"error",
+                                        confirmButtonText: "確定"
+                                    }).then(function(result) {
+                                        if(result.isConfirmed) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
                 } else {
                     redirect();
                 }
+            });
+            backButton.addEventListener('click', function(){
+                if(type === "ADMIN" || courseTeaId === reqTeaId){
+                    Swal.fire({
+                        title: "確定要上架課程嗎?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "確定",
+                        cancelButtonText: "取消"
+                    }).then(function(result){
+                        if(result.isConfirmed) {
+                            fetch("${ctxPath}"+'/verifyCourseAction?action=back&courseId=' + courseId)
+                            .then(response => response.json())
+                            .then(data => {
+                                if(data.isAllowed === true) {
+                                    setTimeout(function(){
+                                        window.location.reload();
+                                    }, 3000);
+                                    Swal.fire({
+                                        title: "課程上架成功",
+                                        icon:"success",
+                                        confirmButtonText: "確定"
+                                    }).then(function(result) {
+                                        if(result.isConfirmed) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                } else {
+                                        Swal.fire({
+                                        title: "課程上架失敗",
+                                        icon:"error",
+                                        confirmButtonText: "確定"
+                                    }).then(function(result) {
+                                        if(result.isConfirmed) {
+                                            window.location.reload();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    redirect();
+                }
+
             });
             }
         });
