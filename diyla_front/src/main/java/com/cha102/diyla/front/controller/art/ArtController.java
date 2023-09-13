@@ -98,7 +98,7 @@ public class ArtController extends HttpServlet {
             byte artStatus = NOSEND_NOSHOW;
             Part artPicPart = req.getPart("artPic");
             InputStream ips = artPicPart.getInputStream();
-            byte[] buffer = ips.readAllBytes();
+            byte[] buffer = null;
             ArtVO artVO = new ArtVO();
             artVO.setArtTitle(artTitle);
             artVO.setArtContext(artContext);
@@ -111,11 +111,12 @@ public class ArtController extends HttpServlet {
             }
 
             ArtService artSvc = new ArtService();
-            if (buffer.length > 0) {
-                artSvc.updateArtAndPic(artNo, artTitle, buffer, artContext, artStatus);
+            if (ips.available() != 0) {
+                buffer = ips.readAllBytes();
             } else {
-                artSvc.updateArt(artNo, artTitle, artContext, artStatus);
+                buffer = artSvc.getArtByArtNo(artNo).getArtPic();
             }
+            artSvc.updateArtAndPic(artNo, artTitle, buffer, artContext, artStatus);
 
             String url = "/art/personalart.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);

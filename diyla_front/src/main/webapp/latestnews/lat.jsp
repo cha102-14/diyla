@@ -5,7 +5,7 @@
 <%@ page import="com.cha102.diyla.IatestnewsModel.*"%>
 <%
      LatService latSvc = new LatService();
-     List<LatestnewsVO> list = latSvc.getAll();
+     List<LatestnewsVO> list = latSvc.getAllShowCheck();
      pageContext.setAttribute("list",list);
 %>
 <!DOCTYPE html>
