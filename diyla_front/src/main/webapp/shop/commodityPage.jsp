@@ -60,7 +60,7 @@
         <!--         </form> -->
         <br>
         <button type="button" class="button" id="addItem">加入購物車</button>
-        <button type="submit" class="button">加入追蹤</button>
+        <button type="submit" class="button" onclick="addTrack(event)">加入追蹤</button>
 
     </div>
 
@@ -92,17 +92,16 @@
 
 <script>
     let commodityComments;
-    let sum=0;
-    let average=0;
-    $(document).ready(function() {
-        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}").then((res)=>{
-            commodityComments=res.data
+    let sum = 0;
+    let average = 0;
+    $(document).ready(function () {
+        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}").then((res) => {
+            commodityComments = res.data
             for (i = 0; i < commodityComments.length; i++) {
                 sum += commodityComments[i].rating;
 
                 $('#commentArea').append(
-
-                  `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                    `  <div className="comment" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
                         <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
                             會員名稱：` + commodityComments[i].memName + `
                             <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
@@ -116,17 +115,23 @@
             }
 
             average = (sum / commodityComments.length).toFixed(1);
-            $('#averageRating').html("平均評分" + average);
-    })
+            if (isNaN(average)) {
+                $('#averageRating').html("尚無評論");
+            } else {
+                $('#averageRating').html("平均評分" + average);
+            }
+
+        })
     });
+
     function sortComment(sort) {
-        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort="+sort).then((res) => {
+        axios.get("${ctxPath}/shop/commodityComment/get/${commodity.comNO}?sort=" + sort).then((res) => {
             $('#commentArea').empty();
             commodityComments = res.data
             for (i = 0; i < commodityComments.length; i++) {
 
                 $('#commentArea').append(
-                    `  <div className="comment"  id="comment`+commodityComments[i].comCommentNo+`" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
+                    `  <div className="comment"  id="comment` + commodityComments[i].comCommentNo + `" style="border-top: 1px solid #ccc;margin-top: 20px; padding-top: 20px;">
                         <div className="member-info" style="font-weight: bold;margin-bottom: 5px;color: #B26021;">
                             會員名稱：` + commodityComments[i].memName + `
                             <span className="rating" style="color: gold; font-size: 1.2em;margin-left: 5px;">` + commodityComments[i].star + `</span>
@@ -146,6 +151,32 @@
 
     }
 
+    function addTrack(event) {
+        event.preventDefault();
+        axios.get('${ctxPath}/shop/track/${commodity.comNO}').then((res) => {
+            console.log(res.data);
+            if (res.data.length===0) {
+                Swal.fire({
+                    title: "請先登入後才能加入追蹤",
+                    text: "點選OK引導至登入頁面",
+                    showCancelButton: true
+                }).then(function(result) {
+                    if (result.value) {
+                        window.location.href = '${ctxPath}/member/mem_login.jsp';
+
+                    }
+                });
+                return;
+            }
+            if (res.data === '已在追蹤清單裡') {
+                swal("已在追蹤清單裡", "", "warning");
+
+                return;
+            }
+            swal("成功加入追蹤", "", "success");
+        });
+
+    }
 </script>
 
 
@@ -194,26 +225,26 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-               memId:memId,
-               comNo:comNo,
-               comAmount:amount
+                memId: memId,
+                comNo: comNo,
+                comAmount: amount
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                swal("成功新增", "", "success");
-                // 延遲 1 秒後刷新
-                setTimeout(function () {
-                    window.location.reload();
-                }, 1500);
-            } else {
-                // 處理刪除失敗的情況
-            }
-        })
-        .catch(error => {
-            // 處理錯誤情況
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    swal("成功新增", "", "success");
+                    // 延遲 1 秒後刷新
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    // 處理刪除失敗的情況
+                }
+            })
+            .catch(error => {
+                // 處理錯誤情況
+            });
     }
 
 </script>

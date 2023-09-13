@@ -8,4 +8,5 @@ public interface LatDAO_interface {
     public void delete(Integer newsNo);
     public LatestnewsVO findByPrimaryKey(Integer newsNo);
     public List<LatestnewsVO> getAll();
+    public List<LatestnewsVO> getAllShowCheck();
 }

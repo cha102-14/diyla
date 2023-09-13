@@ -16,7 +16,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/shop")
 public class CommodityCommentController {
-
     private HttpSession session;
     private CommodityService commodityService = new CommodityService();
     private CommodityCommentService commodityCommentService;
@@ -50,7 +49,7 @@ public class CommodityCommentController {
             commodityCommentVO.setMemId(memVO.getMemId());
         }
         commodityCommentService.save(commodityCommentVO);
-        return "index.jsp";
+        return "redirect:/shop/CommodityController?action=findByID&comNO="+comNO;
     }
 
     @GetMapping("/commodityComment/get/{comNO}")

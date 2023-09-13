@@ -251,7 +251,7 @@
             </div>
             <h5>DIY</h5>
             <div class="order">
-            <a href="${ctxPath}/diyOrder/DiyOrderFrontController">
+            <a href="${ctxPath}/diyOrder/diyOrder_front.jsp">
             <c:choose >
                 <c:when test="${not empty diyList}">
                 <c:forEach var="diyList" items="${diyList}">
@@ -286,7 +286,7 @@
             </a>
             </div>
             <h5>課程</h5>
-            <a href="">
+            <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
             <div class="order">
             <c:choose >
                 <c:when test="${not empty classList}">
@@ -320,13 +320,19 @@
         </div>
     </div>
     <script>
+
+
+
+
         function cart(){
             //let button_el = parseInt(this.getAttribute("data-cart"));
             //console.log(button_el);
             //filterCart(button_el); //1 //2 //3
             let divs = document.getElementsByClassName("order");
             for(div of divs){
+                if (div ===  ){
 
+                }
             }
         }
 

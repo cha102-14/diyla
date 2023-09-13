@@ -12,6 +12,7 @@
 <html lang="en">
 
 <head>
+    <jsp:include page="/index.jsp" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>註冊師傅</title>
@@ -79,7 +80,6 @@
 <body>
 <div id="pageContent">
     <div id="indexBlock">
-        <jsp:include page="/index.jsp" />
     </div>
     <div id="naviContentBlock">
     <div id="naviBlock">
@@ -153,7 +153,8 @@
 </div>
     <script>
         $(document).ready(function () {
-            var type = '${type}';
+            var type = "${type}";
+            var canRegister = "${canRegister}";
             // 判斷 expiresession 的值
             if (type === "NOSESSION") {
                 Swal.fire({
@@ -171,7 +172,7 @@
             } else{
                 
                  //先做是否已可以註冊師傅的驗證
-            if (${canRegister} !== 1) {
+            if (canRegister !== 1) {
                 Swal.fire({
                 title: "您已註冊為教師，或您無權註冊為教師!",
                 icon: "warning",

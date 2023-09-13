@@ -15,6 +15,7 @@
 <html lang="en">
 
 <head>
+    <jsp:include page="/index.jsp" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>修改師傅資料</title>
@@ -75,7 +76,6 @@
         }
         //修改的師傅資料處理
         TeacherVO teacherVO = (TeacherVO)request.getAttribute("teacherVO");
-        TeacherService teacherService = new TeacherService();
         if(teacherVO != null){
         List<String> teaSpeNameList = teacherService.getOneTeaSpecialityStringList(teacherVO.getTeaId());
         pageContext.setAttribute("teaSpeNameList", teaSpeNameList);
@@ -89,7 +89,6 @@
 <body>
     <div id="pageContent">
         <div id="indexBlock">
-
         </div>
         <div id="naviContentBlock">
     <div id="naviBlock">
@@ -262,7 +261,7 @@
             //檢查是否登入
             var type = "${type}";
             if (type === "NOSESSION") {
-                // 啟動定時器，5秒後導航到其他網頁
+                // 啟動定時器，3秒後導航到其他網頁
                 setTimeout(function() {
                 window.location.href = "${ctxPath}/emp/empLogin.jsp";
                 }, 3000); // 3000 毫秒 = 3 秒
@@ -278,7 +277,7 @@
              });
             }
                  //先做是否有修改的權利的確認
-            if (${type} !== 'ADMIN' && ${type} !== 'MASTER') {
+            if (type !== 'ADMIN' && type !== 'MASTER') {
                 // 啟動定時器，3秒後導航到其他網頁
                 setTimeout(function() {
                 window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
