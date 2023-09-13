@@ -269,7 +269,7 @@
                                             <td>課程</td>
                                             </c:when>
                                             <c:otherwise>
-                                            <td>逾期</td>
+                                            <td>過期</td>
                                             </c:otherwise>
                                         </c:choose>
                                         <td><fmt:formatDate value="${list.tokenTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
