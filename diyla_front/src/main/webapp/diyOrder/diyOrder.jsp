@@ -166,12 +166,12 @@ div#body {
 list-style-type: none;
 font-weight: bold;
 font-size: 1.2rem;
-margin-left: 85%;
+margin-left: 90%;
 margin-top: 50px;
 }
 
 a#super {
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     text-decoration: none;
     color: #333; /* 设置链接文本颜色为灰色 */
 }
@@ -180,7 +180,7 @@ a#super {
 a#super:hover {
     color: red; /* 设置鼠标悬停时的文本颜色为红色 */
     font-weight: bold; /* 设置文本粗体 */
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 .annotation{
 text-align: left;
@@ -482,18 +482,27 @@ font-size: 20px;
 	</div>
 
 <div id="annotation">
+
 	<div id="annotation1" class="annotation">
-		<p style="text-align: left;font-size: 18px;margin:0;"><span> <svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-				stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round"
-					d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-	</svg></span>註1:每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消訂單並退款"，並重新新增訂單。</p>
+		<p style="text-align: left;font-size: 18px;margin:0;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+		註1:每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消訂單並退款"，並重新新增訂單。
+		</p>
 	</div>
+	
 	<div id="annotation2" class="annotation">
-		
-		<p style="text-align: left;font-size: 18px;"><span> <svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-</svg></span>註2:如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。</p>
+		<p style="text-align: left;font-size: 18px;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+			註2:如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。
+		</p>
 	</div>
 
 </div>
@@ -505,20 +514,24 @@ font-size: 20px;
 	    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"></script>
 	<script type="text/javascript">
+	
+	$(document).ready(function () {
+		 $('#table_id').DataTable( {
+			    language: {
+			        search: "搜尋:",
+			        sLengthMenu:"顯示_MENU_筆結果",
+			        sInfo: "顯示第_START_至_END_筆結果，共_TOTAL_筆",
+			        oPaginate:{
+			        	sFirst: "首頁",
+			        	sPrevious: "上頁",
+			        	sNext: "下頁",
+			        	sLast: "最後頁"        	
+			        }
+			    }
+			} );
+	});
 	 
-	 $('#table_id').DataTable( {
-		    language: {
-		        search: "搜尋:",
-		        sLengthMenu:"顯示_MENU_筆結果",
-		        sInfo: "顯示第_START_至_END_筆結果，共_TOTAL_筆",
-		        oPaginate:{
-		        	sFirst: "首頁",
-		        	sPrevious: "上頁",
-		        	sNext: "下頁",
-		        	sLast: "最後頁"        	
-		        }
-		    }
-		} );
+	
 	<!--====================================================== Modal 1 ====================================================== -->
 	
 	

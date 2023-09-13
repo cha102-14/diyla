@@ -26,7 +26,7 @@ public class AboutUsData {
             jedis.set("content", content);
         }
         if (image != null) {
-            jedis.set("image", image);
+            jedis.set("image", "data:image/jpeg;base64," + image);
         }
 
         jedis.close();

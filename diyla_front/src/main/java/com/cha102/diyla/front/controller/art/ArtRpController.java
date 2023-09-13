@@ -1,5 +1,7 @@
 package com.cha102.diyla.front.controller.art;
 
+import com.cha102.diyla.articleModel.ArtService;
+import com.cha102.diyla.articlemsgmodel.ArtMsgService;
 import com.cha102.diyla.articlerpmsgmodel.ArtMsgRpService;
 import com.cha102.diyla.articlerpmsgmodel.ArtMsgRpVO;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,8 @@ public class ArtRpController {
 
     @Autowired
     ArtMsgRpService artRpSvc;
+    @Autowired
+    ArtMsgService artMsgSvc;
 
     @RequestMapping(method = RequestMethod.POST, value = "/art/rpmsg")
     public String rpmsg(@Valid ArtMsgRpVO artMsgRpVO, BindingResult result, ModelMap model, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
@@ -64,4 +69,16 @@ public class ArtRpController {
         return null;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/art/deleteArt")
+    public String deleteArt(@RequestParam("artNo") Integer artNo, ModelMap model, HttpServletRequest req, HttpServletResponse res){
+        ArtService artSvc = new ArtService();
+        Integer[] allMsgNo = artMsgSvc.selectAllMsgNoByArtNo(artNo);
+        for (int i = 0; i < allMsgNo.length; i++) {
+            artRpSvc.deleteAllRpByMsgNo(allMsgNo[i]);
+        }
+        artMsgSvc.deleteAllMsgByArtno(artNo);
+        artSvc.deleteArt(artNo);
+
+        return "/art/personalart.jsp";
+    }
 }

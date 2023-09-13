@@ -72,6 +72,9 @@
         th#th_time {
             width: 80px;
         }
+        th#th_context{
+            min-width:360px;
+        }
     </style>
 
 

@@ -61,7 +61,7 @@
     <form method="post" action="DiyOrderFrontController">
           <input type="hidden" name="memId" value="${memId}">
           <input type="hidden" name="action" value="getAllDeleteByMemId_front">
-          <button class="button" type="submit" onclick="navigateToGmail()" style="background-image: url('sweet3.jpg');">退款查詢</button>
+          <button class="button" type="submit" onclick="navigateToGmail()" style="background-image: url('sweet3.jpg');">未退款狀態查詢</button>
         </form>
     
 </div>

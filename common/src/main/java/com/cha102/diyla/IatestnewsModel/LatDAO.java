@@ -259,4 +259,60 @@ public class LatDAO implements LatDAO_interface {
 		}
 		return list;
 	}
+
+	@Override
+	public List<LatestnewsVO> getAllShowCheck() {
+		List<LatestnewsVO> list = new ArrayList<LatestnewsVO>();
+		LatestnewsVO latestnewsVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement("SELECT * FROM diyla.latestnews where ANN_STATUS = 1 order by news_No");
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				latestnewsVO = new LatestnewsVO();
+				latestnewsVO.setNewsNo(rs.getInt("news_No"));
+				latestnewsVO.setNewsContext(rs.getString("news_Context"));
+				latestnewsVO.setAnnPic(rs.getBytes("ann_Pic"));
+				latestnewsVO.setAnnStatus(rs.getByte("ann_Status"));
+				latestnewsVO.setAnnTime(rs.getTimestamp("ann_Time"));
+				list.add(latestnewsVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }

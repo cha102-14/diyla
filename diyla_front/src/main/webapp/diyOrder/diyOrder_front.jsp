@@ -16,7 +16,7 @@ pageContext.setAttribute("memVO", memVO);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>訂單管理首頁(已接會員session)</title>
+<title>訂單狀態首頁</title>
 <style type="text/css">
 body {
 	font-family: Arial, sans-serif;
@@ -35,15 +35,21 @@ body {
 
 .container1 {
 	max-width: 800px;
-	margin: 20px 280px;
+	margin: 20px 300px 20px 390px;
 	background-color: #fff;
 	padding: 20px;
 	border-radius: 30px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	display: flex;
+	display: inline-block;
 	justify-content: center; /* 水平置中 */
-	align-items: center; /* 垂直置中，如果需要的话 */
+	align-items: center; 
 	height:500px;
+}
+#container_formgroup{
+display: flex;
+margin-top: 30px;
+justify-content: center; /* 水平置中 */
+	align-items: center;
 }
 
 .form-group {
@@ -52,6 +58,13 @@ body {
 
 #form-group_1 {
 	margin-bottom: 70px;
+	margin-top: 50px;
+	margin-left: -30px;
+}
+
+#form-group_2 {
+
+	margin-left: -30px;
 }
 
 label {
@@ -77,15 +90,15 @@ input[type="submit"] {
 
 input[type="submit"].large1 {
 	font-weight: bold;
-	padding: 40px 80px;
+	padding: 30px 60px;
 	font-size: 1.2rem;
-	border-radius: 15px;
+	border-radius: 30px;
 	margin-left: 50px;
 }
 
 input[type="submit"].large2 {
 font-weight: bold;
-	font-size: 0.7rem;
+	font-size: 1rem;
 	border-radius: 15px;
 	margin-top: 50px;
 	margin-left: 70px;
@@ -104,7 +117,21 @@ input[type="submit"]:hover {
 }
 
 #form-group_2 {
-	margin-left: 100px;
+	margin-left: 50px;
+}
+#super{
+white-space: nowrap;
+font-size: 1rem;
+color: rgb(212, 116, 32);
+margin-left: 78%;
+margin-bottom: 30px;
+}
+
+#super:hover {
+    color: red; 
+    font-weight: bold; 
+    font-size: 1.1rem;
+    
 }
 </style>
 </head>
@@ -116,28 +143,33 @@ input[type="submit"]:hover {
 	<input type="hidden" class="aaa" id="aaa" value="${aaa}">
 	<!--     ================================================================= -->
 	<div class="container1">
-		<div class="form-group inline" id="form-group_1">
-			<form method="post" action="DiyOrderFrontController">
-				<input type="hidden" name="memId" value="${memId}"> <input
-					type="hidden" name="action" value="getAllOrderByMemId_front">
-				<input type="submit" class="large1" value="所有訂單狀態">
-			</form>
-		</div>
+	<div style="margin-top: -10px;list-style-type: none;font-weight: bold;font-size: 2rem;" ><a href='${ctxPath}/diyOrder/Front.jsp'  id="super">>回DIY體驗首頁</a></div>
+		<div id="container_formgroup">
+			<div class="form-group inline" id="form-group_1">
+				<form method="post" action="DiyOrderFrontController">
+					<input type="hidden" name="memId" value="${memId}"> <input
+						type="hidden" name="action" value="getAllOrderByMemId_front">
+					<input type="submit" class="large1" value="所有訂單狀態">
+				</form>
+			</div>
 
-		<div class="form-group inline" id="form-group_2">
-			<form method="post" action="DiyOrderFrontController">
-				<label for="diyReserveDate">選擇預約日期：</label> <input type="date" id="diyReserveDate" name="diyReserveDate"> <br> 
-				<label for="diyPeriod">預約時段: </label> 
-					<select name="diyPeriod" id="diyPeriod">
-					<option value="0">上午</option>
-					<option value="1">下午</option>
-					<option value="2">晚上</option>
-				</select> <br> <input type="hidden" name="memId" value="${memId}">
-				<input type="hidden" name="action" value="getMemIdOrderByPeriod">
-				<input type="submit" class="large2" style="font-size: 0.7rem;" value="查詢時段訂單">
-			</form>
-		</div>
+			<div class="form-group inline" id="form-group_2">
+				<form method="post" action="DiyOrderFrontController">
+					<label for="diyReserveDate">選擇預約日期：</label> <input type="date" id="diyReserveDate" name="diyReserveDate"> <br> 
+					<label for="diyPeriod">預約時段: </label> 
+						<select name="diyPeriod" id="diyPeriod">
+						<option value="0">上午</option>
+						<option value="1">下午</option>
+						<option value="2">晚上</option>
+					</select> <br> <input type="hidden" name="memId" value="${memId}">
+					<input type="hidden" name="action" value="getMemIdOrderByPeriod">
+					<input type="submit" class="large2" style="font-size: 0.85rem;text-align: center;" value="查詢時段訂單">
+				</form>
+			</div>
+		</div>	
 	</div>
+	
+	
 	<!--     ================================================================= -->
 	<jsp:include page="/front_footer.jsp" />
 

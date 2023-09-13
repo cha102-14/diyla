@@ -5,7 +5,7 @@
 <%@ page import="com.cha102.diyla.IatestnewsModel.*"%>
 <%
      LatService latSvc = new LatService();
-     List<LatestnewsVO> list = latSvc.getAll();
+     List<LatestnewsVO> list = latSvc.getAllShowCheck();
      pageContext.setAttribute("list",list);
 %>
 <!DOCTYPE html>
@@ -97,6 +97,7 @@
                             <p>無法顯示圖片: ${imgException.message}</p>
                         </c:if>
                     </div>
+                    <hr>
                 </td>
             </tr>
         </c:forEach>

@@ -25,7 +25,7 @@ header {
 	color: white; /* 文字顏色 */
 	padding: 10px 0; /* 上下內邊距 10px，左右內邊距 0 */
 	text-align: center; /* 文字置中 */
-	
+	margin-top: -25px;
 }
 h1{
 font-size: 1.5rem;
@@ -68,8 +68,8 @@ tr:nth-child(even) {
 }
 
 div#body{
-  margin-left: 200px;
-  margin-right: 250px;
+  margin-left: 70px;
+  margin-right: 70px;
   display: block;
 }
 
@@ -86,6 +86,33 @@ div#body{
      color: red; 
     font-size: 25px; 
      } 
+     
+  .super{
+list-style-type: none;
+font-weight: bold;
+font-size: 1rem;
+margin-left: 85%;
+margin-top: 50px;
+}
+
+a.super {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #333; /* 设置链接文本颜色为灰色 */
+}
+
+/* 鼠标悬停时的链接样式 */
+a.super:hover {
+    color: red; /* 设置鼠标悬停时的文本颜色为红色 */
+    font-weight: bold; /* 设置文本粗体 */
+    font-size: 1.5rem;
+}
+
+#annotation1{
+margin-top:100px;
+text-align: left;
+font-size: 20px;
+}
 
 </style>
 
@@ -94,9 +121,7 @@ div#body{
 </head>
 <body>
 <jsp:include page="/front_header.jsp" />
---會員編號:${memId}-- 
 <br> 
---您好，${memVO.memName}--
 <input type="hidden" class="uuu" value="${uuu}">
 <div id="body">
 
@@ -109,9 +134,6 @@ div#body{
 	
 	<table>
 			<tr>
-				<!-- 		<th>DIY訂單編號</th> -->
-				<!-- 		<th>會員編號</th>  -->
-
 
 				<th>DIY品項名稱</th>
 				<th>聯絡人</th>
@@ -190,15 +212,6 @@ div#body{
 						</c:when>
 					</c:choose>
 					
-					
-<%-- 					<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
-<%-- 						<c:choose> --%>
-<%-- 								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
-<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
-<%-- 								</c:when> --%>
-<%-- 						</c:choose>			 --%>
-<%-- 					</c:forEach> --%>
-
 
 						<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
 
@@ -206,16 +219,20 @@ div#body{
 				</tr>
 			</c:forEach>
 		</table>
-<li><a href='diyOrder_front.jsp'>回訂單管理</a></li>
-	<li><a href=''>待用連結</a></li>
+
+
+	<li style="margin-top: 200px;list-style-type: none;font-weight: bold;font-size: 1rem;"><a href='${ctxPath}/diyOrder/diyOrder_front.jsp' class="super">>回訂單狀態</a></li>
+	<li style="list-style-type: none;font-weight: bold;font-size: 1rem;"><a href='${ctxPath}/diyOrder/Front.jsp' class="super">>回DIY體驗首頁</a></li>
 </div>
 
 
 <div id="annotation1">
-<span> <svg  width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-</svg>註:
-</span>訂單取消後，需三個工作天內處理退款程序。
+	<span> 
+		<svg  width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+		</svg>
+	</span>
+	註:訂單取消後，需三個工作天內處理退款程序。
 </div>
 
 

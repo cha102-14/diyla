@@ -125,6 +125,8 @@ input[type="submit"]:hover, .button:hover {
     <h1 style="font-weight: bold;">DIY管理後台首頁</h1>
     <input type="hidden" class="uuu" value="${uuu}">
     <ul>
+    <button type="submit" class="button" style="margin:0px 0px 20px 7px;" onclick="window.location.href='${ctxPath}/diycate/back_diycate.jsp'">DIY項目管理</button>
+    
         <form method="post" action="DiyOrderController">
             <input type="hidden" name="action" value="getAllOrder">
             <input type="submit" value="查詢所有訂單"> 
@@ -168,6 +170,8 @@ input[type="submit"]:hover, .button:hover {
             <p class="error-message">${errorMsgs.refundNot}</p>
         </form>
         <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyReserveResult/total.jsp'">訂單彙總日程明細</button>
+        
+        
     </ul>
 </div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

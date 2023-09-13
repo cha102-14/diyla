@@ -7,7 +7,6 @@
     Jedis jedis = new Jedis("localhost", 6379);
     String content = jedis.get("content");
     String image_src = jedis.get("image");
-    jedis.close();
 %>
 <!DOCTYPE html>
 <html lang="zh-Hant">
@@ -82,7 +81,7 @@
     <h1 id="aboutus">關於我們</h1>
     <div class="container">
         <div class="column">
-            <img id="imagePre" src="data:image/jpeg;base64,<%= image_src %>" alt="圖片1"><br>
+            <img id="imagePre" src="<%= image_src %>" alt="圖片1"><br>
 
             <div class="text">
                 <h2> About Us </h2>
@@ -117,6 +116,7 @@
             </div>
         </div>
     </div>
+    <% jedis.close(); %>
     <script src="${ctxPath}/vendors/jquery/jquery-3.7.0.min.js"></script>
     <script>
 
@@ -191,7 +191,6 @@
         });
 
     </script>
-
 </body>
 
 

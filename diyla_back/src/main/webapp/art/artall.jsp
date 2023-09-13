@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.cha102.diyla.articleModel.*"%>
+<%@ page import="redis.clients.jedis.Jedis"%>
 <%@ page import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+    Jedis jedis = new Jedis("localhost", 6379);
+    pageContext.setAttribute("jedis", jedis);
+%>
 <head>
     <title>全部論壇文章</title>
     <link rel="stylesheet" href="../css/style.css">
@@ -68,6 +72,9 @@
         th#th_time {
             width: 80px;
         }
+        th#th_context{
+            min-width:360px;
+        }
     </style>
 
 
@@ -91,13 +98,13 @@
         </thead>
         <tbody id="content">
             <c:forEach var="artVO" items="${list}">
-
+            <c:set var="redisNo" value="art:${artVO.artNo}" />
                 <tr>
                     <td>${artVO.artNo}</td>
                     <td>${artVO.artTitle}</td>
                     <c:choose>
-                        <c:when test="${not empty imgBase64[(artVO.artNo)-1]}">
-                            <td><img src="data:image/jpeg;base64,${imgBase64[(artVO.artNo)-1]}" alt="Image"></td>
+                        <c:when test="${not empty jedis.get(redisNo)}">
+                            <td><img src="data:image/jpeg;base64,${jedis.get(redisNo)}" alt="Image"></td>
                         </c:when>
                         <c:when test="${not empty artVO.artPic}">
                             <td><img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
@@ -149,6 +156,7 @@
             </c:forEach>
         </tbody>
     </table>
+    ${ jedis.close() }
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script><!-- ●●js  for jquery datatables 用 -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <!-- ●●js  for jquery datatables 用 -->
