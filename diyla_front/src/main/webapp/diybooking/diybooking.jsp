@@ -301,8 +301,9 @@
                 '<p>電話: ' + phone + '</p>' +
                 '<p>訂位日期: ' + selectedDate + '</p>' +
                 '<p>訂位時段: ' + selectedPeriod + '</p>' +
-                '<p>您選擇的diy項目: ' + diyName + '</p>' +
+                '<p>您選擇的DIY項目: ' + diyName + '</p>' +
                 '<p>人數: ' + selectedPeople + '</p>' +
+                '<p>總金額:' + amount + '</p>' +
                 '<input type="hidden" name="tradeDesc" value="' + diyName + '" >' +
                 '<input type="hidden" name="totalPrice" value="' + amount + '" >' +
                 '<input type="hidden" name="itemName" value="' + diyName + '" >' +
@@ -323,9 +324,9 @@
 
             var popup = layer.open({
                 type: 1,
-                title: '訂位確認',
+                title: '<span style="font-size: 24px; font-weight: bold;">訂位確認</span>', // 使用 <span> 标签包裹标题，并添加自定义样式
                 content: formHtml,
-                area: ['400px', '350px'],
+                area: ['400px', '450px'],
                 shadeClose: true,
             });
 

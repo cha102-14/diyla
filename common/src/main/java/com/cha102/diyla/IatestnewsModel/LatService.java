@@ -9,7 +9,7 @@ public class LatService {
         dao = new LatDAO();
     }
 
-    public LatestnewsVO addLat(LatestnewsVO latestnewsVO){
+    public LatestnewsVO addLat(LatestnewsVO latestnewsVO) {
 
         dao.insert(latestnewsVO);
 
@@ -35,6 +35,8 @@ public class LatService {
         return dao.getAll();
     }
 
-
+    public List<LatestnewsVO> getAllShowCheck() {
+        return dao.getAllShowCheck();
+    }
 
 }

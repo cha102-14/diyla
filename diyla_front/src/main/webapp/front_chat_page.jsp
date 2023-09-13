@@ -271,11 +271,7 @@
         // 開啟網頁就建立連線
         window.onload(webSocketOnloadConnect());
         function webSocketOnloadConnect() {
-<<<<<<< HEAD
             console.log(self_chat);
-=======
-            console.log(self_chat); 
->>>>>>> main
             webSocket_chat = new WebSocket(endPointURL_chat);
             webSocket_chat.onopen = function (event) {
                 console.log("connect success!");
@@ -306,11 +302,6 @@
                         fixedSender === self_chat ? div.className +='me_div' : div.className += 'friend_div';
                         fixedSender === self_chat ? nameLi.className +='me_div' : nameLi.className += 'friend_div';
                         fixedSender === self_chat ? li.className += 'me' : li.className += 'friend';
-<<<<<<< HEAD
-
-=======
-                        
->>>>>>> main
                         // 接收到訊息時 顏色變更
                         let getMesageColor = "#007bff"
                         chatIcon.style.backgroundColor = getMesageColor;
@@ -476,7 +467,6 @@
                 let memIdObj = res.EMP_PIC;
                 let memId = res.EMP_ID;
                 let memName = res.EMP_NAME;
-                console.log("memIdObj : "+memIdObj +" , memId : "+ memId +" , memName : "+memName);
                 let picData = arrayBufferToBase64(memIdObj);
                 let temp =  `<img class="friendImg" src="data: image/jpeg;base64,` + picData + `">`;
                 var row = document.getElementById("row");

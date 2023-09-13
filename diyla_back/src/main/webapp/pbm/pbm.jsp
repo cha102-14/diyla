@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <style>
     body{
-    margin-left:300px;
+    margin-left:280px;
     }
     </style>
 </head>

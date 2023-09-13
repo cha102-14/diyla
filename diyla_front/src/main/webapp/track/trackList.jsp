@@ -145,10 +145,10 @@
             font-weight: bold;
         }
         .box{
-            margin:10px 14px 10px 18px;
-            width:230px;
-            border-radius:4px;
-
+            margin:10px 14px 10px 18px !important;
+            width:230px !important;
+            border-radius:8px !important;
+            background-color:white !important;
         }
         .box:hover{
             box-shadow:0 0 10px lightgray;
@@ -156,6 +156,7 @@
         input[type="submit"] {
             cursor: pointer;
             border: 0;
+            background-color:white;
         }
         .shop_section layout_padding{
             padding:0;

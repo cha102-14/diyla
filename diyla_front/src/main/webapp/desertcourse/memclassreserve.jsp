@@ -5,6 +5,7 @@
 <html lang="en">
 
 <head>
+<jsp:include page="/front_header.jsp" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>訂單列表</title>
@@ -24,7 +25,6 @@
 </head>
 
 <body>
-<%-- <jsp:include page="/front_header.jsp" /> --%>
 <section id="navibar">
 <jsp:include page="/desertcourse/navibar.jsp" />
 </section>

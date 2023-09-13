@@ -5,7 +5,7 @@
 <%@ page import="com.cha102.diyla.IatestnewsModel.*"%>
 <%
      LatService latSvc = new LatService();
-     List<LatestnewsVO> list = latSvc.getAll();
+     List<LatestnewsVO> list = latSvc.getAllShowCheck();
      pageContext.setAttribute("list",list);
 %>
 <!DOCTYPE html>
@@ -31,16 +31,16 @@
     <jsp:include page="/front_header.jsp" />
     <div class="lat_container">
         <h1 id="lat_h1">最新消息</h1>
-        <table>
+        <table style="text-align:center;">
             <tr>
-                <th>公告編號</th>
+                <th style="width:100px;">公告編號</th>
                 <th>公告內容</th>
                 <th>公告圖片</th>
             </tr>
             <c:forEach var="a" items="${list}">
                 <tr>
                     <td>${a.newsNo}</td>
-                    <td>${a.newsContext}</td>
+                    <td style="padding:20px;text-align:justify;">${a.newsContext}</td>
                     <td>
                         <hr>
                         <div id="show_img">

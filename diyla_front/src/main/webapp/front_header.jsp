@@ -45,13 +45,14 @@
         .dropdown-content {
           display: none;
           position: absolute;
-          background-color: snow;
           min-width: 400px;
           box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
           z-index: 1;
           top:195px;
           right:50px;
           border-radius: 0.5rem;
+          border-bottom:0px;
+          background-color: snow !important ;
         }
 
         .dropdown-content p {
@@ -60,6 +61,8 @@
           margin: 0;
           width:500px;
           border-radius: 0.5rem;
+          background-color: snow;
+          border:0px !important;
         }
         .dropdown-content p:hover {
             background-color:#F1F1F1;
@@ -373,7 +376,6 @@
     }
 
 </script>
-<jsp:include page="front_chat_page.jsp"/>
 </body>
 
 </html>
