@@ -43,5 +43,9 @@ public class ArtMsgRpService {
         List<ArtDTO> dto = r.stream().map(ArtDTO::new).collect(Collectors.toList());
         return dto;
     }
+
+    public void deleteAllRpByMsgNo(Integer msgNO){
+        artMsgRpRepository.deleteAllRp(msgNO);
+    }
 }
 

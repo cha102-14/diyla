@@ -82,15 +82,12 @@ public class ArtController extends HttpServlet {
             ArtService artSvc = new ArtService();
             List<ArtVO> list = artSvc.getAllArt();
 
-            String[] imgBase64 = new String[list.size()];
             for (ArtVO artVO : list) {
                 int i = artVO.getArtNo();
                 String key = "art:" + i;
-                imgBase64[i - 1] = jedis.get(key);
             }
 
             req.setAttribute("list", list);
-            req.setAttribute("imgBase64", imgBase64);
             jedis.close();
 
             String url = "/art/artall.jsp";
