@@ -35,6 +35,8 @@
         width: 100%;
         padding-left: 20%;
         font-family: 'Lato', sans-serif;
+        align-items: center;
+        column-gap: 8vw;
 
     }
 
@@ -56,6 +58,7 @@
 #introHead{
     border-bottom: 1px solid #ccc; 
     width: 10vw;
+    color:brown; 
 }
 #teacherIntro{
     margin-bottom: 30vh;
@@ -80,17 +83,20 @@
     margin-top: 5vh;
 }
 #messageButton{
-    margin-top: 50px;
+    margin-top: 8vh;
+    margin-bottom: 5vh;
 
 }
 #specialityTitle {
-    width: 200px;
+    width: 10vw;
     border-bottom: 1px solid #ccc; 
     padding-bottom: 5px; 
+    color:brown; 
 }
 #contactLabel{
     border-bottom: 1px solid #ccc; 
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
+    color:brown; 
 }
 #listItem{
     padding-left: 1vw;
@@ -120,7 +126,7 @@
         <img id="teacherPic" src="data:image/jpeg;base64, <%= base64Img %>" alt="Teacher Image">
 
         <div id="teacherNameSpecialityBlock">
-        <div id="teacherName" class=""><h3><%= teacher.getTeaName() %></h3></div>
+        <div id="teacherName" class=""><h2><%= teacher.getTeaName() %></h2></div>
         <div id="specialityBlock">
             <h3 id="specialityTitle">專長 </h3>
             <ul id="listItem">

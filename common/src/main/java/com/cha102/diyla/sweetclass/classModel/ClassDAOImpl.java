@@ -33,7 +33,10 @@ public class ClassDAOImpl implements ClassDAO{
             "SELECT class_id,category,tea_id,reg_end_time,class_date,class_seq,class_pic,class_limit,price,intro,class_name,headcount,class_status FROM class where class_date = ?";
     private static final String GET_BY_TEAID =
             "SELECT class_id FROM class where tea_id = ?";
-
+    private static final String GET_BY_STATUS =
+            "SELECT class_id , reg_end_time FROM class WHERE class_status IN (0,1)";
+    private static final String UPDATE_END_REG =
+            "UPDATE class set class_status=? where class_id = ?";
     @Override
     public Integer insert(ClassVO classVO){
 
@@ -392,5 +395,50 @@ public class ClassDAOImpl implements ClassDAO{
             }
         }
         return list;
+    }
+
+    public String updateAllRegEndClass() {
+        try(
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(UPDATE_END_REG);
+                ) {
+                List<ClassVO> courseList = getAllAvaliableClass();
+                if(courseList.isEmpty()) {
+                    return "無課程需要更新。";
+                }
+                java.util.Date currentDate = new java.util.Date();
+                for(ClassVO course: courseList) {
+                    if (course.getRegEndTime().before(currentDate)) {
+                        pstmt.setInt(1, 2);
+                        pstmt.setInt(2, course.getClassId());
+                        pstmt.executeUpdate();
+                    }
+                }
+        } catch(SQLException se) {
+            return "註冊結束課程狀態更新失敗。";
+        } catch (Exception e) {
+            return "註冊結束課程狀態更新失敗。";
+        }
+         return "註冊結束課程狀態更新成功。";
+    }
+    public List<ClassVO> getAllAvaliableClass() {
+        try(
+                Connection con = ds.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(GET_BY_STATUS);
+                ResultSet rs = pstmt.executeQuery();
+                ) {
+            List<ClassVO> courseList = new ArrayList<>();
+            ClassVO classVO = null;
+            while(rs.next()) {
+                classVO = new ClassVO();
+                classVO.setClassId(rs.getInt("class_id"));
+                classVO.setRegEndTime(rs.getDate("reg_end_time"));
+                courseList.add(classVO);
+            }
+            return courseList;
+        } catch(SQLException se) {
+            throw new RuntimeException("A database error occured. "
+                    + se.getMessage());
+        }
     }
 }

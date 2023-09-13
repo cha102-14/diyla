@@ -28,6 +28,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/2140fe5a67.js" crossorigin="anonymous"></script>
     <style>
 #pageContent{
     display: flex;
@@ -40,6 +41,12 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+#courseInfoBlock{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40vw;
 }
         .title-tag {
     position: relative;
@@ -55,9 +62,7 @@
     content: '';
     border: 4px solid #000;
   }
-  #teacherContainer {
-    
-  }
+
   #courseContainer {
     margin-left: 0vw;
     margin-right: 0vw;
@@ -80,11 +85,10 @@
   }
 
 #registerBlock{
-    width: 20%;
+    width: 16%;
     height: 20%;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
+    
+    font-size: 1.2rem;
 }
 .fix-pic {
     height: 60vh;
@@ -93,13 +97,36 @@
     background: #ffffcc; 
     width:100%;
     text-align: center;
-    border-bottom: 1px solid #ccc;  
+    border-bottom: 1px solid #ccc;
+   
 }
 #headcountInput{
     margin-bottom:5px;
 }
 #registerHeadcount{
     width: 5vw;
+}
+#introLabel{
+    color: brown;
+    font-size: 1.5rem;
+    margin-bottom: 3vh;
+}
+#buttonGroup{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.registerLabel{
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: brown;
+}
+.teacherLabel{
+    color: brown;
+    font-size: 1.4rem;
+}
+.teacherText{
+    font-size: 1.2rem;
 }
     </style>
     </head>
@@ -116,27 +143,27 @@
             <div id="courseDetailBlock">
                 <div id="teacherContainer" class="card">
                     <div id="teacherLabelBlock">
-                        <h3 id="teacherLabel">授課教師</h3>
+                        <h2 id="teacherLabel">授課教師</h2>
                     </div>
                     <div id="teacherImgBlock" >
                         <img id="teaImg" src="data:image/jpeg;base64,<%= teacherPic%>">
                     </div>
-                    <div id="teacherNameBlock"><strong>教師: </strong>
-                        <%= teacher.getTeaName() %>
+                    <div id="teacherNameBlock"><strong class="teacherLabel">教師: </strong>
+                        <span class="teacherText"><%= teacher.getTeaName() %></span>
                     </div>
-                    <div id="teacherIntroBlock"><strong>教師簡介: </strong>
-                        <%= teacher.getTeaIntro() %>
+                    <div id="teacherIntroBlock"><strong class="teacherLabel">教師簡介: </strong>
+                        <span class="teacherText"><%= teacher.getTeaIntro() %>
                     </div>
                 </div>
                 <div id="courseContainer">
-                <div id="coursePicBlock">
-                        <p>
-                            <img class="fix-pic" src="data:image/jpeg;base64,<%= coursePic %>">
-                        </p>
-                </div>
                 <div id="courseInfoBlock">        
+                    <div id="coursePicBlock">
+                            <p>
+                                <img class="fix-pic" src="data:image/jpeg;base64,<%= coursePic %>">
+                            </p>
+                    </div>
                     <div id="courseIntroBlock">
-                    <strong>課程簡介: </strong>
+                    <strong id="introLabel">課程簡介: </strong>
                     <div id="introText" class="text"><%= course.getIntro() %></div>
                     </div>
                 </div>
@@ -146,10 +173,11 @@
                     <div id="courseNameBlock" >
                         <h2 class="card-title"><%= course.getClassName() %></h2>
                     </div>
-                    <div id="courseDateBlock" ><strong>課程日期: </strong>
-                    <%= course.getClassDate() %>
+                    <div id="courseDateBlock" ><i class="fa-regular fa-calendar-days" style="color: #e8b52c;"></i><strong class="registerLabel">課程日期: </strong>
+                    <span class="registerText"><%= course.getClassDate() %></span>
                     </div>
-                    <div id="courseSeqBlock"><strong>課程場次: </strong>
+                    <div id="courseSeqBlock"><i class="fa-regular fa-clock" style="color: #e8b52c;"></i><strong class="registerLabel">課程場次: </strong>
+                    <span class="registerText">
                     <%
                     String classSeqStr = "";
                     int classSeq = course.getClassSeq();
@@ -162,23 +190,35 @@
                     }
                     out.println(classSeqStr);
                     %>
+                    </span>
+                    <div id="courseEndDateBlock"><i class="fa-regular fa-calendar" style="color: #e8b52c;"></i>
+                    <strong class="registerLabel">報名截止日期: </strong> <span class="registerText"><%= course.getRegEndTime() %></span>
                     </div>
-                        <div id="priceText" class="text"><strong>課程價格: </strong><%= course.getPrice() %>(元/每人)</div>
-                        <div id="courseLimitBlock">
-                        <strong>課程人數上限: </strong>
+                    </div>
+                        <div id="priceText" class="text"><i class="fa-solid fa-dollar-sign" style="color: #e8b52c;"></i><strong class="registerLabel">課程價格: </strong><%= course.getPrice() %>(元/每人)</div>
+                        <div id="courseLimitBlock"><i class="fa-solid fa-user-group" style="color: #e8b52c;"></i>
+                        <strong class="registerLabel">課程人數上限: </strong>
                         <%= course.getClassLimit() %>
                         </div>
-                        <div id="headcountBlock">
-                        <strong>已報名人數: </strong>
+                        <div id="headcountBlock"><i class="fa-solid fa-user-large" style="color: #e8b52c;"></i>
+                        <strong class="registerLabel">已報名人數: </strong>
                         <%= course.getHeadcount() %>
                         </div>
-                        <div id="headcountInput">
-                        <strong>欲報名人數: </strong><input id="registerHeadcount">
+                        <div id="headcountInput"><i class="fa-solid fa-person-circle-plus" style="color: #e8b52c;"></i>
+                        <strong class="registerLabel">欲報名人數: </strong><input id="registerHeadcount">
                         </div>
-                        <button type="button" class="btn btn-primary" id="registerButton">報名課程</button>
+                        <div id="buttonGroup">
+                        <%
+                            if(course.getClassStatus() == 2) {
+                            out.print("<button type=\"button\" class=\"btn btn-warning\" id=\"registerButton\" disabled>報名已截止</button>");
+                        } else {
+                            out.print("<button type=\"button\" class=\"btn btn-primary\" id=\"registerButton\">報名課程</button>");
+                        }
+                        %>
+                        </div>
                     </div>
                 </div>
-        <a href="findclass.jsp" style="font-size: 24px; margin-top: 10vh;">返回課程列表</a>
+        <a href="findclasslist.jsp" style="font-size: 24px; margin-top: 10vh;">返回課程列表</a>
         </div>
         <jsp:include page="/front_footer.jsp" />
     </body>
@@ -187,7 +227,8 @@
             var registerButton = document.getElementById('registerButton');
             var urlParams = new URLSearchParams(window.location.search);
             var courseId = urlParams.get('id');
-
+            var courseStatus = "${course.classStatus}";
+            console.log(courseStatus);
                 function isLogIn() {
                 var memId = "${memId}";
                 if(memId === '') {
