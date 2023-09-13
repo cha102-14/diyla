@@ -82,7 +82,7 @@ public class VerifyTeacherActionServlet extends HttpServlet {
                 req.setAttribute("teacherVO", reqTeacher);
                 allowModify.forward(req,res);
             } else {
-                String url = req.getContextPath()+"/desertcourse/notallowed.jsp";
+                String url = "/desertcourse/notallowed.jsp";
                 RequestDispatcher notAllow = req.getRequestDispatcher(url);
                 notAllow.forward(req,res);
             }
