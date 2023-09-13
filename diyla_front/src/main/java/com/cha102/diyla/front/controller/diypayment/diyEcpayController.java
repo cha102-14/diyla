@@ -2,7 +2,7 @@ package com.cha102.diyla.front.controller.diypayment;
 
 import com.cha102.diyla.commodityOrder.CommodityOrderService;
 import com.cha102.diyla.commodityOrder.CommodityOrderVO;
-import com.cha102.diyla.commodityOrder.MailService;
+import com.cha102.diyla.diyreservemodel.MailService;
 import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
 import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyOrder.DiyOrderVO;
