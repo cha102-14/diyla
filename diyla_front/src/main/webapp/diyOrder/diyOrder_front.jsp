@@ -16,7 +16,7 @@ pageContext.setAttribute("memVO", memVO);
 <html>
 <head>
 <meta charset="UTF-8">
-<title>訂單管理首頁(已接會員session)</title>
+<title>訂單狀態首頁</title>
 <style type="text/css">
 body {
 	font-family: Arial, sans-serif;
@@ -42,7 +42,7 @@ body {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	display: inline-block;
 	justify-content: center; /* 水平置中 */
-	align-items: center; /* 垂直置中，如果需要的话 */
+	align-items: center; 
 	height:500px;
 }
 #container_formgroup{
@@ -128,8 +128,8 @@ margin-bottom: 30px;
 }
 
 #super:hover {
-    color: red; /* 设置鼠标悬停时的文本颜色为红色 */
-    font-weight: bold; /* 设置文本粗体 */
+    color: red; 
+    font-weight: bold; 
     font-size: 1.1rem;
     
 }

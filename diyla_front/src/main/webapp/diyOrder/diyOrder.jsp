@@ -514,20 +514,24 @@ font-size: 20px;
 	    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json"></script>
 	<script type="text/javascript">
+	
+	$(document).ready(function () {
+		 $('#table_id').DataTable( {
+			    language: {
+			        search: "搜尋:",
+			        sLengthMenu:"顯示_MENU_筆結果",
+			        sInfo: "顯示第_START_至_END_筆結果，共_TOTAL_筆",
+			        oPaginate:{
+			        	sFirst: "首頁",
+			        	sPrevious: "上頁",
+			        	sNext: "下頁",
+			        	sLast: "最後頁"        	
+			        }
+			    }
+			} );
+	});
 	 
-	 $('#table_id').DataTable( {
-		    language: {
-		        search: "搜尋:",
-		        sLengthMenu:"顯示_MENU_筆結果",
-		        sInfo: "顯示第_START_至_END_筆結果，共_TOTAL_筆",
-		        oPaginate:{
-		        	sFirst: "首頁",
-		        	sPrevious: "上頁",
-		        	sNext: "下頁",
-		        	sLast: "最後頁"        	
-		        }
-		    }
-		} );
+	
 	<!--====================================================== Modal 1 ====================================================== -->
 	
 	
