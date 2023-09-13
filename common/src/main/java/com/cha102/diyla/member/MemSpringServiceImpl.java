@@ -20,15 +20,18 @@ public class MemSpringServiceImpl implements MemSpringService {
     @Autowired
     private MemJPADAO memJPADAO;
 
+    @Autowired
+    private NoticeService noticeService;
+
     @Override
     public String getAllMem(JSONObject jsonObject) {
         int pageIndex = jsonObject.getIntValue("pageIndex");
         int pageSize = jsonObject.getIntValue("pageSize");
         String memEmail = jsonObject.getString("memEmail");
         Integer allMemCount = 1;
-        List<Object[]> allMemObjArr = memJPADAO.getAllMem(pageSize * (pageIndex - 1), pageSize,memEmail);
+        List<Object[]> allMemObjArr = memJPADAO.getAllMem(pageSize * (pageIndex - 1), pageSize, memEmail);
         List<MemDTO> memDTOList = allMemObjArr.stream().map(MemDTO::new).collect(Collectors.toList());
-        if(ObjectUtils.isEmpty(memEmail)){
+        if (ObjectUtils.isEmpty(memEmail)) {
             allMemCount = memJPADAO.getMemListCount();
         }
         JSONObject returnJSONObject = new JSONObject();
@@ -40,6 +43,8 @@ public class MemSpringServiceImpl implements MemSpringService {
     @Override
     public String changeMemStatus(JSONObject jsonObject) {
         int memId = jsonObject.getIntValue("memId");
+//        Boolean memCurrentState = memJPADAO.getMemStatus(memId);
+//        TODO 查詢到當前會員狀態後顯示相對應狀態在查詢會員修改頁面
         Boolean memStatus = jsonObject.getBooleanValue("memStatus");
         int changeMemArtStatus = memJPADAO.changeMemStatus(memId, jsonObject.getIntValue("memStatus"));
         JSONObject returnJSONObject = new JSONObject();
@@ -47,9 +52,14 @@ public class MemSpringServiceImpl implements MemSpringService {
         if (changeMemArtStatus > 0) {
 //            討論區滿三次會寫入黑名單通知進Redis
 //            同時key: memId Value: Black 寫入 Redis
-//
-//            修改Redis
-            JedisNotice.setJedisNotice(memId,"您的討論區功能已能正常使用，請謹守討論區使用規範");
+//            新增個人通知
+            NoticeVO noticeVO = new NoticeVO();
+            noticeVO.setNoticeTitle("您的討論區功能已能正常使用，請謹守討論區使用規範");
+            noticeVO.setMemId(memId);
+            noticeService.addNotice(noticeVO);
+//            存入Redis
+
+            JedisNotice.setJedisNotice(memId, "addArtMsg");
             return JSONObject.toJSONString(returnJSONObject);
         } else {
             return "";
