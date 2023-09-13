@@ -85,10 +85,10 @@
         <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">
 
         <label for="pbmTitle">問題標題：</label>
-        <textarea name="pbmTitle" id="pbmTitle">${pbmVO.pbmTitle}</textarea><br>
+        <textarea name="pbmTitle" id="pbmTitle" required="required">${pbmVO.pbmTitle}</textarea><br>
 
         <label for="pbmContext">問題內容：</label>
-        <textarea name="pbmContext" id="pbmContext">${pbmVO.pbmContext}</textarea><br>
+        <textarea name="pbmContext" id="pbmContext" required="required">${pbmVO.pbmContext}</textarea><br>
 
 
 
