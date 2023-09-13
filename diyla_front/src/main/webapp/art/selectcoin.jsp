@@ -94,7 +94,7 @@
     <script>
         $(document).ready(function () {
             $('#tokenTable').DataTable({
-                "lengthMenu": [10, 20],
+                "lengthMenu": [3, 5, 10, 20],
                 "searching": true,
                 "paging": true,
                 "ordering": true,
