@@ -115,7 +115,12 @@
             }
 
             average = (sum / commodityComments.length).toFixed(1);
-            $('#averageRating').html("平均評分" + average);
+            if (isNaN(average)) {
+                $('#averageRating').html("尚無評論");
+            } else {
+                $('#averageRating').html("平均評分" + average);
+            }
+
         })
     });
 

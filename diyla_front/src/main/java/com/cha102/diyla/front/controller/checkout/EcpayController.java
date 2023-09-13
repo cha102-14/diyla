@@ -62,7 +62,7 @@ public class EcpayController {
 		if ("".equals(token)) {
 			token = 0 + "";
 		}
-		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,jsessionId);
+		String toEcpay = EcpayCheckout.goToEcpay(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo,jsessionId,req);
 		// 自訂取號
 		model.addAttribute("toEcpay", toEcpay);
 		return "/checkout/checkoutPage.jsp";
@@ -123,10 +123,33 @@ public class EcpayController {
 			MemVO memVO = memberService.selectMem(memId);
 			model.addAttribute("memId", memId);
 			model.addAttribute("memVO", memVO);
-			String messageContent = "訂單詳情:\n" + "訂單編號:" + orderNo + "\n" + "收件人:" + recipient + "\n" + "收件地址:"
-					+ recipientAddress + "\n" + "購買日期:" + formattedDate + "\n" + "_____________________\n"
-					+ "DIYLA感謝您的訂購，我們將盡快將商品寄出";
-			mailService.sendMail("t1993626@gmail.com", "訂購成功", messageContent);
+			String messageContent = "<html><head><style>"
+			        + "body {"
+			        + "    font-family: Arial, sans-serif;"
+			        + "    background-color: #ffebeb;"
+			        + "    margin: 0;"
+			        + "    padding: 20px;"
+			        + "}"
+			        + "h2 {"
+			        + "    color: #333;"
+			        + "}"
+			        + "p {"
+			        + "    color: #666;"
+			        + "}"
+			        + "hr {"
+			        + "    border: 1px solid #ccc;"
+			        + "}"
+			        + "</style></head><body>"
+			        + "<h2>訂單詳情</h2>"
+			        + "<p>訂單編號: " + orderNo + "</p>"
+			        + "<p>訂單金額: " + (totalPri - tokenUse) + "元</p>"
+			        + "<p>收件人: " + recipient + "</p>"
+			        + "<p>收件地址: " + recipientAddress + "</p>"
+			        + "<p>購買日期: " + formattedDate + "</p>"
+			        + "<hr>"
+			        + "<p>DIYLA感謝您的訂購，我們將盡快將商品寄出</p>"
+			        + "</body></html>";
+			mailService.sendMail(memVO.getMemEmail(), "訂購成功", messageContent);
 //			commodityOrderDetailService.insert(orderNo, shoppingCartList);
 			// 訂單生成清空購物車
 			jedis.del(redisKey);

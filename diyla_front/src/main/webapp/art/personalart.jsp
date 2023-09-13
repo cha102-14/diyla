@@ -136,7 +136,7 @@
                                 <input type="hidden" name="action" value="update_start">
                                 <button type="submit">✏️編輯</button>
                             </form>
-                            <form method="post" action="ArtController">
+                            <form action="deleteArt" method="post">
                                 <input type="hidden" name="artNo" value="${artVO.artNo}">
                                 <input type="hidden" name="action" value="delete_Art">
                                 <input type="button" onclick="delete_art()" value="❌刪除">
@@ -158,7 +158,7 @@
     <script>
         $(document).ready(function () {
             $('#art').DataTable({
-                "lengthMenu": [10, 20],
+                "lengthMenu": [3, 5, 10, 20],
                 "searching": true,  //搜尋功能, 預設是開啟
                 "paging": true,     //分頁功能, 預設是開啟
                 "ordering": true,   //排序功能, 預設是開啟

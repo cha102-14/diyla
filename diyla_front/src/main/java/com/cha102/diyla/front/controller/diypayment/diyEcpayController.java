@@ -2,7 +2,7 @@ package com.cha102.diyla.front.controller.diypayment;
 
 import com.cha102.diyla.commodityOrder.CommodityOrderService;
 import com.cha102.diyla.commodityOrder.CommodityOrderVO;
-import com.cha102.diyla.commodityOrder.MailService;
+import com.cha102.diyla.diyreservemodel.MailService;
 import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
 import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyOrder.DiyOrderVO;
@@ -126,7 +126,7 @@ public class diyEcpayController {
                 e.printStackTrace();
             }
 
-            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
+            DiyOrderVO diyOrderVO = new DiyOrderVO(145240000, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
                     , Timestamp.valueOf(LocalDateTime.now()), 0, 0, totalPri);
 
             DiyOrderService DOser = new DiyOrderService();
@@ -136,8 +136,8 @@ public class diyEcpayController {
             MemVO memVO = memberService.selectMem(memId);
             session.setAttribute("memId", memId);
             session.setAttribute("memVO", memVO);
-            String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "收件地址:"
-                    + recipientAddress + "\n" + "訂購日期:" + formattedDate + "\n" + "_____________________\n"
+            String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "聯絡電話:"
+                    + phone + "\n" + "預約日期:" + sqlDate2 + "\n" + "_____________________\n"
                     + "DIYLA感謝您的預約";
             mailService.sendMail("love12260327@gmail.com", "訂位成功", messageContent);
 

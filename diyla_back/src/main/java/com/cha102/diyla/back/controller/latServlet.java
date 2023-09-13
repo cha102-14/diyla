@@ -77,12 +77,16 @@ public class latServlet extends HttpServlet {
             Byte annStatus = Byte.valueOf(req.getParameter("annStatus"));
             Part annPicPart = req.getPart("annPic");
             InputStream ips = annPicPart.getInputStream();
-            byte[] buffer = ips.readAllBytes();
 
             LatestnewsVO latVO = new LatestnewsVO();
             latVO.setNewsContext(newsContext);
             latVO.setAnnStatus(annStatus);
-            latVO.setAnnPic(buffer);
+            if(ips.available() !=0){
+                byte[] buffer = ips.readAllBytes();
+                latVO.setAnnPic(buffer);
+            }else{
+                latVO.setAnnPic(latSvc.getOneLat(newsNo).getAnnPic());
+            }
             latVO.setNewsNo(newsNo);
 
 
