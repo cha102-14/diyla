@@ -136,7 +136,7 @@
                                 <input type="hidden" name="action" value="update_start">
                                 <button type="submit">✏️編輯</button>
                             </form>
-                            <form method="post" action="ArtController">
+                            <form action="deleteArt" method="post">
                                 <input type="hidden" name="artNo" value="${artVO.artNo}">
                                 <input type="hidden" name="action" value="delete_Art">
                                 <input type="button" onclick="delete_art()" value="❌刪除">
