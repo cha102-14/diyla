@@ -482,18 +482,27 @@ font-size: 20px;
 	</div>
 
 <div id="annotation">
+
 	<div id="annotation1" class="annotation">
-		<p style="text-align: left;font-size: 18px;margin:0;"><span> <svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-				stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round"
-					d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-	</svg></span>註1:每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消訂單並退款"，並重新新增訂單。</p>
+		<p style="text-align: left;font-size: 18px;margin:0;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+		註1:每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消訂單並退款"，並重新新增訂單。
+		</p>
 	</div>
+	
 	<div id="annotation2" class="annotation">
-		
-		<p style="text-align: left;font-size: 18px;"><span> <svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-</svg></span>註2:如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。</p>
+		<p style="text-align: left;font-size: 18px;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+			註2:如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。
+		</p>
 	</div>
 
 </div>
