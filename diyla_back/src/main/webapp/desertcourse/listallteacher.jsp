@@ -17,6 +17,7 @@
 <html lang="en">
 
 <head>
+    <jsp:include page="/index.jsp" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教師列表</title>
@@ -80,9 +81,6 @@
 
 <body>
 <div id="pageContent">
-        <div id="indexBlock">
-            <%-- <jsp:include page="/index.jsp" /> --%>
-        </div>
         <div id="naviContentBlock">
             <div id="naviBlock">
                 <jsp:include page="/desertcourse/navibar.jsp" />
@@ -116,13 +114,28 @@
         $(document).ready(function () {
             //判斷瀏覽人能對list的控制權, 回傳-1代表管理員,0代表該後台員工無法瀏覽, 1~n代表回回傳師傅id
             var type = "${type}";
-            let getTeaCode = 0;
-            console.log("${requestTeaId}");
-            if (type === "ADMIN") {
-                getTeaCode = -1;
-            } else if (type === "MASTER") {
-                getTeaCode = "${requestTeaId}";
-            }
+            var getTeaCode = 0;
+            if (type === "NOSESSION"){
+                                // 啟動定時器，3秒後導航到其他網頁
+                setTimeout(function() {
+                window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }, 3000); // 3000 毫秒 = 3 秒
+
+                Swal.fire({
+                title: "您沒有登入!",
+                icon: "warning",
+                confirmButtonText: "確定"
+             }).then(function(result){
+                if(result.isConfirmed) {
+                    window.location.href = "${ctxPath}/emp/empLogin.jsp";
+                }
+             });
+            } else {
+                if (type === "ADMIN") {
+                    getTeaCode = -1;
+                } else if (type === "MASTER") {
+                    getTeaCode = "${requestTeaId}";
+                }
             let defaultSearchValue = "${param.defaultSearchValue}";
             let searchOptions = defaultSearchValue !== null ? { search: defaultSearchValue } : {};
             function loadTeacher(Id) {
@@ -176,10 +189,7 @@
                                 { data: 'teacherIntro'}
                             ],
                             columnDefs: [
-                                    {
-                                        targets: [0], 
-                                        className: "custom-header-class" 
-                                    },
+
                             {
                                 targets: 7, // 對應 'teacherPic' 的索引（從 0 開始）
                                 render: function (data, type, row, meta) {
@@ -197,10 +207,11 @@
                                     } else if (getTeaCode === -1 && row.teacherStatus == "不可見") {
                                         return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>'
                                             + '<button type="button" class="back-btn btn btn-warning" data-teacherId="' + row.teacherId + '"data-teacherName="'+ row.teacherName +'">恢復師傅</button></div>';
-                                    } else if (getTeaCode > 0 && row.teacherId === "${requestTeaId}") {
-                                        return '<button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button>';
-                                    }
+                                    } else if (getTeaCode > 0 && row.teacherId == getTeaCode) {
+                                        return '<div class="button-group"><button type="button" class="modify-btn btn btn-primary" data-teacherId="' + row.teacherId + '">修改師傅</button></div>';
+                                    } else {
                                     return '';
+                                    }
                                 }
                             }]
                         });
@@ -317,6 +328,7 @@
                     }
                 });
             });
+            }
         });
     </script>
 

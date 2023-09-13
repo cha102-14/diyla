@@ -39,4 +39,7 @@
   <dispatcher>ERROR</dispatcher>
   <dispatcher>ASYNC</dispatcher>
  </filter-mapping>
+ <listener>
+ <listener-class>com.cha102.diyla.sweetclass.classController.endClassRegisterTimer</listener-class>
+ </listener>
 </web-app>

@@ -2,7 +2,7 @@ package com.cha102.diyla.front.controller.diypayment;
 
 import com.cha102.diyla.commodityOrder.CommodityOrderService;
 import com.cha102.diyla.commodityOrder.CommodityOrderVO;
-import com.cha102.diyla.commodityOrder.MailService;
+import com.cha102.diyla.diyreservemodel.MailService;
 import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
 import com.cha102.diyla.diyOrder.DiyOrderService;
 import com.cha102.diyla.diyOrder.DiyOrderVO;
@@ -126,7 +126,7 @@ public class diyEcpayController {
                 e.printStackTrace();
             }
 
-            DiyOrderVO diyOrderVO = new DiyOrderVO(null, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
+            DiyOrderVO diyOrderVO = new DiyOrderVO(145240000, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
                     , Timestamp.valueOf(LocalDateTime.now()), 0, 0, totalPri);
 
             DiyOrderService DOser = new DiyOrderService();
@@ -136,10 +136,14 @@ public class diyEcpayController {
             MemVO memVO = memberService.selectMem(memId);
             session.setAttribute("memId", memId);
             session.setAttribute("memVO", memVO);
-            String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "收件地址:"
-                    + recipientAddress + "\n" + "訂購日期:" + formattedDate + "\n" + "_____________________\n"
-                    + "DIYLA感謝您的預約";
-            mailService.sendMail("love12260327@gmail.com", "訂位成功", messageContent);
+            String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "聯絡電話:"
+                    + phone + "\n" + "預約日期:" + sqlDate2 + "\n" + "_____________________\n"
+                    + "DIYLA感謝您的預約!\n"
+                    +"注意:本郵件是由系統自動寄出的通知信，請不要直接回覆此信。\n"
+                    +"若您需要其他協助請直接聯絡我們。\n"
+                    + "DIYLA團隊敬上";
+
+            mailService.sendMail("love12260327@gmail.com", "【DIYLA訂位成功通知】", messageContent);
 
             // session遺失問題處理方法: 1見參考 2.用js彈窗處理 3.如果判斷是綠界導回來 直接在成功頁面set一個memVO
             return "/diybooking/order_completed.jsp";

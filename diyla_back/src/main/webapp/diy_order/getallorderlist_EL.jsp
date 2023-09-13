@@ -14,20 +14,17 @@
 <style type="text/css">
 body {
 	margin-left: 280px;
-/* 	font-size: 0; */
-
 }
 
 a {
     font-size: 1rem;
     text-decoration: none;
-    color: #333; /* 设置链接文本颜色为灰色 */
+    color: #333;
 }
 
-/* 鼠标悬停时的链接样式 */
 a:hover {
-    color: red; /* 设置鼠标悬停时的文本颜色为红色 */
-    font-weight: bold; /* 设置文本粗体 */
+    color: red; 
+    font-weight: bold;
     font-size: 1.3rem;
 }
 
@@ -231,7 +228,8 @@ height: 10px 0;
  <script type="text/javascript">
  
 //  new DataTable('#table_id');
- $('#table_id').DataTable( {
+$(document).ready(function (){
+    $('#table_id').DataTable( {
     language: {
         search: "搜尋:",
         sLengthMenu:"顯示_MENU_筆結果",
@@ -244,6 +242,8 @@ height: 10px 0;
         }
     }
 } );
+});
+ 
 
  
  </script>   

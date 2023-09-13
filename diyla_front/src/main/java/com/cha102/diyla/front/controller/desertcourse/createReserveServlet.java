@@ -1,4 +1,4 @@
-package com.cha102.diyla.sweetclass.classController;
+package com.cha102.diyla.front.controller.desertcourse;
 
 import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.member.MemberService;
@@ -31,8 +31,6 @@ public class createReserveServlet extends HttpServlet {
         MailService mailService = new MailService();
         //處理輸出的json字串
         String json = "";
-        //抓取目前session內的會員id
-        //Integer memId = (Integer)session.getAttribute("memId");
         try{
             BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
             StringBuffer stb = new StringBuffer();

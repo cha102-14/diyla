@@ -71,14 +71,6 @@ public class ArtController extends HttpServlet {
             successView.forward(req, res);
         }
 
-        if ("delete_Art".equals(action)) {
-            ArtService artSvc = new ArtService();
-            artSvc.deleteArt(Integer.valueOf(req.getParameter("artNo")));
-
-            String url = "/art/personalart.jsp";
-            RequestDispatcher successView = req.getRequestDispatcher(url);
-            successView.forward(req, res);
-        }
 
         if ("update_start".equals(action)) {
             ArtService artSvc = new ArtService();
@@ -98,7 +90,7 @@ public class ArtController extends HttpServlet {
             byte artStatus = NOSEND_NOSHOW;
             Part artPicPart = req.getPart("artPic");
             InputStream ips = artPicPart.getInputStream();
-            byte[] buffer = ips.readAllBytes();
+            byte[] buffer = null;
             ArtVO artVO = new ArtVO();
             artVO.setArtTitle(artTitle);
             artVO.setArtContext(artContext);
@@ -111,11 +103,12 @@ public class ArtController extends HttpServlet {
             }
 
             ArtService artSvc = new ArtService();
-            if (buffer.length > 0) {
-                artSvc.updateArtAndPic(artNo, artTitle, buffer, artContext, artStatus);
+            if (ips.available() != 0) {
+                buffer = ips.readAllBytes();
             } else {
-                artSvc.updateArt(artNo, artTitle, artContext, artStatus);
+                buffer = artSvc.getArtByArtNo(artNo).getArtPic();
             }
+            artSvc.updateArtAndPic(artNo, artTitle, buffer, artContext, artStatus);
 
             String url = "/art/personalart.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -127,15 +120,12 @@ public class ArtController extends HttpServlet {
             ArtService artSvc = new ArtService();
             List<ArtVO> list = artSvc.getAllCheckArt();
 
-            String[] imgBase64 = new String[list.size()];
             for (ArtVO artVO : list) {
                 int i = artVO.getArtNo();
                 String key = "art:" + i;
-                imgBase64[i - 1] = jedis.get(key);
             }
 
             req.setAttribute("list", list);
-            req.setAttribute("imgBase64", imgBase64);
             jedis.close();
 
             String url = "/art/art.jsp";

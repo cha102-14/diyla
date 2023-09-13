@@ -53,6 +53,7 @@ public class MailService {
 			message.setSubject(subject);
 			// 設定信中的內容
 			message.setText(messageContent);
+            message.setContent(messageContent, "text/html; charset=utf-8");
 
 			Transport.send(message);
 			System.out.println("傳送成功!");

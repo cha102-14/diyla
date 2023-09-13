@@ -1,12 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.cha102.diyla.articleModel.*"%>
+<%@ page import="redis.clients.jedis.Jedis"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+    Jedis jedis = new Jedis("localhost", 6379);
+    pageContext.setAttribute("jedis", jedis);
+%>
 <head>
     <title>全部論壇文章</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
@@ -96,13 +100,13 @@
         </thead>
         <tbody id="content">
             <c:forEach var="artVO" items="${list}">
-
+            <c:set var="redisNo" value="art:${artVO.artNo}" />
                 <tr>
                     <td>${artVO.memVO}</td>
                     <td>${artVO.artTitle}</td>
                     <c:choose>
-                        <c:when test="${not empty imgBase64[(artVO.artNo)-1]}">
-                            <td><img src="data:image/jpeg;base64,${imgBase64[(artVO.artNo)-1]}" alt="Image"></td>
+                        <c:when test="${not empty jedis.get(redisNo)}">
+                            <td><img src="data:image/jpeg;base64,${jedis.get(redisNo)}" alt="Image"></td>
                         </c:when>
                         <c:when test="${not empty artVO.artPic}">
                             <td><img src="data:image/jpeg;base64,${Base64.getEncoder().encodeToString(artVO.artPic) }"
@@ -138,6 +142,7 @@
             </c:forEach>
         <tbody>
     </table>
+${ jedis.close() }
     <jsp:include page="/front_footer.jsp" />
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- ●●js  for jquery datatables 用 -->
@@ -146,7 +151,7 @@
     <script>
         $(document).ready(function () {
             $('#art').DataTable({
-                "lengthMenu": [10, 20],
+                "lengthMenu": [3, 5, 10, 20],
                 "searching": true,  //搜尋功能, 預設是開啟
                 "paging": true,     //分頁功能, 預設是開啟
                 "ordering": true,   //排序功能, 預設是開啟

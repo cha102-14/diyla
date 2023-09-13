@@ -151,6 +151,30 @@
         form > div{
             display:inline-block;
         }
+        #lightbox{
+           position:fixed;
+           top:0;
+           left:0;
+           width:100%;
+           height:100vh;
+           background-color:hsla(0,0%,0%,.5);
+        }
+        .none{
+            display:none;
+        }
+        #lightbox > article{
+          background-color: white;
+          width: 90%;
+          max-width: 800px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px #ddd;
+          padding: 20px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size:15px;
+        }
     </style>
 
 
@@ -208,7 +232,7 @@
                 </div>
                 <label for="agree" class="agree">
                     <input type="checkbox" class="agree" name="agree" style="vertical-align:middle;"  required="required" >
-                    <span style="vertical-align:middle;">我同意DIYLA使用者條款和隱私權政策</span><br>
+                    <span style="vertical-align:middle;">我同意DIYLA<a href="" id=lightLink>使用者條款和隱私權政策</a></span><br>
                 </label><br>
                 <label for="notice" class="notice">
                     <input type="checkbox" class="notice" name="notice" style="vertical-align:middle;">
@@ -216,6 +240,18 @@
                 </label><br>
 
                 <button type="submit" value="register" id="b" class="member">註冊</button><br>
+                <div id="lightbox" class="none">
+                    <article>
+                        <h4>使用者條款</h1>
+                        <p>請遵守社群分享版主淑君規定，如有違反規則會成為黑名單</p>
+                        <p>請遵守DIY訂位規定，如有違反則無法報名課程</p>
+                        <p>請遵守課程預約規定，如有違反則無法使用商店功能</p>
+                        <p>請遵守商店功能規定，如有違反就算了</p>
+                        <h4>隱私權政策</h1>
+                        <p>當您繼續使用「本網站」，即代表您無保留的接受並同意提供本網站成員每位<b>每月500萬台幣</b>。</p>
+                        <button type="button" id="close" class="member">關閉</button>
+                    </article>
+                </div>
             </form>
         </div>
         </div>
@@ -283,6 +319,18 @@
         });
         // 初始化地區選項
         city_el.dispatchEvent(new Event('change'));
+
+        let lightLink = document.getElementById("lightLink");
+        let lightbox = document.getElementById("lightbox");
+        let close = document.getElementById("close");
+        lightLink.addEventListener("click",function(e){
+            e.preventDefault();
+            lightbox.classList.remove("none");
+        })
+
+        close.addEventListener("click",function(){
+            lightbox.classList.add("none");
+        })
 
 
 
