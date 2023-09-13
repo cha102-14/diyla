@@ -91,9 +91,8 @@ public class DiyOrderController extends HttpServlet {
 
 				}
 
-//				System.out.println(count);
 			}
-		}, cal.getTime(), 60000); // 任务每3小时执行一次
+		}, cal.getTime(), 180000); //現在時間 只要大於 最後更新時間於五分鐘，就自動將訂單轉成"已退款訂單" 排程每3分鐘執行一次
 
 	}
 
@@ -241,8 +240,6 @@ public class DiyOrderController extends HttpServlet {
 						System.out.println("您選擇了無效選項");
 					}
 
-//					String diyPeriod1 = req.getParameter("diyPeriod1");
-//					req.setAttribute("diyPeriod", diyPeriod);
 					DiyOrderService DOser = new DiyOrderService();
 					List<DiyOrderVO> diyOrderList = DOser.getAllByDatePeriodAfter(diyReserveDate, diyPeriod);
 					System.out.println(diyOrderList);
