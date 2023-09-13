@@ -79,14 +79,14 @@
 </head>
 <body>
 <div class="lat_container right-scroll">
-    <table>
+    <table style="text-align:center;">
         <tr>
             <th>公告內容</th>
             <th>公告圖片</th>
         </tr>
         <c:forEach var="a" items="${list}">
             <tr>
-                <td>${a.newsContext}</td>
+                <td style="padding:20px;text-align:justify;">${a.newsContext}</td>
                 <td>
                     <hr>
                     <div id="show_img">
