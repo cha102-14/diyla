@@ -221,7 +221,7 @@ font-size: 20px;
 		</table>
 
 
-	<li style="margin-top: 200px;list-style-type: none;font-weight: bold;font-size: 1rem;"><a href='${ctxPath}/diyOrder/diyOrder_front.jsp' class="super">>回訂單管理</a></li>
+	<li style="margin-top: 200px;list-style-type: none;font-weight: bold;font-size: 1rem;"><a href='${ctxPath}/diyOrder/diyOrder_front.jsp' class="super">>回訂單狀態</a></li>
 	<li style="list-style-type: none;font-weight: bold;font-size: 1rem;"><a href='${ctxPath}/diyOrder/Front.jsp' class="super">>回DIY體驗首頁</a></li>
 </div>
 

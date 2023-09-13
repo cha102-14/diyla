@@ -204,26 +204,15 @@ font-size: 20px;
 
 		<header>
 			<span>
-<%-- 				<c:choose> --%>
-<%-- 						<c:when test="${diyPeriod == 0}"> --%>
-<%-- 							<h1 class="header-title">${diyReserveDate} 上午 訂單列表</h1> --%>
-<%-- 						</c:when> --%>
-<%-- 						<c:when test="${diyPeriod == 1}"> --%>
+
 							<h1 class="header-title">${diyReserveDate} ${diyPeriod} 訂單列表</h1>
-<%-- 						</c:when> --%>
-<%-- 						<c:when test="${diyPeriod == 2}"> --%>
-<%-- 							<h1 class="header-title">${diyReserveDate} 晚上 訂單列表</h1> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose>	 --%>
+
 			</span>
 		</header>
 					
 
 		<table>
 			<tr>
-				<!-- 		<th>DIY訂單編號</th> -->
-				<!-- 		<th>會員編號</th>  -->
-
 
 				<th>操作</th>
 				<th>DIY品項名稱</th>
@@ -241,12 +230,6 @@ font-size: 20px;
 			<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 				<tr>
-
-
-					<%-- 		<td>${DiyOrderVO.diyOrderNo}</td> --%>
-					<%-- 		<td>${DiyOrderVO.memId}</td> --%>
-
-
 
 					<td>
 						<div id="buttom">
@@ -366,15 +349,6 @@ font-size: 20px;
 							<td id="paymentStatus">已退款訂單</td>
 						</c:when>
 					</c:choose>
-					
-					
-<%-- 					<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
-<%-- 						<c:choose> --%>
-<%-- 								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
-<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
-<%-- 								</c:when> --%>
-<%-- 						</c:choose>			 --%>
-<%-- 					</c:forEach> --%>
 					
 					<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
 				</tr>

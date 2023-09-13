@@ -166,12 +166,12 @@ div#body {
 list-style-type: none;
 font-weight: bold;
 font-size: 1.2rem;
-margin-left: 85%;
+margin-left: 90%;
 margin-top: 50px;
 }
 
 a#super {
-    font-size: 1.8rem;
+    font-size: 1.1rem;
     text-decoration: none;
     color: #333; /* 设置链接文本颜色为灰色 */
 }
@@ -180,7 +180,7 @@ a#super {
 a#super:hover {
     color: red; /* 设置鼠标悬停时的文本颜色为红色 */
     font-weight: bold; /* 设置文本粗体 */
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 .annotation{
 text-align: left;
