@@ -1,4 +1,4 @@
-package com.cha102.diyla.sweetclass.classController;
+package com.cha102.diyla.front.controller.desertcourse;
 
 import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.member.MemberService;

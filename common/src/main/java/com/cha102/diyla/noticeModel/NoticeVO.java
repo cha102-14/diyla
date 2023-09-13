@@ -30,5 +30,5 @@ public class NoticeVO {
     private Timestamp noticeTime = Timestamp.valueOf(LocalDateTime.now());
 
     @Column(name = "NOTICE_STATUS",insertable = false)
-    private Integer noticeStatus;
+    private byte noticeStatus;
 }

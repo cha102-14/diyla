@@ -1,13 +1,11 @@
 package com.cha102.diyla.back.controller.art;
 
-import com.cha102.diyla.articleModel.ArtService;
 import com.cha102.diyla.articlemsgmodel.ArtMsgService;
 import com.cha102.diyla.articlerpmsgmodel.ArtDTO;
 import com.cha102.diyla.articlerpmsgmodel.ArtMsgRpService;
 import com.cha102.diyla.member.MemberService;
 import com.cha102.diyla.noticeModel.NoticeService;
 import com.cha102.diyla.noticeModel.NoticeVO;
-import com.cha102.diyla.tokenModel.TokenService;
 import com.cha102.diyla.util.JedisNotice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +46,7 @@ public class ArtReportController {
         //新增個人通知
         NoticeVO noticeVO = new NoticeVO();
         noticeVO.setNoticeTitle("您的留言因受到檢舉並審核通過，提醒您若受到檢舉三次將只能瀏覽文章。");
+        noticeVO.setMemId(memId);
         noticeService.addNotice(noticeVO);
         //存入redis
         JedisNotice.setJedisNotice(memId,"reportCount");
@@ -56,6 +54,7 @@ public class ArtReportController {
             memSvc.addArtBlackList(memId);
             //新增個人通知
             noticeVO.setNoticeTitle("您因多次受到檢舉已進入黑名單，無法再使用該功能。");
+            noticeVO.setMemId(memId);
             noticeService.addNotice(noticeVO);
             //存入redis
             JedisNotice.setJedisNotice(memId,"ArtBlack");

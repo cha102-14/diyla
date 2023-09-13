@@ -7,25 +7,87 @@
 <html>
 <head>
     <title>修改商品</title>
-    <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5F5;
+            font-size: 16pt;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background-color: #B26021;
+            color: #FFFFFF;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        label {
+            color: #B26021;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            border: 1px solid #B26021;
+            margin: 10px 0;
+        }
+
+        .button {
+            background-color: #B26021;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .commodityPhoto {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 10px;
+        }
+
+        #product_description {
+            width: 300px;
+            height: 100px;
+            margin-bottom: 10px;
+            resize: both;
+            overflow: auto;
+        }
+    </style>
 </head>
 
 <body style="margin-left: 280px">
 <aside class="topPage">
-    <jsp:include page="../index.jsp" />
+    <jsp:include page="../index.jsp"/>
 </aside>
-<h1>修改商品</h1>
-<div id="CONTENT">
-    <!--商品欄開始-->
-    <div class="prod">
+<div class="container">
+    <div class="header">修改商品</div>
+    <div id="CONTENT">
+        <!--商品欄開始-->
+
         <form action="${ctxPath}/shop/CommodityController" method="post" enctype="multipart/form-data">
             <input type="text" value="update" name="action" hidden="hidden">
             <input type="text" value="${commodity.comNO}" name="comNO" hidden="hidden">
 
             <div class="img">
-                <img src="${commodity.showPic}" class="commodityPhoto" style="width: 100%">
+                <img src="${commodity.showPic}" class="commodityPhoto">
             </div>
             <label for="product_image">商品圖片:</label>
             <input type="file" id="product_image" name="commodityPic" accept="image/*">
@@ -46,8 +108,7 @@
 					<br>
                     <span style="display: block; color: red;">${errMsg["commodityDes"]}</span>
 					<label>商品描述：</label>
-					<input type="text" id="product_description" name="commodityDes" value="${commodity.comDes}"
-                           style="resize: both;">
+					<textarea id="product_description" name="commodityDes">${commodity.comDes}</textarea>
                     <br>
                     <span style="display: block; color: red;">${errMsg["commodityPri"]}</span>
 					<label>價格：</label>
@@ -67,8 +128,12 @@
 
 					<button type="submit" class="button">完成修改</button>
                 </span>
+                <a href="${ctxPath}/shop/CommodityController?action=listAll">
+                    <button class="button" style="background-color: darkgray">返回商品清單</button>
+                </a>
             </div>
         </form>
+
     </div>
 </div>
 

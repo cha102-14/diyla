@@ -77,8 +77,9 @@
             </tr>
         </c:forEach>
     </table>
+    <br>
     <c:forEach begin="0" end="${pageSize}"  var="i">
-        <a href="${ctxPath}/shop/commodity/get/${i}">${i+1}</a>
+        <a href="${ctxPath}/shop/commodity/get/${i+1}">${i+1}</a>
     </c:forEach>
 </div>
 <script src="../vendors/jquery/jquery-3.7.0.min.js"></script>

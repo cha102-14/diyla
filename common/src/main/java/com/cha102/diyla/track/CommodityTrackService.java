@@ -46,4 +46,11 @@ public class CommodityTrackService {
     }
 
 
+    public boolean isTracking(Integer comNo, Integer memId) {
+        return commodityTrackRepository.findFirstByComNOAndMemId(comNo, memId) != null;
+    }
+
+    public void save(CommodityTrackVO commodityTrackVO) {
+        commodityTrackRepository.save(commodityTrackVO);
+    }
 }
