@@ -23,14 +23,15 @@ pageContext.setAttribute("memVO", memVO);
 <title>個人訂單管理</title>
 
 <style type="text/css">
-<
-link href ="https: //cdn.jsdelivr.net /npm /bootstrap @5.1.1 /dist /css
+<link href ="https: //cdn.jsdelivr.net /npm /bootstrap @5.1.1 /dist /css
 	/bootstrap.min.css " rel ="stylesheet " integrity ="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU
-	" crossorigin ="anonymous ">header {
+	" crossorigin ="anonymous ">
+	header {
 	background-color: rgb(243, 151, 5);; /* 背景顏色 */
 	color: white; /* 文字顏色 */
 	padding: 10px 0; /* 上下內邊距 10px，左右內邊距 0 */
-	text-align: center; /* 文字置中 */
+	text-align: center;
+	margin-top: -55px;
 }
 
 h1 {
@@ -73,8 +74,9 @@ tr:nth-child(even) {
 }
 
 div#body {
-	margin-left: 100px;
-	margin-right: 100px;
+	margin-top:50px;
+	margin-left: 50px;
+	margin-right: 50px;
 	display: block;
 }
 
@@ -150,6 +152,33 @@ div#body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+#super{
+list-style-type: none;
+font-weight: bold;
+font-size: 1.2rem;
+margin-left: 85%;
+margin-top: 50px;
+}
+
+a#super {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: #333; /* 设置链接文本颜色为灰色 */
+}
+
+/* 鼠标悬停时的链接样式 */
+a#super:hover {
+    color: red; /* 设置鼠标悬停时的文本颜色为红色 */
+    font-weight: bold; /* 设置文本粗体 */
+    font-size: 2rem;
+}
+.annotation{
+margin-top:100px;
+text-align: left;
+font-size: 20px;
+}
+
 </style>
 
 
@@ -162,9 +191,7 @@ div#body {
 		<jsp:include page="/front_header.jsp"  />	
 	</div>
 	
-	--會員編號:${memId}--
 	<input type="hidden" name="memId" value="${memId}">
-	<br> --您好，${memVO.memName}--
 	<input type="hidden" class="uuu" value="${uuu}">
 	
 	
@@ -177,26 +204,15 @@ div#body {
 
 		<header>
 			<span>
-<%-- 				<c:choose> --%>
-<%-- 						<c:when test="${diyPeriod == 0}"> --%>
-<%-- 							<h1 class="header-title">${diyReserveDate} 上午 訂單列表</h1> --%>
-<%-- 						</c:when> --%>
-<%-- 						<c:when test="${diyPeriod == 1}"> --%>
+
 							<h1 class="header-title">${diyReserveDate} ${diyPeriod} 訂單列表</h1>
-<%-- 						</c:when> --%>
-<%-- 						<c:when test="${diyPeriod == 2}"> --%>
-<%-- 							<h1 class="header-title">${diyReserveDate} 晚上 訂單列表</h1> --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose>	 --%>
+
 			</span>
 		</header>
 					
 
 		<table>
 			<tr>
-				<!-- 		<th>DIY訂單編號</th> -->
-				<!-- 		<th>會員編號</th>  -->
-
 
 				<th>操作</th>
 				<th>DIY品項名稱</th>
@@ -214,12 +230,6 @@ div#body {
 			<c:forEach var="DiyOrderVO" items="${diyOrderList}">
 
 				<tr>
-
-
-					<%-- 		<td>${DiyOrderVO.diyOrderNo}</td> --%>
-					<%-- 		<td>${DiyOrderVO.memId}</td> --%>
-
-
 
 					<td>
 						<div id="buttom">
@@ -340,15 +350,6 @@ div#body {
 						</c:when>
 					</c:choose>
 					
-					
-<%-- 					<c:forEach var="DiyCateEntity" items="${diyCateList}"> --%>
-<%-- 						<c:choose> --%>
-<%-- 								<c:when test="${DiyOrderVO.diyNo == DiyCateEntity.diyNo}"> --%>
-<%-- 									<td id="diyPrice">${DiyCateEntity.amount}</td> --%>
-<%-- 								</c:when> --%>
-<%-- 						</c:choose>			 --%>
-<%-- 					</c:forEach> --%>
-					
 					<td id="diyPrice">${DiyOrderVO.diyPrice}</td>
 				</tr>
 			</c:forEach>
@@ -464,7 +465,7 @@ div#body {
 			</div>
 		</div>
 <!--======================================================================================================================== -->
-		<li><a href='diyOrder_front.jsp'>回訂單管理</a></li>
+		<li style="margin-top: 30px;list-style-type: none;font-weight: bold;font-size: 2rem;" ><a href='${ctxPath}/diyOrder/diyOrder_front.jsp'  id="super">>回訂單管理</a></li>
 
 		  </div>
 
@@ -473,24 +474,31 @@ div#body {
 	</div>
 
 
-	<div id="annotation1">
-		<span> <svg width="25px" height="25px"
-				xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-				stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round"
-					d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-</svg>註1:
-		</span>每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消並退款"，並重新新增訂單。
+<div id="annotation">
+
+	<div id="annotation1" class="annotation">
+		<p style="text-align: left;font-size: 18px;margin:0;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+		註1:每筆訂單僅能變更聯絡人或是聯絡電話，如需變更其他項目，請點選"取消訂單並退款"，並重新新增訂單。
+		</p>
 	</div>
-	<div id="annotation2">
-		<span> <svg width="25px" height="25px"
-				xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-				stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round"
-					d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-</svg>註2:
-		</span>如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。
+	
+	<div id="annotation2" class="annotation" style="margin-top: -10px;">
+		<p style="text-align: left;font-size: 18px;">
+			<span> 
+			<svg width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  		<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+			</svg>
+			</span>
+			註2:如需取消訂單，需在報到當日前三日申請退款，方能退款成功，如報到三日內申請退款方不予受理退款事宜。
+		</p>
 	</div>
+
+</div>
 
 
 	<jsp:include page="/front_footer.jsp" />

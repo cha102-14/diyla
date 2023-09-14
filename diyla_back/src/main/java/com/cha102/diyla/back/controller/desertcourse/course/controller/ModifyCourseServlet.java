@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @MultipartConfig(
@@ -39,6 +42,8 @@ public class ModifyCourseServlet extends HttpServlet {
         Gson gson = new Gson();
         TeacherService teacherService = new TeacherService();
         Integer updateCode = null;
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        java.util.Date currentDate = Timestamp.valueOf(currentDateTime);
         //驗證修改的師傅id是存在的
         Integer modifyTeacherId = Integer.parseInt(req.getParameter("teacherId").trim());
         if (!teacherService.verifyTeacherId(modifyTeacherId)) {
@@ -58,6 +63,12 @@ public class ModifyCourseServlet extends HttpServlet {
         String intro = req.getParameter("courseIntro").trim();
         Integer limit = Integer.parseInt(req.getParameter("courseLimit").trim());
         Integer price = Integer.parseInt(req.getParameter("price").trim());
+        Integer courseStatus = classService.getOneClass(modifyCourseId).getClassStatus();
+        if(regEndDate.after(currentDate)){
+            courseStatus = 0;
+        } else {
+            courseStatus = 2;
+        }
         // 確認報名時間不能早於報名截止時間
         if (courseDate.before(regEndDate)) {
             errorMessage.add("報名截止日期不可晚於課程日期。");
@@ -112,7 +123,7 @@ public class ModifyCourseServlet extends HttpServlet {
         if (errorMessage.isEmpty()) {
             try {
                 //更新課程資料
-                classService.updateClass(modifyCourseId, category, modifyTeacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName);
+                classService.updateClass(modifyCourseId, category, modifyTeacherId, regEndDate, courseDate, courseSeq, coursePic, limit, price, intro, courseName, courseStatus);
                 //更新資料庫內的食材
                 classService.updateClassING(modifyCourseId, courseIngIdList, courseIngQuantitiesList);
             } catch (RuntimeException re) {

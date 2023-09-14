@@ -271,8 +271,10 @@
         function notMasterEmpfilter(){
             let empFunList = `${typeFun}`;
             // 判斷是否存在多筆 權限
-            let isNotSingle = empFunList.includes(",");
-            let empFun = isNotSingle ? "MASTER" : empFunList.substring(1, empFunList.length-1);
+            if(empFunList.includes(",")){
+                return true;
+            }
+            let empFun = empFunList.substring(1, empFunList.length-1);
             let isMaster = !empFun.includes("MASTER");
             return isMaster;
         }

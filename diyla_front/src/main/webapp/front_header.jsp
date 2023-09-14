@@ -95,7 +95,7 @@
                     </li>
                     <li class="nav-item">
                         <%--可自行更改href連結--%>
-                        <a class="nav-link" href="${ctxPath}/diyCate/diyCateList">
+                        <a class="nav-link" href="${ctxPath}/diyOrder/Front.jsp">
                             DIY體驗
                         </a>
                     </li>
@@ -290,13 +290,15 @@
             console.log("Connect Success");
         }
 
-        webSocket.onmessage = function (event) {
+        webSocket.onmessage = function (event){
+            let dropDN = document.querySelector("#notification-dropdown");
             let jsonObj = JSON.parse(event.data);
             console.log(jsonObj);
-            if (jsonObj != null){
-                addListener();
-                getNotices();
-            }
+            addListener();
+            dropDN.addEventListener("load",function(){
+				setTimeout("loadNotice()",10000)
+				})
+            getNotices();
         }
 
         function addListener() {
@@ -307,7 +309,7 @@
         }
 
     };
-
+	function loadNotice(){location.href+" #notification-dropdown"}
     function disconnect() {
         console.log("disconnect");
         webSocket.close();
@@ -371,7 +373,6 @@
             }
 
             $('#notification-count').html(noticeLength);
-
         })
     }
 

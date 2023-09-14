@@ -9,6 +9,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="static/picture/favicon.png">
     <link rel="stylesheet" href="/diyla_front/diy/css/bootstrap1.min.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/style3.css">
+    <script>
+        function navigateToDIYList() {
+            window.location.href = '${ctxPath}/diyCate/diyCateList';
+        }
+    </script>
 </head>
 
 <body>
@@ -36,12 +41,12 @@
                         <div class="order-complete-content">
                             <h3><span>DIYLA</span> 預約成功!</h3>
                             <div class="check mb-25"><img src="/diyla_front/diy/image/check.png" alt=""></div>
-                            <p>Thank you for your order! Your order is being processed and will be completed within
-                                6-12 Hours. You will receive an email confirmation when your order is completed.</p>
-                            <a href="../../diyOrder/diyOrder_front.jsp" class="btn"
+                            <p>取消/修改訂位，可於[我的訂單]自行完成。
+                                座位保留10分鐘，遲到須現場重新候位。</p>
+                            <a href="javascript:void(0);" onclick="navigateToDIYList();" class="btn"
                                style="font-size: 18px;">繼續瀏覽DIY品項</a>
-                            <a href="../../diyOrder/diyOrder_front.jsp" class="btn" style="font-size: 18px;">查詢我的訂單</a>
-                            <p class="get-ans">Get answers to all your <a href="#">Questions</a> you might have.</p>
+                            <a href="/diyla_front/diyOrder/diyOrder_front.jsp" class="btn" style="font-size: 18px;">查詢我的訂單</a>
+                            <p class="get-ans">Get answers to all your <a href="/diyla_front/pbm/pbm.jsp">Questions</a> you might have.</p>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 package com.cha102.diyla.front.filter;
 
 import com.cha102.diyla.member.*;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +28,16 @@ public class LoginFilter implements Filter{
         HttpSession session = req.getSession();
         MemVO memVO = (MemVO) session.getAttribute("memVO");
         if (memVO == null){
-            session.setAttribute("location",req.getRequestURI());
-            res.sendRedirect(req.getContextPath()+"/member/mem_login.jsp");
+            String requestURI = req.getRequestURI();
+            String queryString = req.getQueryString();
+            if (!StringUtils.isEmpty(queryString) && requestURI.contains("diybooking.jsp")) {
+                session.setAttribute("location","/diyla_front/diyCate/reserve" +"?" + queryString);
+                res.sendRedirect(req.getContextPath()+"/member/mem_login.jsp");
+            }else {
+                session.setAttribute("location",requestURI);
+                res.sendRedirect(req.getContextPath()+"/member/mem_login.jsp");
+            }
+
             return;
 
         }else {

@@ -85,7 +85,7 @@
             <input type="hidden" name="newsNo" value="<%= latVO.getNewsNo() %>">
 
             <label for="newsContext">公告內容：</label>
-            <textarea name="newsContext" id="newsContext"><%= latVO.getNewsContext() %></textarea><br>
+            <textarea name="newsContext" id="newsContext" required="required"><%= latVO.getNewsContext() %></textarea><br>
 
             <label for="newsPic">公告圖片：</label>
                 <input id="addimg" type="file" name="annPic" accept="image/*" onchange="preImg()">

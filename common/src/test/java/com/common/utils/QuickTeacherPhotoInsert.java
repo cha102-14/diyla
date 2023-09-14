@@ -16,8 +16,8 @@ public class QuickTeacherPhotoInsert {
         String USER = "root";
         String PASSWORD = "1234";
         String INSERT_PHOTO = "UPDATE TEACHER SET TEA_PIC = ? WHERE TEA_ID = ? ;";
-        for (int i = 1; i <= 30; i++) {
-            File file = new File("C:/teacher/" + i + ".jpg");
+        for (int i = 1; i <= 5; i++) {
+            File file = new File("C:/TEACHER/" + i + ".jpg");
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement ps = conn.prepareStatement(INSERT_PHOTO)) {

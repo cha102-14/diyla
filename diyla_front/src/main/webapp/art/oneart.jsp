@@ -91,8 +91,11 @@
                 <form action="insert" method="post" modelAttribute="ArtMsgVO">
                     <div class="comment">
                         <input type="text" class="comment-text" name="msgContext" onclick="hideError()" />
-                        <c:forEach var="error" items="${errorsListToKeep}">
+                        <c:forEach var="error" items="${errorsMsgList}">
                             <p class="error">${error.defaultMessage}</p>
+                        </c:forEach>
+                        <c:forEach var="error" items="${Blacklist}">
+                            <p class="error">${error}</p>
                         </c:forEach>
                         <input name="memId" type="hidden" value="${memId}" />
                         <input name="artNo" type="hidden" value="${artVO.artNo}" />

@@ -125,13 +125,15 @@ input[type="submit"]:hover, .button:hover {
     <h1 style="font-weight: bold;">DIY管理後台首頁</h1>
     <input type="hidden" class="uuu" value="${uuu}">
     <ul>
+    <button type="submit" class="button" style="margin:0px 0px 20px 7px;" onclick="window.location.href='${ctxPath}/diycate/back_diycate.jsp'">DIY項目管理</button>
+    
         <form method="post" action="DiyOrderController">
             <input type="hidden" name="action" value="getAllOrder">
             <input type="submit" value="查詢所有訂單"> 
         </form>
         <li>
             <form method="post" action="DiyOrderController">
-                <b style="font-weight: bold; margin-left: -45px;">輸入訂單編號 (如1):</b>
+                <b style="font-weight: bold; margin-left: -45px;">輸入訂單編號:</b>
                 <c:choose>
                     <c:when test="${uuu == 404}">
                         <input type="text" name="diyOrderNo" value="${diyorderNo} ">
@@ -147,7 +149,7 @@ input[type="submit"]:hover, .button:hover {
         </li>
         <li>
             <form method="post" action="DiyOrderController">
-                <b style="font-weight: bold;">輸入會員編號 (如1):</b>
+                <b style="font-weight: bold;">輸入會員編號:</b>
                 <c:choose>
                     <c:when test="${uuu == 405}">
                         <input type="text" name="memId" value="">
@@ -157,7 +159,7 @@ input[type="submit"]:hover, .button:hover {
                     </c:otherwise>
                 </c:choose>
                 <input type="hidden" name="action" value="getOneMemId_For_Display">
-                <input type="submit" value="查詢該會員所有訂單資料">
+                <input type="submit" value="查詢會員所有訂單資料">
                 <p class="error-message">${errorMsgs.memId}${errorMsgs.diyOrderList}</p>
             </form>
         </li>
@@ -168,6 +170,8 @@ input[type="submit"]:hover, .button:hover {
             <p class="error-message">${errorMsgs.refundNot}</p>
         </form>
         <button type="submit" class="button" onclick="window.location.href='${ctxPath}/diyReserveResult/total.jsp'">訂單彙總日程明細</button>
+        
+        
     </ul>
 </div>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

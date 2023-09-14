@@ -45,12 +45,11 @@ public class ClassService {
         return classVO;
     }
     public ClassVO updateClass(Integer claID, Integer category, Integer teaID, Date regEndTime, Date classDate, Integer classSEQ,
-                               byte[] classPic, Integer classLimit, Integer price, String intro, String className
+                               byte[] classPic, Integer classLimit, Integer price, String intro, String className, Integer classStatus
                                ) throws RuntimeException{
 
         ClassVO classVO = new ClassVO();
         Integer headcount = getOneClass(claID).getHeadcount();
-        Integer classStatus = getOneClass(claID).getClassStatus();
         classVO.setClassId(claID);
         classVO.setCategory(category);
         classVO.setTeaId(teaID);
@@ -70,6 +69,20 @@ public class ClassService {
     public ClassVO updateClass(ClassVO classVO){
         claDAO.update(classVO);
         return classVO;
+    }
+    public ClassVO updateClassStatus(String action, Integer claId) {
+        ClassVO updateClass = claDAO.findByPrimaryKey(claId);
+        if("delete".equals(action)){
+            updateClass.setClassStatus(1);
+            updateClass(updateClass);
+        } else if("back".equals(action)){
+            updateClass.setClassStatus(0);
+            updateClass(updateClass);
+        }
+        return updateClass;
+    }
+    public String updateRegEndClass() {
+        return claDAO.updateAllRegEndClass();
     }
     public void deleteClass(Integer claID) {
         claDAO.delete(claID);
