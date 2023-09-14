@@ -83,10 +83,9 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                     style="margin-top: 5vh; margin-bottom: 5vh">
                     <h2 id="title" class="title-tag">修改甜點課程</h2>
                 </div>
+                        
                 <div id="contentBlock">
                     <div id="formBlock">
-                        <a
-                            href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">前往課程日曆表</a>
                         <form action="${ctxPath}/modifyCourse" method="post" enctype="multipart/form-data">
                             <input type="hidden" id="modifyCourseId" name="modifyCourseId" value="${courseVO.classId}">
                             <div class="row">

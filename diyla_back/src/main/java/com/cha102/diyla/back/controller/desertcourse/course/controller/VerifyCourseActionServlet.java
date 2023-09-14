@@ -72,17 +72,17 @@ public class VerifyCourseActionServlet extends HttpServlet {
         Integer thisEmpId = (Integer) session.getAttribute("empId");
         //取得使用者打算做甚麼action
         String action = req.getParameter("action");
-
+        System.out.println(action);
         //分成modify和delete的個別驗證
         if("delete".equals(action)) {
             //若使用者是admin,就不用比對session內的empId以及當前課程的teacher對應的empId
             if(adminAuthCode) {
-                reqTeacher.setTeaStatus(1);
-                teacherService.updateTeaStatus(teacherId,1);
+                classService.updateClassStatus(action, courseId);
                 resJson.put("isAllowed", true);
             } else {
                 if(reqEmpId == thisEmpId) {
-                    teacherService.updateTeaStatus(teacherId,1);
+                    classService.updateClassStatus(action, courseId);
+                    System.out.println("delete action ok");
                     resJson.put("isAllowed", true);
                 } else {
                     resJson.put("isAllowed", false);
@@ -123,12 +123,11 @@ public class VerifyCourseActionServlet extends HttpServlet {
         } else if("back".equals(action)) {
             //仍需改動,下架課程功能
             if(adminAuthCode) {
-                reqTeacher.setTeaStatus(1);
-                teacherService.updateTeaStatus(teacherId,0);
+                classService.updateClassStatus(action, courseId);
                 resJson.put("isAllowed", true);
             } else {
                 if(reqEmpId == thisEmpId) {
-                    teacherService.updateTeaStatus(teacherId,0);
+                    classService.updateClassStatus(action, courseId);
                     resJson.put("isAllowed", true);
                 } else {
                     resJson.put("isAllowed", false);
