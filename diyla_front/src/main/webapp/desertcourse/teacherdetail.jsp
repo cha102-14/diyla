@@ -117,8 +117,10 @@
     TeacherVO teacher = teacherService.getOneTeacher(teacherId);
     List<String> specialityList = teacherService.getOneTeaSpecialityStringList(teacherId);
     byte[] imgBytes = teacher.getTeaPic();
-    String base64Img = Base64.getEncoder().encodeToString(imgBytes);
-
+    String base64Img = "";
+    if(imgBytes != null){
+        base64Img = Base64.getEncoder().encodeToString(imgBytes);
+    }
 %>
 <div id="page-content">
     <div id="teacherBlock">
@@ -146,7 +148,7 @@
             <h3 id="introHead">簡介 </h3>
             <%= teacher.getTeaIntro() %>
         </div>
-          <button type="button" class="btn btn-outline-secondary" id="messageButton">發送訊息</button>
+        
         </div>
     </div>
 </div>

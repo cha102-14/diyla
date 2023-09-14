@@ -86,7 +86,11 @@
             pageContext.setAttribute("type", type);
         }
     %>
-
+    <style>
+    .btn{
+        white-space: nowrap;
+    }
+    </style>
 </head>
 
 <body>
@@ -180,7 +184,7 @@
             </div>
             <div class="col-md-3 form-group">
                 <label for="ingredientQuantity1"> 食材數量</label>
-                <input id="ingredientQuantity1" class="form-control" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required>
+                <input id="ingredientQuantity1" class="form-control" name="ingredientQuantity[]" data-field="ingredientQuantity" class="ingredientQuantity-row" required placeholder="輸入克數">
                 <span class="error" style="display: none">食材數量請輸入數字</span><br>
             </div>
             <div class="col-md-3 form-group">

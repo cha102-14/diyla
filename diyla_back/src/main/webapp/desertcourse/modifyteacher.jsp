@@ -76,11 +76,16 @@
         }
         //修改的師傅資料處理
         TeacherVO teacherVO = (TeacherVO)request.getAttribute("teacherVO");
-        if(teacherVO != null){
-        List<String> teaSpeNameList = teacherService.getOneTeaSpecialityStringList(teacherVO.getTeaId());
+        List<String> teaSpeTestList = teacherService.getOneTeaSpecialityStringList(teacherVO.getTeaId());
+        List<String> teaSpeNameList = null;
+        if(teacherVO != null && !teaSpeTestList.isEmpty()){
+        teaSpeNameList = teacherService.getOneTeaSpecialityStringList(teacherVO.getTeaId());
         pageContext.setAttribute("teaSpeNameList", teaSpeNameList);
+        } else {
+            teaSpeNameList = null;
+            pageContext.setAttribute("teaSpeNameList", teaSpeNameList);
         }
-
+        System.out.println("speListis:" + teaSpeNameList);
 
 
 %>
@@ -260,6 +265,7 @@
         $(document).ready(function () {
             //檢查是否登入
             var type = "${type}";
+            
             if (type === "NOSESSION") {
                 // 啟動定時器，3秒後導航到其他網頁
                 setTimeout(function() {

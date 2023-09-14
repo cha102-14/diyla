@@ -68,19 +68,22 @@
                     <style>
                     .event-time{
                       margin-right: 10px;
-                      font-size: 1.2rem;
+                      font-size: 1rem;
                       font-weight:bold;
                       color:brown;
-                      
+                      white-space: nowrap;
                     }
                     .event-title{
-                      font-size: 1.2rem;
+                      font-size: 1rem;
                       color:black;
+                      
                     }
                     .event-item{
                       display:flex;
                       flex-direction: row;
                       width: 100%;
+                      margin-right: 10px;
+                      white-space: wrap;
                       border-radius: 5px;
                       background: #a3a3c2;
                     }

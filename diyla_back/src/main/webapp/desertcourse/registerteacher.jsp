@@ -60,6 +60,8 @@
                 canRegister = 0;
             } else if ("MASTER".equals(type) && !isEmpAlreadyTeacher) {
                 canRegister = 1;
+            } else {
+                canRegister = 0;
             }
             pageContext.setAttribute("type", type);
             pageContext.setAttribute("teacherName", empName);
@@ -172,7 +174,7 @@
             } else{
                 
                  //先做是否已可以註冊師傅的驗證
-            if (canRegister !== 1) {
+            if (canRegister !== '1') {
                 Swal.fire({
                 title: "您已註冊為教師，或您無權註冊為教師!",
                 icon: "warning",

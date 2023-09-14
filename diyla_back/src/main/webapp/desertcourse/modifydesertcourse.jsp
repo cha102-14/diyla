@@ -68,7 +68,11 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
         pageContext.setAttribute("type", type);
         ClassVO courseVO = (ClassVO) request.getAttribute("courseVO");
         %>
-
+        <style>
+        .btn{
+            white-space: nowrap;
+        }
+        </style>
     </head>
 
     <body>
