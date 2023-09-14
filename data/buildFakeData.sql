@@ -18,7 +18,7 @@ VALUES ('烘焙器材'),
 
 INSERT INTO diyla.commodity (COM_CLASS_NO, COM_NAME, COM_PIC, COM_DES, COM_PRI, COM_QUA, COM_STATE, COMMENT_TOTAL,
                              RATING_SUM, UPDATE_TIME)
-VALUES (1, '擀麵棍', null, '取材等級最高的A級櫸木,竹木紋理完全保留,木製品的美也源於此。麵粉不容易沾黏，桿麵團超便利！',
+VALUES (1, '桿麵棍', null, '取材等級最高的A級櫸木，竹木紋理完全保留，木製品的美也源於此。麵粉不容易沾黏，桿麵團超便利！',
         150, 50, 1, 0, 0, DEFAULT),
        (1, '隔熱手套(單支)', null, '多彩微波爐手套，特製防滑硅膠，隔熱防滑。精選面料，經久耐用，牢固度高。', 50, 100, 1, 0, 0,
         DEFAULT),
