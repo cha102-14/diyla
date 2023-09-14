@@ -116,7 +116,7 @@
             width: 100%;
             height: 100%;
         }
-        .order>a{
+        .allorder>a{
             display: block;
             color: #B26021;
         }
@@ -125,7 +125,7 @@
             text-decoration: none;
             color: #B26021;
         }
-        .order>a:hover{
+        .allorder>a:hover{
             color: #B26021;
         }
         .order:hover{
@@ -152,16 +152,13 @@
             font-weight: bold;
         }
 
-        .order>a>img {
-            width: 20%;
-            border-redius:4px;
-        }
         div.order{
             border: 1px solid #B26021;
             border-radius:4px;
             padding:1rem;
+            margin-bottom:10px;
         }
-        div.order>a>div{
+        div.order>div{
             display:inline-block;
             vertical-align: middle;
         }
@@ -176,10 +173,29 @@
             border-radius:4px;
             line-height:70px;
         }
-        .member>h5{
+        .allOrder>h5{
             margin-bottom:10px;
             margin-top:20px;
         }
+        button.data-button{
+            border-radius: 0.5rem;
+            background-color: #B26021;
+            color: #FCE5CD;
+            border: 1px #B26021;
+            letter-spacing: 3px;
+            padding:3px 8px;
+        }
+        button.data-button:hover{
+            background-color: #FCE5CD;
+            color:  #B26021;
+            transition: all 0.3s;
+        }
+         button.data-button:focus{
+             outline: none;
+         }
+         .button{
+         margin-bottom:10px;
+         }
     </style>
 </head>
 
@@ -200,18 +216,18 @@
         <div class="member">
             <h4 class="member">我的訂單</h4>
             <div class="button">
-                <button class="button" >全部</button>
-                <button class="button" data-cart="0" onclick="cart();">商店</button>
-                <button class="button" data-cart="1" onclick="cart();">DIY</button>
-                <button class="button" data-cart="2" onclick="cart();">課程</button>
+                <button class="data-button" value="3">全部</button>
+                <button class="data-button" value="0">商店</button>
+                <button class="data-button" value="1">DIY</button>
+                <button class="data-button" value="2">課程</button>
             </div>
+            <div class="allorder">
             <h5>商店</h5>
-            <div class="order">
             <c:choose>
                 <c:when test="${not empty comList}">
                 <c:forEach var="comList" items="${comList}">
                     <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
-
+                        <div class="order">
                         <div>
                             <i class="fi fi-tr-tags"></i>訂單編號#${comList.orderNO}<br>
                             <i class="fi fi-ts-calendar-days"></i><fmt:formatDate value="${comList.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" /><br>
@@ -239,6 +255,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
+                        </div>
                     </a>
                 </c:forEach>
                 </c:when>
@@ -249,13 +266,13 @@
                 </c:otherwise>
             </c:choose>
             </div>
+            <div class="allorder">
             <h5>DIY</h5>
-            <div class="order">
             <a href="${ctxPath}/diyOrder/diyOrder_front.jsp">
             <c:choose >
                 <c:when test="${not empty diyList}">
                 <c:forEach var="diyList" items="${diyList}">
-
+                    <div class="order">
                     <div>
                     <i class="fi fi-tr-tags"></i>DIY品項#${diyList.diyCateName}<br>
                     <i class="fi fi-ts-calendar-days"></i>${diyList.diyReserveDate}<br>
@@ -283,8 +300,10 @@
                     <span>您目前還沒有DIY訂位訂單</span>
                 </c:otherwise>
             </c:choose>
+            </div>
             </a>
             </div>
+            <div class="allorder">
             <h5>課程</h5>
             <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
             <div class="order">
@@ -315,26 +334,37 @@
                     <span>您目前還沒有課程訂單</span>
                 </c:otherwise>
             </c:choose>
+            </div>
             </a>
             </div>
         </div>
     </div>
     <script>
+    let buttons = document.getElementsByClassName("data-button");
 
+    let allOrder = document.getElementsByClassName("allorder");
 
-
-
-        function cart(){
-            //let button_el = parseInt(this.getAttribute("data-cart"));
-            //console.log(button_el);
-            //filterCart(button_el); //1 //2 //3
-            let divs = document.getElementsByClassName("order");
-            for(div of divs){
-                if (div ===  ){
-
-                }
+    for(let button of buttons){
+        button.addEventListener("click",function(){
+        console.log(button.value);
+        for(let i=0;i<allOrder.length;i++){
+            let butCount = parseInt(button.value);
+            if(butCount === 3){
+                allOrder[i].style.display="block";
+            } else if(i === butCount){
+                allOrder[i].style.display="block";
+            } else{
+                allOrder[i].style.display="none";
             }
         }
+        })
+    }
+
+
+
+
+
+
 
     </script>
     <jsp:include page="/front_footer.jsp" />
