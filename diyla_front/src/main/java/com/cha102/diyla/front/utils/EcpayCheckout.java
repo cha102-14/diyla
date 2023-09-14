@@ -14,10 +14,6 @@ public class EcpayCheckout {
 	 */
 	public static String goToEcpay(Integer memNO, String tradeDesc, String totalPrice,String token, String itemName,
 								   String receiveInfo,String jsessionid,HttpServletRequest req) {
-<<<<<<< HEAD
-=======
-		// 一般信用卡測試卡號 : 4311-9522-2222-2222 安全碼 : 222
->>>>>>> main
 		// 取得交易時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String tradeDate = sdf.format(new Date(System.currentTimeMillis()));
@@ -37,11 +33,7 @@ public class EcpayCheckout {
 		aioCheckOutALL.setRemark(jsessionid);
 		aioCheckOutALL.setItemName("Diyla商品一批"); // 商品敘述不能超過兩百字，否則顯示商品一批
 		aioCheckOutALL.setReturnURL(req.getContextPath()+"/checkout/ecpayReturn"); // 綠界回傳成功訊息的api網址，上線環境才有用
-<<<<<<< HEAD
 		// 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
-=======
-		// todo 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
->>>>>>> main
 		aioCheckOutALL.setOrderResultURL("http://localhost:8081/diyla_front/checkout/ecpayReturn");
 		aioCheckOutALL.setClientBackURL("http://localhost:8081/diyla_front");
 		aioCheckOutALL.setNeedExtraPaidInfo("N");
