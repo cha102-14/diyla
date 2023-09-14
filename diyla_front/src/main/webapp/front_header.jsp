@@ -290,10 +290,14 @@
             console.log("Connect Success");
         }
 
-        webSocket.onmessage = function (event) {
+        webSocket.onmessage = function (event){
+            let dropDN = document.querySelector("#notification-dropdown");
             let jsonObj = JSON.parse(event.data);
             console.log(jsonObj);
             addListener();
+            dropDN.addEventListener("load",function(){
+				setTimeout("loadNotice()",10000)
+				})
             getNotices();
         }
 
@@ -305,7 +309,7 @@
         }
 
     };
-
+	function loadNotice(){location.href+" #notification-dropdown"}
     function disconnect() {
         console.log("disconnect");
         webSocket.close();
@@ -369,7 +373,6 @@
             }
 
             $('#notification-count').html(noticeLength);
-            $('#notification-dropdown').load(location.href+"#notification-dropdown");
         })
     }
 
