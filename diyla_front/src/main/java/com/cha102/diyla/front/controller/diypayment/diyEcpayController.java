@@ -126,7 +126,7 @@ public class diyEcpayController {
                 e.printStackTrace();
             }
 
-            DiyOrderVO diyOrderVO = new DiyOrderVO(145240000, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
+            DiyOrderVO diyOrderVO = new DiyOrderVO(52, memId, Integer.parseInt(diyNo), recipient, phone, Integer.parseInt(count), Integer.parseInt(period), sqlDate2
                     , Timestamp.valueOf(LocalDateTime.now()), 0, 0, totalPri);
 
             DiyOrderService DOser = new DiyOrderService();
@@ -137,10 +137,10 @@ public class diyEcpayController {
             session.setAttribute("memId", memId);
             session.setAttribute("memVO", memVO);
             String messageContent = "訂單詳情:\n" + "訂單編號:" + diyOrderVO1.getDiyOrderNo() + "\n" + "訂位人:" + recipient + "\n" + "聯絡電話:"
-                    + phone + "\n" + "預約日期:" + sqlDate2 + "\n" + "_____________________\n"
+                    + phone + "\n" + "您預約的日期:" + sqlDate2 +  "\n" +"預約人數:" + Integer.parseInt(count) + "\n"+ "總金額:" + totalPri + "\n" + "\n"+ "_____________________\n"
                     + "DIYLA感謝您的預約!\n"
-                    +"注意:本郵件是由系統自動寄出的通知信，請不要直接回覆此信。\n"
-                    +"若您需要其他協助請直接聯絡我們。\n"
+                    + "注意:本郵件是由系統自動寄出的通知信，請不要直接回覆此信。\n"
+                    + "若您需要其他協助請直接聯絡我們。\n"
                     + "DIYLA團隊敬上";
 
             mailService.sendMail("love12260327@gmail.com", "【DIYLA訂位成功通知】", messageContent);
