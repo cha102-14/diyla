@@ -10,7 +10,7 @@
             <style>
 
                 .bgc_empshowlist {
-                    background-color: rgb(197, 218, 236);
+                    background-color: #FFDDCC;
                 }
 
 
@@ -42,7 +42,37 @@
                     position: absolute;
                 }
 
-                
+
+                td.count {
+                    white-space: nowrap; /* 防止文本折行 */
+                    padding: 8px; /* 设置单元格内边距 */
+                    text-align: center; /* 文本左对齐，根据需要调整 */
+                }
+
+                td.empid {
+                    white-space: nowrap; /* 防止文本折行 */
+                    padding: 8px; /* 设置单元格内边距 */
+                    text-align: left; /* 文本左对齐，根据需要调整 */
+                }
+
+                td.empname {
+                    white-space: nowrap; /* 防止文本折行 */
+                    padding: 8px; /* 设置单元格内边距 */
+                    text-align: left; /* 文本左对齐，根据需要调整 */
+                }
+
+                td.empemail {
+                    white-space: nowrap; /* 防止文本折行 */
+                    padding: 8px; /* 设置单元格内边距 */
+                    text-align: left; /* 文本左对齐，根据需要调整 */
+                }
+
+                td.emptypefun {
+                    white-space: nowrap; /* 防止文本折行 */
+                    padding: 8px; /* 设置单元格内边距 */
+                    text-align: left; /* 文本左对齐，根据需要调整 */
+                }
+
             
 
 
@@ -81,10 +111,10 @@
                         </div>
                         <br>
 
-                        <div class="emptitle">
-                        <tr style="background-color:#b45f06">
-                            <th class="count">筆數</th>
-                            <th class="number">編號</th>
+                        <div style=padding:10px;>
+                        <tr style="background-color:#C08261;padding: 10px;">
+                            <th>筆數</th>
+                            <th>編號</th>
                             <th>姓名</th>
                             <th>照片</th>
                             <th>信箱</th>
@@ -287,21 +317,24 @@
                         for (let i = 0; i < emps.length; i++) {
                             let emp = emps[i];
                             // console.log(emp.empId);
-                            html += "<tr>";
-                            html += `<td>` + (i + 1) + `</td>`;
-                            html += `<td>` + emp.empId + `</td>`;
-                            html += `<td>` + emp.empName + `</td>`;
+                            html += "<tr>"; 
+                            html += `<td class="count">` + (i + 1) + `</td>`;
+                            html += `<td calss="empid">` + emp.empId + `</td>`;
+                            // html += `<td style="height:15px; width:15px;">` + (i + 1) + `</td>`;
+                            // html += `<td style="height:5px; width:5px;">` + emp.empId + `</td>`;
+                            html += `<td class="empname">` + emp.empName + `</td>`;
                             // console.log(emp);
                             if(emp.empPic == "" || emp.empPic == undefined){
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
                             } else {
                                 html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="data: image/jpeg;base64,` + emp.empPic + `"></td>`;
                             }
-                            html += `<td>` + emp.empEmail + `</td>`;
-                            html += `<td>` + emp.typeFun + `</td>`;
+                            html += `<td class="empemail">` + emp.empEmail + `</td>`;
+                            html += `<td class="emptypefun">` + emp.typeFun + `</td>`;
                             html += `<td><button type="button" id="` + emp.empId + `" class="empStatus">` + (emp.empStatus ? "開啟" : "停用") + `</button></td>`;
                             // html += `<td><input type="SUBMIT" value="修改"></td>`;
                             html += `</tr>`;
+                            console.log(emp.empStatus);
                         }
                         //將emps資料放入頁面中
                     }
