@@ -31,7 +31,6 @@ public class CartRedisController {
 	@PostMapping("/shopR/insert")
 	public ResponseEntity<String> insert(@RequestBody CartListDTO dto) {
 		try {
-			System.out.println("AAA");
 			cartService.addItem(dto);
 			JSONObject jsonResponse = new JSONObject();
 			jsonResponse.put("success", true);
@@ -47,7 +46,6 @@ public class CartRedisController {
 	@PostMapping("/shopR/update")
 	public ResponseEntity<String> update(@RequestBody CartListDTO dto) {
 		try {
-			System.out.println("update");
 			cartService.modifyComAmount(dto);
 			JSONObject jsonResponse = new JSONObject();
 			jsonResponse.put("success", true);
@@ -62,7 +60,6 @@ public class CartRedisController {
 	@PostMapping("/shopR/delete")
 	public ResponseEntity<String> deleteCartItem(@RequestParam Integer comNo, @RequestParam Integer memId) {
 		try {
-			System.out.println("del");
 			cartService.delete(memId, comNo);
 			JSONObject jsonResponse = new JSONObject();
 			jsonResponse.put("success", true);
@@ -77,7 +74,6 @@ public class CartRedisController {
 	@DeleteMapping("/shopR/clear/{memId}")
 	public ResponseEntity<String> deleteByMemId(@PathVariable Integer memId) {
 		try {
-			System.out.println("clear");
 			cartService.clear(memId);
 			JSONObject jsonResponse = new JSONObject();
 			jsonResponse.put("success", true);
@@ -92,7 +88,6 @@ public class CartRedisController {
 
 	@GetMapping("/shopR/getlist/{memId}")
 	public String getCartList(Model model, @PathVariable Integer memId) {
-		System.out.println("confirm!!");
 		List<CartListDTO> cartList = cartService.getAll(memId);
 		Integer totalPrice = 0;
 		if (cartList.size() > 0) {

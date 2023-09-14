@@ -36,8 +36,8 @@ public class MailService {
 			// ●5-1) 下拉式選單【選取應用程式】--> 選取【郵件】
 			// ●5-2) 下拉式選單【選取裝置】--> 選取【Windows 電腦】
 			// ●5-3) 最後按【產生】密碼
-			final String myGmail = "ixlogic.wu@gmail.com";
-			final String myGmail_password = "ddjomltcnypgcstn";
+			final String myGmail = "tibame515@gmail.com";
+			final String myGmail_password = "eqvlgcsqsszypcvg";
 			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(myGmail, myGmail_password);
@@ -54,7 +54,6 @@ public class MailService {
 			// 設定信中的內容
 			message.setText(messageContent);
             message.setContent(messageContent, "text/html; charset=utf-8");
-
 			Transport.send(message);
 			System.out.println("傳送成功!");
 		} catch (MessagingException e) {
