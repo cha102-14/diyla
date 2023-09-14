@@ -124,7 +124,7 @@
                                 targets: 10,
                                 render: function (data, type, row, meta) {
                                     if (row.status === "預約單成立") {
-                                        return '<button class="delete-btn" data-reserveId="' + row.reserveId + '">取消預約單</button>';
+                                        return '<button class="delete-btn btn btn-warning" data-reserveId="' + row.reserveId + '">取消預約單</button>';
                                     }
                                     else {
                                         return '';
