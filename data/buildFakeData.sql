@@ -8,6 +8,10 @@ VALUES ('apache', 'app@diyla.com', 'api123456', '0900111222', '2004-12-31', '0',
        ('david', 'doget@diyla.com', '098765d', '0955888999', '1950-6-30', '0', '花蓮縣壽豐鄉福德189號', '2022-12-31'),
        ('exception', 'error@diyla.com', '3456e78', '0977888666', '1977-9-3', '0', '屏東縣鹽埔鄉仕絨村東平街25號',
         '2023-4-4');
+INSERT INTO MEMBER(MEM_NAME, MEM_EMAIL, MEM_PASSWORD, MEM_PHONE,
+                   MEM_BIRTHDAY, MEM_GENDER, MEM_ADDRESS, MEM_DATE,MEM_STATUS)
+VALUES ('淑君', '1021234243@nkust.edu.tw', '123456', '0900111222', '1970-01-01', '0', '澎湖縣馬公市石泉1之31','2021-4-1','1');
+
 
 
 INSERT INTO diyla.commodity_class (COM_CLASS_NAME)
@@ -60,7 +64,8 @@ VALUES (1, DEFAULT, 3, 85, 0, 85, DEFAULT, '老爹', '南方公園', '0987654321
 
        (2, DEFAULT, 2, 400, 0, 400, DEFAULT, '大頭', '南方公園', '0987654321'),
 
-       (3, DEFAULT, 2, 295, 0, 295, DEFAULT, '凱子', '南方公園', '0987654321');
+       (3, DEFAULT, 2, 295, 0, 295, DEFAULT, '凱子', '南方公園', '0987654321'),
+       (6, DEFAULT, 2, 295, 0, 295, DEFAULT, '凱子', '南方公園', '0987654321');
 
 INSERT INTO diyla.commodity_order_detail (ORDER_NO, COM_NO, COM_QUANTITY, COM_PRICE)
 VALUES (1, 11, 2, 25),
@@ -292,7 +297,9 @@ values (10, 0, 1),
        (6, 0, 4),
        (7, 0, 5),
        (-5, 3, 1),
-       (-3, 3, 2);
+       (-3, 3, 2),
+       (-3, 3, 6),
+       (20, 2, 6);
 
 INSERT INTO diy_cate (DIY_NAME, DIY_STATUS, DIY_CATE_NAME, ITEM_DETAILS, AMOUNT)
 VALUES ('Juicy馬卡龍', 0, 3, '馬卡龍：原味+黃色色粉 內餡：檸檬蛋奶餡 裝飾：白巧克力、珍珠糖 🎁附手提紙盒一個 (12個裝一起) ', 300),
@@ -330,7 +337,8 @@ VALUES ('Juicy馬卡龍', 0, 3, '馬卡龍：原味+黃色色粉 內餡：檸檬
 INSERT INTO diy_order (MEM_ID, DIY_NO, CONTACT_PERSON, CONTACT_PHONE, RESERVATION_NUM, DIY_PERIOD, DIY_RESERVE_DATE,
                        CREATE_TIME, RESERVATION_STATUS, PAYMENT_STATUS, DIY_PRICE)
 VALUES (1, 1, 'David', '0978127324', 4, 0, '2023-08-04', '2023-06-04', 0, 0, 580),
-       (2, 2, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
+       (2, 2, 'Lucy', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080),
+       (6, 3, 'Sun', '0931344182', 4, 1, '2023-08-06', '2023-07-04', 0, 0, 1080);
 
 
 INSERT INTO DIY_FORUM(MEM_ID, DIY_NO, ARTI_CONT, DIY_GRA, CREATE_TIME)
@@ -496,7 +504,9 @@ VALUES (1, '您的留言因受到檢舉並審核通過，提醒您若受到檢�
        (4, '您的文章有一個新留言，快來看看吧～',
         '2023-3-30 18:05:59'),
        (5, '您的留言因受到檢舉並審核通過，提醒您若受到檢舉三次將只能瀏覽文章。',
-        '2023-7-7 07:07:07');
+        '2023-7-7 07:07:07'),
+        (6, '您的留言因受到檢舉並審核通過，提醒您若受到檢舉三次將只能瀏覽文章。',
+                '2023-7-7 07:07:07');
 
 
 INSERT INTO CHATROOM(MEM_ID, TEA_ID, CHAT_TIME, CHAT_CONTEXT, CHAT_DIR)
@@ -554,7 +564,8 @@ VALUES (1, 1, 1, '2023-09-17 00:00:00', '2023-09-19', 0, 5, 1300, '或許各位�
        (11, 0, 1, '2023-09-25 00:00:00', '2023-09-29', 1, 5, 599, '傳統的好滋味!記憶中的好味道!長輩的最愛,動手自己來給長輩最暖的呵護,阿嬤我來囉!!!', '手工牛軋糖班', 2, 1),
        (12, 6, 1, '2023-09-26 00:00:00', '2023-09-24', 0, 5, 899, '來道媽媽的最愛!香煎馬頭魚!煎魚一直是大家的敵人,快來克服它吧,別再把魚煎不見,事不宜遲趕快來報名!', '香煎馬頭魚', 2, 1);
 INSERT INTO diyla.class_reserve(`RESERVE_ID`, `CLASS_ID`, `MEM_ID`, `HEADCOUNT`, `STATUS`, `CREATE_TIME`, `TOTAL_PRICE`)
-VALUES ('1', '1', '1', '3', '0', CURRENT_TIMESTAMP, '4500');
+VALUES ('1', '1', '1', '3', '0', CURRENT_TIMESTAMP, '4500'),
+        ('2', '1', '6', '3', '0', CURRENT_TIMESTAMP, '4500');
 
 INSERT INTO diyla.ing_storage(`BRAND`, `ING_NUMS`, `ING_NAME`, `STATUS`, `SERVING_SIZE`)
 VALUES ('安佳', '4500', '奶油', '0', '45'),
@@ -572,5 +583,8 @@ VALUES ('安佳', '4500', '奶油', '0', '45'),
 
 
 
-
+INSERT INTO `diyla`.`commodity_track` (`TRACK_ID`, `MEM_ID`, `COM_NO`) VALUES ('8', '1', '2');
+INSERT INTO `diyla`.`commodity_track` (`TRACK_ID`, `MEM_ID`, `COM_NO`) VALUES ('9', '6', '8');
+INSERT INTO `diyla`.`commodity_track` (`TRACK_ID`, `MEM_ID`, `COM_NO`) VALUES ('10', '6', '3');
+INSERT INTO `diyla`.`commodity_track` (`TRACK_ID`, `MEM_ID`, `COM_NO`) VALUES ('11', '2', '9');
 

@@ -305,7 +305,7 @@
             </div>
             <div class="allorder">
             <h5>課程</h5>
-            <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
+             <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
             <div class="order">
             <c:choose >
                 <c:when test="${not empty classList}">

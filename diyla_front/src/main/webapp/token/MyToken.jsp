@@ -246,7 +246,7 @@
                 <h4 class="member">我的代幣</h4>
                  <br>
                  <div class="token">
-                 <table id="token">
+                 <table id="token" class="display">
                      <thead>
                          <tr>
                              <th>代幣數量</th>
@@ -295,7 +295,6 @@
                 "pageLength":"5",
                 "paging":true,
                 "ordering":true,
-                "sPaginationType":"full_numbers",
                 "language":{
                     "lengthMenu":"顯示_MENU_筆結果",
                     "zeroRecords":"尚無代幣紀錄",
@@ -312,7 +311,7 @@
                     "aria":{
                         "sortAscending":"：升冪排列",
                         "sortDescending":"：降冪排列"
-                    }
+                    },
 
                 }
 
