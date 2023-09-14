@@ -16,7 +16,7 @@ public class QuickClassPhotoInsert {
         String USER = "root";
         String PASSWORD = "1234";
         String INSERT_PHOTO = "UPDATE CLASS SET CLASS_PIC = ? WHERE CLASS_ID = ? ;";
-        for (int i = 1; i <= 30; i++) {
+        for (int i = 1; i <= 5; i++) {
             File file = new File("C:/CLASS/" + i + ".jpg");
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
