@@ -38,9 +38,9 @@
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -49,7 +49,7 @@
             }
             Integer reqTeacherId = null;
             TeacherVO reqTeacher = null;
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 List<TeacherVO> teacherList = teacherService.getAllTeacher();
                 pageContext.setAttribute("teacherList", teacherList);
             } else if ("MASTER".equals(type)) {
@@ -280,9 +280,10 @@
             var reqTeaId = "${reqTeaId}";
             var empId = "${empId}";
             var type = "${type}";
+            
             //判斷是否有權限做修改
             function isUserHaveAuth() {
-                if (type === "ADMIN" || type === "MASTER"){
+                if (type === "BACKADMIN" || type === "MASTER"){
                     return true;
                 } else {
                     return false;
@@ -336,14 +337,14 @@
             }
             //兩顆按鈕的事件處理
             modifyButton.addEventListener('click', function () {
-                if(type === "ADMIN" || courseTeaId === reqTeaId){
+                if(type === "BACKADMIN" || courseTeaId === reqTeaId){
                     window.location.href = "${ctxPath}"+'/verifyCourseAction?action=modify&courseId=' + courseId;
                 } else {
                     redirect();
                 }
             });
             deleteButton.addEventListener('click', function() {
-                if(type === "ADMIN" || courseTeaId === reqTeaId){
+                if(type === "BACKADMIN" || courseTeaId === reqTeaId){
                     Swal.fire({
                         title: "確定要下架課程嗎?",
                         icon: "warning",
@@ -387,7 +388,7 @@
                 }
             });
             backButton.addEventListener('click', function(){
-                if(type === "ADMIN" || courseTeaId === reqTeaId){
+                if(type === "BACKADMIN" || courseTeaId === reqTeaId){
                     Swal.fire({
                         title: "確定要上架課程嗎?",
                         icon: "warning",

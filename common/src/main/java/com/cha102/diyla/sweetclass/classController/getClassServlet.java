@@ -29,8 +29,8 @@ public class getClassServlet extends HttpServlet {
             if (categoryId == -1){
                 if(courses.getClassStatus() == 0 || courses.getClassStatus() == 2) {
                     JSONObject jsonCourse = new JSONObject();
-                    if (courses.getClassPic().length == 0) {
-                        jsonCourse.put("coursePic", "無圖片。");
+                    if (courses.getClassPic() == null) {
+                        jsonCourse.put("coursePic", "");
                     } else {
                         jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
                     }
@@ -53,8 +53,8 @@ public class getClassServlet extends HttpServlet {
             } else if (courses.getCategory() == categoryId) {
                 if(courses.getClassStatus() == 0 || courses.getClassStatus() == 2) {
                     JSONObject jsonCourse = new JSONObject();
-                    if (courses.getClassPic().length == 0) {
-                        jsonCourse.put("coursePic", "無圖片。");
+                    if (courses.getClassPic() == null) {
+                        jsonCourse.put("coursePic", "");
                     } else {
                         jsonCourse.put("coursePic", Base64.getEncoder().encodeToString(courses.getClassPic()));
                     }

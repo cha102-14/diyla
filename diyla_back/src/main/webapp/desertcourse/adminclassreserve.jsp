@@ -55,9 +55,9 @@
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -66,7 +66,7 @@
             }
             Integer teacherId = null;
             TeacherVO teacher = null;
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 List<TeacherVO> teacherList = teacherService.getAllTeacher();
                 pageContext.setAttribute("teacherList", teacherList);
             } else if ("MASTER".equals(type)) {
@@ -131,7 +131,7 @@
                     } else{
                     var Id = null;
                     //若type為ADMIN,則將teaId設-1,可瀏覽全部課程, MASTER則為後台教師,則將teaId設為目前教師Id
-                    if (type === "ADMIN") {
+                    if (type === "BACKADMIN") {
                         Id = -1;
                     } else if (type === "MASTER") {
                         Id = "${reqTeaId}";

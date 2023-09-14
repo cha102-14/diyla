@@ -60,8 +60,8 @@ public class AddNewCourseServlet extends HttpServlet {
             intro = req.getParameter("courseIntro").trim();
             limit = Integer.parseInt(req.getParameter("courseLimit").trim());
             price = Integer.parseInt(req.getParameter("price").trim());
-            ingredientTypes = req.getParameterValues("ingredientType[]");
-            ingredientQuantities = req.getParameterValues("ingredientQuantity[]");
+            ingredientTypes = (String[])req.getParameterValues("ingredientType[]");
+            ingredientQuantities = (String[])req.getParameterValues("ingredientQuantity[]");
             courseIngIdList = new Integer[ingredientTypes.length];
             courseIngQuantitiesList = new Integer[ingredientQuantities.length];
             // 開始做圖片相關的處理

@@ -273,6 +273,7 @@ CREATE TABLE TOKEN
     CREATE TABLE `speciality` (
       `SPE_ID` INT NOT NULL AUTO_INCREMENT,
       `SPE_NAME` VARCHAR(20) NOT NULL,
+      UNIQUE (`SPE_NAME`),
       PRIMARY KEY (`SPE_ID`));
 
     CREATE TABLE `tea_speciality` (

@@ -82,8 +82,7 @@ MENU DETAILS START
                         <div class="tab-pane fade" id="pills-home" role="tabpanel"
                              aria-labelledby="pills-home-tab" tabindex="0">
                             <div class="menu_det_description">
-                                <p>訂位前請詳讀資訊以確保您的權益
-                                </p>
+                                <p><span style="font-size: 18px; font-weight: bold; color: red;">訂位前請詳讀資訊以確保您的權益</span></p>
                                 <ul>
                                     <li>● 因安全考量，無論是否有大人陪同，都無法接待12歲以下小朋友。
                                         (為避免小朋友年齡爭議，請攜帶可證明年齡之相關證件，供必要時核對)
@@ -98,18 +97,13 @@ MENU DETAILS START
                                     <li>● 費用依『甜點價格』收費。(無服務費)</li>
                                     <li>● 一份甜點價格限一人製作，其餘人數皆加收陪同費$100/人。</li>
                                 </ul>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Earum itaque nesciunt dolor laudantium placeat sed velit
-                                    aspernatur, nobis quos quibusdam distinctio voluptatum officia
-                                    Beatae, dolorum ad ea deleniti ratione voluptatum similique
-                                    omnis voluptas tempora optio soluta</p>
+                                <p>【修改及取消訂位注意事項】</p>
 
                                 <ul>
-                                    <li>Reiciendis blanditiis architecto. Debitis nesciunt
-                                        inventore voluptate
-                                    <li>Lorem ipsum dolor sit amet consectetur adipisicing
-                                        elit Doloribus.
-                                    </li>
+                                    <li>● 請在預約日三日前取消預約，否則不受理全額退費。 </li>
+                                    <li>● 若須修改聯絡人、電話相關資訊請至"查詢我的訂單"內修改。</li>
+                                    <li>● 代幣優惠折扣僅限商城使用，DIY體驗恕不折扣。</li>
+                                    <li>● 營業時間: 9:00~12:00，14:00~16:00，18:00~21:00</li>
 
                                 </ul>
 
