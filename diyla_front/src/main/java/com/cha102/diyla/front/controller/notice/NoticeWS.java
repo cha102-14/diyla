@@ -36,8 +36,7 @@ public class NoticeWS {
         }
 
         //排程器 定時取出redis 送到前端
-        timer = new Timer();
-        timer.schedule(new Task(),5000);
+
     }
 
 
@@ -46,12 +45,14 @@ public class NoticeWS {
 
         Set<Integer> memIds = sessionMap.keySet();
         for (Integer memId : memIds){
-            System.out.println(memId);
+            System.out.println("get"+memId);
             JedisNotice.delJedisNotice(memId);
+            System.out.println("delete");
         }
         System.out.println(message);
-        System.out.println("delete");
 
+        timer = new Timer();
+        timer.schedule(new Task(),5000);
 
     }
     @OnError
@@ -71,15 +72,16 @@ public class NoticeWS {
             for (Session session : memIdSessions){
                 if(session.isOpen()){
                     session.getAsyncRemote().sendText(gson.toJson(data));
+                    System.out.println("send"+data);
                 }
             }
 
 //            onMessage(memIdSession,memId);
             //裡面放onmessage方法
             //裡面放取出redis 丟到前端 onmessage移除redis的值?
-//
+//            onopen連線
 
-
+//一連線先取得ID 取出redis 丟到前端
 
         }
     }
