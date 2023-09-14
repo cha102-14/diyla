@@ -9,6 +9,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="static/picture/favicon.png">
     <link rel="stylesheet" href="/diyla_front/diy/css/bootstrap1.min.css">
     <link rel="stylesheet" href="/diyla_front/diy/css/style3.css">
+    <script>
+        function navigateToDIYList() {
+            window.location.href = '${ctxPath}/diyCate/diyCateList';
+        }
+    </script>
 </head>
 
 <body>
@@ -38,7 +43,7 @@
                             <div class="check mb-25"><img src="/diyla_front/diy/image/check.png" alt=""></div>
                             <p>取消/修改訂位，可於[我的訂單]自行完成。
                                 座位保留10分鐘，遲到須現場重新候位。</p>
-                            <a href="/diyla_front/diyOrder/diyOrder_front.jsp" class="btn"
+                            <a href="javascript:void(0);" onclick="navigateToDIYList();" class="btn"
                                style="font-size: 18px;">繼續瀏覽DIY品項</a>
                             <a href="/diyla_front/diyOrder/diyOrder_front.jsp" class="btn" style="font-size: 18px;">查詢我的訂單</a>
                             <p class="get-ans">Get answers to all your <a href="/diyla_front/pbm/pbm.jsp">Questions</a> you might have.</p>

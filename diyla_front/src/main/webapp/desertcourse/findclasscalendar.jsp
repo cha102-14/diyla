@@ -29,9 +29,9 @@
                      eventContent: function (arg) {
                               var startTime = arg.event.start;
                               var timeCategory = getTimeCategory(startTime);
-                              
+                              var isFullClass = arg.event.extendedProps.isFull ? 'event-full' : '';
                               // 只顯示早上/下午/晚上之一，根據時間分類
-                              var timeHtml = '<div class="event-item"><div class="event-time">' + timeCategory + '</div>';
+                              var timeHtml = '<div class="event-item ' + isFullClass + '"><div class="event-time">' + timeCategory + '</div>';
                               var titleHtml = '<div class="event-title">' + arg.event.title + '</div></div>';
                               return { html: timeHtml + titleHtml };
                           }
@@ -77,22 +77,28 @@
             font-size: 1.2rem;
             margin-bottom: 8vh;
         }
-        .event-item{
-            display:flex;
-            flex-direction: row;
-            background: #66c2ff;
-            width: 100%;
-            border-radius: 2vh;
-        }
-        .event-time{
-            margin-right: 4%;
-            font-size: 1.3rem;
-            color: brown;
-        }
-        .event-title{
-            font-size: 1.2rem;
-            color: #52527a;
-        }
+                    .event-time{
+                      margin-right: 10px;
+                      font-size: 1.2rem;
+                      font-weight:bold;
+                      color:brown;
+                      
+                    }
+                    .event-title{
+                      font-size: 1.2rem;
+                      color:black;
+                      white-space: wrap;
+                    }
+                    .event-item{
+                      display:flex;
+                      flex-direction: row;
+                      width: 100%;
+                      border-radius: 5px;
+                      background: #b3ffb3;
+                    }
+                    .event-full {
+                        background: #ccc; 
+                    }
         </style>
     </head>
 

@@ -50,9 +50,9 @@
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -61,7 +61,7 @@
             }
             Integer teacherId = null;
             TeacherVO teacher = null;
-            if("ADMIN".equals(type)) {
+            if("BACKADMIN".equals(type)) {
                 List<TeacherVO> teacherList = teacherService.getAllTeacher();
                 pageContext.setAttribute("teacherList", teacherList);
             } else if ("MASTER".equals(type)) {
@@ -131,7 +131,7 @@
                 }
              });
             } else {
-                if (type === "ADMIN") {
+                if (type === "BACKADMIN") {
                     getTeaCode = -1;
                 } else if (type === "MASTER") {
                     getTeaCode = "${requestTeaId}";
@@ -306,7 +306,7 @@
                     success: function(response){
                             if(response.isAllowed) {
                                 Swal.fire({
-                                    title:'覆職師傅成功!',
+                                    title:'恢復師傅成功!',
                                     icon: 'success',
                                     confirmButtonText: '確定'
                                 }).then((result) => {
@@ -318,7 +318,7 @@
                                 })
                             } else{
                                 Swal.fire({
-                                    title: '無權限! 覆職師傅失敗!',
+                                    title: '無權限! 恢復師傅失敗!',
                                     icon: 'error',
                                     confirmButtonText: '確定'
                                 })

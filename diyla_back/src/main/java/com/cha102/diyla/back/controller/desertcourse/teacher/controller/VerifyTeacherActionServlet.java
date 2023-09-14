@@ -21,17 +21,18 @@ public class VerifyTeacherActionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         //取得當前連線session的empVO
         HttpSession session = req.getSession();
+        Integer thisEmpId = (Integer)session.getAttribute("empId");
         //判斷該連線者是否有權限
         Object typeFunObj = session.getAttribute("typeFun");
         boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
         String type = "notAuth";
-        if (session == null){
+        if (session != null){
             if (isTypeFunList) {
                 List<String> typeFun = (List<String>) session.getAttribute("typeFun");
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
 
                 } else if (containsMaster) {
                     type = "MASTER";
@@ -43,13 +44,14 @@ public class VerifyTeacherActionServlet extends HttpServlet {
         } else {
             type = "NOSESSION";
         }
+        System.out.println(type);
         //處理res相關
         res.setContentType("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
         JSONObject resJson = new JSONObject();
         PrintWriter out = res.getWriter();
         //取得的empId以及是否有修改權限
-        Integer thisEmpId = (Integer)session.getAttribute("empId");
+
         //取得請求修改teacherId以及目前請求者的empId
         Integer teacherId = Integer.parseInt(req.getParameter("teacherId"));
         TeacherService teacherService = new TeacherService();
@@ -60,8 +62,8 @@ public class VerifyTeacherActionServlet extends HttpServlet {
         String action = req.getParameter("action");
         //分成modify和delete的個別驗證
         if("delete".equals(action)) {
-            if("ADMIN".equals(type)) {
-                reqTeacher.setTeaStatus(1);
+            if("BACKADMIN".equals(type)) {
+
                 teacherService.updateTeaStatus(teacherId,1);
                 resJson.put("isAllowed", true);
             } else {
@@ -76,7 +78,7 @@ public class VerifyTeacherActionServlet extends HttpServlet {
             out.flush();
         } else if("modify".equals(action)){
 
-            if("ADMIN".equals(type) || reqEmpId == thisEmpId) {
+            if("BACKADMIN".equals(type) || reqEmpId == thisEmpId) {
                 String url = "/desertcourse/modifyteacher.jsp";
                 RequestDispatcher allowModify = req.getRequestDispatcher(url);
                 req.setAttribute("teacherVO", reqTeacher);
@@ -87,8 +89,8 @@ public class VerifyTeacherActionServlet extends HttpServlet {
                 notAllow.forward(req,res);
             }
         } else if("back".equals(action)) {
-            if("ADMIN".equals(type)) {
-                reqTeacher.setTeaStatus(1);
+            if("BACKADMIN".equals(type)) {
+
                 teacherService.updateTeaStatus(teacherId,0);
                 resJson.put("isAllowed", true);
             } else {

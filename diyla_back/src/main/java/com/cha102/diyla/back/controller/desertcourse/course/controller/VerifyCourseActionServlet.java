@@ -27,16 +27,19 @@ public class VerifyCourseActionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         //確認當前session和使用者權限
         HttpSession session = req.getSession();
+        Integer thisEmpId = (Integer) session.getAttribute("empId");
         Object typeFunObj = session.getAttribute("typeFun");
         boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
         String type = "notAuth";
-        if (session == null){
+        if (session != null){
             if (isTypeFunList) {
                 List<String> typeFun = (List<String>) session.getAttribute("typeFun");
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
+                System.out.println(containsAdmin);
+                System.out.println(containsMaster);
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
 
                 } else if (containsMaster) {
                     type = "MASTER";
@@ -45,9 +48,9 @@ public class VerifyCourseActionServlet extends HttpServlet {
             } else {
                 type = (String) typeFunObj;
             }
-    } else {
-        type = "NOSESSION";
-    }
+        } else {
+            type = "NOSESSION";
+        }
         //處理res相關
         res.setContentType("UTF-8");
         res.setContentType("application/json; charset=UTF-8");
@@ -62,14 +65,13 @@ public class VerifyCourseActionServlet extends HttpServlet {
         boolean adminAuthCode = false;
         ClassVO reqCourse = classService.getOneClass(courseId);
         //確認是否有管理員權限
-        if ("ADMIN".equals(type)) {
+        if ("BACKADMIN".equals(type)) {
             adminAuthCode = true;
         }
         //取得請求修改courseId以及當前請求的empId
         Integer teacherId = classService.getOneClass(courseId).getTeaId();
         TeacherVO reqTeacher = teacherService.getOneTeacher(teacherId);
         Integer reqEmpId = reqTeacher.getEmpId();
-        Integer thisEmpId = (Integer) session.getAttribute("empId");
         //取得使用者打算做甚麼action
         String action = req.getParameter("action");
         System.out.println(action);

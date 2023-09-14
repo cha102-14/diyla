@@ -28,6 +28,7 @@
   <url-pattern>/art/editart.jsp</url-pattern>
   <url-pattern>/art/personalart.jsp</url-pattern>
   <url-pattern>/art/selectcoin.jsp</url-pattern>
+  <url-pattern>/art/oneart.jsp</url-pattern>
   <url-pattern>/front_chat_page.jsp</url-pattern>
   <url-pattern>/diyOrder/diyOrder_front.jsp</url-pattern>
   <url-pattern>/diyOrder/diyOrder.jsp</url-pattern>
