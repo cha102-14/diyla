@@ -1,7 +1,5 @@
 package com.cha102.diyla.front;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -32,8 +30,8 @@ public class MailService {
 //        String emailFrom = "feal1221@gmail.com";
 //        String pw = "pgktgjhqndsinxci";
 
-        String emailFrom = "shihshih.vivi@gmail.com";
-        String pw ="afklxhhvhqcconbk";
+        String emailFrom = "tibame515@gmail.com";
+        String pw ="eqvlgcsqsszypcvg";
 
         //支援TLS
 //        props.put("mail.smtp.starttls.enable","true");
