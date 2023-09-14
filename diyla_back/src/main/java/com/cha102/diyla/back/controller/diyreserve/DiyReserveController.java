@@ -151,10 +151,7 @@ public class DiyReserveController {
 				Date dateNoSummary = diyReserveResultEntity.getDiyReserveDate();
 				Integer periodNoSummary = diyReserveResultEntity.getDiyPeriod();
 				java.sql.Date dateNoSummarySQL = new java.sql.Date(dateNoSummary.getTime());
-//				System.out.println("sql  "+dateNoSummarySQL);
 				java.sql.Date sqlDate = new java.sql.Date(diyReserveResultEntity.getDiyReserveDate().getTime());
-//				System.out.println("SQLDATE  "+ sqlDate);
-//				System.out.println("DTOGET    " + diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary));
 				///////////////////////////////////////////////////////////////////////////
 				
 				if (sdf.format(diyReserveResultEntity.getDiyReserveDate())
@@ -163,9 +160,7 @@ public class DiyReserveController {
 						&& diyReserveResultEntity.getPeoCount() != diyReserveResultEntity_DTO.getPeoCount()) {
 
 					diyReserveResultEntity.setPeoCount(diyReserveResultEntity_DTO.getPeoCount());
-//					System.out.println( "有人訂的  " + diyReserveResultEntity_DTO.getPeoCount());
-					diyReserveResultEntity.setPeoLimit( ///////////////
-							/* diyReserveResultEntity.getPeoLimit() - */ diyReserveResultEntity_DTO.getPeoLimit());
+					diyReserveResultEntity.setPeoLimit(diyReserveResultEntity_DTO.getPeoLimit());
 
 					if (diyReserveResultEntity_DTO.getPeoCount() < 20) {
 						diyReserveResultEntity.setReserveStatus(0);
@@ -180,7 +175,8 @@ public class DiyReserveController {
 					reserveResultRepository.save(diyReserveResultEntity);
 
 				} else if(diyReserveResultEntity.getPeoCount() !=20 && diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary).getDiyPeriod()== null){
-//					System.out.println("進來嘍"   +  diyReserveResultEntity.getDiyReserveDate());
+					System.out.println("============" + diyReserveResultEntity);
+					System.out.println("============" + diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary));
 					diyReserveResultEntity.setPeoCount(0);
 					diyReserveResultEntity.setPeoLimit(20);
 					diyReserveResultEntity.setItemQuantity(20);
