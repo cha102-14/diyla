@@ -53,9 +53,9 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
             boolean isTypeFunList = (typeFunObj != null && (typeFunObj instanceof java.util.List));
             if (isTypeFunList) {
                 boolean containsMaster = typeFun.contains("MASTER");
-                boolean containsAdmin = typeFun.contains("ADMIN");
+                boolean containsAdmin = typeFun.contains("BACKADMIN");
                 if (containsMaster && containsAdmin) {
-                    type = "ADMIN";
+                    type = "BACKADMIN";
                 } else if (containsMaster) {
                     type = "MASTER";
                 }
@@ -68,7 +68,11 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
         pageContext.setAttribute("type", type);
         ClassVO courseVO = (ClassVO) request.getAttribute("courseVO");
         %>
-
+        <style>
+        .btn{
+            white-space: nowrap;
+        }
+        </style>
     </head>
 
     <body>
@@ -83,15 +87,14 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                     style="margin-top: 5vh; margin-bottom: 5vh">
                     <h2 id="title" class="title-tag">修改甜點課程</h2>
                 </div>
+                        
                 <div id="contentBlock">
                     <div id="formBlock">
-                        <a
-                            href="${ctxPath}/desertcourse/listalldesertcoursecalendar.jsp">前往課程日曆表</a>
                         <form action="${ctxPath}/modifyCourse" method="post" enctype="multipart/form-data">
                             <input type="hidden" id="modifyCourseId" name="modifyCourseId" value="${courseVO.classId}">
                             <div class="row">
                                 <c:choose>
-                                    <c:when test="${type == 'ADMIN'}">
+                                    <c:when test="${type == 'BACKADMIN'}">
                                         <div id="teacherIdField"
                                             class="col-md-6 form-group">
                                             <label for="teacherId">師傅編號:
@@ -404,7 +407,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                     });
                 //阻擋無權限人員修改課程
                 var type = "${type}";
-                if (type !== "ADMIN" && type !== "MASTER") {
+                if (type !== "BACKADMIN" && type !== "MASTER") {
                     // 啟動定時器，5秒後導航到其他網頁
                     setTimeout(function () {
                         window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
@@ -579,7 +582,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                             } else {
                                 setTimeout(function () {
                                 window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
-                                }, 5000); // 5000 毫秒 = 5 秒
+                                }, 3000); // 3000 毫秒 = 3 秒
                                 Swal.fire({
                                     title: "課程修改成功",
                                     icon: "success",

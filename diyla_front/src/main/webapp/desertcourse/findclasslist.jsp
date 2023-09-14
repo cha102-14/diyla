@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+            <jsp:include page="/front_header.jsp" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>甜點課程列表</title>
@@ -71,13 +72,16 @@
     li:hover.one {
       background-color: white;
     }
+    .card-title{
+        color: brown;
+        font-weight: bold;
+    }
     </style>
 </head>
 
 <body>
-<div>
-<jsp:include page="/front_header.jsp" />
-</div>
+
+
 <section id="navibar">
 <jsp:include page="/desertcourse/navibar.jsp" />
 </section>
@@ -124,59 +128,54 @@
 <script>
     $(document).ready(function() {
     function loadCourses(catId = -1) {
-$.ajax({
-    url: '${ctxPath}/getDesertCourse',
-    method: 'GET',
-    data: { categoryId: catId },
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    dataType: 'json',
-    success: function (data) {
-        var courseContainer = $('#courseContainer');
-        $('#courseContainer').empty();
-        var rowContainer = $('<div class="row"></div>');
+    $.ajax({
+        url: '${ctxPath}/getDesertCourse',
+        method: 'GET',
+        data: { categoryId: catId },
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        dataType: 'json',
+        success: function (data) {
+            var courseContainer = $('#courseContainer');
+            $('#courseContainer').empty();
+            var rowContainer = $('<div class="row"></div>');
+            data.forEach(function (course, index) {
+                var courseCardHtml = '<div class="col-md-4 col-sm-6 col-lg-4 wow fadeInUp">'; 
+                courseCardHtml += '<div class="card shadow-sm">';
+                courseCardHtml += '<img style="height: 40vh;"class="card-img-top" src="data:image/jpeg;base64,' + course.coursePic + '" alt="' + course.courseName + '">';
+                courseCardHtml += '<div class="card-body">';
+                courseCardHtml += '<h5 class="card-title">' + course.courseName + '</h5>';
+                courseCardHtml += '<p class="card-text">上課時間: ' + course.courseDate + " " + course.courseSeq + '</p>';
+                courseCardHtml += '<p class="card-text">報名截止日期: ' + course.regEndDate + '</p>';
+                var courseIntro = course.courseIntro.length > 20 ? course.courseIntro.substring(0, 16) + '...' : course.courseIntro;
+                courseCardHtml += '<p class="card-text">課程簡介: ' + courseIntro + '</p>';
+                courseCardHtml += '<button class="detailButton btn btn-primary" data-courseid='+ course.courseId+'>課程詳情</button>'
+                courseCardHtml += '</div>';
+                courseCardHtml += '</div>';
+                courseCardHtml += '</div>';
+                rowContainer.append(courseCardHtml);
 
-        data.forEach(function (course, index) {
+                if ((index + 1) % 3 === 0 || index === data.length - 1) {
+                    rowContainer.css('margin-bottom', '5vh');
+                    courseContainer.append(rowContainer);
+                    rowContainer = $('<div class="row"></div>');
+                }
 
-            var courseCardHtml = '<div class="col-md-4 col-sm-6 col-lg-4 wow fadeInUp">'; // 使用 col-md-4 来确保每行显示3个卡片
-            courseCardHtml += '<div class="card shadow-sm">';
-            courseCardHtml += '<img style="height: 40vh;"class="card-img-top" src="data:image/jpeg;base64,' + course.coursePic + '" alt="' + course.courseName + '">';
-            courseCardHtml += '<div class="card-body">';
-            courseCardHtml += '<h5 class="card-title">' + course.courseName + '</h5>';
-            courseCardHtml += '<p class="card-text">上課時間: ' + course.courseDate + " " + course.courseSeq + '</p>';
-            courseCardHtml += '<p class="card-text">報名截止日期: ' + course.regEndDate + '</p>';
-            var courseIntro = course.courseIntro.length > 20 ? course.courseIntro.substring(0, 16) + '...' : course.courseIntro;
-            courseCardHtml += '<p class="card-text">課程簡介: ' + courseIntro + '</p>';
-            courseCardHtml += '<button class="detailButton btn btn-primary" data-courseid='+ course.courseId+'>課程詳情</button>'
-            courseCardHtml += '</div>';
-            courseCardHtml += '</div>';
-            courseCardHtml += '</div>';
-
-
-            rowContainer.append(courseCardHtml);
-
-            if ((index + 1) % 3 === 0 || index === data.length - 1) {
-                rowContainer.css('margin-bottom', '5vh');
-                courseContainer.append(rowContainer);
-                rowContainer = $('<div class="row"></div>');
+            });
+        },
+        error: function () {
+            console.log('Error fetching course data');
             }
         });
-    },
-    error: function () {
-        console.log('Error fetching course data');
     }
-});
-
-
-        }
         loadCourses();
-    $('#courseCatContainer').on('click', '.categoryTab', function(){
-        var category = $(this).data('category');
-        loadCourses(category);
-    });
-    });
+        $('#courseCatContainer').on('click', '.categoryTab', function(){
+            var category = $(this).data('category');
+            loadCourses(category);
+        });
         $('#courseContainer').on('click', '.detailButton', function(){
         var courseId = $(this).data('courseid');
         window.location.href = 'classdetail.jsp?id=' + courseId;
+    });
     });
 </script>
 </html>

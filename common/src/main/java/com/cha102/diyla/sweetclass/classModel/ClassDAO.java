@@ -15,5 +15,5 @@ public interface ClassDAO {
     ClassVO findByDate(java.sql.Date classDate);
 
     List<ClassVO> getAll();
-
+    String updateAllRegEndClass ();
 }

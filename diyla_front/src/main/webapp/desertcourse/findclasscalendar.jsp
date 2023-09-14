@@ -25,9 +25,29 @@
                     eventClick: function (info) {
                         var courseId = info.event.id;
                         window.location.href = 'classdetail.jsp?id=' + courseId;
-                    }
+                    },
+                     eventContent: function (arg) {
+                              var startTime = arg.event.start;
+                              var timeCategory = getTimeCategory(startTime);
+                              var isFullClass = arg.event.extendedProps.isFull ? 'event-full' : '';
+                              // 只顯示早上/下午/晚上之一，根據時間分類
+                              var timeHtml = '<div class="event-item ' + isFullClass + '"><div class="event-time">' + timeCategory + '</div>';
+                              var titleHtml = '<div class="event-title">' + arg.event.title + '</div></div>';
+                              return { html: timeHtml + titleHtml };
+                          }
                 });
+                             function getTimeCategory(startTime) {
+                        var hour = startTime.getHours();
+                        if (hour >= 6 && hour < 12) {
+                            return '早上 ';
+                        } else if (hour >= 12 && hour < 18) {
+                            return '下午 ';
+                        } else {
+                            return '晚上 ';
+                        }
+                    }
                 calendar.render();
+                
             });
 
         </script>
@@ -57,6 +77,28 @@
             font-size: 1.2rem;
             margin-bottom: 8vh;
         }
+                    .event-time{
+                      margin-right: 10px;
+                      font-size: 1.2rem;
+                      font-weight:bold;
+                      color:brown;
+                      
+                    }
+                    .event-title{
+                      font-size: 1.2rem;
+                      color:black;
+                      white-space: wrap;
+                    }
+                    .event-item{
+                      display:flex;
+                      flex-direction: row;
+                      width: 100%;
+                      border-radius: 5px;
+                      background: #b3ffb3;
+                    }
+                    .event-full {
+                        background: #ccc; 
+                    }
         </style>
     </head>
 
