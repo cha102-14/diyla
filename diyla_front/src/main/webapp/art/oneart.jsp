@@ -94,6 +94,9 @@
                         <c:forEach var="error" items="${errorsMsgList}">
                             <p class="error">${error.defaultMessage}</p>
                         </c:forEach>
+                        <c:forEach var="error" items="${Blacklist}">
+                            <p class="error">${error}</p>
+                        </c:forEach>
                         <input name="memId" type="hidden" value="${memId}" />
                         <input name="artNo" type="hidden" value="${artVO.artNo}" />
                         <button type="submit">send</button>
