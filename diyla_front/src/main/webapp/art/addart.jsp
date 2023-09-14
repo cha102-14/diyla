@@ -27,6 +27,13 @@
                         </c:forEach>
                     </ul>
                 </c:if>
+                <c:if test="${not empty Blacklist}">
+                    <ul class="error">
+                        <c:forEach items="${Blacklist}" var="error">
+                            <li>${error}</li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
                 <table id="art_table">
                     <tr>
                         <td class="td1">文章標題</td>

@@ -29,7 +29,7 @@
                                    font-weight: bold;
                                    font-size: 50px;
                                    font-style: #f3f3f3;
-                                   background-color: #663709;
+                                   background-color: #C08261;
                               }
 
                               .emp_content {
@@ -77,7 +77,7 @@
 
                                              <tr>
                                                   <td>管理員密碼:</td>
-                                                  <td><input type="TEXT" name="empPassword"
+                                                  <td><input type="password" name="empPassword"
                                                             value="<%= (empVO==null)? "" : empVO.getEmpPassword()%>"
                                                             placeholder="請輸入管理員密碼" size="30" />
                                                             <span  id ="upFiles.errors" class="error">${errorMsgMap.empPassword}</span>

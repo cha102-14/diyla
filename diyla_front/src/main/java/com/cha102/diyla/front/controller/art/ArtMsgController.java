@@ -4,6 +4,7 @@ import com.cha102.diyla.articleModel.ArtService;
 import com.cha102.diyla.articleModel.ArtVO;
 import com.cha102.diyla.articlemsgmodel.ArtMsgService;
 import com.cha102.diyla.articlemsgmodel.ArtMsgVO;
+import com.cha102.diyla.member.MemberService;
 import com.cha102.diyla.noticeModel.NoticeService;
 import com.cha102.diyla.noticeModel.NoticeVO;
 import com.cha102.diyla.util.JedisNotice;
@@ -45,8 +46,14 @@ public class ArtMsgController {
             result.addError(fieldError);
         }
         if (result.hasErrors()) {
-            model.addAttribute("errorsMsgList",errorsMsgList);
-            select(memId,artMsgVO,model,req,res);
+            model.addAttribute("errorsMsgList", errorsMsgList);
+            select(memId, artMsgVO, model, req, res);
+            return "/art/oneart.jsp";
+        }
+        MemberService memSvc = new MemberService();
+        if (memSvc.selectMem(memId).getBlacklistArt() == 1) {
+            select(memId, artMsgVO, model, req, res);
+            model.addAttribute("Blacklist", "已被黑名單");
             return "/art/oneart.jsp";
         }
 
@@ -63,10 +70,10 @@ public class ArtMsgController {
         noticeVO.setMemId(memId);
         noticeService.addNotice(noticeVO);
         //存入redis
-        JedisNotice.setJedisNotice(memId,"addArtMsg");
+        JedisNotice.setJedisNotice(memId, "addArtMsg");
 
         model.addAttribute("artVO", artVO);
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
 
         return "/art/oneart.jsp";
     }
@@ -79,7 +86,7 @@ public class ArtMsgController {
         List<ArtMsgVO> list = artMsgSvc.getAllByArtNo(artNo);
 
         model.addAttribute("artVO", artVO);
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
 
         return "/art/oneart.jsp";
     }

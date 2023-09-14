@@ -16,7 +16,7 @@ public interface MemJPADAO extends JpaRepository<MemSpringVO, Long> {
     @Query(nativeQuery = true, value = "SELECT mem_id,mem_name,mem_email,mem_phone,blacklist_art from member where if (?3 !='',mem_email = ?3,1=1)order by mem_id limit ?1,?2")
     List<Object[]> getAllMem(Integer pageIndex, Integer pageSize,String memEmail );
 
-
+    
     @Transactional
     @Modifying
     @Query(nativeQuery = true,
