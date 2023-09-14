@@ -105,11 +105,9 @@ public class DiyReserveController {
 	@GetMapping("/getOneSummaryMorning") // 拿單筆彙總資料 -- 早
 	public List<DiyReserveResultEntity> getOneSummaryMorning(
 			@RequestParam("selectedDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date diyReserveDate) {
-//		System.out.println(diyReserveDate);
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 0);
 		List<DiyReserveResultEntity> diyReserveResultEntityList = new LinkedList<>();
 		diyReserveResultEntityList.add(diyReserveResultEntity);
-//		System.out.println(diyReserveResultEntityList);
 		return diyReserveResultEntityList;
 	};
 
@@ -119,7 +117,6 @@ public class DiyReserveController {
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 1);
 		List<DiyReserveResultEntity> diyReserveResultEntityList = new LinkedList<>();
 		diyReserveResultEntityList.add(diyReserveResultEntity);
-//		System.out.println(diyReserveResultEntityList);
 		return diyReserveResultEntityList;
 	};
 
@@ -129,7 +126,6 @@ public class DiyReserveController {
 		DiyReserveResultEntity diyReserveResultEntity = diyReserveService.getOneSummary(diyReserveDate, 2);
 		List<DiyReserveResultEntity> diyReserveResultEntityList = new LinkedList<>();
 		diyReserveResultEntityList.add(diyReserveResultEntity);
-		System.out.println(diyReserveResultEntityList);
 		return diyReserveResultEntityList;
 	};
 
@@ -175,8 +171,6 @@ public class DiyReserveController {
 					reserveResultRepository.save(diyReserveResultEntity);
 
 				} else if(diyReserveResultEntity.getPeoCount() !=20 && diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary).getDiyPeriod()== null){
-					System.out.println("============" + diyReserveResultEntity);
-					System.out.println("============" + diyOrderService.getOneDTODatePeriod(sqlDate, periodNoSummary));
 					diyReserveResultEntity.setPeoCount(0);
 					diyReserveResultEntity.setPeoLimit(20);
 					diyReserveResultEntity.setItemQuantity(20);
