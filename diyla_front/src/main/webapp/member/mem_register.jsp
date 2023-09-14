@@ -320,6 +320,7 @@
         // 初始化地區選項
         city_el.dispatchEvent(new Event('change'));
 
+        //使用者條款
         let lightLink = document.getElementById("lightLink");
         let lightbox = document.getElementById("lightbox");
         let close = document.getElementById("close");

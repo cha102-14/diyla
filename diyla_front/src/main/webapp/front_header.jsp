@@ -293,10 +293,8 @@
         webSocket.onmessage = function (event) {
             let jsonObj = JSON.parse(event.data);
             console.log(jsonObj);
-            if (jsonObj != null){
-                addListener();
-                getNotices();
-            }
+            addListener();
+            getNotices();
         }
 
         function addListener() {
@@ -371,7 +369,7 @@
             }
 
             $('#notification-count').html(noticeLength);
-
+            $('#notification-dropdown').load(location.href+"#notification-dropdown");
         })
     }
 
