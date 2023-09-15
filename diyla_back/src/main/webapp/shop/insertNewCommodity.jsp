@@ -13,9 +13,9 @@
 <html>
 <head>
     <title>新增商品表單</title>
-    <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
-    <link rel="stylesheet" type="text/css" href="../css/commodity.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/listCommodity.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/commodity.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
 </head>
 
 <body style="margin-left: 280px">

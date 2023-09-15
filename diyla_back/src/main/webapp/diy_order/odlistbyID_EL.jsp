@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css"/>
     <title>查詢單筆訂單資料-EL_Ver.</title>
         <style>
         /* Reset default styles */
