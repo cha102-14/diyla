@@ -145,7 +145,6 @@
 		$(".deleteButton").click(function() {
 			const button =$(this);
 			const comNo = button.closest('tr').find(".dcomNo").val();
-// 			const memId =button.closest('tr').find(".dmemId").val();
 			const memId = <%=session.getAttribute("memId")%>;
 
 			console.log(comNo);
@@ -196,7 +195,6 @@
 	        const originalAmount = parseInt(inputField.data('original-amount'));
 	        const amount =  inputField.val(); 
 	        const comNo = button.closest('tr').find(".ucomNo").val();
-// 			const memId =button.closest('tr').find(".umemId").val();
 			const memId = <%=session.getAttribute("memId")%>;
 			console.log(amount);
 			console.log(inputField);

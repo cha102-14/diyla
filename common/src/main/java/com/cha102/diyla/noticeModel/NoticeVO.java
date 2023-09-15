@@ -19,6 +19,7 @@ public class NoticeVO {
 
     @Column(name = "MEM_ID")
     private Integer memId;
+    
 
     @Column(name = "NOTICE_TITLE")
     private String noticeTitle;

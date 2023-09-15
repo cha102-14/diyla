@@ -133,7 +133,7 @@ input[type="submit"]:hover, .button:hover {
         </form>
         <li>
             <form method="post" action="DiyOrderController">
-                <b style="font-weight: bold; margin-left: -45px;">輸入訂單編號 (如1):</b>
+                <b style="font-weight: bold; margin-left: -45px;">輸入訂單編號:</b>
                 <c:choose>
                     <c:when test="${uuu == 404}">
                         <input type="text" name="diyOrderNo" value="${diyorderNo} ">
@@ -149,7 +149,7 @@ input[type="submit"]:hover, .button:hover {
         </li>
         <li>
             <form method="post" action="DiyOrderController">
-                <b style="font-weight: bold;">輸入會員編號 (如1):</b>
+                <b style="font-weight: bold;">輸入會員編號:</b>
                 <c:choose>
                     <c:when test="${uuu == 405}">
                         <input type="text" name="memId" value="">
@@ -159,7 +159,7 @@ input[type="submit"]:hover, .button:hover {
                     </c:otherwise>
                 </c:choose>
                 <input type="hidden" name="action" value="getOneMemId_For_Display">
-                <input type="submit" value="查詢該會員所有訂單資料">
+                <input type="submit" value="查詢會員所有訂單資料">
                 <p class="error-message">${errorMsgs.memId}${errorMsgs.diyOrderList}</p>
             </form>
         </li>
