@@ -11,7 +11,7 @@
 
                 .serchMember {
                     text-align:center;
-                    width: 850px;
+                    width: 1000px;
                     padding-top: 10px;
                     padding-bottom:10px;
                     border-radius: 8px;
@@ -28,7 +28,7 @@
                 }
                 .showAllMemPage {
                     margin-left: 300px;
-                    width:73%;
+                    width:74.3%;
                     height: 612px;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
