@@ -31,12 +31,12 @@
     #teacherBlock {
         display: flex;
         flex-direction: row; /* 將內容水平排列 */
-        gap: 10px;
-        width: 100%;
-        padding-left: 20%;
+        width: 95%;
+        padding-left: 15%;
         font-family: 'Lato', sans-serif;
-        align-items: center;
+        align-items: space-around;
         column-gap: 8vw;
+        margin-top: 5vh;
 
     }
 
@@ -47,7 +47,7 @@
         width: 100%;
     }
 #teacherNameSpecialityBlock {
-    order: 1;
+    
     display: flex;
     margin-top: 10px;
     width: 20%;
@@ -64,13 +64,14 @@
     margin-bottom: 30vh;
 }
 #teacherPic {
-    order: 2;
-    max-width: 100%;
+    max-width: 80%;
     align-self: center; /* 垂直置中 */
+    margin-bottom: 10vh;
+    
 }
 
 #teacherIntroMessageBlock {
-    order: 3;
+    
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -124,24 +125,24 @@
 %>
 <div id="page-content">
     <div id="teacherBlock">
-
-        <img id="teacherPic" src="data:image/jpeg;base64, <%= base64Img %>" alt="Teacher Image">
-
         <div id="teacherNameSpecialityBlock">
-        <div id="teacherName" class=""><h2><%= teacher.getTeaName() %></h2></div>
-        <div id="specialityBlock">
-            <h3 id="specialityTitle">專長 </h3>
-            <ul id="listItem">
-                <% for (String speciality : specialityList) { %>
-                    <li><%= speciality %></li>
-                <% } %>
-            </ul>
+            <div id="teacherName" class=""><h2><%= teacher.getTeaName() %></h2></div>
+            <div id="specialityBlock">
+                <h3 id="specialityTitle">專長 </h3>
+                <ul id="listItem">
+                    <% for (String speciality : specialityList) { %>
+                        <li><%= speciality %></li>
+                    <% } %>
+                </ul>
+            </div>
+            <div id="contactBlock">
+                <h3 id="contactLabel">聯絡方式</h3>
+                電子信箱: <%= teacher.getTeaEmail() %> <br>
+                電話: <%= teacher.getTeaPhone() %>
+            </div>
         </div>
-        <div id="contactBlock">
-            <h3 id="contactLabel">聯絡方式</h3>
-            電子信箱: <%= teacher.getTeaEmail() %> <br>
-            電話: <%= teacher.getTeaPhone() %>
-        </div>
+        <div id="picBlock">
+            <img id="teacherPic" src="data:image/jpeg;base64, <%= base64Img %>" alt="Teacher Image" >
         </div>
         <div id="teacherIntroMessageBlock">
         <div id="teacherIntro">

@@ -18,10 +18,10 @@
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
 
     <!-- Custom styles for this template -->
-    <link href="../css/style.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/style.css" rel="stylesheet"/>
 
     <!-- responsive style -->
-    <link href="../css/responsive.css" rel="stylesheet"/>
+    <link href="${ctxPath}/css/responsive.css" rel="stylesheet"/>
     <style>
         * {
             box-sizing: border-box;

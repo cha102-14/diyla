@@ -34,14 +34,15 @@ public class EcpayCheckout {
 		aioCheckOutALL.setItemName("Diyla商品一批"); // 商品敘述不能超過兩百字，否則顯示商品一批
 		aioCheckOutALL.setReturnURL(req.getContextPath()+"/checkout/ecpayReturn"); // 綠界回傳成功訊息的api網址，上線環境才有用
 		// 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
-		aioCheckOutALL.setOrderResultURL("http://localhost:8081/diyla_front/checkout/ecpayReturn");
-		aioCheckOutALL.setClientBackURL("http://localhost:8081/diyla_front");
+		//這兩行改成上線環境的IP看看
+		aioCheckOutALL.setOrderResultURL("http://34.80.161.173/diyla_front/checkout/ecpayReturn");
+		aioCheckOutALL.setClientBackURL("http://34.80.161.173//diyla_front");
 		aioCheckOutALL.setNeedExtraPaidInfo("N");
 		return allInOne.aioCheckOut(aioCheckOutALL, null); // 新增一個jsp，把checkoutPage放在<body>標籤內，會自動導向結帳頁面
 	}
 
 	public static String goToEcpayForDiy(Integer memNO, String tradeDesc, String totalPrice,String token, String itemName,
-										 String receiveInfo, Integer diyReserveNo) {
+										 String receiveInfo, Integer diyReserveNo,HttpServletRequest req) {
 		// 一般信用卡測試卡號 : 4311-9522-2222-2222 安全碼 : 222
 		// 取得交易時間
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -64,10 +65,12 @@ public class EcpayCheckout {
 //		System.out.println("測試:" + 111);
 //        String ECPAY_PROD_FORMAT = "品名：%s 數量：%s 價格：%s #";
 		aioCheckOutALL.setItemName("Diyla商品一批"); // 商品敘述不能超過兩百字，否則顯示商品一批
-		aioCheckOutALL.setReturnURL("http://localhost:8081/diyla_front/shop/XxxController"); // 綠界回傳成功訊息的api網址，上線環境才有用
+
+		//還有這邊
+		aioCheckOutALL.setReturnURL(req.getContextPath()+"/checkout/ecpayReturn"); // 綠界回傳成功訊息的api網址，上線環境才有用
 		// todo 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
-		aioCheckOutALL.setOrderResultURL("http://localhost:8081/diyla_front/diy/checkout/ecpayReturn");
-		aioCheckOutALL.setClientBackURL("http://localhost:8081/diyla_front");
+		aioCheckOutALL.setOrderResultURL("http://34.80.161.173/diyla_front/diy/checkout/ecpayReturn");
+		aioCheckOutALL.setClientBackURL("http://34.80.161.173/diyla_front");
 		aioCheckOutALL.setNeedExtraPaidInfo("N");
 		return allInOne.aioCheckOut(aioCheckOutALL, null); // 新增一個jsp，把checkoutPage放在<body>標籤內，會自動導向結帳頁面
 	}

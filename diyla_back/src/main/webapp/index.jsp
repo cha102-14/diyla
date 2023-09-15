@@ -233,8 +233,8 @@
     </aside>
 </div>
 
-<script src="./vendors/jquery/jquery-3.7.0.min.js"></script>
-<script src="./js/back.js"></script>
+<script src="${ctxPath}/vendors/jquery/jquery-3.7.0.min.js"></script>
+<script src="${ctxPath}/js/back.js"></script>
 <script>
 </script>
     <jsp:include page="chatPage.jsp"/>

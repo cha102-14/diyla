@@ -11,8 +11,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新增常見問題</title>
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/addpbm.css">
+<link rel="stylesheet" href="${ctxPath}/css/style.css">
+<link rel="stylesheet" href="${ctxPath}/addpbm.css">
   <style>
     *{
       box-sizing: border-box;

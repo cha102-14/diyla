@@ -21,7 +21,7 @@
                     <link href="/css/style.css" rel="stylesheet" />
 
                     <!-- responsive style -->
-                    <link href="./css/responsive.css" rel="stylesheet" />
+                    <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
                     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 

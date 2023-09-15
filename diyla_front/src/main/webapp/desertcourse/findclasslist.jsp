@@ -60,6 +60,7 @@
         border-radius: 1vw;
         transition: background-color 1s ease;
         color: brown;
+        white-space: nowrap;
     }
     li:hover.three {
       background-color: white;

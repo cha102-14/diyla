@@ -26,6 +26,9 @@
     content: '';
     border: 4px solid #000;
   }
+  .card-img-top{
+    height: 45vh;
+  }
     </style>
 </head>
 <body>
