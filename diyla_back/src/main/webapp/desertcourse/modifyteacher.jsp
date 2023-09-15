@@ -102,9 +102,9 @@
             <div id="titleBlock" style="margin-top: 5vh; margin-bottom: 5vh">
                 <h2 id="title" class="title-tag" >修改師傅</h2>
             </div>
+    <a href="${ctxPath}/desertcourse/listallteacher.jsp">前往教師列表頁面</a>
         <div id="contentBlock">
         <div id="formBlock">
-    <a href="${ctxPath}/desertcourse/listallteacher.jsp">前往教師列表頁面</a>
     <form action="${ctxPath}/modifyTeacher" method="post" enctype="multipart/form-data">
     <c:choose>
     <c:when test="${'BACKADMIN'.equals(type) && teacherVO != null}">
@@ -255,7 +255,7 @@
         <input type="hidden" id="defaultTeaPic" name="defaultTeaPic" value="">
     <% } %>
 </div>
-    <input type="submit" class="btn btn-primary" value="儲存修改" id="submitButton">
+    <input type="submit" class="btn btn-primary" value="儲存修改" id="submitButton" style="margin-top: 3vh;">
 </form>
 </div>
 </div>

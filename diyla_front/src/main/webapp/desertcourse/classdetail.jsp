@@ -85,7 +85,7 @@
   }
 
 #registerBlock{
-    width: 16%;
+    width: 20%;
     height: 20%;
     
     font-size: 1.2rem;
@@ -98,7 +98,7 @@
     width:100%;
     text-align: center;
     border-bottom: 1px solid #ccc;
-   
+    
 }
 #headcountInput{
     margin-bottom:5px;
@@ -120,13 +120,23 @@
     font-weight: bold;
     font-size: 1.2rem;
     color: brown;
+    white-space: nowrap;
 }
 .teacherLabel{
     color: brown;
     font-size: 1.4rem;
+    white-space: nowrap;
 }
 .teacherText{
     font-size: 1.2rem;
+}
+#coursePicBlock{
+    border: 1px solid gray;
+    border-radius: 2vw;
+    padding: 3px;
+}
+.fix-pic{
+    border-radius: 2vw;
 }
     </style>
     </head>
@@ -146,7 +156,7 @@
                         <h2 id="teacherLabel">授課教師</h2>
                     </div>
                     <div id="teacherImgBlock" >
-                        <img id="teaImg" src="data:image/jpeg;base64,<%= teacherPic%>">
+                        <img id="teaImg" src="data:image/jpeg;base64,<%= teacherPic%>" style="width: 100%;">
                     </div>
                     <div id="teacherNameBlock"><strong class="teacherLabel">教師: </strong>
                         <span class="teacherText"><%= teacher.getTeaName() %></span>
