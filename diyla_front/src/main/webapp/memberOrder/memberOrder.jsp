@@ -286,7 +286,7 @@ tr:nth-child(even) {
 		<div class="barblcok">
 			<span id="memberInfo" class="subbar"><a href="${ctxPath}/member/update?action=select&memId=${memId}" class="subbarlink">會員資訊管理</a></span>> <span
 				id="orderitem" class="subbar"><a  href="${ctxPath}/allOrder/allOrder?memId=${memId}" class="subbarlink">我的訂單</a></span>> <span
-				id="shoporder" class="subbar"><a  href="" class="subbarlink">商店訂單</a></span>
+				id="shoporder" class="subbar"><a  href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}" class="subbarlink">商店訂單</a></span>
 		</div>
 		<p class="heading">
 		<svg fill="#000000" xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 52 52" enable-background="new 0 0 52 52" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M39.3,26.9c0,1-0.9,1.9-1.9,1.9H14.6c-1,0-1.9-0.9-1.9-1.9V25c0-1,0.9-1.9,1.9-1.9h22.9c1,0,1.9,0.9,1.9,1.9 v1.9H39.3z M35.5,38.3c0,1-0.9,1.9-1.9,1.9h-19c-1,0-1.9-0.9-1.9-1.9v-1.9c0-1,0.9-1.9,1.9-1.9h19.1c1,0,1.9,0.9,1.9,1.9v1.9H35.5z M12.7,13.5c0-1,0.9-1.9,1.9-1.9h19.1c1,0,1.9,0.9,1.9,1.9v1.9c0,1-0.9,1.9-1.9,1.9H14.6c-1,0-1.9-0.9-1.9-1.9 C12.7,15.4,12.7,13.5,12.7,13.5z M41.2,4H10.8C7.6,4,5,6.6,5,9.7v32.4c0,3.1,2.6,5.7,5.7,5.7h30.5c3.1,0,5.7-2.6,5.7-5.7V9.7 C47,6.6,44.4,4,41.2,4z"></path> </g></svg>
