@@ -25,7 +25,7 @@ List<CommodityOrderVO> commodityOrderVOList = service.getAll();
 body {
 	font-family: Arial, sans-serif;
 	padding: 0;
-	background-color: #f4f4f4;
+	background-color: white;
 }
 
 table {
@@ -108,6 +108,9 @@ th, td {
 .status-canceled {
 	background-color: #FF3333; /* 已取消的顏色 */
 }
+.status-canceling{
+	background-color: #FF9797;
+}
 
 /* @media ( max-width :767.98px) { */
 /* 	aside.topPage { */
@@ -170,6 +173,9 @@ form {
 	justify-content: center;
 	text-align: center;
 	opacity: 1;
+	padding: 0px;
+	height: 24px;
+	width: 24px;
 }
 
 #main_content {
@@ -181,7 +187,7 @@ form {
 }
 
 #orderTable {
-	padding: 25px 12px 60px 12px;;
+	padding: 25px 12px 80px 12px;;
 	margin: 35px 0px;
 	border: 1px solid rgba(128, 128, 128, 0.5);
 	border-radius: 8px;
@@ -418,6 +424,18 @@ tr:nth-child(even) {
 	color: white;
 	margin-left: 14px;
 }
+.cancel-agree{
+border:none;
+color:white;
+font-size: 12px;
+background-color: red; 
+}
+.cancel-agree:hover{
+cursor: pointer;
+}
+.order_content{
+padding-top: 5px !important;
+}
 </style>
 </head>
 <body>
@@ -475,19 +493,18 @@ tr:nth-child(even) {
 								</form>
 							</td>
 
-							<td class="order_content">
+							<td class="order_content" >
 								<form action="${ctxPath}/orderManage/OrderManageController"
 									method="post" id="form${loop.index}">
-									<input name="action" value="editOrder" type="hidden"> <input
-										name="orderNO" value="${orderVO.orderNO}" type="hidden">
+									<input name="action" value="editOrder" type="hidden"> 
+									<input name="orderNO" value="${orderVO.orderNO}" type="hidden">
 									<input name="memId" value="${orderVO.memId}" type="hidden">
-									<input name="actualPrice" value="${orderVO.actualPrice}"
-										type="hidden"> <input name="orderStatus"
-										value="${orderVO.orderStatus}" type="hidden">
+									<input name="actualPrice" value="${orderVO.actualPrice}" type="hidden"> 
+									<input name="orderStatus" value="${orderVO.orderStatus}" type="hidden">
 									<button type="submit" class="edit-order"
 										data-order-status="${orderVO.orderStatus}
 											form="form${loop.index}">
-										<svg width="30px" height="30px" viewBox="0 0 24 24"
+										<svg width="24px" height="24px" viewBox="0 0 24 24"
 											fill="none" xmlns="http://www.w3.org/2000/svg">
 											<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 											<g id="SVGRepo_tracerCarrier" stroke-linecap="round"
@@ -501,6 +518,16 @@ tr:nth-child(even) {
 												fill="#ce9f73"></path> </g></svg>
 									</button>
 								</form>
+								<c:if test="${orderVO.orderStatus== 6}">
+									<form action="${ctxPath}/orderManage/OrderManageController">
+										<input name="action" value="agreecancel" type="hidden">
+										<input name="orderNO" value="${orderVO.orderNO}" type="hidden">
+										<input name="memId" value="${orderVO.memId}" type="hidden">
+										<input name="actualPrice" value="${orderVO.actualPrice}" type="hidden"> 
+										<input name="orderStatus" value="${orderVO.orderStatus}" type="hidden">
+										<input type="submit" value="同意取消" class="cancel-agree">
+									</form>
+								</c:if>
 							</td>
 						</tr>
 
@@ -530,7 +557,9 @@ tr:nth-child(even) {
 				"2" : "備貨中",
 				"3" : "已出貨",
 				"4" : "已完成",
-				"5" : "已取消"
+				"5" : "已取消",
+				"6" : "審核中"
+				
 			};
 			// 找到所有的訂單狀態欄位
 			$(".orderStatus").each(function() {
@@ -550,6 +579,8 @@ tr:nth-child(even) {
 					$(this).addClass("status-completed");
 				} else if (orderStatus === "5") {
 					$(this).addClass("status-canceled");
+				}else if (orderStatus === "6") {
+					$(this).addClass("status-canceling");
 				}
 			});
 
@@ -557,7 +588,7 @@ tr:nth-child(even) {
 				let form = $(this).closest("form"); // 找到最近的父級 form
 				var orderStatus = parseInt($(this).data('order-status'));
 				console.log(orderStatus);
-				if (orderStatus >= 4) {
+				if (orderStatus == 4||orderStatus==5) {
 					e.preventDefault();
 					swal({
 						title : "訂單已結案",

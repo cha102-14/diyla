@@ -110,6 +110,9 @@ th, td {
 .status-canceled {
 	background-color: #FF3333; /* 已取消的顏色 */
 }
+.status-canceling{
+	background-color: #FF9797;
+}
 
 table {
 	width: 100%;
@@ -411,10 +414,19 @@ tr:nth-child(even) {
 							});
 				            return;
 				        }
-					  if (orderStatus >= 4) {
+					  if (orderStatus == 4||orderStatus==5) {
 						  swal({
 							    title: "訂單已完成，無法取消訂單",
 							    icon:"error",
+							    buttonsStyling: false,
+							    confirmButtonClass: 'btn btn-primary btn-block'
+							});
+				            return;
+				        }
+					  if (orderStatus == 6) {
+						  swal({
+							    title: "申請已送出，請耐心等候",
+							    icon:"warning",
 							    buttonsStyling: false,
 							    confirmButtonClass: 'btn btn-primary btn-block'
 							});
@@ -430,7 +442,7 @@ tr:nth-child(even) {
 					}).then((cancel)=>{
 						if(cancel){
 							 Swal.fire({
-						            title: '訂單已成功取消',
+						            title: '取消申請已送出',
 						            icon: 'success',
 						            timer: 1000, // 顯示成功提示 1 秒
 						            showConfirmButton: false
@@ -450,7 +462,8 @@ tr:nth-child(even) {
 					"2" : "備貨中",
 					"3" : "已出貨",
 					"4" : "已完成",
-					"5" : "已取消"
+					"5" : "已取消",
+					"6" : "審核中"
 			    };
 			    // 找到所有的訂單狀態欄位
 		  $(".orderStatus").each(function() {
@@ -470,7 +483,9 @@ tr:nth-child(even) {
 		            $(this).addClass("status-completed");
 		        }else if (orderStatus === "5") {
 		            $(this).addClass("status-canceled");
-		        }
+		        }else if (orderStatus === "6") {
+					$(this).addClass("status-canceling");
+				}
 		    });
 			    
 
