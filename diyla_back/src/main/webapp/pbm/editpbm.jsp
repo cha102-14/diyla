@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>編輯常見問題</title>
-    <link rel="stylesheet" href="${ctxPath}/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
     <style>
   body {
     font-family: Arial, sans-serif;
