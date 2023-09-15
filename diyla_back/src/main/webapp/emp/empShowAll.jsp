@@ -6,31 +6,37 @@
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
+            <title>管理員查詢</title>
             <style>
 
-                .bgc_empshowlist {
-                    background-color: #FFDDCC;
+                .serchEmp {
+                    text-align:center;
+                    width: 825px;
+                    padding-top: 10px;
+                    padding-bottom:10px;
+                    border-radius: 8px;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    font-weight: bold;
+                    font-size: 45px;
+                    color: #F6F4EB;
+                    background-color: #A75D5D;
                 }
 
-
                 .showAllEmpPage {
-                    text-align: center;
-                    padding-left: 280px;
+                    margin-left: 300px;
+                    width:72%;
+                    height: 180%;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
                     font-size: 18px;
                     background-color: #FFEEDD;
                 }
 
-                #addempicon {
-                    float:right;
-                }
-
                 .iconaddemp{ 
+                    float:right;
                     position: relative;
-                    top:    20px; 
-                    right: 40px; 
+                    top:    5px; 
+                    right: 120px; 
                 }
 
                 div.emptitle{
@@ -44,37 +50,134 @@
 
 
                 td.count {
-                    white-space: nowrap; /* 防止文本折行 */
-                    padding: 8px; /* 设置单元格内边距 */
                     text-align: center; /* 文本左对齐，根据需要调整 */
                 }
 
                 td.empid {
-                    white-space: nowrap; /* 防止文本折行 */
-                    padding: 8px; /* 设置单元格内边距 */
-                    text-align: left; /* 文本左对齐，根据需要调整 */
+                    text-align: center; /* 文本左对齐，根据需要调整 */
                 }
 
                 td.empname {
                     white-space: nowrap; /* 防止文本折行 */
-                    padding: 8px; /* 设置单元格内边距 */
-                    text-align: left; /* 文本左对齐，根据需要调整 */
+                    text-align: center; /* 文本左对齐，根据需要调整 */
+                }
+
+                td.empPic{
+                    text-align: center;
                 }
 
                 td.empemail {
                     white-space: nowrap; /* 防止文本折行 */
-                    padding: 8px; /* 设置单元格内边距 */
-                    text-align: left; /* 文本左对齐，根据需要调整 */
+                    text-align: center; /* 文本左对齐，根据需要调整 */
                 }
 
                 td.emptypefun {
                     white-space: nowrap; /* 防止文本折行 */
-                    padding: 8px; /* 设置单元格内边距 */
-                    text-align: left; /* 文本左对齐，根据需要调整 */
+                    text-align: center; /* 文本左对齐，根据需要调整 */
                 }
 
-            
+                .selectTypeFun{
+                    position: relative;
+                    left: 250px;
+                }
 
+                .selectpage{
+                    margin-left: 180px;
+                }
+
+                .currentTotalPage{
+                    position: relative;
+                    top: 20px;
+                    left: 66%;
+                    transform: translate(-50%, -50%);
+                }
+
+                .informationTitle{
+                    margin-top: 10px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    font-weight: bold;
+                    font-size: 20px;
+                    color: #F8F1F1;
+                    background-color:#A3816A;
+
+                }
+
+                .sendbutton{
+                    width: 50px;
+                    height: 25px;
+                    border-width: 1px;
+                    border-radius: 10px;
+                    background-color: #A3816A;
+                    cursor: pointer;
+                    outline: none;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    color: #F8F1F1;
+                    font-size: 15px;
+                }
+
+                .empStatus{
+                    width: 50px;
+                    height: 30px;
+                    border-width: 3px;
+                    border-radius: 10px;
+                    background-color: #815B5B;
+                    cursor: pointer;
+                    outline: none;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    color: #FEFCF3;
+                    font-size: 15px;
+                    font-weight: bold;
+
+                }
+
+                .selectbutton{
+                    width: 65px;
+                    height: 25px;
+                    border-width: 1px;
+                    border-radius: 10px;
+                    background-color: #A3816A;
+                    cursor: pointer;
+                    outline: none;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    color: #F8F1F1;
+                    font-size: 15px;
+
+                }
+
+                .textbutton{
+                    width: 30px;
+                    height: 25px;
+                    text-align: center;
+                    border-width: 2px;
+                    border-radius: 10px;
+                    background-color: #A3816A;
+                    cursor: pointer;
+                    outline: none;
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    color: #F8F1F1;
+                    font-size: 15px;
+                    
+                }
+
+                #chooseTypeFun{
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    text-align: center;
+                    font-size: 15px; /*文字大小*/
+                    color: F8F1F1; /*文字顏色*/
+                    border-radius: 10px;
+                    font-weight: bold;
+                }
+
+                #select_size{
+                    font-family: "微軟正黑體", Arial, sans-serif;
+                    text-align: center;
+                    font-size: 15px; /*文字大小*/
+                    color: F8F1F1; /*文字顏色*/
+                    border-radius: 10px;
+                    font-weight: bold;
+                }
 
 
             </style>
@@ -84,35 +187,48 @@
         <body>
             <jsp:include page="/index.jsp" />
             <div class="showAllEmpPage">
+
+                <div class="serchEmp">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45px" height="45px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve" fill="#a75d5d" stroke="#a75d5d">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                        <g id="SVGRepo_iconCarrier"> <g> <g> <path fill="#FFF8EA" d="M302.188,279.563C313.36,263.875,320,244.727,320,224c0-53.032-42.984-96-96-96c-53.017,0-96,42.968-96,96 c0,53.016,42.983,96,96,96c20.727,0,39.875-6.64,55.563-17.812l77.124,77.124c6.25,6.252,16.375,6.252,22.624,0 c6.252-6.249,6.252-16.374,0-22.623L302.188,279.563z M278.953,256.319c-5.53,9.36-13.273,17.104-22.634,22.634 C246.805,284.563,235.843,288,224,288c-35.345,0-64-28.656-64-64s28.655-64,64-64c35.344,0,64,28.656,64,64 C288,235.843,284.563,246.805,278.953,256.319z M256,0C114.609,0,0,114.609,0,256s114.609,256,256,256s256-114.609,256-256 S397.391,0,256,0z M256,472c-119.298,0-216-96.702-216-216c0-119.297,96.702-216,216-216s216,96.703,216,216 C472,375.298,375.298,472,256,472z"></path> </g> </g> </g></svg>
+                        &nbsp
+                    管理員查詢
+
+                
+                </div>
+
                 <a href="/diyla_back/emp/insert.jsp">
-                <svg fill="#000000" width="88px" height="88px" viewBox="0 0 24.00 24.00" id="addempicon" data-name="Line Color" 
+                <svg fill="#000000" width="88px" height="88px" viewBox="0 0 24.00 24.00" data-name="Line Color" 
                 xmlns="http://www.w3.org/2000/svg" class="iconaddemp"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
                 <path id="secondary" d="M8.54,13A4,4,0,1,0,12,7a3.66,3.66,0,0,0-1,.13" style="fill: none; stroke: #ffbfbf; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path>
                 <path id="secondary-2" data-name="secondary" d="M7,19.5a9,9,0,0,0,9.94,0A5,5,0,0,0,7,19.5ZM3,9H7M5,11V7" style="fill: none; stroke: #ffbfbf; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path>
-                <path id="primary" d="M8,3.94A9,9,0,1,1,5.64,18.36,8.86,8.86,0,0,1,3.52,15" style="fill: none; stroke: #9a3b3b; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path></g></svg>
+                <path id="primary" d="M8,3.94A9,9,0,1,1,5.64,18.36,8.86,8.86,0,0,1,3.52,15"  style="fill: none; stroke: #9a3b3b; stroke-linecap: round; stroke-linejoin: round; stroke-width:0.9600000000000002;"></path></g></svg>
                 </a>
+                <br><br>
+                <div class="selectTypeFun">
+                    <td>請選擇權限類別</td>
+                    <td><select id="chooseTypeFun" ><option select="selected" value="" >請選擇權限類別</option>
+                        <option value="SHOP">商店管理員</option>
+                        <option value="CLASS">課程管理員</option>
+                        <option value="MEMADMIN">會員權限管理人員</option>
+                        <option value="MASTER">師傅</option>
+                        <option value="STORADMIN">倉儲管理人員</option>
+                        <option value="CUSTORSERVICE">客服人員</option>
+                   </select>
+                   <button type="button" class="sendbutton" onclick="getAllEmpList()">查詢</button>
+                </div>
                 <table class="display" style="width:100%">
-                    <thead>
+                    <thead class="informationTitle">
 
                         <br>
 
-                        <div class="select">
-                            <td>請選擇權限類別</td>
-                            <td><select id="chooseTypeFun" ><option select="selected" value="" >請選擇權限類別</option>
-                                <option value="SHOP">商店管理員</option>
-                                <option value="CLASS">課程管理員</option>
-                                <option value="MEMADMIN">會員權限管理人員</option>
-                                <option value="MASTER">師傅</option>
-                                <option value="STORADMIN">倉儲管理人員</option>
-                                <option value="CUSTORSERVICE">客服人員</option>
-                           </select>
-                           <button type="button" class="btn btn-primary" onclick="getAllEmpList()">查詢</button>
-                        </div>
+                        
                         <br>
 
-                        <div style=padding:10px;>
-                        <tr style="background-color:#C08261;padding: 10px;">
+                        <div>
+                        <tr>
                             <th>筆數</th>
                             <th>編號</th>
                             <th>姓名</th>
@@ -141,19 +257,21 @@
                         <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
-                    <button type="button" class="firstPage" onclick="firstPageAndSubmit()">第一頁</button>
-                    <button type="button" class="previousPage" onclick="prePageSizeAndSubmit()">上一頁</button>
-                    <input id="pageIndex" type="text" size="1" value="1">
-                    <button type="button" class="nextPage" onclick="nextPageSizeAndSubmit()">下一頁</button>
-                    <button type="button" class="lastPage" onclick="lastPageAndSubmit()">最末頁</button>
-                    <button type="button" class="btn btn-primary" onclick="getAllEmpList()">送出</button>
+                    <button type="button" class="selectbutton" class="firstPage" onclick="firstPageAndSubmit()">第一頁</button>
+                    <button type="button" class="selectbutton" class="previousPage" onclick="prePageSizeAndSubmit()">上一頁</button>
+                    <input id="pageIndex" class="textbutton" type="text" size="1" value="1">
+                    <button type="button" class="selectbutton" class="nextPage" onclick="nextPageSizeAndSubmit()">下一頁</button>
+                    <button type="button" class="selectbutton" class="lastPage" onclick="lastPageAndSubmit()">最末頁</button>
+                    <button type="button" class="sendbutton" onclick="getAllEmpList()">送出</button>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                    <p>當前頁碼：<span id="currentPage"></span> / 總頁數：<span id="totalPages"></span></p>
+                    <br>
+                    <p class="currentTotalPage">當前頁碼：<span id="currentPage"></span> / 總頁數：<span id="totalPages"></span></p>
                 </div>
 
             </div>
 
             <!--   優化頁數傳至後端,跑出第一頁 最後頁,上一頁,下一頁 隱藏button -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
             <script>
                 let emp_totalSize = 0;
                 function resetCurrentPageIndex() {
@@ -194,7 +312,7 @@
                     let currentPege = getCurrentPage();
                     let totalPege = getTotalPageSize();
                     if (currentPege === totalPege) {
-                        alert("此為最末頁")
+                        Swal.fire('此為最末頁 !');
                         return;
                     }
                     document.getElementById("pageIndex").value = currentPege + 1;
@@ -205,7 +323,7 @@
                 function firstPageAndSubmit() {
                     let currentPage = getCurrentPage();
                     if (currentPage === 1) {
-                        alert("當前頁面為第一頁");
+                        Swal.fire('當前頁面為第一頁 !');
                         return;
                     } else {
                         // 如當前頁面非第一頁 帶至第一頁資料顯示
@@ -219,7 +337,7 @@
                     let currentPage = getCurrentPage();
                     let totalPages = getTotalPageSize();
                     if (currentPage === totalPages) {
-                        alert("此為最末頁");
+                        Swal.fire('此為最末頁！');
                         return;
                     } else {
                         //如目前非為最末頁,將跳至最末頁資料
@@ -232,7 +350,7 @@
                 function prePageSizeAndSubmit() {
                     let currentPege = getCurrentPage();
                     if (currentPege < 2) {
-                        alert("沒有前一頁可顯示");
+                        Swal.fire('沒有前一頁可顯示！');
                         return;
                     }
                     document.getElementById("pageIndex").value = currentPege - 1;
@@ -319,15 +437,15 @@
                             // console.log(emp.empId);
                             html += "<tr>"; 
                             html += `<td class="count">` + (i + 1) + `</td>`;
-                            html += `<td calss="empid">` + emp.empId + `</td>`;
+                            html += `<td class="empid">` + emp.empId + `</td>`;
                             // html += `<td style="height:15px; width:15px;">` + (i + 1) + `</td>`;
                             // html += `<td style="height:5px; width:5px;">` + emp.empId + `</td>`;
                             html += `<td class="empname">` + emp.empName + `</td>`;
                             // console.log(emp);
                             if(emp.empPic == "" || emp.empPic == undefined){
-                                html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
+                                html += `<td class="empPic"><img style="height: 150px; width: 150px;" class="imgWH_" src="../img/NoImage.jpg"></td>`;
                             } else {
-                                html += `<td><img style="height: 150px; width: 150px;" class="imgWH_" src="data: image/jpeg;base64,` + emp.empPic + `"></td>`;
+                                html += `<td class="empPic"><img style="height: 150px; width: 150px;" class="imgWH_" src="data: image/jpeg;base64,` + emp.empPic + `"></td>`;
                             }
                             html += `<td class="empemail">` + emp.empEmail + `</td>`;
                             html += `<td class="emptypefun">` + emp.typeFun + `</td>`;

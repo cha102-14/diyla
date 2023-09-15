@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cha102.diyla.commodityOrder.CommodityOrderService;
 import com.cha102.diyla.commodityOrder.CommodityOrderVO;
 import com.cha102.diyla.commodityOrder.MailService;
-import com.cha102.diyla.commodityOrderDetail.CommodityOrderDetailService;
 import com.cha102.diyla.front.utils.EcpayCheckout;
 import com.cha102.diyla.member.MemVO;
 import com.cha102.diyla.member.MemberService;
@@ -83,7 +82,6 @@ public class EcpayController {
 			MailService mailService = new MailService();
 			ShoppingCartService shoppingCartService = new ShoppingCartService();
 			CommodityOrderService commodityOrderService = new CommodityOrderService();
-			CommodityOrderDetailService commodityOrderDetailService = new CommodityOrderDetailService();
 			// 因為綠界交易成功導回專案時有時候會把session id換掉，所以離開專案前暫存會員資料進HashMap，交易回來再取出
 			HttpSession session = req.getSession();
 			Integer memId = memberHolder.get(memKey);
@@ -150,13 +148,10 @@ public class EcpayController {
 			        + "<p>DIYLA感謝您的訂購，我們將盡快將商品寄出</p>"
 			        + "</body></html>";
 			mailService.sendMail(memVO.getMemEmail(), "訂購成功", messageContent);
-//			commodityOrderDetailService.insert(orderNo, shoppingCartList);
 			// 訂單生成清空購物車
 			jedis.del(redisKey);
 			return "/checkout/checkoutSucess.jsp";
 		} else {
-			// todo 交易失敗的動作
-			System.out.println("000");
 			return "/checkout/checkoutFail.jsp";
 		}
 

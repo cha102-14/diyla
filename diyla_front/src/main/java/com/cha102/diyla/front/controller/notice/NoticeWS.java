@@ -50,10 +50,16 @@ public class NoticeWS {
             System.out.println("delete");
         }
         System.out.println(message);
+        if(sessionMap.containsValue(memIdSession)){
+            timer = new Timer();
+            timer.schedule(new Task(),5000);
+        }
 
-        timer = new Timer();
-        timer.schedule(new Task(),5000);
-
+    }
+    @OnClose
+    public void onClose(){
+        timer.cancel();
+        timer.purge();
     }
     @OnError
     public void onError(Session memIdSession,Throwable e){
