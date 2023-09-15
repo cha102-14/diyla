@@ -79,6 +79,15 @@ public class OrderManageController extends HttpServlet {
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/editorder.jsp");
 			dispatcher.forward(req, res);
 		}
+		if("agreecancel".equals(action)) {
+			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
+			commodityOrderService.updateStatus(5, orderNo);
+			List<CommodityOrderVO> list = commodityOrderService.getAll(); 
+			session.setAttribute("commodityOrderVOList", list);
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/ordermanage.jsp");
+			dispatcher.forward(req, res);
+			
+		}
 		if ("editcomplete".equals(action)) {
 			Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
