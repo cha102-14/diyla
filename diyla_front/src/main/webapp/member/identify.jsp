@@ -72,13 +72,13 @@
         label.user {
             position: absolute;
             top: 70px;
-            left: 100px;
+            left: 95px;
             letter-spacing: 3px;
         }
         label.pw {
             position: absolute;
             top: 160px;
-            left: 100px;
+            left: 95px;
             letter-spacing: 3px;
         }
 
@@ -90,7 +90,8 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
-            padding: 0 0 0 8px;
+            padding: 0 8px;
+            width:220px;
         }
         input.inputform:focus {
               outline: 1.5px solid #B26021;
@@ -110,7 +111,7 @@
             background-color: #B26021;
             color: #FCE5CD;
             border: 1px #B26021;
-            width: 199.33px;
+            width: 220px;
             height: 35px;
             letter-spacing: 3px;
             margin-top: 40px;
@@ -121,7 +122,9 @@
             color:  #B26021;
             transition: all 0.3s;
         }
-
+         button.member:focus{
+             outline: none;
+         }
 
         p {
             margin-top: 5px;
