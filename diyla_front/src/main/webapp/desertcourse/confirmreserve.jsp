@@ -71,6 +71,9 @@
             margin: 3vh;
             display: block;
         }
+        .coursePic{
+            height: 40vh;
+        }
     </style>
 </head>
 
@@ -123,20 +126,21 @@ $(document).ready(function () {
         })
         .then (function (courseInfo) {
             let courseInfoHtml = '';
-                courseInfoHtml += "<img src='data:image/jpeg;base64," + courseInfo.coursePic + "' alt='課程'>";
+                courseInfoHtml += "<img src='data:image/jpeg;base64," + courseInfo.coursePic + "' alt='課程' class='coursePic'>";
                 courseInfoHtml += "<strong class='regInfo' id='coursename'>課程名稱: " + courseInfo.courseName + "</strong>";
                 courseInfoHtml += "<strong class='regInfo' id='coursedate'>課程時間: " + courseInfo.courseDate + "</strong>";
                 courseInfoHtml += "<strong class='regInfo' id='headcount'>報名人數: " + headcount + "</strong>";
                 courseInfoHtml += "<strong class='regInfo' id='headcount'>總金額: " + (headcount * courseInfo.coursePrice) + "</strong>";
                 courseInfoHtml += "<div id='buttonGroup'><button type=button class='btn btn-success' id=confirmreserve>確定報名</button>";
-                courseInfoHtml += "<button type=button class='btn btn-warning' id=cancel>取消報名</button></div>";
+                courseInfoHtml += "<button type=button class='btn btn-warning' id=cancelreserve>取消報名</button></div>";
                 $("#courseInfoContainer").append(courseInfoHtml);
         })
         .catch(function(error){
             console.error("Error", error);
         });
     }
-    $("courseInfoContainer").on("click", "#cancel", function(){
+    $("#courseInfoContainer").on("click", "button", function(){
+        if($(this).is("#cancelreserve")) {
         Swal.fire({
             title: "確定取消報名嗎?",
             icon:"warning",
@@ -146,8 +150,7 @@ $(document).ready(function () {
                 window.history.back();
             }
         });
-    });
-    $("#courseInfoContainer").on("click", "#confirmreserve", function(){
+        } else{
         //避免重複按按鈕
         $(this).prop("disabled", true);
         isLogIn();
@@ -201,7 +204,8 @@ $(document).ready(function () {
              $("#confirmreserve").prop("disabled", false);
             console.error("Error", error);
         });
-    })
+        }
+    });
 });
 </script>
 </html>
