@@ -22,7 +22,7 @@
 
                               .emp_insert_title {
                                    text-align:center;
-                                   width: 837px;
+                                   width: 1000px;
                                    padding-left: 5px;
                                    padding-top: 10px;
                                    padding-bottom:10px;
@@ -37,7 +37,7 @@
                               
                               .insertcontent{
                                    margin-left:300px;
-                                   width: 72%;
+                                   width: 74.3%;
                                    height: 100%;
                                    background-color: #FFEEDD;
                               }
@@ -121,6 +121,8 @@
                               #status_id{
                                    font-family: "微軟正黑體", Arial, sans-serif;
                                    text-align: center;
+                                   white-space: 20px;
+                                   white-space: p;
                                    font-size: 15px; /*文字大小*/
                                    color: #594545; /*文字顏色*/
                                    border-radius: 10px;

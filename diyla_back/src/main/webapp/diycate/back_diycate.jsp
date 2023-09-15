@@ -33,7 +33,7 @@
 
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
     <!-- Bootstrap core JavaScript-->
     <script src="/diyla_back/vendors/jquery/jquery-3.7.0.min.js"></script>
     <script src="/diyla_back/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

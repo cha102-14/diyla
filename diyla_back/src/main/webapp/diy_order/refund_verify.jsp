@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css" />
 <title>退款狀態查詢</title>
 
 <style type="text/css">

@@ -82,7 +82,7 @@
         <a href="${ctxPath}/shop/commodity/get/${i+1}">${i+1}</a>
     </c:forEach>
 </div>
-<script src="../vendors/jquery/jquery-3.7.0.min.js"></script>
+<script src="${ctxPath}/vendors/jquery/jquery-3.7.0.min.js"></script>
 <script>
     $(document).ready(function () {
 
