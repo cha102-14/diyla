@@ -76,7 +76,7 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
-            padding: 0 0 0 8px;
+            padding: 0 8px;
             margin-top:5px;
         }
         input.inputform:focus {
@@ -106,9 +106,12 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
-            padding: 0 25px 0 8px;
+            padding: 0 8px 0 8px;
             margin-top:5px;
 
+        }
+        select:focus {
+            outline:none;
         }
         div.name {
             margin-right:75px;
@@ -175,6 +178,9 @@
           transform: translate(-50%, -50%);
           font-size:15px;
         }
+         button.member:focus{
+             outline: none;
+         }
     </style>
 
 

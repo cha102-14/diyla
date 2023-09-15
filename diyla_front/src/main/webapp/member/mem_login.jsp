@@ -72,13 +72,13 @@
         label.user {
             position: absolute;
             top: 22px;
-            left: 100px;
+            left: 95px;
             letter-spacing: 3px;
         }
         label.pw {
             position: absolute;
             top: 110px;
-            left: 100px;
+            left: 95px;
             letter-spacing: 3px;
         }
 
@@ -90,7 +90,8 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
-            padding: 0 0 0 8px;
+            padding: 0 8px 0 8px;
+            width:220px;
         }
         input.inputform:focus {
               outline: 1.5px solid #B26021;
@@ -120,7 +121,7 @@
             background-color: #B26021;
             color: #FCE5CD;
             border: 1px #B26021;
-            width: 199.33px;
+            width: 220px;
             height: 35px;
             letter-spacing: 3px;
             margin-top: 40px;
@@ -148,6 +149,10 @@
             font-size: 1rem;
             color: #B26021;
         }
+         button.member:focus{
+             outline: none;
+         }
+
 
     </style>
 
@@ -172,10 +177,6 @@
                 <label class="pw">密碼</label><br>
                 <input type="password" name="password" placeholder="請輸入6-12字(含英數字)" minlength="6" maxlength="12"
                     class="inputform"><br>
-                <label for="remember" class="remember">
-                    <input type="checkbox" class="remember" name="remember" style="vertical-align:middle;">
-                    <span style="vertical-align:middle;">記住我</span><br>
-                </label>
                 <input type="hidden" name="action" value="login">
                 <button type="submit" value="login" class="member">登入</button><br>
                 <br>

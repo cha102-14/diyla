@@ -206,8 +206,10 @@
             <ul>
                 <li><a href="${ctxPath}/member/update?action=select&memId=${memId}"><i
                             class="fi fi-ts-user-gear"></i>會員資訊管理</a></li>
-                <li><a href="${ctxPath}/member/updatePw.jsp"><i class="fi fi-tr-key-skeleton-left-right"></i>修改密碼</a></li>
-                <li><a id="a1" href="${ctxPath}/allOrder/allOrder?memId=${memId}"><i class="fi fi-ts-ballot"></i>我的訂單</a></li>
+                <li><a href="${ctxPath}/member/updatePw.jsp"><i class="fi fi-tr-key-skeleton-left-right"></i>修改密碼</a>
+                </li>
+                <li><a id="a1" href="${ctxPath}/allOrder/allOrder?memId=${memId}"><i
+                            class="fi fi-ts-ballot"></i>我的訂單</a></li>
                 <li><a href="${ctxPath}/track/track?memId=${memId}"><i class="fi fi-tr-hand-love"></i>我的商品追蹤</a></li>
                 <li><a href="${ctxPath}/token/MyToken.jsp"><i class="fi fi-ts-piggy-bank"></i>我的代幣</a></li>
                 <li><a href="${ctxPath}/member/login?action=logout"><i class="fi fi-tr-hand-wave"></i>登出</a></li>
@@ -222,120 +224,122 @@
                 <button class="data-button" value="2">課程</button>
             </div>
             <div class="allorder">
-            <h5>商店</h5>
-            <c:choose>
-                <c:when test="${not empty comList}">
-                <c:forEach var="comList" items="${comList}">
-                    <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
-                        <div class="order">
-                        <div>
-                            <i class="fi fi-tr-tags"></i>訂單編號#${comList.orderNO}<br>
-                            <i class="fi fi-ts-calendar-days"></i><fmt:formatDate value="${comList.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" /><br>
-                            <i class="fi fi-tr-usd-circle"></i>${comList.actualPrice}元<br>
-                        </div>
-                        <div class="status">
-                            <c:choose>
-                                <c:when test="${comList.orderStatus==0}">
-                                訂單成立
-                                </c:when>
-                                <c:when test="${comList.orderStatus==1}">
-                                已付款
-                                </c:when>
-                                <c:when test="${comList.orderStatus==2}">
-                                備貨中
-                                </c:when>
-                                <c:when test="${comList.orderStatus==3}">
-                                已出貨
-                                </c:when>
-                                <c:when test="${comList.orderStatus==4}">
-                                已完成
-                                </c:when>
-                                <c:otherwise>
-                                已取消
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                        </div>
-                    </a>
-                </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
-                        <span>您目前還沒有商店訂單</span>
-                    </a>
-                </c:otherwise>
-            </c:choose>
+                <h5>商店</h5>
+                <c:choose>
+                    <c:when test="${not empty comList}">
+                        <c:forEach var="comList" items="${comList}">
+                            <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
+                                <div class="order">
+                                    <div>
+                                        <i class="fi fi-tr-tags"></i>訂單編號#${comList.orderNO}<br>
+                                        <i class="fi fi-ts-calendar-days"></i>
+                                        <fmt:formatDate value="${comList.orderTime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <br>
+                                        <i class="fi fi-tr-usd-circle"></i>${comList.actualPrice}元<br>
+                                    </div>
+                                    <div class="status">
+                                        <c:choose>
+                                            <c:when test="${comList.orderStatus==0}">
+                                                訂單成立
+                                            </c:when>
+                                            <c:when test="${comList.orderStatus==1}">
+                                                已付款
+                                            </c:when>
+                                            <c:when test="${comList.orderStatus==2}">
+                                                備貨中
+                                            </c:when>
+                                            <c:when test="${comList.orderStatus==3}">
+                                                已出貨
+                                            </c:when>
+                                            <c:when test="${comList.orderStatus==4}">
+                                                已完成
+                                            </c:when>
+                                            <c:otherwise>
+                                                已取消
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </a>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="${ctxPath}/memberOrder/OrderController?action=listOrder&memId=${memId}">
+                            <span>您目前還沒有商店訂單</span>
+                        </a>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="allorder">
-            <h5>DIY</h5>
-            <a href="${ctxPath}/diyOrder/diyOrder_front.jsp">
-            <c:choose >
-                <c:when test="${not empty diyList}">
-                <c:forEach var="diyList" items="${diyList}">
+                <h5>DIY</h5>
+                <a href="${ctxPath}/diyOrder/diyOrder_front.jsp">
+                    <c:choose>
+                        <c:when test="${not empty diyList}">
+                            <c:forEach var="diyList" items="${diyList}">
+                                <div class="order">
+                                    <div>
+                                        <i class="fi fi-tr-tags"></i>DIY品項#${diyList.diyCateName}<br>
+                                        <i class="fi fi-ts-calendar-days"></i>${diyList.diyReserveDate}<br>
+                                        <i class="fi fi-tr-usd-circle"></i>${diyList.diyPrice}元<br>
+                                    </div>
+                                    <div class="status">
+                                        <c:choose>
+                                            <c:when test="${diyList.reservationStatus==0}">
+                                                訂位完成
+                                            </c:when>
+                                            <c:when test="${diyList.reservationStatus==1}">
+                                                訂位已取消，尚未退款完成
+                                            </c:when>
+                                            <c:when test="${diyList.reservationStatus==2}">
+                                                退款完成
+                                            </c:when>
+                                            <c:otherwise>
+                                                當日未到
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <span>您目前還沒有DIY訂位訂單</span>
+                        </c:otherwise>
+                    </c:choose>
+                </a>
+            </div>
+            <div class="allorder">
+                <h5>課程</h5>
+                <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
                     <div class="order">
-                    <div>
-                    <i class="fi fi-tr-tags"></i>DIY品項#${diyList.diyCateName}<br>
-                    <i class="fi fi-ts-calendar-days"></i>${diyList.diyReserveDate}<br>
-                    <i class="fi fi-tr-usd-circle"></i>${diyList.diyPrice}元<br>
+                        <c:choose>
+                            <c:when test="${not empty classList}">
+                                <c:forEach var="classList" items="${classList}">
+                                    <div>
+                                        <i class="fi fi-tr-tags"></i>${classList.className}<br>
+                                        <i class="fi fi-ts-calendar-days"></i>${classList.classDate}<br>
+                                        <i class="fi fi-tr-usd-circle"></i>${classList.totalPrice}元<br>
+                                    </div>
+                                    <div class="status">
+                                        <c:choose>
+                                            <c:when test="${classList.status==0}">
+                                                預約單成立
+                                            </c:when>
+                                            <c:when test="${classList.status==1}">
+                                                預約單取消
+                                            </c:when>
+                                            <c:otherwise>
+                                                預約單完成
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <span>您目前還沒有課程訂單</span>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
-                        <div class="status">
-                            <c:choose>
-                                <c:when test="${diyList.reservationStatus==0}">
-                                訂位完成
-                                </c:when>
-                                <c:when test="${diyList.reservationStatus==1}">
-                                訂位已取消，尚未退款完成
-                                </c:when>
-                                <c:when test="${diyList.reservationStatus==2}">
-                                退款完成
-                                </c:when>
-                                <c:otherwise>
-                                當日未到
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <span>您目前還沒有DIY訂位訂單</span>
-                </c:otherwise>
-            </c:choose>
-            </div>
-            </a>
-            </div>
-            <div class="allorder">
-            <h5>課程</h5>
-             <a href="${ctxPath}/desertcourse/memclassreserve.jsp">
-            <div class="order">
-            <c:choose >
-                <c:when test="${not empty classList}">
-                <c:forEach var="classList" items="${classList}">
-                    <div>
-                    <i class="fi fi-tr-tags"></i>${classList.className}<br>
-                    <i class="fi fi-ts-calendar-days"></i>${classList.classDate}<br>
-                    <i class="fi fi-tr-usd-circle"></i>${classList.totalPrice}元<br>
-                    </div>
-                        <div class="status">
-                            <c:choose>
-                                <c:when test="${classList.status==0}">
-                                預約單成立
-                                </c:when>
-                                <c:when test="${classList.status==1}">
-                                預約單取消
-                                </c:when>
-                                <c:otherwise>
-                                預約單完成
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <span>您目前還沒有課程訂單</span>
-                </c:otherwise>
-            </c:choose>
-            </div>
-            </a>
+                </a>
             </div>
         </div>
     </div>

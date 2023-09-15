@@ -33,7 +33,7 @@
 
                 }
 
-                body {
+        body {
             margin: 0;
             background-image: url('../img/login.png'); /* 背景图像的URL，注意路径 */
             background-size: cover; /* 按照视口大小覆盖整个屏幕 */
@@ -66,26 +66,28 @@
             margin-bottom:15px
         }
 
-        /* label.valid {
-            position: fixed;
-            top: 120px;
-            left: 100px;
-            letter-spacing: 3px;
+        .inputtext{
+            font-family: "微軟正黑體", Arial, sans-serif;
+            text-align: center;
+            font-size: 15px; /*文字大小*/
+            border-radius: 10px;
+            font-weight: bold;
         }
 
-        label.reset {
-            position: fixed;
-            top: 220px;
-            left: 100px;
-            letter-spacing: 3px;
+        .sendbutton{
+            margin-top: 20px;
+            width: 90px;
+            height: 30px;
+            border-width: 3px;
+            border-radius: 10px;
+            background-color: #A3816A;
+            cursor: pointer;
+            outline: none;
+            font-family: "微軟正黑體", Arial, sans-serif;
+            color: #F8F1F1;
+            font-size: 16px;
+            font-weight: bold;
         }
-
-        label.check {
-            position: fixed;
-            top: 320px;
-            left: 100px;
-            letter-spacing: 3px;
-        } */
 </style>
 </head>
 <body>
@@ -96,19 +98,19 @@
             <form method="post" action="validCode">
                 <label class="valid">驗證碼<br>
                 <br>   
-                <input required type="text" id="valid" name="valid" placeholder="請輸入驗證碼" ></label><br>
+                <input class="inputtext" required type="text" id="valid" name="valid" placeholder="請輸入驗證碼" ></label><br>
                 <br>
                 <!-- Email一起帶入做比對? 將驗證碼傳入Controller 調用Service方法至Jedis比對驗證碼 比對成功後將新empPassword寫入DB -->
                 <label class="reset">修改密碼<br>
                 <br>
-                <input required type="password" name="empPassword" placeholder="請輸入6-12字碼英數字"  minlength="6" maxlength="12" ></label><br>
+                <input class="inputtext" required type="password" name="empPassword" placeholder="請輸入6-12字碼英數字"  minlength="6" maxlength="12" ></label><br>
                 <br>
                 <label class="check">確認密碼<br>
                 <br>  
-                <input type="password" name="doubleCheckPassword" placeholder="再次輸入密碼" minlength="6" maxlength="12"></label><br>
+                <input class="inputtext" type="password" name="doubleCheckPassword" placeholder="再次輸入密碼" minlength="6" maxlength="12"></label><br>
                 <br>
                 <!-- <span  id ="doubleCheck.errors" class="error">${errorMsgMap.empPassword}</span> -->
-                <button required type="submit" value="resetPassword">送出</button>
+                <button class="sendbutton" required type="submit" value="resetPassword">送出</button>
             </form>
         </div>
     </div>
