@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css" />
 <title>點名系統首頁</title>
 <style type="text/css">
 body, p, ul {

@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css" />
 <title>會員${memVO.memName}的所有訂單</title>
 
 

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css" />
 <title>所有訂單</title>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <style type="text/css">
