@@ -215,7 +215,7 @@
                         <%= course.getHeadcount() %>
                         </div>
                         <div id="headcountInput"><i class="fa-solid fa-person-circle-plus" style="color: #e8b52c;"></i>
-                        <strong class="registerLabel">欲報名人數: </strong><input id="registerHeadcount">
+                        <strong class="registerLabel">欲報名人數: </strong><input id="registerHeadcount" type="number" min="1" max="100" step="1">
                         </div>
                         <div id="buttonGroup">
                         <%
