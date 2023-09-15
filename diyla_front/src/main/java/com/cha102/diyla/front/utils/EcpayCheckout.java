@@ -35,8 +35,8 @@ public class EcpayCheckout {
 		aioCheckOutALL.setReturnURL(req.getContextPath()+"/checkout/ecpayReturn"); // 綠界回傳成功訊息的api網址，上線環境才有用
 		// 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
 		//這兩行改成上線環境的IP看看
-		aioCheckOutALL.setOrderResultURL("http://34.80.161.173/diyla_front/checkout/ecpayReturn");
-		aioCheckOutALL.setClientBackURL("http://34.80.161.173//diyla_front");
+		aioCheckOutALL.setOrderResultURL("http://localhost:8081/diyla_front/checkout/ecpayReturn");
+		aioCheckOutALL.setClientBackURL("http://localhost:8081/diyla_front");
 		aioCheckOutALL.setNeedExtraPaidInfo("N");
 		return allInOne.aioCheckOut(aioCheckOutALL, null); // 新增一個jsp，把checkoutPage放在<body>標籤內，會自動導向結帳頁面
 	}
@@ -69,8 +69,8 @@ public class EcpayCheckout {
 		//還有這邊
 		aioCheckOutALL.setReturnURL(req.getContextPath()+"/checkout/ecpayReturn"); // 綠界回傳成功訊息的api網址，上線環境才有用
 		// todo 放入綠界結帳成功後訊息要打的api(servlet)，測試環境有用，確定寫入成功後要執行寫入訂單
-		aioCheckOutALL.setOrderResultURL("http://34.80.161.173/diyla_front/diy/checkout/ecpayReturn");
-		aioCheckOutALL.setClientBackURL("http://34.80.161.173/diyla_front");
+		aioCheckOutALL.setOrderResultURL("http://localhost:8081/diyla_front/diy/checkout/ecpayReturn");
+		aioCheckOutALL.setClientBackURL("http://localhost:8081/diyla_front");
 		aioCheckOutALL.setNeedExtraPaidInfo("N");
 		return allInOne.aioCheckOut(aioCheckOutALL, null); // 新增一個jsp，把checkoutPage放在<body>標籤內，會自動導向結帳頁面
 	}
