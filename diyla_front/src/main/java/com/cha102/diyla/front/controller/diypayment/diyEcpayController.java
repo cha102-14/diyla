@@ -76,7 +76,7 @@ public class diyEcpayController {
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(date.getTime());
 
 
-        String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo, 0);
+        String toEcpay = EcpayCheckout.goToEcpayForDiy(memNO, tradeDesc, totalPrice, token, itemName, receiveInfo, 0,req);
         // 自訂取號
         model.addAttribute("toEcpay", toEcpay);
         return "/checkout/checkoutPage.jsp";
