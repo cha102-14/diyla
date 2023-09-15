@@ -36,7 +36,8 @@ public class NoticeWS {
         }
 
         //排程器 定時取出redis 送到前端
-
+        timer = new Timer();
+        timer.schedule(new Task(),3000,5000);
     }
 
 
@@ -50,10 +51,7 @@ public class NoticeWS {
             System.out.println("delete");
         }
         System.out.println(message);
-        if(sessionMap.containsValue(memIdSession)){
-            timer = new Timer();
-            timer.schedule(new Task(),5000);
-        }
+
 
     }
     @OnClose
