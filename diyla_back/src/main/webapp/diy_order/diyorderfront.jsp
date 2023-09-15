@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="${ctxPath}/css/style.css"/>
 <title>DIY管理後台首頁</title>
 
 <style>

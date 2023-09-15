@@ -16,7 +16,7 @@
     <title>全部論壇文章</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css" />
     <!-- ●●css for jquery datatables 用 -->
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
     <style>
         body {
             font-family: Arial, sans-serif;

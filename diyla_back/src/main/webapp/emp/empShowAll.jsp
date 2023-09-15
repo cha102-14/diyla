@@ -11,7 +11,7 @@
 
                 .serchEmp {
                     text-align:center;
-                    width: 825px;
+                    width: 1000px;
                     padding-top: 10px;
                     padding-bottom:10px;
                     border-radius: 8px;
@@ -24,7 +24,7 @@
 
                 .showAllEmpPage {
                     margin-left: 300px;
-                    width:72%;
+                    width:74.3%;
                     height: 180%;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;

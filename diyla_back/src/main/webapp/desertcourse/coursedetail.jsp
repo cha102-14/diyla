@@ -135,6 +135,9 @@
                 font-size: 1.1rem;
                 color: #666699;
             }
+            #coursePic{
+                width: 50%;
+            }
             </style>
     </head>
 
@@ -156,7 +159,7 @@
                         <h2><%= course.getClassName() %></h2>
                         </div>
                         <div id="coursePic">
-                        <img src="data:image/jpeg;base64,<%= coursePic %>">
+                        <img src="data:image/jpeg;base64,<%= coursePic %>" style="width: 100%">
                         </div>
                         <div id="courseCategoryBlock"><strong class="label">課程分類: </strong>
                             <p class="text">

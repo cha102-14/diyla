@@ -7,10 +7,10 @@
 <html>
 <head>
     <title>商品類別管理</title>
-    <link rel="stylesheet" type="text/css" href="../css/commodityClass.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/commodityClass.css">
     <script src="http://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="${ctxPath}/vendors/axios/axios.min.js"></script>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
 </head>
 <body style="margin-left: 280px">
 <aside class="topPage">

@@ -21,7 +21,7 @@
                     <link href="/css/style.css" rel="stylesheet" />
 
                     <!-- responsive style -->
-                    <link href="./css/responsive.css" rel="stylesheet" />
+                    <link href="${ctxPath}/css/responsive.css" rel="stylesheet" />
                     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
 
@@ -44,16 +44,16 @@
                             text-align: center; /* 文本居中 */
                         }
 
-                    
-
-                        /* 输入框样式 */
-                        input[type="text"] {
-                            width: 280px; /* 输入框宽度100% */
-                            padding: 10px; /* 输入框内边距 */
-                            margin-bottom: 10px; /* 底部间距 */
+                        .inputtext{
+                            font-family: "微軟正黑體", Arial, sans-serif;
+                            text-align: center;
+                            width: 400px;
+                            height: 35px;
+                            font-size: 15px; /*文字大小*/
+                            border-radius: 10px;
+                            font-weight: bold;
                         }
-
-
+                    
                         h4{
                             font-family: "微軟正黑體", Arial, sans-serif;
                             font-size:30px;
@@ -71,6 +71,21 @@
                             background-position: center center; /* 居中显示背景图像 */
                         }
 
+                        .sendbutton{
+                            margin-top: 20px;
+                            width: 120px;
+                            height: 35px;
+                            border-width: 3px;
+                            border-radius: 10px;
+                            background-color: #A3816A;
+                            cursor: pointer;
+                            outline: none;
+                            font-family: "微軟正黑體", Arial, sans-serif;
+                            color: #F8F1F1;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+
                     </style>
 
                 </head>
@@ -85,9 +100,10 @@
                             請輸入您的Email帳號，系統將會寄送驗證碼到您的Email信箱。
                             <br>
                             <br>
-                            <input type="text" name="email" id="email" placeholder="請輸入信箱"
-                                value="${(empVO==null)? "" : empVO.empEmail()}" </br>
-                            <button type="submit" value="" 　id="sub" onclick="sendEmail()">送出驗證信</button><br>
+                            <input class="inputtext" type="text" name="email" id="email" placeholder="請輸入信箱"
+                                value="${(empVO==null)? "" : empVO.empEmail()}"> <br>
+                            <br>    
+                            <button type="button" value="" class="sendbutton" onclick="sendEmail()">送出驗證信</button>
                         </div>
                     </div>
                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
