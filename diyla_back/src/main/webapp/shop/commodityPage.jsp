@@ -5,10 +5,10 @@
 <html>
 <head>
     <title>商品詳情</title>
-    <link rel="stylesheet" type="text/css" href="../css/listCommodity.css">
-    <link rel="stylesheet" type="text/css" href="../css/commodityPage.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/listCommodity.css">
+    <link rel="stylesheet" type="text/css" href="${ctxPath}/css/commodityPage.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
 </head>
 
 <body style="margin-left: 280px">
