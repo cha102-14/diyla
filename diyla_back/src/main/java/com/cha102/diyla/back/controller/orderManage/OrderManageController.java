@@ -1,7 +1,6 @@
 package com.cha102.diyla.back.controller.orderManage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,18 +51,6 @@ public class OrderManageController extends HttpServlet {
 		}
 
 		if ("showDetail".equals(action)) {
-//			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
-//			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
-//			List<Integer> comNoList = new ArrayList<>();
-//			for (CommodityOrderDetailVO commodityOrderDetailVO : commodityOrderDetailList) {
-//				comNoList.add(commodityOrderDetailVO.getComNo());
-//			}
-//			List<CommodityVO> commodityList = commodityService.getAllByComNo(comNoList);
-//			session.setAttribute("orderTime", commodityOrderVO.getOrderTime());
-//			session.setAttribute("commodityList", commodityList);
-//			session.setAttribute("commodityOrderDetailList", commodityOrderDetailList);
-//			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/ordermanage.jsp");
-//			dispatcher.forward(req, res);
 			Integer orderNo =Integer.valueOf(req.getParameter("orderNo"));
 			CommodityOrderVO commodityOrderVO =commodityOrderService.findByOrderNo(orderNo);
 			List<CommodityOrderDetailVO> commodityOrderDetailList = commodityOrderDetailService.getAll(orderNo);
@@ -82,7 +69,6 @@ public class OrderManageController extends HttpServlet {
 			// 設置HTTP回應的內容類型
 			res.setContentType("application/json");
 			res.setCharacterEncoding("UTF-8");
-
 			// 寫入JSON字符串到HTTP回應
 			res.getWriter().write(jsonString);
 		}
@@ -104,7 +90,6 @@ public class OrderManageController extends HttpServlet {
 			commodityOrderVO.setRecipient(recipient);
 			commodityOrderVO.setRecipientAddress(recipientAddress);
 			commodityOrderVO.setPhone(phone);
-
 			//將錯誤驗證存入Map 在jsp取出
 			Set<ConstraintViolation<CommodityOrderVO>> errors = validator.validate(commodityOrderVO);
 			Map<String, String> errorMap = new HashMap<String, String>();
@@ -122,7 +107,7 @@ public class OrderManageController extends HttpServlet {
 			}
 
 			commodityOrderService.update(status, orderNo, recipient, recipientAddress, phone);
-			List<CommodityOrderVO> list = commodityOrderService.getAll(); // ??
+			List<CommodityOrderVO> list = commodityOrderService.getAll(); 
 			session.setAttribute("commodityOrderVOList", list);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/ordermanage/ordermanage.jsp");
 			dispatcher.forward(req, res);

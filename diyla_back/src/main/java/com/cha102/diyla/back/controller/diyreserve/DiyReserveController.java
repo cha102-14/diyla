@@ -81,8 +81,10 @@ public class DiyReserveController {
 			System.out.println(parsedDate);
 			if (diyReserveService.getOneSummary(parsedDate, 0) == null) {
 				diyReserveService.newVacancyAllSummary();
+				System.out.println("彙總表已初始化成功");
 				return true;
 			} else {
+				System.out.println("已有彙總表");
 				return false;
 			}
 		} catch (ParseException e) {
@@ -131,6 +133,7 @@ public class DiyReserveController {
 
 	@GetMapping("/diyResult/allPeriodResult")
 	public List<DiyReserveResultEntity> getAllSummaryFromOrder() {
+		getAllVacancySummary();
 //		List<DiyReserveResultEntity> diyReserveResultEntityList_update = new LinkedList<>();
 		List<DiyReserveResultEntity> diyReserveResultEntityList_DTO = diyReserveService.setSummaryFromOrderPeriod();
 		List<DiyReserveResultEntity> diyReserveResultEntityList = diyReserveService.getAllSummaryFromOrder();

@@ -1,8 +1,11 @@
 package com.cha102.diyla.sweetclass.classController;
 
+import com.cha102.diyla.member.MemVO;
+import com.cha102.diyla.member.MemberService;
 import com.cha102.diyla.sweetclass.classModel.ClassReserveVO;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
 import com.cha102.diyla.sweetclass.classModel.ClassVO;
+import com.cha102.diyla.sweetclass.email.MailService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,10 +25,16 @@ public class modifyReserveServlet extends HttpServlet {
         String action = req.getParameter("action");
         ClassService classService = new ClassService();
         ClassReserveVO classReserveVO = new ClassReserveVO();
+        MemberService memberService = new MemberService();
+        MailService mailService = new MailService();
         //(0:預約單成立，1:預約單取消，2:預約單完成)
         if ("delete".equals(action)) {
             classService.updateReserveStatus(reserveId, 1);
             classReserveVO = classService.getOneReserve(reserveId);
+            Integer memId = classReserveVO.getMemId();
+            MemVO member = memberService.selectMem(memId);
+            String to = member.getMemEmail();
+            String memName = member.getMemName();
             Integer classId = classReserveVO.getClassId();
             ClassVO classVO = classService.getOneClass(classId);
             int reserveHeadcount = classReserveVO.getHeadcount();
@@ -33,6 +42,7 @@ public class modifyReserveServlet extends HttpServlet {
             int newClassHeadCount = classHeadCount - reserveHeadcount;
             classVO.setHeadcount(newClassHeadCount);
             classService.updateClass(classVO);
+            mailService.sendMail(to, memName, "createReserve");
         } else if ("complete".equals(action)) {
             classService.updateReserveStatus(reserveId, 2);
         }
