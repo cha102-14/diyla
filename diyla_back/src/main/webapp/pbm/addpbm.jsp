@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>新增常見問題</title>
 <link rel="stylesheet" href="${ctxPath}/css/style.css">
-<link rel="stylesheet" href="${ctxPath}/addpbm.css">
+<link rel="stylesheet" href="${ctxPath}/css/addpbm.css">
   <style>
     *{
       box-sizing: border-box;
