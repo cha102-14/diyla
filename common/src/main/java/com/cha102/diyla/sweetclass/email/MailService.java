@@ -52,7 +52,7 @@ public class MailService {
             } else if ("deleteReserve".equals(action)) {
                 subject =  "您的甜點訂單已取消";
                 messageText += memName+"先生/小姐，你好: \n";
-                messageText += "您在DIYLA上的甜點訂單已成立，若有任何疑問請聯絡我們!";
+                messageText += "您在DIYLA上的甜點訂單已取消，若有任何疑問請聯絡我們!";
             }
             // 設定信中的主旨
             message.setSubject(subject);
