@@ -25,7 +25,7 @@
                 .showAllEmpPage {
                     margin-left: 300px;
                     width:74.3%;
-                    height: 180%;
+                    height: 725px;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
                     font-size: 18px;

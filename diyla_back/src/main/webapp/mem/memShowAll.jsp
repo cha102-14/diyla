@@ -29,7 +29,7 @@
                 .showAllMemPage {
                     margin-left: 300px;
                     width:74.3%;
-                    height: 612px;
+                    min-height: 612px;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
                     font-size: 18px;
