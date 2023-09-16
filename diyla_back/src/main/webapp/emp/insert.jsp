@@ -22,7 +22,6 @@
 
                               .emp_insert_title {
                                    text-align:center;
-                                   width: 1000px;
                                    padding-left: 5px;
                                    padding-top: 10px;
                                    padding-bottom:10px;
@@ -37,7 +36,7 @@
                               
                               .insertcontent{
                                    margin-left:300px;
-                                   width: 74.3%;
+                                   width: 73%;
                                    height: 100%;
                                    background-color: #FFEEDD;
                               }

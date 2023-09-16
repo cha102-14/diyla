@@ -224,7 +224,7 @@
         let host = window.location.host;
         let path = window.location.pathname;
         let webCtx = path.substring(0, path.indexOf('/', 1));
-        let endPointURL = "ws://" + host + webCtx + MyPoint;
+        let endPointURL = "wss://" + host + webCtx + MyPoint;
 
         let statusOutput = document.getElementById("statusOutput");
         let messagesArea = document.getElementById("messagesArea");

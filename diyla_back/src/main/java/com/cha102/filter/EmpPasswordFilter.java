@@ -7,6 +7,7 @@ import com.cha102.diyla.empmodel.EmpService;
 import com.cha102.diyla.empmodel.EmpVO;
 import com.cha102.diyla.util.SHAEncodeUtil;
 import org.aspectj.weaver.ast.Var;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.*;
@@ -22,10 +23,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EmpPasswordFilter implements Filter {
     private EmpService empService = new EmpService();
 
+    @Value("setSalt")
+    private String setSalt;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String setSalt = "SleepAndEat";
         byte[] setSaltArr = setSalt.getBytes();
         String empPassword = request.getParameter("empPassword");
         Map<String, String> errorMsgMap = new ConcurrentHashMap<>();
