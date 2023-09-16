@@ -87,8 +87,9 @@
             color: #B26021;
             height: 35px;
             letter-spacing: 1px;
-            padding: 0 25px 0 8px;
+            padding: 0 8px;
             margin-top:5px;
+            width:220px;
         }
         input.inputform:focus {
               outline: 1.5px solid #B26021;
@@ -116,7 +117,7 @@
             background-color: #B26021;
             color: #FCE5CD;
             border: 1px #B26021;
-            width: 199.33px;
+            width: 220px;
             height: 35px;
             letter-spacing: 3px;
             margin-top: 40px;
@@ -205,6 +206,9 @@
             right:80px;
             margin-top:5px;
         }
+         button.member:focus{
+             outline: none;
+         }
         </style>
 
 </head>

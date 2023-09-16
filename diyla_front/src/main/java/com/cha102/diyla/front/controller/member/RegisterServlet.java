@@ -65,6 +65,11 @@ public class RegisterServlet extends HttpServlet {
         if (!pw.equals(pwcheck)){
             exMsgs.add("該密碼與您設定的密碼不一致");
         }
+        String addReg = "^[\u4e00-\u9fa5\\w,]+$";
+        if (!(address.matches(addReg))){
+            exMsgs.add("地址格式只能為中、英文字母、數字和,");
+        }
+
 
         MemberService memSer = new MemberService();
         MemVO memVO=memSer.addMem(exMsgs,name,email,pw,phone,birthday,gender,addressAll);
