@@ -20,9 +20,15 @@ public class DataImportToRedis {
 
         List<ArtVO> datas = artService.getAllArt();
 
+        for (int i = 0; i < 100; i++) {
+            if (jedis.exists("art:" + i))
+                jedis.del("art:" + i);
+        }
+
         for (ArtVO data : datas) {
-            if(data.getArtPic() != null)
-            jedis.set("art:" + data.getArtNo(), Base64.getEncoder().encodeToString(data.getArtPic()));
+            if (data.getArtPic() != null) {
+                jedis.set("art:" + data.getArtNo(), Base64.getEncoder().encodeToString(data.getArtPic()));
+            }
         }
 
         jedis.close();
