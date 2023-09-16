@@ -228,7 +228,7 @@
         let domain = host_chat.split(":")[0];
         let port = '8082';
         let webCtx_chat = "/diyla_back";
-        let endPointURL_chat = "ws://" + domain + ":" +port + webCtx_chat + MyPoint;
+        let endPointURL_chat = "wss://" + domain + ":" +port + webCtx_chat + MyPoint;
         let backendServer_chat = "http://" + domain + ":" +port + webCtx_chat;
 
         let statusOutput = document.getElementById("statusOutput");
