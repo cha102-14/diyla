@@ -139,8 +139,8 @@
                             <form action="deleteArt" method="post">
                                 <input type="hidden" name="artNo" value="${artVO.artNo}">
                                 <input type="hidden" name="action" value="delete_Art">
-                                <input type="button" onclick="delete_art()" value="❌刪除">
-                                <input id="delete_submit" type="submit" style="display: none">
+                                <input type="button" onclick="delete_art(${artVO.artNo})" value="❌刪除">
+                                <input id="delete_submit${artVO.artNo}" type="submit" style="display: none">
                             </form>
                         </td>
                     </tr>
@@ -199,14 +199,14 @@
             $('.showall_button').css('display', 'block');
             $('.showpart_button').css('display', 'none');
         }
-        function delete_art() {
+        function delete_art(artNo) {
             swal("確定要刪除貼文?", "請按確定刪除或按取消返回", {
                 dangerMode: true,
                 buttons: ["取消", "確定"],
             }).then((confirm) => {
                 if (confirm) {
                     // 使用者按下了 "確定" 按鈕，執行表單送出
-                    document.querySelector("#delete_submit").click();
+                    document.querySelector("#delete_submit" +artNo).click();
                 } else {
                     // 使用者按下了 "取消" 按鈕，不執行任何操作，讓使用者保留在頁面
                 }

@@ -113,8 +113,8 @@
                 <td class="td1">公告狀態:</td>
                 <td class="td2">
                     <select name="annStatus">
-                        <option value="1">上架</option>
                         <option value="0">下架</option>
+                        <option value="1">上架</option>
                     </select>
                 </td>
             </tr>
