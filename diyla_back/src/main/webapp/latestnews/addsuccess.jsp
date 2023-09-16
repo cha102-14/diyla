@@ -67,7 +67,14 @@ a.a_addsuccess {
         <h1 id="addok">新增成功！</h1>
        <% if (addedLat != null) { %>
                <ul>
-                   <li>公告狀態：<%= addedLat.getAnnStatus() %></li>
+                <c:choose>
+                    <c:when test="<%= addedLat.getAnnStatus() == 0 %>">
+                        <li>公告狀態：下架</li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>公告狀態：上架</li>
+                    </c:otherwise>
+                </c:choose>
                    <li>公告內容：<%= addedLat.getNewsContext() %></li>
                    <li>公告圖片：</li>
                 <li><img src="data:image/jpeg;base64,<%= Base64.getEncoder().encodeToString(addedLat.getAnnPic()) %>" alt="沒有新增圖片"></li>
