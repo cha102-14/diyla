@@ -101,8 +101,8 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                                             </label>
                                             <input type="text" id="teacherId"
                                                 class="form-control"
-                                                name="teacherId"
-                                                value="${(courseVO != null) ? courseVO.teaId: ""}"><br>
+                                                name="teacherid"
+                                                value="${courseVO.teaId}"><br>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
@@ -112,7 +112,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                                             </label>
                                             <input type="text" id="teacherId"
                                                 class="form-control"
-                                                name="teacherId"
+                                                name="teacherid"
                                                 value="${courseVO.teaId}"
                                                 readonly
                                                 style="background-color: #f2f2f2;"><br>
@@ -408,7 +408,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                 //阻擋無權限人員修改課程
                 var type = "${type}";
                 if (type !== "BACKADMIN" && type !== "MASTER") {
-                    // 啟動定時器，5秒後導航到其他網頁
+                    // 啟動定時器，2.5秒後導航到其他網頁
                     setTimeout(function () {
                         window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                     }, 2500); // 2500 毫秒 = 2.5 秒
@@ -422,7 +422,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                         }
                     });
                 } else if (type == "NOSESSION" || type == "notAuth"){
-                     // 啟動定時器，5秒後導航到其他網頁
+                     // 啟動定時器，2.5秒後導航到其他網頁
                     setTimeout(function () {
                         window.location.href = "${ctxPath}" + "/desertcourse/listalldesertcoursecalendar.jsp";
                     }, 2500); // 2500 毫秒 = 2.5 秒
@@ -438,6 +438,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                 }
                 //圖片預覽處理以及需要上傳圖片才可以送出表單
                 $("#coursePic").on("change", function () {
+                    $('#defaultCoursePic').val("");
                     const previewBlock = $("#picPreviewBlock");
                     const preview = $("#picPreview");
                     const input = this;
@@ -445,8 +446,6 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                         const reader = new FileReader();
                         reader.onload = function (e) {
                             preview.attr("src", e.target.result);
-                            // 啟用新增按钮
-                            $("#submitButton").prop("disabled", false);
                         };
                         reader.readAsDataURL(input.files[0]);
                         previewBlock.show(); // 顯示圖片預覽區塊
@@ -457,7 +456,7 @@ import="com.cha102.diyla.back.controller.desertcourse.blobreader.Base64Converter
                     }
                 });
                 var ingredientIndex = $(".ingredient-row").length + 1;
-                console.log(ingredientIndex);
+                
 
                 $("#ingIncreaseButton").click(function() {
         var newIngredientTypeGroup = $("<div>").addClass("col-md-6 ing-type-block form-group");

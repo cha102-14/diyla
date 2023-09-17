@@ -23,7 +23,7 @@ import java.util.*;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 10,  // 10 KB
-        maxFileSize = 1024 * 300,       // 300 KB
+        maxFileSize = 1024 * 1000,       // 1000 KB
         maxRequestSize = 1024 * 1024    // 1 MB
 )
 @WebServlet("/modifyCourse")
@@ -39,15 +39,18 @@ public class ModifyCourseServlet extends HttpServlet {
         ClassVO classVO = new ClassVO();
         ClassService classService = new ClassService();
         List<String> errorMessage = new ArrayList<>();
+        List<String> typeFunList = (List<String>) session.getAttribute("typeFun");
         Gson gson = new Gson();
         TeacherService teacherService = new TeacherService();
         Integer updateCode = null;
         LocalDateTime currentDateTime = LocalDateTime.now();
         java.util.Date currentDate = Timestamp.valueOf(currentDateTime);
+        boolean isAdmin = typeFunList.contains("BACKADMIN");
         //驗證修改的師傅id是存在的
-        Integer modifyTeacherId = Integer.parseInt(req.getParameter("teacherId").trim());
-        if (!teacherService.verifyTeacherId(modifyTeacherId)) {
-            updateCode = 0;
+        Integer modifyTeacherId = Integer.parseInt(req.getParameter("teacherid").trim());
+
+        if (!teacherService.verifyTeacherId(modifyTeacherId) && !isAdmin) {
+
             errorMessage.add("修改的師傅ID不存在。");
         }
         //驗證是否有資格修改課程
@@ -127,7 +130,7 @@ public class ModifyCourseServlet extends HttpServlet {
                 //更新資料庫內的食材
                 classService.updateClassING(modifyCourseId, courseIngIdList, courseIngQuantitiesList);
             } catch (RuntimeException re) {
-                errorMessage.add(re.getMessage());
+                errorMessage.add(re.getMessage()+ "請檢查師傅編號是否正確。");
             }
         }
         String errorMessageJson = gson.toJson(errorMessage);

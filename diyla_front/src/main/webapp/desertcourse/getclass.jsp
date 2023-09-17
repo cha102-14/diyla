@@ -17,7 +17,9 @@
         Date classDate = course.getClassDate();
         int classLimit = course.getClassLimit();
         int classHeadcount = course.getHeadcount();
+        int classStatus = course.getClassStatus();
         boolean isFull = classHeadcount >= classLimit;
+        boolean isOverDue = classStatus == 2;
         // 根據 classSeq 計算完整的開始和結束時間
         String startTime = "";
         String endTime = "";
@@ -40,6 +42,7 @@
         eventsJson.append("\"start\": \"" + isoStartTime + "\",");
         eventsJson.append("\"end\": \"" + isoEndTime + "\",");
         eventsJson.append("\"isFull\": " + isFull + ",");
+        eventsJson.append("\"isOverDue\": " + isOverDue + ",");
         eventsJson.append("\"id\": \"" + course.getClassId() + "\"");
         eventsJson.append("}");
         eventsJson.append(",");

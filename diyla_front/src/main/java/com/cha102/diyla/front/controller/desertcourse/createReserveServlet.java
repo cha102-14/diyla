@@ -5,6 +5,7 @@ import com.cha102.diyla.member.MemberService;
 import com.cha102.diyla.sweetclass.classModel.ClassService;
 import com.cha102.diyla.sweetclass.classModel.ClassVO;
 import com.cha102.diyla.sweetclass.email.MailService;
+import com.cha102.diyla.sweetclass.teaModel.TeacherService;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -28,6 +29,7 @@ public class createReserveServlet extends HttpServlet {
         PrintWriter out = res.getWriter();
         HttpSession session = req.getSession();
         ClassService classService = new ClassService();
+        TeacherService teacherService = new TeacherService();
         MailService mailService = new MailService();
         //處理輸出的json字串
         String json = "";

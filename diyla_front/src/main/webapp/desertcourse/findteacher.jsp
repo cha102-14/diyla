@@ -27,7 +27,7 @@
     border: 4px solid #000;
   }
   .card-img-top{
-    height: 45vh;
+    height: 30vh;
   }
     </style>
 </head>
@@ -67,6 +67,7 @@
 
         for (int i = startIndex; i < endIndex; i++) {
             TeacherVO teacher = teacherList.get(i);
+            if(teacher.getTeaStatus() == 0){
             byte[] imgBytes = teacher.getTeaPic();
             String base64Img = null;
             if( imgBytes == null){
@@ -86,7 +87,7 @@
             </div>
         </div>
     <%
-        }
+        }}
     %>
         </div>
     <div id="page" class="pagination">

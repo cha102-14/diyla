@@ -18,7 +18,7 @@ import java.util.Base64;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 10,  // 10 KB
-        maxFileSize = 1024 * 300,       // 300 KB
+        maxFileSize = 1024 * 2000,       // 300 KB
         maxRequestSize = 1024 * 1024    // 1 MB
 )
 

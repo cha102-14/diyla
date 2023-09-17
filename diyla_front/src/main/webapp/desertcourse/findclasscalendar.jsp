@@ -30,8 +30,9 @@
                               var startTime = arg.event.start;
                               var timeCategory = getTimeCategory(startTime);
                               var isFullClass = arg.event.extendedProps.isFull ? 'event-full' : '';
+                              var isOverDue = arg.event.extendedProps.isOverDue ? 'event-over' : '';
                               // 只顯示早上/下午/晚上之一，根據時間分類
-                              var timeHtml = '<div class="event-item ' + isFullClass + '"><div class="event-time">' + timeCategory + '</div>';
+                              var timeHtml = '<div class="event-item ' + isFullClass + isOverDue + '"><div class="event-time">' + timeCategory + '</div>';
                               var titleHtml = '<div class="event-title">' + arg.event.title + '</div></div>';
                               return { html: timeHtml + titleHtml };
                           }
@@ -97,6 +98,9 @@
                       background: #b3ffb3;
                     }
                     .event-full {
+                        background: #ccc; 
+                    }
+                    .event-over {
                         background: #ccc; 
                     }
         </style>

@@ -84,7 +84,7 @@ public class VerifyCourseActionServlet extends HttpServlet {
             } else {
                 if(reqEmpId == thisEmpId) {
                     classService.updateClassStatus(action, courseId);
-                    System.out.println("delete action ok");
+
                     resJson.put("isAllowed", true);
                 } else {
                     resJson.put("isAllowed", false);
@@ -101,7 +101,6 @@ public class VerifyCourseActionServlet extends HttpServlet {
             List<Integer> reqCourseIngId = new ArrayList<>();
             List<Integer> reqCourseIngAmount = new ArrayList<>();
             for(int i = 0; i < reqCourseIngIdAmountList.size(); i++) {
-
                 reqCourseIngId.add(reqCourseIngIdAmountList.get(i).getIngId());
                 reqCourseIngAmount.add(reqCourseIngIdAmountList.get(i).getIngNums());
 

@@ -42,7 +42,7 @@ public class modifyReserveServlet extends HttpServlet {
             int newClassHeadCount = classHeadCount - reserveHeadcount;
             classVO.setHeadcount(newClassHeadCount);
             classService.updateClass(classVO);
-            mailService.sendMail(to, memName, "createReserve");
+            mailService.sendMail(to, memName, "deleteReserve");
         } else if ("complete".equals(action)) {
             classService.updateReserveStatus(reserveId, 2);
         }

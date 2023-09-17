@@ -221,6 +221,8 @@
                         <%
                             if(course.getClassStatus() == 2) {
                             out.print("<button type=\"button\" class=\"btn btn-warning\" id=\"registerButton\" disabled>報名已截止</button>");
+                        } else if(course.getHeadcount() == course.getClassLimit()) {
+                            out.print("<button type=\"button\" class=\"btn btn-primary\" id=\"registerButton\" disabled>報名人數已額滿</button>");
                         } else {
                             out.print("<button type=\"button\" class=\"btn btn-primary\" id=\"registerButton\">報名課程</button>");
                         }
