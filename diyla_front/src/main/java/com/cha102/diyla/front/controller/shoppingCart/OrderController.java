@@ -79,7 +79,7 @@ public class OrderController extends HttpServlet {
 		if ("cancelOrder".equals(action)) {
 			Integer memId = (Integer) session.getAttribute("memId");
 			Integer orderNo = Integer.valueOf(req.getParameter("orderNO"));
-			commodityOrderService.updateStatus(5, orderNo);
+			commodityOrderService.updateStatus(6, orderNo);
 			List<CommodityOrderVO> list = commodityOrderService.getAllByMemId(memId);
 			session.setAttribute("memId", memId);
 			session.setAttribute("commodityOrderVOList", list);

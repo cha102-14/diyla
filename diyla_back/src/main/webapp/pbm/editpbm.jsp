@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>編輯常見問題</title>
-    <link rel="stylesheet" href="${ctxPath}/style.css">
+    <link rel="stylesheet" href="${ctxPath}/css/style.css">
     <style>
   body {
     font-family: Arial, sans-serif;
@@ -94,10 +94,10 @@
 
         <label for="pbmSort">問題分類：</label>
         <select name="pbmSort" id="pbmSort">
-            <option value="0" ${pbmVO.pbmNo== 0 ? "selected" : ""}>課程</option>
-            <option value="1" ${pbmVO.pbmNo== 1 ? "selected" : ""}>DIY</option>
-            <option value="2" ${pbmVO.pbmNo== 2 ? "selected" : ""}>商店</option>
-            <option value="3" ${pbmVO.pbmNo== 3 ? "selected" : ""}>其他</option>
+            <option value="0" ${pbmVO.pbmSort== 0 ? "selected" : ""}>課程</option>
+            <option value="1" ${pbmVO.pbmSort== 1 ? "selected" : ""}>DIY</option>
+            <option value="2" ${pbmVO.pbmSort== 2 ? "selected" : ""}>商店</option>
+            <option value="3" ${pbmVO.pbmSort== 3 ? "selected" : ""}>其他</option>
         </select><br>
 
         <button type="submit">更新</button>

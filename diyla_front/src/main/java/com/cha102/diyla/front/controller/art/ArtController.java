@@ -101,15 +101,16 @@ public class ArtController extends HttpServlet {
             ArtVO artVO = new ArtVO();
             artVO.setArtTitle(artTitle);
             artVO.setArtContext(artContext);
+            ArtService artSvc = new ArtService();
 
             Set<ConstraintViolation<ArtVO>> error = validator.validate(artVO);
             if (!error.isEmpty()) {
+                req.setAttribute("artVO",(artSvc.getArtByArtNo(artNo)));
                 req.setAttribute("ErrorMessage", error);
                 req.getRequestDispatcher("/art/editart.jsp").forward(req, res);
                 return;
             }
 
-            ArtService artSvc = new ArtService();
             if (ips.available() != 0) {
                 buffer = ips.readAllBytes();
             } else {

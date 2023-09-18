@@ -51,13 +51,9 @@ public class MemberService {
 		if (mem_gender == null){
 			exMsgs.add("請輸入性別");
 		}
-		String addReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9-,)]$";
 		if (mem_address == null || (mem_address.trim()).length()==0){
 			exMsgs.add("請輸入地址");
 		}
-//		else if (!(mem_address.matches(addReg))){
-//			exMsgs.add("地址格式只能為中、英文字母、數字、-和,");
-//		}
 
 		MemberService memSer = new MemberService();
 		List<MemVO> lists = memSer.selectAll();
