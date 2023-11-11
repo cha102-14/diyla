@@ -108,8 +108,8 @@
     <jsp:include page="/latestnews/lat_header.jsp" />
     <h1 id="addh1">新增最新公告</h1>
     <FORM id="addform" METHOD="post" ACTION="latServlet" enctype="multipart/form-data" name="form1">
-        <table id="addlatTable">
-            <tr>
+        <table id="addlatTable"> <!-- 公告狀態表格 -->
+            <th>
                 <td class="td1">公告狀態:</td>
                 <td class="td2">
                     <select name="annStatus">
@@ -117,7 +117,7 @@
                         <option value="1">上架</option>
                     </select>
                 </td>
-            </tr>
+            </th>
             <tr>
                 <td class="td1">公告內容:</td>
                 <td class="td2"> <input id="text" type="text" name="newsContext" required="required"> </td>
