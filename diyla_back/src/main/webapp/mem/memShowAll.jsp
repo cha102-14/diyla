@@ -11,7 +11,6 @@
 
                 .serchMember {
                     text-align:center;
-                    width: 1000px;
                     padding-top: 10px;
                     padding-bottom:10px;
                     border-radius: 8px;
@@ -28,7 +27,7 @@
                 }
                 .showAllMemPage {
                     margin-left: 300px;
-                    width:74.3%;
+                    width:72%;
                     min-height: 612px;
                     font-family: "微軟正黑體", Arial, sans-serif;
                     font-weight: bold;
@@ -52,7 +51,7 @@
                 
                 .selectpage{
                     position: absolute;
-                    top: 72%;
+                    top: 90%;
                     left: 58%;
                     width: 45%;
                     margin-left: 60px;

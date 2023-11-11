@@ -279,7 +279,7 @@
     let host = window.location.host;
     let path = window.location.pathname;
     let webCtx = path.substring(0, path.indexOf('/', 1));
-    let endPointURL = "ws://" + host + webCtx + "/NoticeWS/${memId}";
+    let endPointURL = "wss://" + host + webCtx + "/NoticeWS/${memId}";
     let webSocket;
 
 
