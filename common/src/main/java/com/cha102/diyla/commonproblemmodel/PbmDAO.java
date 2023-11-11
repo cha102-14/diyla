@@ -188,8 +188,8 @@ public class PbmDAO implements PbmDAO_interface {
                 }
             }
 
-            return pbmvo;
         }
+        return pbmvo;
     }
 
     @Override

@@ -6,7 +6,7 @@
     LatestnewsVO latVO = (LatestnewsVO) request.getAttribute("latVO");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>編輯公告</title>

@@ -12,7 +12,7 @@ body#addpbm_body{
 h1#addpbm_h1 {
   text-align: center;
   margin:  0;
-  color: #e74c3c;
+
      font-size: 32px;
      background-color: #f39c12;
      color: white;
@@ -31,7 +31,7 @@ table {
   font-size: 20px;
   color: #e74c3c;
   text-align: right;
-  color: #e74c3c;
+
   min-width: 20%;
 }
 

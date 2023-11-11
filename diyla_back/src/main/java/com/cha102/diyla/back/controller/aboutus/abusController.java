@@ -25,26 +25,39 @@ public class abusController extends HttpServlet {
             throws ServletException, IOException {
         // 使用你的 Redis 客戶端庫，將修改後的內容存儲到 Redis 中
         Jedis jedis = new Jedis("localhost", 6379);
+        try {
 
-        BufferedReader reader = req.getReader();
-        StringBuilder strb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            strb.append(line);
+            BufferedReader reader = req.getReader();
+            StringBuilder strb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                strb.append(line);
+            }
+
+            JSONObject datas = new JSONObject(strb.toString());
+            String content = datas.getString("content");
+            String image = datas.getString("image");
+
+            if (content != null) {
+                jedis.set("content", content);
+            }
+            if (image != null) {
+                jedis.set("image", image);
+            }
+            res.getWriter().write("{\"status\": \"success\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+            res.getWriter().write("{\"status\": \"error\"}");
+        } finally {
+            if (jedis != null) {
+                try {
+                    jedis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        JSONObject datas = new JSONObject(strb.toString());
-        String content = datas.getString("content");
-        String image = datas.getString("image");
-
-        if (content != null) {
-            jedis.set("content", content);
-        }
-        if (image != null) {
-            jedis.set("image", image);
-        }
-        jedis.close();
-        res.getWriter().write("{\"status\": \"success\"}");
     }
 }
 

@@ -79,7 +79,7 @@
 <body bgcolor='white'>
 <jsp:include page="/pbm/pbm_header.jsp" />
 <div class="container">
-    <h2 id="pbm_edit">編輯公告</h2>
+    <h2 id="pbm_edit">編輯常見問題</h2>
     <form method="post" action="PbmController">
         <input type="hidden" name="action" value="update_pbm">
         <input type="hidden" name="pbmNo" value="${pbmVO.pbmNo}">

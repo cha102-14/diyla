@@ -83,7 +83,7 @@
 <body bgcolor='white'>
     <jsp:include page="/index.jsp" />
         <jsp:include page="art.jsp" />
-    <table id="art" class="display" style="width: 100%">
+    <table id="art" class="display" style="width: 100%"><!-- dataTable表格 -->
         <thead id="header">
             <tr>
                 <th>文章編號</th>
